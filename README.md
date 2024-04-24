@@ -11,17 +11,14 @@ Use Spring Framework + MySQL and MongoDB to create APIs for my app and Typescrip
 
 ## [Frontend](https://github.com/pdcthanh112/MyDream/tree/main/frontend)
 
-### [Admin](https://github.com/pdcthanh112/MyDream/tree/main/frontend/admin)
-Using Angular framework, responsible for the management of the application.
-
 ### [Ecommerce](https://github.com/pdcthanh112/MyDream/tree/main/frontend/ecommerce)
-Using React with Vite, get design ideas from amazon.com, responsible for the company's e-commerce segment, with main functions such as viewing goods, shopping cart, ordering, online payment, tracking delivery.
+Using NextJS 14 with app router, get design ideas from amazon.com, responsible for the company's e-commerce segment, with main functions such as viewing goods, shopping cart, ordering, online payment, tracking delivery.
 
 ### [Management](https://github.com/pdcthanh112/MyDream/tree/main/frontend/management)
-This is an internal website for the company's employees, with functions such as tracking, employee management, recruitment, timekeeping, salary calculation.
+Using Angular. This is an internal website for the company's employees, with functions such as tracking, employee management, recruitment, timekeeping, salary calculation.
 
-### [Recruitment](https://github.com/pdcthanh112/MyDream/tree/main/frontend/cruitment)
-Using React's NextJS technology to be SEO friendly, responsible for posting the company's job postings, sending notifications to candidates and assisting in tracking the application and interviewing process for candidates.
+### [Company](https://github.com/pdcthanh112/MyDream/tree/main/frontend/cruitment)
+Using NextJS Pages router technology to be SEO friendly, responsible for posting the company's job postings, sending notifications to candidates and assisting in tracking the application and interviewing process for candidates.
 
 ## [Mobile](https://github.com/pdcthanh112/MyDream/tree/main/mobile)
 Using Flutter (learning...)
