@@ -15,7 +15,7 @@ export const registerSchema = z
     name: z.string().trim().min(2).max(256),
     email: z.string().trim().min(1, "Email is required").email(),
     phone: z.string(),
-    password: z.string().min(8).max(100),
+    password: z.string().min(8, "Password at least 8 characters").max(100),
     confirm: z.string().min(8).max(100),
   })
   .strict()
@@ -38,3 +38,21 @@ export const forgetPasswordSchema = z
   .strict();
 
 export type forgetPasswordType = z.TypeOf<typeof forgetPasswordSchema>;
+
+export const resetPasswordSchema = z
+  .object({
+    password: z.string().min(8, "Password at least 8 characters"),
+    confirm: z.string(),
+  })
+  .strict()
+  .superRefine(({ confirm, password }, ctx) => {
+    if (confirm !== password) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Confirm does not match",
+        path: ["confirm"],
+      });
+    }
+  });
+
+export type resetPasswordType = z.TypeOf<typeof resetPasswordSchema>;

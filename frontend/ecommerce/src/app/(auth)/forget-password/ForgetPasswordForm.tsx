@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const ForgetPasswordForm = () => {
-  const forgetPasswordLogin = useForm<forgetPasswordType>({
+
+  const forgetPasswordForm = useForm<forgetPasswordType>({
     resolver: zodResolver(forgetPasswordSchema),
     defaultValues: {
       email: "",
@@ -21,10 +22,10 @@ const ForgetPasswordForm = () => {
   };
 
   return (
-    <Form {...forgetPasswordLogin}>
-      <form onSubmit={forgetPasswordLogin.handleSubmit(onSubmit)} noValidate>
+    <Form {...forgetPasswordForm}>
+      <form onSubmit={forgetPasswordForm.handleSubmit(onSubmit)} noValidate>
         <FormField
-          control={forgetPasswordLogin.control}
+          control={forgetPasswordForm.control}
           name="email"
           render={({ field }) => (
             <FormItem className="h-24">
