@@ -5,6 +5,7 @@ import com.congthanh.project.dto.management.PositionDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.entity.management.Position;
 import com.congthanh.project.service.management.PositionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/management/position")
-@CrossOrigin("*")
+@Tag(name = "Position API", description = "Position API in CongThanhApp - Management")
 public class PositionController {
 
   @Autowired

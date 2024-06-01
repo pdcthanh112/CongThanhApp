@@ -1,0 +1,41 @@
+version: 2.1
+commands:
+  build-and-test:
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies (main)
+          command: npm install
+      - run:
+          name: Build next-i18next
+          command: npm run build
+      - run:
+          name: Install examples
+          command: npm run install:examples
+      - run:
+          name: Build examples
+          command: npm run build:examples
+      - run:
+          name: Lint
+          command: npm run lint
+      - run:
+          name: Typecheck
+          command: npm run typecheck
+      - run:
+          name: Test
+          command: npm test
+      - run:
+          name: e2e
+          command: npm run test:e2e
+
+jobs:
+  node-v18:
+    docker:
+      - image: cimg/node:18.4
+    steps:
+      - build-and-test
+
+workflows:
+  node-multi-build:
+    jobs:
+      - node-v18

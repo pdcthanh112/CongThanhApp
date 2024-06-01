@@ -24,6 +24,10 @@ public class CartItem {
   @JoinColumn(name = "product", nullable = false)
   private Product product;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "productVariant")
+  private ProductVariant productVariant;
+
   private int quantity;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -33,8 +37,8 @@ public class CartItem {
   @Column(name = "created_at")
   private long createdAt;
 
-  public BigDecimal getTotal() {
-    return product.getPrice().multiply(BigDecimal.valueOf(quantity));
-  }
+//  public BigDecimal getTotal() {
+//    return product.getPrice().multiply(BigDecimal.valueOf(quantity));
+//  }
 
 }

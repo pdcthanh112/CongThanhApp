@@ -6,6 +6,7 @@ import com.congthanh.project.model.ecommerce.request.RatingStarRequest;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.entity.ecommerce.Review;
 import com.congthanh.project.service.ecommerce.ReviewService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ecommerce/review")
+@Tag(name = "Review API", description = "Review API in CongThanhApp - Ecommerce")
 public class ReviewController {
 
     @Autowired

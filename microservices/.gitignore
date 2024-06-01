@@ -1,0 +1,6 @@
+bin/*
+!bin/install_tools
+
+mdl--*
+
+cover.cov

@@ -1,14 +1,14 @@
 package com.congthanh.project.entity.ecommerce;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -19,7 +19,10 @@ public class ProductImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String product;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product", nullable = false)
+    @JsonManagedReference
+    private Product product;
 
     @Column(name = "image_path", length = 1500)
     private String imagePath;

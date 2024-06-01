@@ -5,6 +5,7 @@ import com.congthanh.project.dto.management.DepartmentDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.entity.management.Department;
 import com.congthanh.project.service.management.DepartmentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/management/department")
-@CrossOrigin("*")
+@Tag(name = "Department API", description = "Department API in CongThanhApp - Management")
 public class DepartmentController {
 
   @Autowired

@@ -1,8 +1,11 @@
 package com.congthanh.project.serviceImpl.ecommerce;
 
 import com.congthanh.project.dto.ecommerce.ProductImageDTO;
+import com.congthanh.project.entity.ecommerce.Product;
 import com.congthanh.project.entity.ecommerce.ProductImage;
+import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.ProductImageMapper;
+import com.congthanh.project.repository.ecommerce.product.ProductRepository;
 import com.congthanh.project.repository.ecommerce.productImage.ProductImageRepository;
 import com.congthanh.project.service.ecommerce.ProductImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +22,12 @@ public class ProductImageServiceImpl implements ProductImageService {
 
     @Autowired
     private ProductImageMapper productImageMapper;
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     public List<ProductImageDTO> getImageByProduct(String productId) {
-        List<ProductImage> data = productImageRepository.getImageByProduct(productId);
+        List<ProductImage> data = productRepository.getImageByProduct(productId);
         List<ProductImageDTO> result = new ArrayList<>();
         for (ProductImage item : data) {
             ProductImageDTO imageDTO = productImageMapper.mapProductImageEntityToDTO(item);
@@ -42,8 +47,9 @@ public class ProductImageServiceImpl implements ProductImageService {
 
     @Override
     public ProductImageDTO addProductImage(ProductImageDTO productImageDTO) {
+        Product product = productRepository.findById(productImageDTO.getProduct()).orElseThrow(() -> new NotFoundException(("not found")));
         ProductImage image = ProductImage.builder()
-                .product(productImageDTO.getProduct())
+                .product(product)
                 .imagePath(productImageDTO.getImagePath())
                 .alt(productImageDTO.getAlt())
                 .isDefault(productImageDTO.isDefault())

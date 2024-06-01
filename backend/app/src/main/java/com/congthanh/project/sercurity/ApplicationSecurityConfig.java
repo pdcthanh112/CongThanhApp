@@ -22,24 +22,34 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfig {
 
+  private static final String[] SWAGGER_LIST = {
+          "/v3/api-docs",
+          "/swagger-ui/**",
+          "/swagger-resources/**",
+          "/swagger-resources",
+          "/*", "/**"
+  };
+
+
   //    private final ApplicationUserService applicationUserService;
 //    private JwtConfig jwtConfig;
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf().disable().authorizeHttpRequests()
-            .requestMatchers("/api/v1/auth/**", "/v2/api-docs", "/v3/api-docs", "/v3/api-docs/**", "/swagger-resources", "/swagger-resources/**",
-                    "/configuration/ui",
-                    "/configuration/security", "/swagger-ui/**",
-                    "/webjars/**",
-                    "/swagger-ui.html",
-                    "/management/**", "/management/category/**",
-                    "/ecommerce/**", "/management/product/**",
-                    "/graphql"
-            )
-            .permitAll()
-            .anyRequest().authenticated();
+            .requestMatchers(SWAGGER_LIST).permitAll()
+            .anyRequest().authenticated()/*.and().httpBasic()*/;
 
     return http.build();
+
+//    "/api/v1/auth/**", "/v1/api-docs", "/v1/api-docs", "/v1/api-docs/**", "/swagger-resources", "/swagger-resources/**",
+//            "/configuration/ui",
+//            "/configuration/security", "/swagger-ui/**",
+//            "/webjars/**",
+//            "/swagger-ui.html",
+//            "/management/**", "/management/category/**",
+//            "/ecommerce/**", "/management/product/**",
+//            "/graphql"
+
   }
 
   @Bean

@@ -1,20 +1,15 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
     container: {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1440px",
       },
     },
     extend: {
@@ -52,6 +47,26 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        status_approved: {
+          text: "#1BC5BD",
+          background: "#C9F7F5",
+        },
+        status_rejected: {
+          text: "#F64E60",
+          background: "#FFE2E5",
+        },
+        status_success: {
+          text: "#F64E60",
+          background: "#C9F7F5",
+        },
+        status_failed: {
+          text: "#F64E60",
+          background: "#FFE2E5",
+        },
+        status_pending: {
+          text: "#FFA800",
+          background: "#FFF4DE",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -75,6 +90,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, String>, ProductCustomRepository {
 
   @Query(nativeQuery = true, value = "SELECT product.*\n" +
-          "FROM product  JOIN category on product.category = category.id\n" +
+          "FROM product JOIN category on product.category = category.id\n" +
           "JOIN subcategory on product.subcategory = subcategory.id\n" +
           "WHERE product.slug ILIKE ?1")
   Optional<Product> findProductBySlug(String slug);

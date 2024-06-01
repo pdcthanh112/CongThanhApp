@@ -7,6 +7,12 @@ import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.entity.ecommerce.Product;
 import com.congthanh.project.repository.ecommerce.product.ProductRepository;
 import com.congthanh.project.service.ecommerce.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -18,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ecommerce/product")
+@Tag(name = "Product API", description = "Product API in CongThanhApp - Ecommerce")
 public class ProductController {
 
   @Autowired
@@ -45,6 +52,25 @@ public class ProductController {
     response.setData(data);
     response.setStatus(ResponseStatus.STATUS_SUCCESS);
     response.setMessage("Get by id successfully");
+    return ResponseEntity.ok().body(response);
+  }
+
+  @GetMapping("/detail/{id}")
+  @PermitAll
+  @Operation(
+          summary = "Get product detail by Id",
+          description = "Get product detail by id with full attribute",
+          tags = { "product", "get", "detail" })
+  @ApiResponses({
+          @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema()) }),
+          @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+          @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+  public ResponseEntity<Response<ProductDTO>> getProductDetailById(@PathVariable("id") String id) {
+    ProductDTO data = productService.getProductDetailById(id);
+    Response<ProductDTO> response = new Response<>();
+    response.setData(data);
+    response.setStatus(ResponseStatus.STATUS_SUCCESS);
+    response.setMessage("Get detail by id successfully");
     return ResponseEntity.ok().body(response);
   }
 

@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Set;
 
 @Data
@@ -32,19 +31,19 @@ public class CartDTO {
 
 //    private CheckoutDTO checkout;
 
-    public BigDecimal getTotalOrderPrice() {
-        BigDecimal sum = BigDecimal.ZERO;
-        if (this.cartItems == null || this.cartItems.isEmpty()) {
-            return BigDecimal.ZERO;
-        }
-        Set<CartItemDTO> orderProducts = this.cartItems;
-        for (CartItemDTO item : orderProducts) {
-            BigDecimal quantityDecimal = BigDecimal.valueOf(item.getQuantity());
-            BigDecimal itemTotal = quantityDecimal.multiply(item.getProduct().getPrice());
-            sum = sum.add(itemTotal);
-        }
-        return sum;
-    }
+//    public BigDecimal getTotalOrderPrice() {
+//        BigDecimal sum = BigDecimal.ZERO;
+//        if (this.cartItems == null || this.cartItems.isEmpty()) {
+//            return BigDecimal.ZERO;
+//        }
+//        Set<CartItemDTO> orderProducts = this.cartItems;
+//        for (CartItemDTO item : orderProducts) {
+//            BigDecimal quantityDecimal = BigDecimal.valueOf(item.getQuantity());
+//            BigDecimal itemTotal = quantityDecimal.multiply(item.getProduct().getPrice());
+//            sum = sum.add(itemTotal);
+//        }
+//        return sum;
+//    }
 
     public int getCountItem() {
         if (this.cartItems == null || this.cartItems.isEmpty()) {

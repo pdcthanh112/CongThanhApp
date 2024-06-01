@@ -8,6 +8,7 @@ import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.service.ecommerce.OrderDetailService;
 import com.congthanh.project.service.ecommerce.OrderService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ecommerce/order")
+@Tag(name = "Order API", description = "Order API in CongThanhApp - Ecommerce")
 public class OrderController {
 
   @Autowired

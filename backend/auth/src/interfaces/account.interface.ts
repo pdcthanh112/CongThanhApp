@@ -1,18 +1,19 @@
 export interface Account {
   id?: number;
   account?: string;
-  empAccount?: string; 
+  empAccount?: string;
   email: string;
   password: string;
 }
 
 export interface Customer {
   id?: number;
-  accountId: string; 
+  accountId: string;
   name: string;
   email: string;
   password?: string;
   phone: string;
+  phone_verified: boolean;
   address: string;
   dob: Date;
   gender: string;
@@ -21,7 +22,7 @@ export interface Customer {
 export interface Employee {
   id?: number;
   accountId: string;
-  empAccount: string; 
+  empAccount: string;
   name: string;
   email: string;
   password?: string;
@@ -36,7 +37,7 @@ export interface Employee {
 }
 export interface Candidate {
   id?: number;
-  accountId: string; 
+  accountId: string;
   name: string;
   email: string;
   password?: string;

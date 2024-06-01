@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -14,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "account", indexes = @Index(columnList = "account_id"))
 public class Account {
-
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

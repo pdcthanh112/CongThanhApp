@@ -6,6 +6,7 @@ import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.entity.ecommerce.Subcategory;
 import com.congthanh.project.repository.ecommerce.subcategory.SubcategoryRepository;
 import com.congthanh.project.service.ecommerce.SubcategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/ecommerce/subcategory")
+@Tag(name = "Subcategory API", description = "Subcategory API in CongThanhApp - Ecommerce")
 public class SubcategoryController {
 
   @Autowired

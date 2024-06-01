@@ -10,8 +10,6 @@ import java.util.List;
 @Transactional
 public interface ProductImageCustomRepository {
 
-    List<ProductImage> getImageByProduct(String productId);
-
     ProductImage getDefaultImageByProduct(String productId);
 
 }

@@ -12,7 +12,6 @@ import com.congthanh.project.service.ecommerce.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,12 +25,6 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private CartItemRepository cartItemRepository;
-
-    @Autowired
-    private CartMapper cartMapper;
-
-    @Autowired
-    private ProductMapper productMapper;
 
     @Override
     public CartDTO getCartById(String id) {
@@ -51,9 +44,9 @@ public class CartServiceImpl implements CartService {
                 CartItemDTO cartItemTmp = new CartItemDTO();
                 cartItemTmp.setId(cartItemItem.getId());
                 cartItemTmp.setQuantity(cartItemItem.getQuantity());
-                cartItemTmp.setCart(cartMapper.mapCartEntityToDTO(cart));
+                cartItemTmp.setCart(CartMapper.mapCartEntityToDTO(cart));
                 cartItemTmp.setCreatedDate(cartItemItem.getCreatedAt());
-                cartItemTmp.setProduct(productMapper.mapProductEntityToDTO(cartItemItem.getProduct()));
+                cartItemTmp.setProduct(ProductMapper.mapProductEntityToDTO(cartItemItem.getProduct()));
 
                 cartItems.add(cartItemTmp);
             }
@@ -81,8 +74,8 @@ public class CartServiceImpl implements CartService {
                         CartItemDTO cartItemTmp = new CartItemDTO();
                         cartItemTmp.setId(cartItemItem.getId());
                         cartItemTmp.setQuantity(cartItemItem.getQuantity());
-                        cartItemTmp.setCart(cartMapper.mapCartEntityToDTO(cart));
-                        cartItemTmp.setProduct(productMapper.mapProductEntityToDTO(cartItemItem.getProduct()));
+                        cartItemTmp.setCart(CartMapper.mapCartEntityToDTO(cart));
+                        cartItemTmp.setProduct(ProductMapper.mapProductEntityToDTO(cartItemItem.getProduct()));
 
                         cartItems.add(cartItemTmp);
                     }
@@ -109,7 +102,7 @@ public class CartServiceImpl implements CartService {
         if (cartDTO.isDefault()) {
             this.setDefaultCartForCustomer(cartDTO.getCustomer(), result.getId());
         }
-        return cartMapper.mapCartEntityToDTO(result);
+        return CartMapper.mapCartEntityToDTO(result);
     }
 
     @Override
@@ -131,7 +124,7 @@ public class CartServiceImpl implements CartService {
     public CartDTO getDefaultCartOfCustomer(String customerId) {
         Cart data = cartRepository.getDefaultCartOfCustomer(customerId);
         if (data != null) {
-            return cartMapper.mapCartEntityToDTO(data);
+            return CartMapper.mapCartEntityToDTO(data);
         }
         return null;
     }

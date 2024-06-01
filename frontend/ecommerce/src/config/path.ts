@@ -1,0 +1,20 @@
+const path = {
+  account: '/account',
+  address: '/manage/address',
+  bankingAccount: 'banking-account',
+  cart: '/cart',
+  changePassword: '/auth/change-password',
+  history: '/history',
+  home: '/',
+  login: '/auth/login',
+  logout: '/logout',
+  notification: '/manage/notification',
+  order: '/order',
+  product: '/product/:slug',
+  profile: '/manage/profile',
+  resetPassword: '/auth/reset-password',
+  signup: '/auth/signup',
+  vouchers: '/manage/vouchers',
+  wishlist: '/wishlist',
+} as const;
+export default path;

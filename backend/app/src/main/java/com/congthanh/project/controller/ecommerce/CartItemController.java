@@ -4,12 +4,14 @@ import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.ecommerce.CartItemDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.service.ecommerce.CartItemService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ecommerce/cart-item")
+@Tag(name = "Cart Item API", description = "Cart item API in CongThanhApp - Ecommerce")
 public class CartItemController {
 
   @Autowired

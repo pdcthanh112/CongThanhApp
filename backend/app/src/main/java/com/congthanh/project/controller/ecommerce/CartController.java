@@ -6,6 +6,7 @@ import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.entity.ecommerce.Cart;
 import com.congthanh.project.repository.ecommerce.cart.CartRepository;
 import com.congthanh.project.service.ecommerce.CartService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ecommerce/cart")
+@Tag(name = "Cart API", description = "Cart API in CongThanhApp - Ecommerce")
 public class CartController {
 
   @Autowired

@@ -1,13 +1,12 @@
 package com.congthanh.project.dto.ecommerce;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,17 +25,17 @@ public class ProductDTO {
 
   private String SKU;
 
-  @Min(value = 0)
-  private int quantity;
-
-  @Min(value = 0)
-  private BigDecimal price;
-
-  private String production;
-
   private String description;
 
-  private String store;
+  private List<ProductImageDTO> image;
+
+  private List<ProductAttributeValueDTO> attribute;
+
+  private String supplier;
+
+  private String brand;
+
+  private List<ProductVariantDTO> variant;
 
   private String status;
 

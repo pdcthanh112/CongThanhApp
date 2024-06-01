@@ -79,7 +79,7 @@ public class CheckoutServiceImpl implements CheckoutService {
 
         CreateOrderRequest createOrderRequest = CreateOrderRequest.builder()
                 .customer(createCheckoutRequest.getCustomer())
-                .total(cart.getTotalOrderPrice())
+//                .total(cart.getTotalOrderPrice())
                 .checkout(result.getId())
                 .build();
         Order order = orderService.createOrder(createOrderRequest);

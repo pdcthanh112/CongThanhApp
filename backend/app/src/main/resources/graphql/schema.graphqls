@@ -4,7 +4,7 @@ type Query {
     subcategory: [Subcategory]
     cart: [Cart]
     appData: AppData
-    store: [Store]
+    supplier: [Supplier]
 }
 
 union AppData = Category | Subcategory
@@ -15,14 +15,11 @@ type Product {
     category: Category
     subcategory: Subcategory
     SKU: String
-    quantity: Int
-    price: Float
-    production: String
-    image: String
+    image: [ProductImage]
     description: String
     status: String
     slug: String
-    store: Store
+    supplier: Supplier
 }
 
 type Category {
@@ -53,10 +50,18 @@ type CartItem {
     createdDate: String
 }
 
-type Store {
+type Supplier {
     id: ID!
     name: String!
     avatar: String
     background: String
     domain: String
+}
+
+type ProductImage {
+    id: ID!
+    name: String
+    imagePath: String
+    alt: String
+    isDefault: Boolean
 }

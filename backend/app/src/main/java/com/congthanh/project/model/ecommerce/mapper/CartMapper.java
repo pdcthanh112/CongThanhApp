@@ -4,25 +4,32 @@ import com.congthanh.project.dto.ecommerce.CartDTO;
 import com.congthanh.project.entity.ecommerce.Cart;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CartMapper {
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private static final ModelMapper modelMapper = new ModelMapper();
+
+    static {
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT)
+                .setFieldMatchingEnabled(true)
+                .setSkipNullEnabled(true);
+    }
 
     @PostConstruct
     private void configureModelMapper() {
 
     }
 
-    public Cart mapCartDTOToEntity(CartDTO cartDTO) {
+    public static Cart mapCartDTOToEntity(CartDTO cartDTO) {
         return modelMapper.map(cartDTO, Cart.class);
     }
 
-    public CartDTO mapCartEntityToDTO(Cart cart) {
+    public static CartDTO mapCartEntityToDTO(Cart cart) {
         return modelMapper.map(cart, CartDTO.class);
     }
 

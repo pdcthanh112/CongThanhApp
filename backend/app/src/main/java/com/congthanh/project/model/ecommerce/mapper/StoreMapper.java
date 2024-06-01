@@ -1,7 +1,7 @@
 package com.congthanh.project.model.ecommerce.mapper;
 
-import com.congthanh.project.dto.ecommerce.StoreDTO;
-import com.congthanh.project.entity.ecommerce.Store;
+import com.congthanh.project.dto.ecommerce.SupplierDTO;
+import com.congthanh.project.entity.ecommerce.Supplier;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,11 @@ public class StoreMapper {
 
     }
 
-    public Store mapStoreDTOToEntity(StoreDTO storeDTO) {
-        return modelMapper.map(storeDTO, Store.class);
+    public Supplier mapSupplierDTOToEntity(SupplierDTO supplierDTO) {
+        return modelMapper.map(supplierDTO, Supplier.class);
     }
 
-    public StoreDTO mapStoreEntityToDTO(Store store) {
-        return modelMapper.map(store, StoreDTO.class);
+    public SupplierDTO mapSupplierEntityToDTO(Supplier store) {
+        return modelMapper.map(store, SupplierDTO.class);
     }
 }

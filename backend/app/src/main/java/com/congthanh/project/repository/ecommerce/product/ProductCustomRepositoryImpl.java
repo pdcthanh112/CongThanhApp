@@ -1,17 +1,26 @@
 package com.congthanh.project.repository.ecommerce.product;
 
 import com.congthanh.project.entity.ecommerce.Product;
+import com.congthanh.project.entity.ecommerce.ProductImage;
+import com.congthanh.project.entity.ecommerce.ProductVariant;
 import com.congthanh.project.enums.ecommerce.OrderStatus;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Override
+    public Optional<Product> getProductDetailById(String productId) {
+        String sql = "SELECT p FROM Product p JOIN FETCH p.image JOIN FETCH p.variant JOIN FETCH p.variant JOIN FETCH p.attribute WHERE p.id = :productId";
+        TypedQuery<Product> query = entityManager.createQuery(sql, Product.class);
+        query.setParameter("productId", productId);
+        return Optional.ofNullable(query.getSingleResult());
+    }
 
     @Override
     public List<Product> searchProduct(String keyword) {
@@ -37,6 +46,33 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         query.setParameter("productId", productId);
         query.setParameter("status", OrderStatus.COMPLETED.name());
         return query.getSingleResult();
+    }
+
+    @Override
+    public List<Tuple> getProductAttributeValueByProductId(String productId) {
+       String sql = "SELECT product_attribute_value.id, product_attribute_value.value, product_attribute_value.product, product_attribute.name as attribute \n" +
+               "FROM product JOIN product_attribute_value ON product.id = product_attribute_value.product\n" +
+               "\t\t\tJOIN product_attribute ON product_attribute.id = product_attribute_value.attribute\n" +
+               "WHERE product.id = ?1";
+        Query query = entityManager.createNativeQuery(sql, Tuple.class);
+        query.setParameter(1, productId);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<ProductVariant> getVariantByProductId(String productId) {
+        String sql = "SELECT pv FROM ProductVariant pv WHERE pv.product.id = :productId";
+        TypedQuery<ProductVariant> query = entityManager.createQuery(sql, ProductVariant.class);
+        query.setParameter("productId", productId);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<ProductImage> getImageByProduct(String productId) {
+        String sql = "SELECT i FROM ProductImage i WHERE i.product.id = :productId ORDER BY isDefault DESC NULLS LAST";
+        TypedQuery<ProductImage> query = entityManager.createQuery(sql, ProductImage.class);
+        query.setParameter("productId", productId);
+        return query.getResultList();
     }
 
 }

@@ -3,21 +3,24 @@ package com.congthanh.project.entity.ecommerce;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Table(name = "product")
+@NamedEntityGraph(name = "Product.WithAll", attributeNodes = {
+        @NamedAttributeNode("image"),
+        @NamedAttributeNode("variant"),
+        @NamedAttributeNode("attribute")
+}, subgraphs = {})
 public class Product {
 
     @Id
@@ -35,19 +38,16 @@ public class Product {
     @JoinColumn(name = "subcategory", nullable = false)
     private Subcategory subcategory;
 
-    private int quantity;
-
-    @Column(name = "price", precision = 19, scale = 4)
-    private BigDecimal price;
-
     @Column(unique = true, name = "SKU")
     private String SKU;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store")
-    private Store store;
+    @JoinColumn(name = "supplier")
+    private Supplier supplier;
 
-    private String production;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand")
+    private Brand brand;
 
     @Column(columnDefinition = "text")
     private String description;
@@ -57,9 +57,23 @@ public class Product {
     @Column(nullable = false, unique = true)
     private String slug;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Set<AttributeValue> attributeValues;
+    @JsonBackReference
+    @ToString.Exclude
+    private Set<ProductImage> image;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @JsonBackReference
+    @ToString.Exclude
+    private Set<ProductAttributeValue> attribute;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @JsonBackReference
+    @ToString.Exclude
+    private Set<ProductVariant> variant;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

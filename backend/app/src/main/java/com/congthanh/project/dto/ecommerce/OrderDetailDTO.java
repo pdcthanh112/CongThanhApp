@@ -26,8 +26,8 @@ public class OrderDetailDTO {
 
     private String status;
 
-    public BigDecimal getTotal() {
-        return product.getPrice().multiply(BigDecimal.valueOf(quantity));
-    }
+//    public BigDecimal getTotal() {
+//        return product.getPrice().multiply(BigDecimal.valueOf(quantity));
+//    }
 
 }

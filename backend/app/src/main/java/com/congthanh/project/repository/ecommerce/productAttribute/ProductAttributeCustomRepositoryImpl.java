@@ -7,4 +7,6 @@ public class ProductAttributeCustomRepositoryImpl implements ProductAttributeCus
 
     @PersistenceContext
     private EntityManager entityManager;
+
+
 }

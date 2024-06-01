@@ -4,20 +4,20 @@ import com.congthanh.project.dto.ecommerce.CartItemDTO;
 import com.congthanh.project.entity.ecommerce.CartItem;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CartItemMapper {
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private static  final ModelMapper modelMapper = new ModelMapper();
 
-    @Autowired
-    private ProductMapper productMapper;
-
-    @Autowired
-    private CartMapper cartMapper;
+    static {
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT)
+                .setFieldMatchingEnabled(true)
+                .setSkipNullEnabled(true);
+    }
 
     @PostConstruct
     private void configureModelMapper() {

@@ -1,47 +1,61 @@
-//package com.congthanh.project.config;
-//
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import springfox.documentation.builders.PathSelectors;
-//import springfox.documentation.builders.RequestHandlerSelectors;
-//import springfox.documentation.service.ApiKey;
-//import springfox.documentation.service.AuthorizationScope;
-//import springfox.documentation.service.SecurityReference;
-//import springfox.documentation.spi.DocumentationType;
-//import springfox.documentation.spi.service.contexts.SecurityContext;
-//import springfox.documentation.spring.web.plugins.Docket;
-//import springfox.documentation.swagger2.annotations.EnableSwagger2;
-//
-//import java.util.Arrays;
-//import java.util.List;
-//
-//@Configuration
-//@EnableSwagger2
-//public class SwaggerConfig {
-//    @Bean
-//    public Docket api() {
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .securityContexts(Arrays.asList(securityContext()))
-//                .securitySchemes(Arrays.asList(apiKey()))
-//                .select()
-//                .apis(RequestHandlerSelectors.any())
-//                .paths(PathSelectors.any())
-//                .build();
-//    }
-//
-//    private ApiKey apiKey() {
-//        return new ApiKey("JWT", "Authorization", "header");
-//    }
-//
-//    private SecurityContext securityContext() {
-//        return SecurityContext.builder().securityReferences(defaultAuth()).build();
-//    }
-//
-//    private List<SecurityReference> defaultAuth() {
-//        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-//        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-//        authorizationScopes[0] = authorizationScope;
-//        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
-//    }
-//
-//}
+package com.congthanh.project.config;
+
+import java.util.List;
+
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.servers.Server;
+
+@Configuration
+public class SwaggerConfig {
+
+    @Value("${congthanhapp.openapi.dev-url}")
+    private String devUrl;
+
+    @Value("${congthanhapp.openapi.prod-url}")
+    private String prodUrl;
+
+    @Bean
+    public OpenAPI myOpenAPI() {
+        Server devServer = new Server();
+        devServer.setUrl(devUrl);
+        devServer.setDescription("Server URL in Development environment");
+
+        Server prodServer = new Server();
+        prodServer.setUrl(prodUrl);
+        prodServer.setDescription("Server URL in Production environment");
+
+        Contact contact = new Contact();
+        contact.setEmail("pdcthanh112.dev@gmail.com");
+        contact.setName("CongThanh");
+        contact.setUrl("https://www.pdcthanhdev.com");
+
+        License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
+
+        Info info = new Info()
+                .title("CongThanhApp API")
+                .version("1.0")
+                .contact(contact)
+                .description("This API exposes endpoints to manage CongThanhApp.").termsOfService("https://www.bezkoder.com/terms")
+                .license(mitLicense);
+
+        return new OpenAPI().info(info).servers(List.of(devServer, prodServer)).components(
+                new Components().addSecuritySchemes(
+                        "api",
+                        new SecurityScheme()
+                                .scheme("bearer")
+                                .type(SecurityScheme.Type.HTTP)
+                                .bearerFormat("jwt") //if it is your case
+                                .name("api")
+                )
+        );
+    }
+}

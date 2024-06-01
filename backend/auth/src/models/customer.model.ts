@@ -7,6 +7,7 @@ export class CustomerModel extends Model<Customer> implements Customer {
   accountId: string;
   name: string;
   phone: string;
+  phone_verified: boolean;
   address: string;
   dob: Date;
   gender: string;
@@ -46,6 +47,10 @@ export default function (sequelize: Sequelize): typeof CustomerModel {
       phone: {
         allowNull: false,
         type: DataTypes.STRING(20),
+      },
+      phone_verified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
       address: {
         allowNull: false,
