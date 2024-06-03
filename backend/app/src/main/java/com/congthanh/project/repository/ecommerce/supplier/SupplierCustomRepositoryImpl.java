@@ -27,5 +27,4 @@ public class SupplierCustomRepositoryImpl implements SupplierCustomRepository {
 
         return new PageImpl<>(query.getResultList(), pageable, totalProducts);
     }
-
 }

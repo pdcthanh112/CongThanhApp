@@ -1,14 +1,17 @@
-import axiosConfig from '@/config/axiosConfig';
+import axiosConfig from "@/config/axiosConfig";
+import { cache } from "react";
 
-export const getAllProduct = async (page?: number, limit?: number) => {
-  const url = page !== undefined && limit !== undefined ? `product/getAll?page=${page}&limit=${limit}` : 'product/getAll';
+export const getAllProduct = cache(async (page?: number, limit?: number) => {
+  const params = new URLSearchParams();
+  page && params.append("page", String(page));
+  limit && params.append("limit", String(limit));
   return await axiosConfig
-    .get(url)
+    .get("product/getAll")
     .then((response) => response.data)
     .catch((error) => {
       throw error;
     });
-};
+});
 
 export const getProductById = async (productId: string) => {
   return await axiosConfig

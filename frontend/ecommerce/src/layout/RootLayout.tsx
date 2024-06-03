@@ -2,14 +2,27 @@ import React from "react";
 import { LayoutProps } from "@/app/page";
 import AuthModal from "@/components/AuthModal";
 import { useAppSelector } from "@/redux/store";
+import { ToastContainer } from "react-toastify";
 
 const RootLayout = ({ children }: LayoutProps) => {
   const openModalAuth = useAppSelector((state) => state.modalAuth.isOpenModalAuth);
 
   return (
     <React.Fragment>
-      <div className="min-h-[calc(100vh-150px)]">{children}</div>
+      {children}
       {openModalAuth && <AuthModal />}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </React.Fragment>
   );
 };

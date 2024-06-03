@@ -74,7 +74,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO getProductById(String id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Product not found"));
-        System.out.println("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"+product.getImage().isEmpty());
         ProductDTO response = ProductMapper.mapProductEntityToDTO(product);
         return response;
     }

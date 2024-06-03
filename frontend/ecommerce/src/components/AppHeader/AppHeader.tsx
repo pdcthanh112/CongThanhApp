@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { logoutRequested } from '@/redux/actions/auth';
 import Link from 'next/link';
 import { Category, Customer, Notification } from '@/models/types';
-import { ThemeToggle } from '../ThemeToggle';
+import { ThemeToggle } from '../Theme/ThemeToggle';
 
 const AppHeader = () => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);

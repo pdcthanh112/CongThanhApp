@@ -1,19 +1,11 @@
 "use client";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProviders";
 import AppHeader from "@/components/AppHeader";
 import AppFooter from "@/components/AppFooter";
-import { ToastContainer } from "react-toastify";
 import AppNavbar from "@/components/AppNavbar";
 import RootLayout from "@/layout/RootLayout";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { SessionProvider } from "next-auth/react";
-import { Provider } from "react-redux";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { persistor, store } from "@/redux/store";
-import { PersistGate } from "redux-persist/integration/react";
-import { AppPropsWithLayout } from "./page";
+import Providers from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,47 +31,17 @@ type LayoutProps = {
 // };
 
 export default function Layout({ children }: Readonly<LayoutProps>) {
-// export default function Layout({ Component, pageProps: { session, ...pageProps }, router }: AppPropsWithLayout) {
-  const client = new ApolloClient({
-    uri: `${process.env.REACT_APP_API_URL}/graphql`,
-    cache: new InMemoryCache(),
-  });
-
-  const queryClient = new QueryClient();
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <SessionProvider session={null}>
-          <ApolloProvider client={client}>
-            <Provider store={store}>
-              <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
-                <QueryClientProvider client={queryClient}>
-                  <AppHeader />
-                  <AppNavbar />
-                  <RootLayout>{children}</RootLayout>
-                </QueryClientProvider>
-              </PersistGate>
-            </Provider>
-          </ApolloProvider>
-          </SessionProvider>
-
+        <Providers>
+          <AppHeader />
+          <AppNavbar />
+          <RootLayout>
+            <main className="min-h-[calc(100vh-270px)]">{children}</main>
+          </RootLayout>
           <AppFooter />
-        </ThemeProvider>
-
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+        </Providers>
       </body>
     </html>
   );
