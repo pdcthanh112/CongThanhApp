@@ -1,25 +1,16 @@
+'use client'
 import React, { useState } from 'react';
-import ManagementLayout from '@layout/ManagementLayout';
-import styled from 'styled-components';
+import ManagementLayout from '@/layout/ManagementLayout';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { ChangePasswordForm } from '@models/form';
+import { ChangePasswordForm } from '@/models/form';
 import { Icon } from '@mui/material';
 import { DoneAll, Lock, Password, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'next-i18next';
-import ValidatePassword from '@components/ValidatePassword';
+import ValidatePassword from '@/components/ValidatePassword';
 import { Spin, Tooltip } from 'antd';
-import { changePassword } from '@api/customerApi';
-import { Button } from '@components/UI';
+import { changePassword } from '@/api/customerApi';
 
-const InputField = styled.div`
-  border: 1px solid #b6b6b6;
-  padding: 0.5rem 0.2rem 0.5rem 0.4rem;
-  border-radius: 4px;
-  margin-top: 1rem;
-  position: relative;
-  width: 25rem;
-`;
 
 const ChangePassword = (): React.ReactElement => {
   const [showCurrentPassword, setShowCurrentPassword] = useState<boolean>(false);

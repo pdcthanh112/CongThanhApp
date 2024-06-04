@@ -25,3 +25,14 @@ export const getAuthLogo = (name: string) => {
       return { img: '', bgColor: '#fdafdsa', iconBg: '#fff' };
   }
 };
+
+export const formatCurrency = (number: number) => {
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  });
+
+  return formatter.format(number) as string;
+};

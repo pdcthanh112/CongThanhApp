@@ -1,6 +1,6 @@
 "use client";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import AppHeader from "@/components/AppHeader";
 import AppFooter from "@/components/AppFooter";
 import AppNavbar from "@/components/AppNavbar";

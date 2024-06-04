@@ -1,0 +1,35 @@
+name: CD
+
+on:
+  push:
+    tags: [v*.*.*]
+
+jobs:
+  tag-production:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set output
+        id: vars
+        run: echo "version=${GITHUB_SHA:0:7}" >> "$GITHUB_ENV"
+
+      - name: AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: "github-actions"
+          aws-region: "us-east-2"
+          role-duration-seconds: 900
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Pull Images
+        run: docker pull 036666651253.dkr.ecr.us-east-2.amazonaws.com/guglu:commit-${{ env.version }}
+
+      - name: Tag Production
+        run: docker tag 036666651253.dkr.ecr.us-east-2.amazonaws.com/guglu:commit-${{ env.version }} 036666651253.dkr.ecr.us-east-2.amazonaws.com/guglu:production
+
+      - name: Push Image
+        run: docker push 036666651253.dkr.ecr.us-east-2.amazonaws.com/guglu:production
