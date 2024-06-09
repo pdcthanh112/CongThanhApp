@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { CartItem, ProductImage } from '@/models/types';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { getDefaultImageByProductId } from '@/api/productApi';
 import DefaultImage from '@/assets/images/default-image.jpg';
 

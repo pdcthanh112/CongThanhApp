@@ -1,10 +1,10 @@
 import React from 'react';
-import { Customer } from '@models/type';
-import { useAppSelector } from '@redux/store';
+import { Customer } from '@/models/types';
+import { useAppSelector } from '@/redux/store';
 import Image from 'next/image';
-import DefaultImage from '@assets/images/default-image.jpg';
+import DefaultImage from '@/assets/images/default-image.jpg';
 import Link from 'next/link';
-import path from '@config/path';
+
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { Icon } from '@mui/material';

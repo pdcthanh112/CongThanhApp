@@ -4,7 +4,6 @@ import './AppHeader.scss';
 import Image from 'next/image';
 import { Card, Avatar, Icon } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import path from '@/config/path';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { Button } from '@/components/ui/button';
 import { signIn, signOut, useSession } from 'next-auth/react';
@@ -20,6 +19,7 @@ import { logoutRequested } from '@/redux/actions/auth';
 import Link from 'next/link';
 import { Category, Customer, Notification } from '@/models/types';
 import { ThemeToggle } from '../Theme/ThemeToggle';
+import { AUTH_PATH_URL, COMMON_URL } from '@/config/path';
 
 const AppHeader = () => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
@@ -43,7 +43,7 @@ const AppHeader = () => {
 
   return (
     <div className="flex items-center bg-slate-400 p-1 flex-grow py-2">
-      <Link href={path.home}>
+      <Link href={COMMON_URL.HOME}>
         <Image src={AppLogo} alt="App Logo" width={100} className="cursor-pointer mx-12" />
       </Link>
 
@@ -97,7 +97,7 @@ const AppHeader = () => {
             ) : (
               <div>
                 <div>{t('common.welcome')}</div>
-                <div className="font-semibold md:text-sm" onClick={() => router.push(path.login)}>
+                <div className="font-semibold md:text-sm" onClick={() => router.push(AUTH_PATH_URL.LOGIN)}>
                   {t('common.login')} or {t('common.signup')}
                 </div>
               </div>

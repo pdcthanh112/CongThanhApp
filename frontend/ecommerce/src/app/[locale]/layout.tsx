@@ -4,8 +4,8 @@ import "../globals.css";
 import AppHeader from "@/components/AppHeader";
 import AppFooter from "@/components/AppFooter";
 import AppNavbar from "@/components/AppNavbar";
-import RootLayout from "@/layout/RootLayout";
-import Providers from "./providers";
+import Providers from "../providers";
+import { RootLayout } from "@/layout";
 
 const inter = Inter({ subsets: ["latin"] });
 

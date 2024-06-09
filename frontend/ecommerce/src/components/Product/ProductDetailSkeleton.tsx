@@ -1,6 +1,6 @@
 import { Skeleton } from '@mui/material';
 
-export default function ProductSkeleton() {
+export default function ProductDetailSkeleton() {
   return (
     <div className="w-[80%] mx-auto">
       <div className="bg-white mt-3 flex">

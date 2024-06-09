@@ -1,54 +1,37 @@
 'use client';
 import { useRef, useState } from 'react';
-import { Metadata, NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { Metadata } from 'next';
+import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getAttributeByProductId, getImageByProductId, getProductBySlug, getSoldByProduct } from 'api/productApi';
 import { Rating, Icon, Avatar, TableContainer, Table, TableBody, TableRow, TableCell } from '@mui/material';
 import { Storefront, ForumOutlined } from '@mui/icons-material';
 import Image from 'next/image';
 import DefaultImage from '@assets/images/default-image.jpg';
-import { roundNumber } from '@utils/helper';
-import { Button } from '@components/UI';
-import ProductSkeleton from './product-skeleton';
+import { roundNumber } from '@/utils/helper';
+import { Button } from '@/components/ui';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
-import { useAddProductToWishlist, useRemoveProductFromWishlist } from '@hooks/wishlist/wishlistHook';
-import { useAppDispatch, useAppSelector } from '@redux/store';
-import { openModalAuth } from '@redux/features/modalAuth';
-import { HeartEmpty, HeartFull } from '@assets/icons';
+import { useAddProductToWishlist, useRemoveProductFromWishlist } from '@/hooks/wishlist/wishlistHook';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { openModalAuth } from '@/redux/features/modalAuth';
+import { HeartEmpty, HeartFull } from '@/assets/icons';
 import { toast } from 'react-toastify';
-import { useAddProductToCart } from '@hooks/cart/cartHook';
+import { useAddProductToCart } from '@/hooks/cart/cartHook';
 import { getWishlistByCustomer } from 'api/wishlistApi';
 import { getStoreById } from '@/api/supplierApi';
 import Link from 'next/link';
-import { getRatingStarofProduct } from 'api/reviewApi';
-import { AttributeValue, Customer, Product, ProductImage, Store, Wishlist } from '@models/type';
-import QuantitySelector from '@components/QuantitySelector/QuantitySelector';
+import { AttributeValue, Customer, Product, ProductImage, Store, Wishlist } from '@/models/types';
+import QuantitySelector from '@/components/QuantitySelector/QuantitySelector';
+import { PRODUCT_KEY, WISHLIST_KEY } from '@/utils/constants/queryKey';
+import ProductDetailSkeleton from '../ProductDetailSkeleton';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const product = await getProductBySlug(params.slug);
-  return {
-    title: 'product.title',
-    // title: product.title,
-    description: product.description,
-    openGraph: {
-      title: product.title,
-      description: product.description,
-      images: [
-        {
-          url: product.image,
-        },
-      ],
-    },
-  };
-}
-
-const ProductDetail: NextPage = (): React.ReactElement => {
+const ProductDetail = ({productData}: {productData: Product}) => {
 
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const router = useRouter();
-  const { slug: productSlug } = router.query;
+  const params = useParams()
+  const { slug: productSlug } = params;
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation('common');
@@ -69,38 +52,44 @@ const ProductDetail: NextPage = (): React.ReactElement => {
   const { mutate: addProductToWishlist } = useAddProductToWishlist();
   const { mutate: removeProductFromWishlist } = useRemoveProductFromWishlist();
 
-  const { data: product, isLoading } = useQuery(['product'], async () => await getProductBySlug(productSlug as string).then((result) => result.data), {
-    onSuccess: async (data) => {
-      await getRatingStarofProduct(data.id).then((response) => {
-        if (response && response.data) {
-          setRatingStar(response.data);
-        }
-      });
-      await getStoreById(data.store).then((response) => {
-        if (response && response.data) {
-          setStore(response.data);
-        }
-      });
-      await getAttributeByProductId(data.id).then((response) => {
-        if (response && response.data) {
-          setProductAttribute(response.data);
-        }
-      });
-      await getImageByProductId(data.id).then((response) => {
-        if (response && response.data) {
-          setProductImage(response.data);
-          setCurrentImage(response.data.find((image: ProductImage) => image.isDefault === true));
-        }
-      });
-      await getSoldByProduct(data.id).then((response) => {
-        if (response && response.data) {
-          setSold(response.data);
-        }
-      });
-    },
-  });
+//   const { data: product, isLoading } = useQuery({
+//     queryKey: [PRODUCT_KEY, productSlug],
+//     queryFn: async () => await getProductBySlug(productSlug as string).then(async(result) => {
+//           await getRatingStarofProduct(result.id).then((response) => {
+//             if (response && response.data) {
+//               setRatingStar(response.data);
+//             }
+//           });
+//           await getStoreById(result.store).then((response) => {
+//             if (response && response.data) {
+//               setStore(response.data);
+//             }
+//           });
+//           await getAttributeByProductId(result.id).then((response) => {
+//             if (response && response.data) {
+//               setProductAttribute(response.data);
+//             }
+//           });
+//           await getImageByProductId(result.id).then((response) => {
+//             if (response && response.data) {
+//               setProductImage(response.data);
+//               setCurrentImage(response.data.find((image: ProductImage) => image.isDefault === true));
+//             }
+//           });
+//           await getSoldByProduct(result.id).then((response) => {
+//             if (response && response.data) {
+//               setSold(response.data);
+//             }
+//           });
+//           return result.data
+//         },
+//    )
+// });
 
-  const { data: wishlist } = useQuery<Wishlist>(['wishlist'], async () => await getWishlistByCustomer(currentUser.userInfo.accountId).then((result) => result.data));
+  const { data: wishlist } = useQuery<Wishlist>({
+    queryKey: [WISHLIST_KEY], 
+    queryFn: async () => await getWishlistByCustomer(currentUser.userInfo.accountId).then((result) => result.data)
+  });
 
   const handleAddProductToCart = () => {
     if (currentUser) {
@@ -201,7 +190,7 @@ const ProductDetail: NextPage = (): React.ReactElement => {
     }
   };
 
-  if (isLoading) return <ProductSkeleton />;
+  if (isLoading) return <ProductDetailSkeleton />;
 
   return (
     <div className="w-[80%] mx-auto my-3">
@@ -210,7 +199,7 @@ const ProductDetail: NextPage = (): React.ReactElement => {
           <div className="relative w-full pt-[100%] shadow cursor-zoom-in overflow-hidden" onMouseLeave={handleRemoveZoom} onMouseMove={handleZoom}>
             <Image
               src={currentImage?.imagePath || DefaultImage}
-              alt={currentImage?.alt || product.name}
+              alt={currentImage?.alt || productData.name}
               width={300}
               height={300}
               ref={imageRef}
@@ -234,7 +223,7 @@ const ProductDetail: NextPage = (): React.ReactElement => {
                 <div key={img.id} className="relative w-full pt-[100%]" onClick={() => setCurrentImage(img)}>
                   <Image
                     src={img.imagePath}
-                    alt={img.alt || product.name}
+                    alt={img.alt || productData.name}
                     width={50}
                     height={50}
                     className={`cursor-pointer absolute top-0 left-0 h-full w-full bg-white object-cover ${isActive && 'border-2 border-red-400'}`}
@@ -245,7 +234,7 @@ const ProductDetail: NextPage = (): React.ReactElement => {
           </div>
         </div>
         <div className="w-[60%] ml-5 p-3">
-          <h1 className="font-medium text-2xl bg-gray-200 px-3 py-2 mb-3">{product.name}</h1>
+          <h1 className="font-medium text-2xl bg-gray-200 px-3 py-2 mb-3">{productData.name}</h1>
           <div className="flex justify-between my-3">
             <div className="flex items-center">
               <span className="mr-1">{ratingStar.value.toFixed(1)}</span>
@@ -274,11 +263,11 @@ const ProductDetail: NextPage = (): React.ReactElement => {
           <div className="font-semibold text-3xl text-yellow-400">{product.price}</div>
           <div className="flex mt-10">
             <span className="flex items-center mr-10">{t('product.Quantity')}</span>
-            <QuantitySelector value={quantity} max={product.quantity} onDecrease={setQuantity} onIncrease={setQuantity} onType={setQuantity} />
+            <QuantitySelector value={quantity} max={productData.quantity} onDecrease={setQuantity} onIncrease={setQuantity} onType={setQuantity} />
             <span className="flex items-center ml-10">
-              {product.quantity > 0 ? (
+              {productData.quantity > 0 ? (
                 <p>
-                  {product.quantity} {t('common.available')}
+                  {productData.quantity} {t('common.available')}
                 </p>
               ) : (
                 <p>{t('common.sold_out')}</p>
@@ -343,7 +332,7 @@ const ProductDetail: NextPage = (): React.ReactElement => {
       </div>
       <div className="bg-white mt-10 p-5">
         <h2 className="bg-yellow-100 px-2 py-1 rounded-sm">{t('product.product_description').toUpperCase()}</h2>
-        <div className="">{product.description}</div>
+        <div className="">{productData.description}</div>
       </div>
     </div>
   );
@@ -358,13 +347,3 @@ const AddToCartIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default ProductDetail;
-
-export async function getServerSideProps({ locale, params }: any) {
-  // const product = await getProductBySlug(params.slug).then(response => response.data);
-  return {
-    props: {
-      // product,
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  };
-}

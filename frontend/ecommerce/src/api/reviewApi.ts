@@ -1,8 +1,8 @@
-import axiosConfig from '@/config/axiosConfig';
+import axiosConfig from "@/config/axiosConfig";
 
-export const getRatingStarofProduct = async (productId: string) => {
+export const getStatisticFromProduct = async (productId: string) => {
   return await axiosConfig
-    .get(`review/getRatingStar?product=${productId}`)
+    .get(`review/statistic?product=${productId}`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
