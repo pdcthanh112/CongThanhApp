@@ -51,8 +51,8 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
     @Override
     public List<Tuple> getProductAttributeValueByProductId(String productId) {
        String sql = "SELECT product_attribute_value.id, product_attribute_value.value, product_attribute_value.product, product_attribute.name as attribute \n" +
-               "FROM product JOIN product_attribute_value ON product.id = product_attribute_value.product\n" +
-               "\t\t\tJOIN product_attribute ON product_attribute.id = product_attribute_value.attribute\n" +
+               "FROM product JOIN product_attribute_value ON product.id = product_attribute_value.product" +
+               "JOIN product_attribute ON product_attribute.id = product_attribute_value.attribute" +
                "WHERE product.id = ?1";
         Query query = entityManager.createNativeQuery(sql, Tuple.class);
         query.setParameter(1, productId);

@@ -1,6 +1,7 @@
 package com.congthanh.project.repository.ecommerce.review;
 
-import com.congthanh.project.model.ecommerce.request.RatingStarRequest;
+import com.congthanh.project.model.ecommerce.response.StatisticReviewResponse;
+import jakarta.persistence.Tuple;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +9,6 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public interface ReviewCustomRepository {
 
-    RatingStarRequest getReviewStatsFromProduct(String productId);
+    StatisticReviewResponse getStatisticReviewFromProduct(String productId);
+
 }

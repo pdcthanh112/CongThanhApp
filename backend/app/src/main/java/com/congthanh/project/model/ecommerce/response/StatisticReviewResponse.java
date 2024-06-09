@@ -1,14 +1,30 @@
 package com.congthanh.project.model.ecommerce.response;
 
-import com.congthanh.project.dto.ecommerce.ReviewDTO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-public class StatisticReviewReponse {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class StatisticReviewResponse {
 
     private int totalReview;
 
-    private int averageRating;
+    private float averageRating;
 
-    
+    private int reviewWithRating5;
+
+    private int reviewWithRating4;
+
+    private int reviewWithRating3;
+
+    private int reviewWithRating2;
+
+    private int reviewWithRating1;
+
+    private int reviewWithMedia;
+
 }

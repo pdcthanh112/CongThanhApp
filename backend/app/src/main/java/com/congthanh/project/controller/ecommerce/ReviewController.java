@@ -2,9 +2,10 @@ package com.congthanh.project.controller.ecommerce;
 
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.ecommerce.ReviewDTO;
-import com.congthanh.project.model.ecommerce.request.RatingStarRequest;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.entity.ecommerce.Review;
+import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
+import com.congthanh.project.model.ecommerce.response.StatisticReviewResponse;
 import com.congthanh.project.service.ecommerce.ReviewService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
+
     @PostMapping("/create")
     public ResponseEntity<Response<Review>> createReview(@RequestBody ReviewDTO reviewDTO) {
         Review review = reviewService.createReview(reviewDTO);
@@ -29,11 +31,21 @@ public class ReviewController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/getRatingStar")
-    public ResponseEntity<Response<RatingStarRequest>> getRatingStarOfProduct(@RequestParam("product") String productId) {
-        RatingStarRequest rating = reviewService.getRatingStarOfProduct(productId);
-        Response<RatingStarRequest> response = new Response<>();
-        response.setData(rating);
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<Response<ResponseWithPagination<ReviewDTO>>> getReviewByProductId(@PathVariable("productId") String productId,  @RequestParam(defaultValue = "All") String filterRequest, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int limit) {
+        ResponseWithPagination<ReviewDTO> data = reviewService.getReviewByProductId(productId, page, limit);
+        Response<ResponseWithPagination<ReviewDTO>> response = new Response<>();
+        response.setData(data);
+        response.setMessage("Get successfully");
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/statistic")
+    public ResponseEntity<Response<StatisticReviewResponse>> getRatingStarOfProduct(@RequestParam("product") String productId) {
+        StatisticReviewResponse data = reviewService.getReviewStatisticOfProduct(productId);
+        Response<StatisticReviewResponse> response = new Response<>();
+        response.setData(data);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
         response.setMessage("Get rating star successfully");
         return ResponseEntity.ok().body(response);

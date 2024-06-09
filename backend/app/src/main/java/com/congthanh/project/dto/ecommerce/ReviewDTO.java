@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +22,7 @@ public class ReviewDTO {
 
     @Min(0)
     @Max(5)
-    private float rating;
+    private int rating;
 
     @NotNull
     private String customerId;
@@ -28,6 +30,10 @@ public class ReviewDTO {
     @NotNull
     private String product;
 
-    private long createdDate;
+    private String variant;
+
+    private List<ReviewMediaDTO> reviewMedia;
+
+    private long createdAt;
 
 }

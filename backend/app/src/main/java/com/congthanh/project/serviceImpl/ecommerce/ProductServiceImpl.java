@@ -47,8 +47,9 @@ public class ProductServiceImpl implements ProductService {
         if (page != null & limit != null) {
             Pageable pageable = PageRequest.of(page, limit);
             Page<Product> result = productRepository.findAll(pageable);
-            ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
+
             if (result.hasContent()) {
+                ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
                 List<ProductDTO> list = new ArrayList<>();
                 for (Product product : result.getContent()) {
                     ProductDTO productDTO = productMapper.mapProductEntityToDTO(product);
@@ -56,10 +57,11 @@ public class ProductServiceImpl implements ProductService {
                 }
                 response.setResponseList(list);
                 response.setTotalPage(result.getTotalPages());
+                return response;
             } else {
                 throw new RuntimeException("List empty exception");
             }
-            return response;
+
         } else {
             List<Product> list = productRepository.findAll();
             List<ProductDTO> result = new ArrayList<>();
