@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { LayoutProps } from "@/app/[locale]/page";
 import AuthModal from "@/components/AuthModal";

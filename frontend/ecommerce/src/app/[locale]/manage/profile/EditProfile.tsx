@@ -46,7 +46,7 @@ const EditProfile = ({ isOpen, handleOpen }: PropsType) => {
   const [isChangePhone, setIsChangePhone] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const { register, setValue, watch, handleSubmit, formState, getValues } = useForm<EditProfileForm>();
   const onSubmit: SubmitHandler<EditProfileForm> = (data) => {

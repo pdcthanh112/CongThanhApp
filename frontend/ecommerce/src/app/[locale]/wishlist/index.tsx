@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Customer, Product } from '@models/type';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
 import { getWishlistByCustomer } from 'api/wishlistApi';
 import EmptyWishlistImage from '@assets/images/empty_wishlist.png';
@@ -13,7 +13,7 @@ import WishlistItem from './WishlistItem';
 
 const Wishlist: NextPage = (): React.ReactElement => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const { data: wishlist, isLoading } = useQuery(['wishlist'], async () => await getWishlistByCustomer(currentUser.userInfo.accountId).then((response) => response.data));
 
@@ -57,7 +57,7 @@ export default Wishlist;
 
 const EmptyWishlist = () => {
   const router = useRouter();
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
   return (
     <div style={{ width: '250%' }}>
       <div className="flex justify-center">

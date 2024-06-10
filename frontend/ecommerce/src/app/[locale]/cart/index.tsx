@@ -9,7 +9,7 @@ import { useAppSelector } from '@redux/store';
 import { useRouter } from 'next/router';
 import { Cart, Customer } from '@models/type';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import CartEmptyImage from '@assets/images/cart-empty-image.png';
 import Image from 'next/image';
 import { Popconfirm } from 'antd';
@@ -19,7 +19,7 @@ import { toast } from 'react-toastify';
 const Cart: NextPage = (): React.ReactElement => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const router = useRouter();
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const { mutate: deleteCart } = useDeleteCart();
 

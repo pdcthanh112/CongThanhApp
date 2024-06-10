@@ -5,7 +5,7 @@ import Image from 'next/image';
 import DefaultImage from '@/assets/images/default-image.jpg';
 import Link from 'next/link';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { Icon } from '@mui/material';
 import { AccountBox, ShoppingCart, Favorite, Lock, AddCard, LocationOn } from '@mui/icons-material';
@@ -21,7 +21,7 @@ const ManageNavbar = () => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const router = useRouter();
   const { pathname } = router;
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const NavBarItem = ({ name, icon, url, className }: NavBarItemProps) => (
     // <Card className={`px-3 py-4 rounded mb-2 hover:bg-blue-200  ${pathname === url && 'bg-blue-200'} ${className}`} sx={{backgroundColor: pathname === url ? '#4d4dff' : '#fff'}}>

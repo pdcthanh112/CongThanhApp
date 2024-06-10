@@ -11,7 +11,7 @@ import DefaultImage from '@assets/images/default-image.jpg';
 import { roundNumber } from '@/utils/helper';
 import { Button } from '@/components/ui';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { useAddProductToWishlist, useRemoveProductFromWishlist } from '@/hooks/wishlist/wishlistHook';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { openModalAuth } from '@/redux/features/modalAuth';
@@ -34,7 +34,7 @@ const ProductDetail = ({productData}: {productData: Product}) => {
   const { slug: productSlug } = params;
 
   const dispatch = useAppDispatch();
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const [quantity, setQuantity] = useState(1);
   const [ratingStar, setRatingStar] = useState<{ vote: number; value: number }>({ vote: 0, value: 0.0 });

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { roundNumber } from '@utils/helper';
 import { ShoppingCart, Source } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '@redux/store';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
 import { openModalAuth } from '@redux/features/modalAuth';
 import { toast } from 'react-toastify';
@@ -25,7 +25,7 @@ interface ProductProps {
 const ProductItemCard = ({ product }: ProductProps) => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const router = useRouter();
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
   const dispatch = useAppDispatch();
 
   const [ratingStar, setRatingStar] = useState<{ vote: number; value: number }>({ vote: 0, value: 0.0 });

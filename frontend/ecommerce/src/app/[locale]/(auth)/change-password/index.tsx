@@ -6,7 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { ChangePasswordForm } from '@/models/form';
 import { Icon } from '@mui/material';
 import { DoneAll, Lock, Password, Visibility, VisibilityOff } from '@mui/icons-material';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import ValidatePassword from '@/components/ValidatePassword';
 import { Spin, Tooltip } from 'antd';
 import { changePassword } from '@/api/customerApi';
@@ -21,7 +21,7 @@ const ChangePassword = (): React.ReactElement => {
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const { register, handleSubmit, formState, setError } = useForm<ChangePasswordForm>();
   const onSubmit: SubmitHandler<ChangePasswordForm> = (data) => {

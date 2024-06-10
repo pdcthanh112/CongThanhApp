@@ -11,7 +11,7 @@ type PropsType = {
 
 const ValidatePassword = ({ password }: PropsType) => {
 
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   return (
     <React.Fragment>

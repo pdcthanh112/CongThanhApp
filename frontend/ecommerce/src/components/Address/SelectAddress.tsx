@@ -11,7 +11,7 @@ import { Address } from '@models/type';
 import { CreateAddressForm, UpdateAddressForm } from '@models/form';
 import { useCreateAddress, useUpdateAddress } from '@hooks/address/addressHook';
 import { SubmitHandler } from 'react-hook-form';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 type PropsType = {
   isOpen: boolean;
@@ -28,7 +28,7 @@ const SelectAddress = ({ isOpen, handleOpen, changeAddress }: PropsType) => {
   const { mutate: createAddress } = useCreateAddress();
   const { mutate: updateAddress } = useUpdateAddress();
 
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
   const { data: listAddress } = useQuery({
     queryKey: ['address'],
     queryFn: async () => await getAddressByCustomer(currentUser.userInfo.accountId).then((response) => response.data),

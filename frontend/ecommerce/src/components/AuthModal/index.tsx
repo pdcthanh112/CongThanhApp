@@ -10,7 +10,7 @@ import { Visibility, VisibilityOff, Close, Email as EmailIcon, Lock as LockIcon,
 import { loginRequested } from '@/redux/actions/auth';
 import AppLogo from '@/assets/images/app-logo.png';
 import { closeModalAuth } from '@/redux/features/modalAuth';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { getAuthLogo } from '@/utils/helper';
 import { signIn } from 'next-auth/react';
 import { LoginForm, SignupForm } from '@/models/form';
@@ -35,7 +35,7 @@ const InputComponent: React.FC<InputComponentProps> = (element) => {
 
 const AuthModal = () => {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
   const providers = [
     { id: 'google', name: 'Google' },
     { id: 'facebook', name: 'Facebook' },

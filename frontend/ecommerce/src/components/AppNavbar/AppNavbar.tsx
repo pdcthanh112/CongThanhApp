@@ -1,13 +1,13 @@
 'use client'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import AppSidebar from '@/components/AppSidebar';
 import { Icon } from '@mui/material';
 import { Menu as MenuIcon, Close as CloseIcon } from '@mui/icons-material';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 const AppNavbar = () => {
-  const { t } = useTranslation('common');
+  const t  = useTranslations('common');
   const [showSidebar, setShowSidebar] = useState(false);
 
   const navbarItems = [
@@ -18,7 +18,7 @@ const AppNavbar = () => {
   ];
 
   return (
-    <>
+    <React.Fragment>
       <div className="flex items-center bg-blue-300 text-white space-x-6 p-2 pl-6">
         <p className="hover:cursor-pointer" onClick={() => setShowSidebar(!showSidebar)}>
           <MenuIcon className="h-6 mr-1" />
@@ -38,7 +38,7 @@ const AppNavbar = () => {
           </div>
         </div>
       )}
-    </>
+    </React.Fragment>
   );
 };
 

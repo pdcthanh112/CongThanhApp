@@ -5,7 +5,7 @@ import { Address } from '@models/type';
 import styled from 'styled-components';
 import { Autocomplete, TextField } from '@mui/material';
 import countryData from '../../../public/data/country.json';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { UpdateAddressForm } from '@models/form';
 
 type InputComponentProps = {
@@ -40,7 +40,7 @@ type PropsType = {
 
 const TabEditAddress = ({ address, onBack, handleUpdate }: PropsType) => {
 
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const { register, handleSubmit, formState, setValue } = useForm<UpdateAddressForm>();
 

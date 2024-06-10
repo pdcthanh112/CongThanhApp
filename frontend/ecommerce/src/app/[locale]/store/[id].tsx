@@ -11,13 +11,13 @@ import { Avatar, Icon } from '@mui/material';
 import Button from '@components/UI/Button';
 import { Add, ForumOutlined } from '@mui/icons-material';
 import { Tabs, type TabsProps } from 'antd';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 const Store: NextPage = (): React.ReactElement => {
   const router = useRouter();
   const { id: storeId } = router.query;
 
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const [pagination, setPagination] = useState<PaginationParams>({ page: 1, limit: 10, totalPage: 0 });
 

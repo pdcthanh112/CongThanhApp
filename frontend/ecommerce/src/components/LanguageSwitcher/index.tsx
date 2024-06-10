@@ -1,28 +1,29 @@
+'use client'
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import LanguageData from "../../../public/data/languages.json";
 import USFlag from "@/assets/icons/us-flag.png";
-import VNFlag from "@/assets/icons/vn-flag.png";
-import CNFlag from "@/assets/icons/china-flag.png";
-import ESFlag from "@/assets/icons/spain-flag.png";
-import FRFlag from "@/assets/icons/france-flag.png";
-import DEFlag from "@/assets/icons/germany-flag.png";
-import ITFlag from "@/assets/icons/italy-flag.png";
-import KRFlag from "@/assets/icons/korea-flag.png";
-import RUFlag from "@/assets/icons/russia-flag.png";
+
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import { useLocale } from "next-intl";
+import { Locale } from "@/lib/locales";
 
 export default function ChangeLanguage() {
   const router = useRouter();
+  const locale = useLocale() as Locale;
+
+  function handleLocaleChange(newLocale: string): void {
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+    router.refresh();
+  }
 
   return (
     <React.Fragment>
@@ -43,7 +44,8 @@ export default function ChangeLanguage() {
               {LanguageData.map((item) => (
                 <div
                   key={item.code}
-                  className="col-span-2 hover:bg-gray-200 rounded-sm truncate px-3 py-4 hover:cursor-pointer"
+                  className={`col-span-2 hover:bg-gray-200 rounded-sm truncate px-3 py-4 hover:cursor-pointer ${locale === item.code && 'bg-red-300'}`}
+                  onClick={() => handleLocaleChange(item.code)}
                 >
                   <div>{item.language.name}</div>
                   <div className="font-light text-sm">{item.language.nativeName}</div>

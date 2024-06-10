@@ -14,12 +14,11 @@ import CartModal from '@/components/CartModal';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import NotificationModal from '@/components/NotificationModal';
 import { NotificationIcon } from '@/assets/icons';
-import { useTranslation } from 'react-i18next';
 import { logoutRequested } from '@/redux/actions/auth';
 import Link from 'next/link';
 import { Category, Customer, Notification } from '@/models/types';
 import { ThemeToggle } from '../Theme/ThemeToggle';
-import { AUTH_PATH_URL, COMMON_URL } from '@/config/path';
+import { PATH } from '@/config/path';
 
 const AppHeader = () => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
@@ -27,7 +26,7 @@ const AppHeader = () => {
   const listNotification: Notification[] = useAppSelector((state) => state.notification.data);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { t } = useTranslation('common');
+  // const t = useTranslations('common');
   const { data: session } = useSession();
 
   const [showNotification, setShowNotification] = useState(false);
@@ -43,14 +42,14 @@ const AppHeader = () => {
 
   return (
     <div className="flex items-center bg-slate-400 p-1 flex-grow py-2">
-      <Link href={COMMON_URL.HOME}>
+      <Link href={PATH.HOME}>
         <Image src={AppLogo} alt="App Logo" width={100} className="cursor-pointer mx-12" />
       </Link>
 
       <div className="hidden sm:flex items-center h-10 rounded-md flex-grow cursor-pointer">
         <span className="bg-gray-300 h-[2.5rem] w-20 rounded-l-md flex justify-center items-center relative group">
           <span className="">
-            {t('common.all')}
+            {/* {t('common.all')} */}aaaaaa
             <ArrowDropDownOutlined />
           </span>
 
@@ -90,16 +89,16 @@ const AppHeader = () => {
             {session || currentUser ? (
               <div>
                 <div>
-                  {t('common.hello')}, {currentUser.userInfo.name.split(' ').pop()}
+                  {/* {t('common.hello')}, {currentUser.userInfo.name.split(' ').pop()} */}
                 </div>
-                <div className="font-semibold md:text-sm">{t('header.account_and_info')}</div>
+                {/* <div className="font-semibold md:text-sm">{t('header.account_and_info')}</div> */}
               </div>
             ) : (
               <div>
-                <div>{t('common.welcome')}</div>
-                <div className="font-semibold md:text-sm" onClick={() => router.push(AUTH_PATH_URL.LOGIN)}>
+                {/* <div>{t('common.welcome')}</div>
+                <div className="font-semibold md:text-sm" onClick={() => router.push(PATH.AUTH_PATH_URL.LOGIN)}>
                   {t('common.login')} or {t('common.signup')}
-                </div>
+                </div> */}
               </div>
             )}
           </div>
@@ -111,31 +110,31 @@ const AppHeader = () => {
                     <Avatar src={currentUser.userInfo.image || String(DefaultImage)} />
                     <span className="font-medium text-lg ml-3">{currentUser.userInfo.name}</span>
                   </span>
-                  <Link href={path.profile} className="flex items-center hover:cursor-pointer hover:underline hover:text-yellow-600">
-                    {t('common.manage_profile')}
+                  <Link href={PATH.MANAGE_PATH_URL.PROFILE} className="flex items-center hover:cursor-pointer hover:underline hover:text-yellow-600">
+                    {/* {t('common.manage_profile')} */}
                     <Icon component={NavigateNext} />
                   </Link>
                 </div>
                 <div className="flex">
                   <div className="w-1/2">
-                    <h3 className="font-semibold text-base">{t('header.your_shopping')}</h3>
+                    {/* <h3 className="font-semibold text-base">{t('header.your_shopping')}</h3> */}
                     <menu className="leading-6">
-                      <MenuItem name={t('header.view_your_cart')} url={path.cart} />
-                      <MenuItem name={t('header.orders')} url={path.order} />
-                      <MenuItem name={t('header.wishlist')} url={path.wishlist} />
-                      <MenuItem name={t('header.history')} url={path.history} />
+                      {/* <MenuItem name={t('header.view_your_cart')} url={PATH.CART} />
+                      <MenuItem name={t('header.orders')} url={PATH.ORDER} />
+                      <MenuItem name={t('header.wishlist')} url={PATH.WISHLIST} />
+                      <MenuItem name={t('header.history')} url={PATH.HISTORY} /> */}
                     </menu>
                   </div>
                   <div className="w-1/2 border-l-2 border-l-gray-100 pl-4">
-                    <h3 className="font-semibold text-base">{t('header.your_account')}</h3>
+                    {/* <h3 className="font-semibold text-base">{t('header.your_account')}</h3> */}
                     <menu className="leading-6">
-                      <MenuItem name={t('header.account')} url={path.account} />
-                      <MenuItem name={t('header.recommendations')} url={path.home} />
-                      <MenuItem name={t('header.browsing_history')} url={path.home} />
-                      <MenuItem name={t('header.watchlist')} url={path.home} />
+                      {/* <MenuItem name={t('header.account')} url={PATH.MANAGE_PATH_URL.ACCOUNT} />
+                      <MenuItem name={t('header.recommendations')} url={"#"} />
+                      <MenuItem name={t('header.browsing_history')} url={'#'} />
+                      <MenuItem name={t('header.watchlist')} url={'#'} /> */}
                     </menu>
                     <Button className="bg-yellow-400 w-52 rounded-xl" onClick={() => handleLogout()}>
-                      {t('common.logout')}
+                      {/* {t('common.logout')} */}
                     </Button>
                   </div>
                 </div>

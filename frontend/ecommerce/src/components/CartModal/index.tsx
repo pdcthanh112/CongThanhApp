@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import Image from 'next/image';
 import { Checkbox, Popconfirm } from 'antd';
 import CartEmptyImage from '@/assets/images/cart-empty-image.png';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { useCreateNewCart, useDeleteCart } from '@/hooks/cart/cartHook';
 import Link from 'next/link';
 import { CreateCartForm } from '@/models/form';
@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation';
 import { CART_KEY } from '@/utils/constants/queryKey';
 
 const CartModal = () => {
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
   const router = useRouter();
 
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);

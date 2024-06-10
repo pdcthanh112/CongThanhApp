@@ -5,7 +5,7 @@ import { Avatar, Icon } from '@mui/material';
 import { useAppSelector } from '@/redux/store';
 import { ArrowBack as ArrowBackIcon, ArrowForwardIos as ArrowForwardIosIcon } from '@mui/icons-material';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { Category, Customer, Subcategory } from '@/models/types';
 
 const AppSidebar = () => {
@@ -13,7 +13,7 @@ const AppSidebar = () => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const category: Category[] = useAppSelector((state) => state.category.data);
   const subcategory: Subcategory[] = useAppSelector((state) => state.subcategory.data);
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
   const [showSubSidebar, setShowSubSidebar] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [listSubcategory, setListSubcategory] = useState<Subcategory[]>([]);

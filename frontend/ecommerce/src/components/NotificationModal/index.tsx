@@ -3,14 +3,14 @@ import { useQuery } from '@tanstack/react-query';
 import { getNotificationByCustomer } from 'api/notificationApi';
 import Link from 'next/link';
 import moment from 'moment';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import DefaultImage from '@/assets/images/default-image.jpg';
 import { Customer, Notification } from '@/models/types';
 
 export default function NotificationModal() {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const { data: listNotification, isLoading } = useQuery(
     ['listNotification'],

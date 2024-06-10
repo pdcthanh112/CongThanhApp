@@ -5,7 +5,7 @@ import { TableRow, TableCell, Icon } from '@mui/material';
 import DefaultImage from '@assets/images/default-image.jpg';
 import { useRouter } from 'next/router';
 import { Popconfirm } from 'antd';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { Button } from '@components/UI';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import { useRemoveProductFromWishlist } from '@hooks/wishlist/wishlistHook';
@@ -22,7 +22,7 @@ const WishlistItem = ({ item }: PropsType) => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
 
   const router = useRouter();
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const [image, setImage] = useState<ProductImage>();
 

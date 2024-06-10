@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ManagementLayout from '@layout/ManagementLayout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { Customer } from '@models/type';
 import { useAppSelector } from '@redux/store';
 import Image from 'next/image';
@@ -30,7 +30,7 @@ const Profile = (): React.ReactElement => {
 
   const [isOpenModalEdit, setIsOpenModalEdit] = useState<boolean>(false);
 
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
   return (
     <React.Fragment>
       <div className="px-3 py-2">

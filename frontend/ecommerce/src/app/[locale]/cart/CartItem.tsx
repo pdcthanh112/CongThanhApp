@@ -6,7 +6,7 @@ import { useDeleteCartItem, useUpdateCartItem } from '@hooks/cart/cartHook';
 import { Popconfirm } from 'antd';
 import Link from 'next/link';
 import { CartItem, ProductImage } from '@models/type';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { getDefaultImageByProductId } from 'api/productApi';
 import QuantitySelector from '@components/QuantitySelector';
@@ -17,7 +17,7 @@ interface CartItemProps {
 
 const CartItem = ({ item }: CartItemProps): React.ReactElement => {
 
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const [image, setImage] = useState<ProductImage>();
 

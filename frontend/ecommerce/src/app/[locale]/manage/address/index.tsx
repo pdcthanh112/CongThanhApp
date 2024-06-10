@@ -16,7 +16,7 @@ import AddressSkeleton from './AddressSkeleton';
 import TabEditAddress from '@components/Address/TabEditAddress';
 import { CreateAddressForm, UpdateAddressForm } from '@models/form';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 const AddressPage = (): React.ReactElement => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
@@ -27,7 +27,7 @@ const AddressPage = (): React.ReactElement => {
   const { mutate: updateAddress } = useUpdateAddress();
   const { mutate: deleteAddress } = useDeleteAddress();
 
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const { data: listAddress, isLoading } = useQuery({
     queryKey: ['address'],
