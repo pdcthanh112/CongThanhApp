@@ -1,12 +1,9 @@
 "use client";
 import React from "react";
 import { LayoutProps } from "./[locale]/page";
-import { ThemeProvider } from "@/components/Theme/ThemeProviders";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { SessionProvider } from "next-auth/react";
-import { Provider } from "react-redux";
-import { ReactQueryProvider, ReduxStoreProvider } from "@/config/providers";
-import { I18nConfigProvider } from "@/config/providers/I18nConfigProvider";
+import { ReactQueryProvider, ReduxStoreProvider, ThemeProvider } from "@/config/providers";
 
 const Providers = ({ children }: Readonly<LayoutProps>) => {
   const graphClient = new ApolloClient({

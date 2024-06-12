@@ -3,6 +3,7 @@ package com.congthanh.project.serviceImpl.ecommerce;
 import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.dto.ecommerce.ProductDTO;
 import com.congthanh.project.entity.ecommerce.*;
+import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.ProductMapper;
@@ -37,9 +38,6 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private SupplierRepository supplierRepository;
 
-    @Autowired
-    private ProductMapper productMapper;
-
     private final Helper helper = new Helper();
 
     @Override
@@ -52,11 +50,18 @@ public class ProductServiceImpl implements ProductService {
                 ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
                 List<ProductDTO> list = new ArrayList<>();
                 for (Product product : result.getContent()) {
-                    ProductDTO productDTO = productMapper.mapProductEntityToDTO(product);
+                    ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
                     list.add(productDTO);
                 }
+
+                PaginationInfo paginationInfo = PaginationInfo.builder()
+                        .page(page)
+                        .limit(limit)
+                        .totalPage(result.getTotalPages())
+                        .totalElement(result.getTotalElements())
+                        .build();
                 response.setResponseList(list);
-                response.setTotalPage(result.getTotalPages());
+                response.setPaginationInfo(paginationInfo);
                 return response;
             } else {
                 throw new RuntimeException("List empty exception");
@@ -66,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
             List<Product> list = productRepository.findAll();
             List<ProductDTO> result = new ArrayList<>();
             for (Product product : list) {
-                ProductDTO productDTO = productMapper.mapProductEntityToDTO(product);
+                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
                 result.add(productDTO);
             }
             return result;
@@ -114,7 +119,7 @@ public class ProductServiceImpl implements ProductService {
                     .supplier(supplier)
                     .build();
             Product result = productRepository.save(product);
-            ProductDTO response = productMapper.mapProductEntityToDTO(result);
+            ProductDTO response = ProductMapper.mapProductEntityToDTO(result);
             return response;
         }
     }
@@ -151,11 +156,18 @@ public class ProductServiceImpl implements ProductService {
         if (result.hasContent()) {
             List<ProductDTO> list = new ArrayList<>();
             for (Product product : result.getContent()) {
-                ProductDTO productDTO = productMapper.mapProductEntityToDTO(product);
+                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
                 list.add(productDTO);
             }
+
+            PaginationInfo paginationInfo = PaginationInfo.builder()
+                    .page(page)
+                    .limit(limit)
+                    .totalPage(result.getTotalPages())
+                    .totalElement(result.getTotalElements())
+                    .build();
             response.setResponseList(list);
-            response.setTotalPage(result.getTotalPages());
+            response.setPaginationInfo(paginationInfo);
         } else {
             throw new RuntimeException("List empty exception");
         }
@@ -170,11 +182,17 @@ public class ProductServiceImpl implements ProductService {
         if (result.hasContent()) {
             List<ProductDTO> list = new ArrayList<>();
             for (Product product : result.getContent()) {
-                ProductDTO productDTO = productMapper.mapProductEntityToDTO(product);
+                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
                 list.add(productDTO);
             }
+            PaginationInfo paginationInfo = PaginationInfo.builder()
+                    .page(page)
+                    .limit(limit)
+                    .totalPage(result.getTotalPages())
+                    .totalElement(result.getTotalElements())
+                    .build();
             response.setResponseList(list);
-            response.setTotalPage(result.getTotalPages());
+            response.setPaginationInfo(paginationInfo);
         } else {
             throw new RuntimeException("List empty exception");
         }
@@ -189,7 +207,7 @@ public class ProductServiceImpl implements ProductService {
         if (data.size() > 0) {
             List<ProductDTO> result = new ArrayList<>();
             for (Product product : data) {
-                ProductDTO productDTO = productMapper.mapProductEntityToDTO(product);
+                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
                 result.add(productDTO);
             }
             return result;

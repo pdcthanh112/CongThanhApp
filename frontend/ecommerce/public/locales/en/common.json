@@ -1,4 +1,8 @@
 {
+  "metadata":  {
+    "title": "CongThanhApp - Ecommerce",
+    "description": "CongThanhApp - Ecommerce"
+  },
   "common": {
     "title": "CongThanh Ecommerce",
     "login": "Login",

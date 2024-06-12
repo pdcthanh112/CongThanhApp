@@ -1,25 +1,39 @@
-import { SetStateAction, useState } from "react"
-import copy from "copy-to-clipboard"
+"use client";
+import { useState } from "react";
 
-export default function useCopyToClipboard() {
-    const [value, setValue] = useState()
-    const [success, setSuccess] = useState()
-
-    const copyToClipboard = (text: any, options: any) => {
-        const result: any = copy(text, options)
-        if (result) setValue(text)
-        setSuccess(result)
-    }
-
-    return [copyToClipboard, { value, success }]
+export interface useCopyToClipboardProps {
+  timeout?: number;
 }
 
+export function useCopyToClipboard({ timeout = 2000 }: useCopyToClipboardProps) {
+  const [isCopied, setIsCopied] = useState<Boolean>(false);
+
+  const copyToClipboard = (value: string) => {
+    if (typeof window === "undefined" || !navigator.clipboard?.writeText) {
+      return;
+    }
+
+    if (!value) {
+      return;
+    }
+
+    navigator.clipboard.writeText(value).then(() => {
+      setIsCopied(true);
+
+      setTimeout(() => {
+        setIsCopied(false);
+      }, timeout);
+    });
+  };
+
+  return { isCopied, copyToClipboard };
+}
 
 // cach dung:
 // import useCopyToClipboard from "./useCopyToClipboard"
 
 // export default function CopyToClipboardComponent() {
-//     const [copyToClipboard, { success }] = useCopyToClipboard()
+//     const [copyToClipboard, { success }] = useCopyToClipboard({timeout: 3000})
 
 //     return (
 //         <>

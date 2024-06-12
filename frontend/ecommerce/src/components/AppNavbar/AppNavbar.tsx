@@ -7,7 +7,7 @@ import { Menu as MenuIcon, Close as CloseIcon } from '@mui/icons-material';
 import { useTranslations } from 'next-intl';
 
 const AppNavbar = () => {
-  const t  = useTranslations('common');
+  const t  = useTranslations();
   const [showSidebar, setShowSidebar] = useState(false);
 
   const navbarItems = [

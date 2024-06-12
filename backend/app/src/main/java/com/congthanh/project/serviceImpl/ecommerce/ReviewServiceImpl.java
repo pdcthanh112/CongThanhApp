@@ -6,6 +6,7 @@ import com.congthanh.project.model.ecommerce.mapper.ReviewMapper;
 import com.congthanh.project.entity.ecommerce.Product;
 import com.congthanh.project.entity.ecommerce.Review;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
+import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.model.ecommerce.response.StatisticReviewResponse;
 import com.congthanh.project.repository.ecommerce.product.ProductRepository;
@@ -38,16 +39,22 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ResponseWithPagination<ReviewDTO> getReviewByProductId(String productId, Integer page, Integer limit) {
         Pageable pageable = PageRequest.of(page - 1, limit);
-        Page<Review> data = reviewRepository.getReviewsByProductId(productId, pageable);
-        if (data.hasContent()) {
+        Page<Review> result = reviewRepository.getReviewsByProductId(productId, pageable);
+        if (result.hasContent()) {
             ResponseWithPagination<ReviewDTO> response = new ResponseWithPagination<>();
             List<ReviewDTO> list = new ArrayList<>();
-            for (Review review : data) {
+            for (Review review : result.getContent()) {
                 ReviewDTO reviewDTO = ReviewMapper.mapReviewEntityToDTO(review);
                 list.add(reviewDTO);
             }
+            PaginationInfo paginationInfo = PaginationInfo.builder()
+                    .page(page)
+                    .limit(limit)
+                    .totalPage(result.getTotalPages())
+                    .totalElement(result.getTotalElements())
+                    .build();
             response.setResponseList(list);
-            response.setTotalPage(data.getTotalPages());
+            response.setPaginationInfo(paginationInfo);
             return response;
         } else {
             throw new RuntimeException("List empty exception");

@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 public class ResponseWithPagination<T> {
 
-  private int totalPage;
+  private PaginationInfo paginationInfo;
 
   private List<T> responseList;
 

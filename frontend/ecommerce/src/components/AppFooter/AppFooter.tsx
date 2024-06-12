@@ -20,7 +20,7 @@ const AppFooter = (): React.ReactElement => {
         <div className="px-16">
           DreamHigh is a Cong Thanh&apos;s personal project, including an e-commerce site, official website, employee management page and administrator&apos;s site. Specific
           description at &nbsp;
-          <a href="https://github.com/pdcthanh112/MyDream.git" className="underline">
+          <a href="https://github.com/pdcthanh112/CongThanhApp.git" className="underline">
             GitHub
           </a>
         </div>

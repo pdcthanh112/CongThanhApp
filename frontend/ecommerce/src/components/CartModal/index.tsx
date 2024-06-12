@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation';
 import { CART_KEY } from '@/utils/constants/queryKey';
 
 const CartModal = () => {
-  const t = useTranslations('common');
+  const t = useTranslations();
   const router = useRouter();
 
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);

@@ -4,6 +4,7 @@ import com.congthanh.project.dto.ecommerce.ProductDTO;
 import com.congthanh.project.dto.ecommerce.SupplierDTO;
 import com.congthanh.project.entity.ecommerce.Supplier;
 import com.congthanh.project.model.ecommerce.mapper.ProductMapper;
+import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.entity.ecommerce.Product;
 import com.congthanh.project.repository.ecommerce.supplier.SupplierRepository;
@@ -61,8 +62,14 @@ public class SupplierServiceImpl implements SupplierService {
                 ProductDTO productDTO = productMapper.mapProductEntityToDTO(product);
                 list.add(productDTO);
             }
+            PaginationInfo paginationInfo = PaginationInfo.builder()
+                    .page(page)
+                    .limit(limit)
+                    .totalPage(result.getTotalPages())
+                    .totalElement(result.getTotalElements())
+                    .build();
             response.setResponseList(list);
-            response.setTotalPage(result.getTotalPages());
+            response.setPaginationInfo(paginationInfo);
         } else {
             throw new RuntimeException("List empty exception");
         }

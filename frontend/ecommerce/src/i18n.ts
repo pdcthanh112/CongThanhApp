@@ -1,14 +1,14 @@
-"server-only";
+'server-only';
 
-import { notFound } from "next/navigation";
-import { getRequestConfig } from "next-intl/server";
-import { type AbstractIntlMessages } from "next-intl";
-import { locales, type Locale } from "@/lib/locales";
+import { notFound } from 'next/navigation';
+import { getRequestConfig } from 'next-intl/server';
+import { type AbstractIntlMessages } from 'next-intl';
+import { locales, type Locale } from '@/lib/locales';
 
 const messageImports = {
-  en: () => import("../public/locales/en/common.json"),
-  es: () => import("../public/locales/es/common.json"),
-  vi: () => import("../public/locales/vi/common.json"),
+  en: () => import('../public/locales/en/common.json'),
+  es: () => import('../public/locales/es/common.json'),
+  vi: () => import('../public/locales/vi/common.json'),
 } as const satisfies Record<Locale, () => Promise<{ default: AbstractIntlMessages }>>;
 
 export function isValidLocale(locale: unknown): locale is Locale {

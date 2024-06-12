@@ -1,16 +1,13 @@
 'use client';
 import { useRef, useState } from 'react';
-import { Metadata } from 'next';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getAttributeByProductId, getImageByProductId, getProductBySlug, getSoldByProduct } from 'api/productApi';
-import { Rating, Icon, Avatar, TableContainer, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import { Rating, Icon, Avatar, TableContainer, Table, TableBody, TableRow, TableCell, Button } from '@mui/material';
 import { Storefront, ForumOutlined } from '@mui/icons-material';
 import Image from 'next/image';
-import DefaultImage from '@assets/images/default-image.jpg';
+import DefaultImage from '@/assets/images/default-image.jpg';
 import { roundNumber } from '@/utils/helper';
-import { Button } from '@/components/ui';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslations } from 'next-intl';
 import { useAddProductToWishlist, useRemoveProductFromWishlist } from '@/hooks/wishlist/wishlistHook';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
@@ -26,15 +23,14 @@ import QuantitySelector from '@/components/QuantitySelector/QuantitySelector';
 import { PRODUCT_KEY, WISHLIST_KEY } from '@/utils/constants/queryKey';
 import ProductDetailSkeleton from '../ProductDetailSkeleton';
 
-const ProductDetail = ({productData}: {productData: Product}) => {
-
+export default function ProductDetail ({product}: {product: Product}) {
+console.log('PPPPPPPPPPPPPPP', product)
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const router = useRouter();
   const params = useParams()
-  const { slug: productSlug } = params;
 
   const dispatch = useAppDispatch();
-  const t = useTranslations('common');
+  const t = useTranslations();
 
   const [quantity, setQuantity] = useState(1);
   const [ratingStar, setRatingStar] = useState<{ vote: number; value: number }>({ vote: 0, value: 0.0 });
@@ -114,50 +110,50 @@ const ProductDetail = ({productData}: {productData: Product}) => {
     }
   };
 
-  const handleAddToWishlist = (productId: string) => {
-    if (currentUser) {
-      try {
-        addProductToWishlist(
-          { customerId: currentUser.userInfo.accountId, productId: productId },
-          {
-            onSuccess() {
-              toast.success(t('wishlist.add_item_to_wishlist_successfully'));
-            },
-            onError() {
-              toast.error(t('wishlist.add_item_to_wishlist_failed'));
-            },
-          },
-        );
-      } catch (error) {
-        toast.error(t('wishlist.add_item_to_wishlist_failed'));
-      }
-    } else {
-      dispatch(openModalAuth());
-    }
-  };
+  // const handleAddToWishlist = (productId: string) => {
+  //   if (currentUser) {
+  //     try {
+  //       addProductToWishlist(
+  //         { customerId: currentUser.userInfo.accountId, productId: productId },
+  //         {
+  //           onSuccess() {
+  //             toast.success(t('wishlist.add_item_to_wishlist_successfully'));
+  //           },
+  //           onError() {
+  //             toast.error(t('wishlist.add_item_to_wishlist_failed'));
+  //           },
+  //         },
+  //       );
+  //     } catch (error) {
+  //       toast.error(t('wishlist.add_item_to_wishlist_failed'));
+  //     }
+  //   } else {
+  //     dispatch(openModalAuth());
+  //   }
+  // };
 
-  const handleRemoveFromWishlist = (productId: string) => {
-    if (currentUser) {
-      try {
-        removeProductFromWishlist(
-          { customerId: currentUser.userInfo.accountId, productId: productId },
-          {
-            onSuccess() {
-              toast.success(t('wishlist.remove_item_from_wishlist_successfully'));
-            },
-            onError(error) {
-              toast.error(t('wishlist.remove_item_from_wishlist_failed'));
-              console.log(error);
-            },
-          },
-        );
-      } catch (error) {
-        toast.error(t('wishlist.remove_item_from_wishlist_failed'));
-      }
-    } else {
-      dispatch(openModalAuth());
-    }
-  };
+  // const handleRemoveFromWishlist = (productId: string) => {
+  //   if (currentUser) {
+  //     try {
+  //       removeProductFromWishlist(
+  //         { customerId: currentUser.userInfo.accountId, productId: productId },
+  //         {
+  //           onSuccess() {
+  //             toast.success(t('wishlist.remove_item_from_wishlist_successfully'));
+  //           },
+  //           onError(error) {
+  //             toast.error(t('wishlist.remove_item_from_wishlist_failed'));
+  //             console.log(error);
+  //           },
+  //         },
+  //       );
+  //     } catch (error) {
+  //       toast.error(t('wishlist.remove_item_from_wishlist_failed'));
+  //     }
+  //   } else {
+  //     dispatch(openModalAuth());
+  //   }
+  // };
 
   const handleZoom = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -190,7 +186,7 @@ const ProductDetail = ({productData}: {productData: Product}) => {
     }
   };
 
-  if (isLoading) return <ProductDetailSkeleton />;
+  if (false) return <ProductDetailSkeleton />;
 
   return (
     <div className="w-[80%] mx-auto my-3">
@@ -199,7 +195,7 @@ const ProductDetail = ({productData}: {productData: Product}) => {
           <div className="relative w-full pt-[100%] shadow cursor-zoom-in overflow-hidden" onMouseLeave={handleRemoveZoom} onMouseMove={handleZoom}>
             <Image
               src={currentImage?.imagePath || DefaultImage}
-              alt={currentImage?.alt || productData.name}
+              alt={currentImage?.alt || product.name}
               width={300}
               height={300}
               ref={imageRef}
@@ -223,7 +219,7 @@ const ProductDetail = ({productData}: {productData: Product}) => {
                 <div key={img.id} className="relative w-full pt-[100%]" onClick={() => setCurrentImage(img)}>
                   <Image
                     src={img.imagePath}
-                    alt={img.alt || productData.name}
+                    alt={img.alt || product.name}
                     width={50}
                     height={50}
                     className={`cursor-pointer absolute top-0 left-0 h-full w-full bg-white object-cover ${isActive && 'border-2 border-red-400'}`}
@@ -234,7 +230,7 @@ const ProductDetail = ({productData}: {productData: Product}) => {
           </div>
         </div>
         <div className="w-[60%] ml-5 p-3">
-          <h1 className="font-medium text-2xl bg-gray-200 px-3 py-2 mb-3">{productData.name}</h1>
+          <h1 className="font-medium text-2xl bg-gray-200 px-3 py-2 mb-3">{product.name}</h1>
           <div className="flex justify-between my-3">
             <div className="flex items-center">
               <span className="mr-1">{ratingStar.value.toFixed(1)}</span>
@@ -250,11 +246,15 @@ const ProductDetail = ({productData}: {productData: Product}) => {
             </div>
             <div>
               {wishlist?.product.find((item) => item.id === product.id) === undefined ? (
-                <span className="hover:cursor-pointer" title={t('common.add_to_wishlist')} onClick={() => handleAddToWishlist(product.id)}>
+                <span className="hover:cursor-pointer" title={t('common.add_to_wishlist')} 
+                // onClick={() => handleAddToWishlist(product.id)}
+                >
                   <Icon component={HeartEmpty} sx={{ color: 'red' }} />
                 </span>
               ) : (
-                <span className="hover:cursor-pointer" title={t('common.remove_from_wishlist')} onClick={() => handleRemoveFromWishlist(product.id)}>
+                <span className="hover:cursor-pointer" title={t('common.remove_from_wishlist')}
+                //  onClick={() => handleRemoveFromWishlist(product.id)}
+                 >
                   <Icon component={HeartFull} sx={{ color: 'red' }} />
                 </span>
               )}
@@ -263,11 +263,11 @@ const ProductDetail = ({productData}: {productData: Product}) => {
           <div className="font-semibold text-3xl text-yellow-400">{product.price}</div>
           <div className="flex mt-10">
             <span className="flex items-center mr-10">{t('product.Quantity')}</span>
-            <QuantitySelector value={quantity} max={productData.quantity} onDecrease={setQuantity} onIncrease={setQuantity} onType={setQuantity} />
+            <QuantitySelector value={quantity} max={product.quantity} onDecrease={setQuantity} onIncrease={setQuantity} onType={setQuantity} />
             <span className="flex items-center ml-10">
-              {productData.quantity > 0 ? (
+              {product.quantity > 0 ? (
                 <p>
-                  {productData.quantity} {t('common.available')}
+                  {product.quantity} {t('common.available')}
                 </p>
               ) : (
                 <p>{t('common.sold_out')}</p>
@@ -279,7 +279,7 @@ const ProductDetail = ({productData}: {productData: Product}) => {
               <AddToCartIcon width={28} height={28} />
               <span className="ml-1">{t('common.add_to_cart')}</span>
             </Button>
-            <Button className="bg-yellow-400 text-[#fff] ml-3" disable={product.quantity <= 0}>
+            <Button className="bg-yellow-400 text-[#fff] ml-3" disabled={product.quantity <= 0}>
               <span className="mx-3">{t('product.buy_now')}</span>
             </Button>
           </div>
@@ -332,7 +332,7 @@ const ProductDetail = ({productData}: {productData: Product}) => {
       </div>
       <div className="bg-white mt-10 p-5">
         <h2 className="bg-yellow-100 px-2 py-1 rounded-sm">{t('product.product_description').toUpperCase()}</h2>
-        <div className="">{productData.description}</div>
+        <div className="">{product.description}</div>
       </div>
     </div>
   );
@@ -345,5 +345,3 @@ const AddToCartIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <path d="M19 19.5 A1.5 1.5 0 0 1 17.5 21 A1.5 1.5 0 0 1 16 19.5 A1.5 1.5 0 0 1 19 19.5 z" />
   </svg>
 );
-
-export default ProductDetail;

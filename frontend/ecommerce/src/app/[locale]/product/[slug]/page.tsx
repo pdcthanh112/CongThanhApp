@@ -1,7 +1,8 @@
-import React from "react";
-import { getProductBySlug } from "@/api/productApi";
-import { getStatisticFromProduct } from "@/api/reviewApi";
-import { Metadata } from "next";
+import React, { cache } from 'react';
+import { getProductBySlug } from '@/api/productApi';
+import { getStatisticFromProduct } from '@/api/reviewApi';
+import { Metadata } from 'next';
+import ProductDetail from '@/components/Product/ProductDetail';
 
 async function getProductDetail(slug: string) {
   return await getProductBySlug(slug);
@@ -12,13 +13,12 @@ async function getReviewStatisticByProduct(productId: string) {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const product = await getProductBySlug(params.slug);
+  const product = await getProductDetail(params.slug);
   return {
-    title: 'product.title',
-    // title: product.title,
+    title: product.name,
     description: product.description,
     openGraph: {
-      title: product.title,
+      title: product.name,
       description: product.description,
       images: [
         {
@@ -26,10 +26,17 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         },
       ],
     },
+    alternates: {
+      canonical: process.env.NEXT_PUBLIC_API_URL + '/product/' + params.slug,
+    },
   };
 }
 
-export default async function ProductDetailPage({ params: { slug } }: { params: { slug: string } }) {
-  console.log("SSSSSSSSSSS", slug);
-  return <div>page</div>;
+export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
+  const product = await getProductDetail(params.slug).then(res => res.data);
+  return (
+    <React.Fragment>
+      <ProductDetail product={product} />
+    </React.Fragment>
+  );
 }

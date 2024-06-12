@@ -2,6 +2,7 @@ package com.congthanh.project.serviceImpl.ecommerce;
 
 import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.dto.ecommerce.CategoryDTO;
+import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.entity.ecommerce.Category;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
@@ -28,27 +29,30 @@ public class CategoryServiceImpl implements CategoryService {
   @Autowired
   private ModelMapper modelMapper;
 
-  @Autowired
-  private CategoryMapper categoryMapper;
-
   @Override
-  public Object getAllCategory(Integer pageNo, Integer pageSize) {
-    if (pageNo != null && pageSize != null) {
-      Pageable pageable = PageRequest.of(pageNo, pageSize);
-      Page<Category> pageResult = categoryRepository.findAll(pageable);
-      ResponseWithPagination<CategoryDTO> result = new ResponseWithPagination<>();
+  public Object getAllCategory(Integer page, Integer limit) {
+    if (page != null && limit != null) {
+      Pageable pageable = PageRequest.of(page, limit);
+      Page<Category> result = categoryRepository.findAll(pageable);
+      ResponseWithPagination<CategoryDTO> response = new ResponseWithPagination<>();
       List<CategoryDTO> list = new ArrayList<>();
-      if (pageResult.hasContent()) {
-        for (Category category : pageResult.getContent()) {
+      if (result.hasContent()) {
+        for (Category category : result.getContent()) {
           CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
           list.add(categoryDTO);
         }
-        result.setResponseList(list);
-        result.setTotalPage(pageResult.getTotalPages());
+        PaginationInfo paginationInfo = PaginationInfo.builder()
+                .page(page)
+                .limit(limit)
+                .totalPage(result.getTotalPages())
+                .totalElement(result.getTotalElements())
+                .build();
+        response.setResponseList(list);
+        response.setPaginationInfo(paginationInfo);
       } else {
         throw new RuntimeException("List empty exception");
       }
-      return result;
+      return response;
     } else {
       List<Category> list = categoryRepository.findAll();
       List<CategoryDTO> result = new ArrayList<>();
@@ -63,7 +67,7 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public CategoryDTO getCategoryById(int id) {
     Category category = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException(("not found")));
-    return categoryMapper.mapCategoryEntityToDTO(category);
+    return CategoryMapper.mapCategoryEntityToDTO(category);
   }
 
   @Override
@@ -77,7 +81,7 @@ public class CategoryServiceImpl implements CategoryService {
               .status(StateStatus.STATUS_ACTIVE)
               .build();
       Category result = categoryRepository.save(category);
-      CategoryDTO response = categoryMapper.mapCategoryEntityToDTO(result);
+      CategoryDTO response = CategoryMapper.mapCategoryEntityToDTO(result);
       return response;
     }
   }
@@ -90,7 +94,7 @@ public class CategoryServiceImpl implements CategoryService {
     category.setImage(category.getImage());
 
     Category result = categoryRepository.save(category);
-    return categoryMapper.mapCategoryEntityToDTO(result);
+    return CategoryMapper.mapCategoryEntityToDTO(result);
   }
 
   @Override

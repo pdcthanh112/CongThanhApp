@@ -1,13 +1,12 @@
 package com.congthanh.project.serviceImpl.ecommerce;
 
-import com.congthanh.project.dto.ecommerce.OrderDTO;
 import com.congthanh.project.dto.ecommerce.OrderDetailDTO;
-import com.congthanh.project.entity.ecommerce.Order;
 import com.congthanh.project.entity.ecommerce.OrderDetail;
 import com.congthanh.project.entity.ecommerce.Product;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.OrderDetailMapper;
 import com.congthanh.project.model.ecommerce.request.CreateOrderDetailRequest;
+import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.repository.ecommerce.orderDetail.OrderDetailRepository;
 import com.congthanh.project.repository.ecommerce.product.ProductRepository;
@@ -48,16 +47,22 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     @Override
     public ResponseWithPagination<OrderDetailDTO> getOrderDetailByStatus(String status, int page, int limit) {
         PageRequest pageRequest = PageRequest.of(page, limit);
-        Page<OrderDetail> data = orderDetailRepository.findByStatus(status, pageRequest);
-        if(data.hasContent()) {
+        Page<OrderDetail> result = orderDetailRepository.findByStatus(status, pageRequest);
+        if(result.hasContent()) {
             ResponseWithPagination<OrderDetailDTO> response = new ResponseWithPagination<>();
             List<OrderDetailDTO> list = new ArrayList<>();
-            for(OrderDetail item: data) {
+            for(OrderDetail item: result) {
                 OrderDetailDTO orderDTO = orderDetailMapper.mapOrderDetailEntityToDTO(item);
                 list.add(orderDTO);
             }
+            PaginationInfo paginationInfo = PaginationInfo.builder()
+                    .page(page)
+                    .limit(limit)
+                    .totalPage(result.getTotalPages())
+                    .totalElement(result.getTotalElements())
+                    .build();
             response.setResponseList(list);
-            response.setTotalPage(data.getTotalPages());
+            response.setPaginationInfo(paginationInfo);
             return response;
         }
         return null;

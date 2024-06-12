@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import InputNumber, { InputNumberProps } from './InputNumber';
-import { MinusIcon, PlusIcon } from '@assets/icons';
+import { MinusIcon, PlusIcon } from '@/assets/icons';
 
 interface PropsType extends InputNumberProps {
   min?: number;

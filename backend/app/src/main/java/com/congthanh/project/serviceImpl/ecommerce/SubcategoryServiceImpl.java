@@ -2,6 +2,7 @@ package com.congthanh.project.serviceImpl.ecommerce;
 
 import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.dto.ecommerce.SubcategoryDTO;
+import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.entity.ecommerce.Category;
 import com.congthanh.project.entity.ecommerce.Subcategory;
@@ -38,23 +39,29 @@ public class SubcategoryServiceImpl implements SubcategoryService {
     private SubcategoryMapper subcategoryMapper;
 
     @Override
-    public Object getAllSubcategory(Integer pageNo, Integer pageSize) {
-        if (pageNo != null && pageSize != null) {
-            Pageable pageable = PageRequest.of(pageNo, pageSize);
-            Page<Subcategory> pageResult = subcategoryRepository.findAll(pageable);
-            ResponseWithPagination<SubcategoryDTO> result = new ResponseWithPagination<>();
+    public Object getAllSubcategory(Integer page, Integer limit) {
+        if (page != null && limit != null) {
+            Pageable pageable = PageRequest.of(page, limit);
+            Page<Subcategory> result = subcategoryRepository.findAll(pageable);
+            ResponseWithPagination<SubcategoryDTO> response = new ResponseWithPagination<>();
             List<SubcategoryDTO> list = new ArrayList<>();
-            if (pageResult.hasContent()) {
-                for (Subcategory subcategory : pageResult.getContent()) {
+            if (result.hasContent()) {
+                for (Subcategory subcategory : result.getContent()) {
                     SubcategoryDTO subcategoryDTO = modelMapper.map(subcategory, SubcategoryDTO.class);
                     list.add(subcategoryDTO);
                 }
-                result.setResponseList(list);
-                result.setTotalPage(pageResult.getTotalPages());
+                PaginationInfo paginationInfo = PaginationInfo.builder()
+                        .page(page)
+                        .limit(limit)
+                        .totalPage(result.getTotalPages())
+                        .totalElement(result.getTotalElements())
+                        .build();
+                response.setResponseList(list);
+                response.setPaginationInfo(paginationInfo);
             } else {
                 throw new RuntimeException("List empty exception");
             }
-            return result;
+            return response;
         } else {
             List<Subcategory> list = subcategoryRepository.findAll();
             List<SubcategoryDTO> result = new ArrayList<>();
