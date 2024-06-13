@@ -28,11 +28,11 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
                 .totalReview(result.get("total_reviews", Integer.class))
                 .averageRating(result.get("average_rating", Float.class))
                 .reviewWithMedia(result.get("reviews_with_media", Integer.class))
-                .reviewWithRating5(result.get("review_with_rating_5", Integer.class))
-                .reviewWithRating4(result.get("review_with_rating_4", Integer.class))
-                .reviewWithRating3(result.get("review_with_rating_3", Integer.class))
-                .reviewWithRating2(result.get("review_with_rating_2", Integer.class))
-                .reviewWithRating1(result.get("review_with_rating_1", Integer.class))
+                .reviewRating5Star(result.get("review_with_rating_5", Integer.class))
+                .reviewRating4Star(result.get("review_with_rating_4", Integer.class))
+                .reviewRating3Star(result.get("review_with_rating_3", Integer.class))
+                .reviewRating2Star(result.get("review_with_rating_2", Integer.class))
+                .reviewRating1Star(result.get("review_with_rating_1", Integer.class))
                 .build();
         return response;
     }

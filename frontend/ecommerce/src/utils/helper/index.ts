@@ -7,7 +7,7 @@ export const roundNumber = (value: number) => {
   return new Intl.NumberFormat('en-US', {
     notation: 'compact',
     compactDisplay: 'short',
-    maximumFractionDigits: 1
+    maximumFractionDigits: 1,
   }).format(value);
 };
 
@@ -26,13 +26,13 @@ export const getAuthLogo = (name: string) => {
   }
 };
 
-export const formatCurrency = (number: number) => {
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
+export const formatCurrency = (number: number, locale?: string, currency?: string) => {
+  const formatter = new Intl.NumberFormat(locale ?? 'en-US', {
+    style: 'currency',
+    currency: currency ?? 'USD',
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,
   });
 
-  return formatter.format(number) as string;
+  return formatter.format(number);
 };

@@ -6,10 +6,6 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // i18n: {
-  //   locales: ["en", "vi"],
-  //   defaultLocale: "en"
-  // },
   async redirects() {
     return [
       {
@@ -27,6 +23,14 @@ const nextConfig = {
       fullUrl: true,
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*',
+      },
+    ],
+  }
 };
 
 export default withNextIntl(nextConfig);

@@ -3,32 +3,43 @@ export type Product = {
   name: string;
   category: number;
   subcategory: number;
+  slug: string;
   description: string;
   SKU: string;
-  quantity: number;
-  image?: string
-  price: number;
-  production: string;
+  supplier: string;
+  image: ProductImage[]
+  brand: string
   status: string;
-  slug: string;
-  store: string;
+  variant: ProductVariant[]
+  attribute: ProductAttribute[]
 }
 
 export type ProductAttribute = {
   id: number;
   name: string;
-}
-
-export type AttributeValue = {
-  id: number;
-  attribute: ProductAttribute;
-  product: string;
-  value: string;
+  value: string
+  product: string
 }
 
 export type ProductImage = {
   id: number;
   product: string;
+  imagePath: string;
+  alt: string;
+  isDefault: boolean;
+}
+
+export type ProductVariant = {
+  id: string
+  product: string
+  name: string
+  price: number
+  image: ProductVariantImage[]
+}
+
+export type ProductVariantImage = {
+  id: number;
+  variant: string;
   imagePath: string;
   alt: string;
   isDefault: boolean;

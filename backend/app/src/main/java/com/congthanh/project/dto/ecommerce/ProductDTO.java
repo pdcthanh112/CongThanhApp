@@ -25,6 +25,8 @@ public class ProductDTO {
 
   private String SKU;
 
+  private String slug;
+
   private String description;
 
   private List<ProductImageDTO> image;
@@ -38,7 +40,5 @@ public class ProductDTO {
   private List<ProductVariantDTO> variant;
 
   private String status;
-
-  private String slug;
 
 }

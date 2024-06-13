@@ -1,13 +1,24 @@
 'use client';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getAttributeByProductId, getImageByProductId, getProductBySlug, getSoldByProduct } from 'api/productApi';
-import { Rating, Icon, Avatar, TableContainer, Table, TableBody, TableRow, TableCell, Button } from '@mui/material';
-import { Storefront, ForumOutlined } from '@mui/icons-material';
+import {
+  Rating,
+  Icon,
+  Avatar,
+  TableContainer,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  Button,
+  Popover,
+} from '@mui/material';
+import { Storefront, ForumOutlined, KeyboardArrowDown } from '@mui/icons-material';
 import Image from 'next/image';
 import DefaultImage from '@/assets/images/default-image.jpg';
-import { roundNumber } from '@/utils/helper';
+import { formatCurrency, roundNumber } from '@/utils/helper';
 import { useTranslations } from 'next-intl';
 import { useAddProductToWishlist, useRemoveProductFromWishlist } from '@/hooks/wishlist/wishlistHook';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
@@ -18,28 +29,34 @@ import { useAddProductToCart } from '@/hooks/cart/cartHook';
 import { getWishlistByCustomer } from 'api/wishlistApi';
 import { getStoreById } from '@/api/supplierApi';
 import Link from 'next/link';
-import { AttributeValue, Customer, Product, ProductImage, Store, Wishlist } from '@/models/types';
+import { Customer, Product, ProductImage, Store, Wishlist } from '@/models/types';
 import QuantitySelector from '@/components/QuantitySelector/QuantitySelector';
 import { PRODUCT_KEY, WISHLIST_KEY } from '@/utils/constants/queryKey';
 import ProductDetailSkeleton from '../ProductDetailSkeleton';
+import { ReviewStatistic } from '@/models/types/Review';
+import { BarChart, Bar, XAxis, ResponsiveContainer } from 'recharts';
 
-export default function ProductDetail ({product}: {product: Product}) {
-console.log('PPPPPPPPPPPPPPP', product)
+type ProductDetailProps = {
+  product: Product;
+  reviewStatistic: ReviewStatistic;
+};
+
+export default function ProductDetail({ product, reviewStatistic }: ProductDetailProps) {
+  console.log('PPPPPPPPPPPPPPP', product);
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const router = useRouter();
-  const params = useParams()
+  const params = useParams();
 
   const dispatch = useAppDispatch();
   const t = useTranslations();
 
   const [quantity, setQuantity] = useState(1);
-  const [ratingStar, setRatingStar] = useState<{ vote: number; value: number }>({ vote: 0, value: 0.0 });
   const [sold, setSold] = useState<number>(0);
   const [store, setStore] = useState<Store>();
-  const [productAttribute, setProductAttribute] = useState<AttributeValue[]>();
-  const [productImage, setProductImage] = useState<ProductImage[]>();
+  // const [showReviewStatistic, setShowReviewStatistic] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<ProductImage>();
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5]);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
 
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -48,43 +65,43 @@ console.log('PPPPPPPPPPPPPPP', product)
   const { mutate: addProductToWishlist } = useAddProductToWishlist();
   const { mutate: removeProductFromWishlist } = useRemoveProductFromWishlist();
 
-//   const { data: product, isLoading } = useQuery({
-//     queryKey: [PRODUCT_KEY, productSlug],
-//     queryFn: async () => await getProductBySlug(productSlug as string).then(async(result) => {
-//           await getRatingStarofProduct(result.id).then((response) => {
-//             if (response && response.data) {
-//               setRatingStar(response.data);
-//             }
-//           });
-//           await getStoreById(result.store).then((response) => {
-//             if (response && response.data) {
-//               setStore(response.data);
-//             }
-//           });
-//           await getAttributeByProductId(result.id).then((response) => {
-//             if (response && response.data) {
-//               setProductAttribute(response.data);
-//             }
-//           });
-//           await getImageByProductId(result.id).then((response) => {
-//             if (response && response.data) {
-//               setProductImage(response.data);
-//               setCurrentImage(response.data.find((image: ProductImage) => image.isDefault === true));
-//             }
-//           });
-//           await getSoldByProduct(result.id).then((response) => {
-//             if (response && response.data) {
-//               setSold(response.data);
-//             }
-//           });
-//           return result.data
-//         },
-//    )
-// });
+  //   const { data: product, isLoading } = useQuery({
+  //     queryKey: [PRODUCT_KEY, productSlug],
+  //     queryFn: async () => await getProductBySlug(productSlug as string).then(async(result) => {
+  //           await getRatingStarofProduct(result.id).then((response) => {
+  //             if (response && response.data) {
+  //               setRatingStar(response.data);
+  //             }
+  //           });
+  //           await getStoreById(result.store).then((response) => {
+  //             if (response && response.data) {
+  //               setStore(response.data);
+  //             }
+  //           });
+  //           await getAttributeByProductId(result.id).then((response) => {
+  //             if (response && response.data) {
+  //               setProductAttribute(response.data);
+  //             }
+  //           });
+  //           await getImageByProductId(result.id).then((response) => {
+  //             if (response && response.data) {
+  //               setProductImage(response.data);
+  //               setCurrentImage(response.data.find((image: ProductImage) => image.isDefault === true));
+  //             }
+  //           });
+  //           await getSoldByProduct(result.id).then((response) => {
+  //             if (response && response.data) {
+  //               setSold(response.data);
+  //             }
+  //           });
+  //           return result.data
+  //         },
+  //    )
+  // });
 
   const { data: wishlist } = useQuery<Wishlist>({
-    queryKey: [WISHLIST_KEY], 
-    queryFn: async () => await getWishlistByCustomer(currentUser.userInfo.accountId).then((result) => result.data)
+    queryKey: [WISHLIST_KEY],
+    queryFn: async () => await getWishlistByCustomer(currentUser.userInfo.accountId).then((result) => result.data),
   });
 
   const handleAddProductToCart = () => {
@@ -100,7 +117,7 @@ console.log('PPPPPPPPPPPPPPP', product)
               toast.error(t('cart.add_item_to_cart_failed'));
               console.log(error);
             },
-          },
+          }
         );
       } catch (error) {
         toast.error(t('cart.add_item_to_cart_failed'));
@@ -186,13 +203,38 @@ console.log('PPPPPPPPPPPPPPP', product)
     }
   };
 
-  if (false) return <ProductDetailSkeleton />;
+  const data = [
+    {
+      name: '5 stars',
+      uv: Math.round((reviewStatistic.reviewRating5Star / reviewStatistic.totalReview) * 100),
+    },
+    {
+      name: '4 stars',
+      uv: Math.round((reviewStatistic.reviewRating4Star / reviewStatistic.totalReview) * 100),
+    },
+    {
+      name: '3 stars',
+      uv: Math.round((reviewStatistic.reviewRating3Star / reviewStatistic.totalReview) * 100),
+    },
+    {
+      name: '2 stars',
+      uv: Math.round((reviewStatistic.reviewRating2Star / reviewStatistic.totalReview) * 100),
+    },
+    {
+      name: '1 stars',
+      uv: Math.round((reviewStatistic.reviewRating1Star / reviewStatistic.totalReview) * 100),
+    },
+  ];
 
   return (
     <div className="w-[80%] mx-auto my-3">
       <div className="bg-white flex px-3 py-2">
         <div className="w-[40%] py-3">
-          <div className="relative w-full pt-[100%] shadow cursor-zoom-in overflow-hidden" onMouseLeave={handleRemoveZoom} onMouseMove={handleZoom}>
+          <div
+            className="relative w-full pt-[100%] shadow cursor-zoom-in overflow-hidden"
+            onMouseLeave={handleRemoveZoom}
+            onMouseMove={handleZoom}
+          >
             <Image
               src={currentImage?.imagePath || DefaultImage}
               alt={currentImage?.alt || product.name}
@@ -203,26 +245,48 @@ console.log('PPPPPPPPPPPPPPP', product)
             />
           </div>
           <div className="relative mt-4 grid grid-cols-5 gap-2 h-28 overflow-hidden">
-            <button onClick={prev} className="absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+            <button
+              onClick={prev}
+              className="absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
               </svg>
             </button>
-            <button onClick={next} className="absolute right-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+            <button
+              onClick={next}
+              className="absolute right-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
             </button>
-            {productImage?.slice(...currentIndexImages).map((img: any) => {
+            {product.image?.slice(...currentIndexImages).map((img: any) => {
               const isActive = img === currentImage;
               return (
                 <div key={img.id} className="relative w-full pt-[100%]" onClick={() => setCurrentImage(img)}>
                   <Image
                     src={img.imagePath}
                     alt={img.alt || product.name}
-                    width={50}
-                    height={50}
-                    className={`cursor-pointer absolute top-0 left-0 h-full w-full bg-white object-cover ${isActive && 'border-2 border-red-400'}`}
+                    fill
+                    objectFit="fill"
+                    className={`cursor-pointer absolute top-0 left-0 h-full w-full bg-white object-cover ${
+                      isActive && 'border-2 border-red-400'
+                    }`}
                   />
                 </div>
               );
@@ -232,54 +296,103 @@ console.log('PPPPPPPPPPPPPPP', product)
         <div className="w-[60%] ml-5 p-3">
           <h1 className="font-medium text-2xl bg-gray-200 px-3 py-2 mb-3">{product.name}</h1>
           <div className="flex justify-between my-3">
-            <div className="flex items-center">
-              <span className="mr-1">{ratingStar.value.toFixed(1)}</span>
-              <Rating value={ratingStar.value} precision={0.1} size="small" readOnly />
-              <span className="opacity-80 mx-2">|</span>
-              <span>
-                {roundNumber(ratingStar.vote)} {t('product.rating')}
-              </span>
-              <span className="opacity-80 mx-2">|</span>
-              <span>
-                {t('product.sold')}: {sold}
-              </span>
-            </div>
+            <React.Fragment>
+              <div className="flex items-center">
+                <div
+                  className="flex items-center"
+                  onClick={(event) => {
+                    setAnchorEl(event.currentTarget);
+                  }}
+                >
+                  <span className="mr-1">{reviewStatistic?.averageRating}</span>
+                  <Rating value={reviewStatistic.averageRating} precision={0.1} size="small" readOnly />
+                  <Icon component={KeyboardArrowDown} />
+                </div>
+                <span className="opacity-80 mx-2">|</span>
+                <span>
+                  {roundNumber(reviewStatistic.totalReview)} {t('product.rating')}
+                </span>
+                <span className="opacity-80 mx-2">|</span>
+                <span>
+                  {t('product.sold')}: {sold}
+                </span>
+              </div>
+              <Popover
+                open={Boolean(anchorEl)}
+                anchorEl={anchorEl}
+                onClose={() => {
+                  setAnchorEl(null);
+                }}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center',
+                }}
+              >
+                <div className="px-3 py-2 w-96 h-80">
+                  <div className="flex items-center">
+                    <Rating value={reviewStatistic.averageRating} precision={0.1} size="small" readOnly />
+                    <span className="mr-1">{reviewStatistic?.averageRating} out of 5</span>
+                  </div>
+                  <div>{reviewStatistic.totalReview} ratings</div>
+                  <div>
+                    {/* <ResponsiveContainer width="100%" height="100%"> */}
+                    <BarChart width={300} height={400} data={data} layout="vertical">
+                      <Bar dataKey="uv" barSize={20} fill="#8884d8" label />
+                      <XAxis hide />
+                      {/* <YAxis type="category" dataKey="name" /> */}
+                    </BarChart>
+                    {/* </ResponsiveContainer> */}
+                  </div>
+                </div>
+              </Popover>
+            </React.Fragment>
             <div>
               {wishlist?.product.find((item) => item.id === product.id) === undefined ? (
-                <span className="hover:cursor-pointer" title={t('common.add_to_wishlist')} 
-                // onClick={() => handleAddToWishlist(product.id)}
+                <span
+                  className="hover:cursor-pointer"
+                  title={t('common.add_to_wishlist')}
+                  // onClick={() => handleAddToWishlist(product.id)}
                 >
                   <Icon component={HeartEmpty} sx={{ color: 'red' }} />
                 </span>
               ) : (
-                <span className="hover:cursor-pointer" title={t('common.remove_from_wishlist')}
-                //  onClick={() => handleRemoveFromWishlist(product.id)}
-                 >
+                <span
+                  className="hover:cursor-pointer"
+                  title={t('common.remove_from_wishlist')}
+                  //  onClick={() => handleRemoveFromWishlist(product.id)}
+                >
                   <Icon component={HeartFull} sx={{ color: 'red' }} />
                 </span>
               )}
             </div>
           </div>
-          <div className="font-semibold text-3xl text-yellow-400">{product.price}</div>
+          <div className="font-semibold text-3xl text-yellow-400">{formatCurrency(10000000000000, 'vi', 'VND')}</div>
           <div className="flex mt-10">
             <span className="flex items-center mr-10">{t('product.Quantity')}</span>
-            <QuantitySelector value={quantity} max={product.quantity} onDecrease={setQuantity} onIncrease={setQuantity} onType={setQuantity} />
+            <QuantitySelector
+              value={quantity}
+              max={123456}
+              onDecrease={setQuantity}
+              onIncrease={setQuantity}
+              onType={setQuantity}
+            />
             <span className="flex items-center ml-10">
-              {product.quantity > 0 ? (
-                <p>
-                  {product.quantity} {t('common.available')}
-                </p>
-              ) : (
-                <p>{t('common.sold_out')}</p>
-              )}
+              {product ? <p>12345 {t('common.available')}</p> : <p>{t('common.sold_out')}</p>}
             </span>
           </div>
           <div className="flex mt-10">
-            <Button className="bg-yellow-50 border-yellow-300 border-2 text-yellow-400" onClick={() => handleAddProductToCart()}>
+            <Button
+              className="bg-yellow-50 border-yellow-300 border-2 text-yellow-400"
+              onClick={() => handleAddProductToCart()}
+            >
               <AddToCartIcon width={28} height={28} />
               <span className="ml-1">{t('common.add_to_cart')}</span>
             </Button>
-            <Button className="bg-yellow-400 text-[#fff] ml-3" disabled={product.quantity <= 0}>
+            <Button className="bg-yellow-400 text-[#fff] ml-3" disabled={12345 <= 0}>
               <span className="mx-3">{t('product.buy_now')}</span>
             </Button>
           </div>
@@ -295,7 +408,10 @@ console.log('PPPPPPPPPPPPPPP', product)
                 <Icon component={ForumOutlined} />
                 <span>{t('common.contact')}</span>
               </Button>
-              <Link href={`/store/${store?.id}`} className=" border-solid border-2 border-gray-300 flex items-center px-2">
+              <Link
+                href={`/store/${store?.id}`}
+                className=" border-solid border-2 border-gray-300 flex items-center px-2"
+              >
                 <Icon component={Storefront} />
                 <span>{t('store.view_store')}</span>
               </Link>
@@ -312,7 +428,7 @@ console.log('PPPPPPPPPPPPPPP', product)
           <div className="col-span-1">{t('common.Subcategory')}</div>
           <div className="col-span-3">{product.subcategory}</div>
           <div className="col-span-1">{t('common.in_stock')}</div>
-          <div className="col-span-3">{product.quantity > 0 ? <p>{product.quantity}</p> : <p>0</p>}</div>
+          {/* <div className="col-span-3">{product.quantity > 0 ? <p>{product.quantity}</p> : <p>0</p>}</div> */}
         </div>
       </div>
       <div className="bg-white mt-10 p-5">
@@ -320,12 +436,12 @@ console.log('PPPPPPPPPPPPPPP', product)
         <TableContainer>
           <Table>
             <TableBody>
-              {productAttribute?.map((item: AttributeValue) => (
+              {/* {productAttribute?.map((item: AttributeValue) => (
                 <TableRow key={item.id}>
                   <TableCell>{item.attribute.name}</TableCell>
                   <TableCell>{item.value}</TableCell>
                 </TableRow>
-              ))}
+              ))} */}
             </TableBody>
           </Table>
         </TableContainer>
@@ -336,7 +452,7 @@ console.log('PPPPPPPPPPPPPPP', product)
       </div>
     </div>
   );
-};
+}
 
 const AddToCartIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg baseProfile="tiny" viewBox="0 0 24 24" fill="currentColor" height="1em" width="1em" {...props}>

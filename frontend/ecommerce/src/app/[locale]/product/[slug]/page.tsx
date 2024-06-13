@@ -1,4 +1,4 @@
-import React, { cache } from 'react';
+import React from 'react';
 import { getProductBySlug } from '@/api/productApi';
 import { getStatisticFromProduct } from '@/api/reviewApi';
 import { Metadata } from 'next';
@@ -33,10 +33,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
-  const product = await getProductDetail(params.slug).then(res => res.data);
+  const product = await getProductDetail(params.slug).then(response => response.data);
+  const reviewStatistic = await getReviewStatisticByProduct(product.id).then(response => response.data)
   return (
     <React.Fragment>
-      <ProductDetail product={product} />
+      <ProductDetail product={product} reviewStatistic={reviewStatistic}/>
     </React.Fragment>
   );
 }

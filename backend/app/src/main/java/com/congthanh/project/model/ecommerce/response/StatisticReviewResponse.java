@@ -15,15 +15,15 @@ public class StatisticReviewResponse {
 
     private float averageRating;
 
-    private int reviewWithRating5;
+    private int reviewRating5Star;
 
-    private int reviewWithRating4;
+    private int reviewRating4Star;
 
-    private int reviewWithRating3;
+    private int reviewRating3Star;
 
-    private int reviewWithRating2;
+    private int reviewRating2Star;
 
-    private int reviewWithRating1;
+    private int reviewRating1Star;
 
     private int reviewWithMedia;
 

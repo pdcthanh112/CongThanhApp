@@ -1,10 +1,12 @@
 import axiosConfig from '@/config/axiosConfig';
+import { Response, Subcategory } from '@/models/types';
 
-export const getAllSubategory = async (page?: number, limit?: number) => {
-  let url = '';
-  page !== undefined && limit !== undefined ? (url = `subcategory/getAll?page=${page}&limit=${limit}`) : (url = 'subcategory/getAll');
+export const getAllSubategory = async (page?: number, limit?: number): Promise<Response<Subcategory[]>> => {
+  const params = new URLSearchParams();
+  page && params.append('page', String(page));
+  limit && params.append('limit', String(limit));
   return await axiosConfig
-    .get(url)
+    .get('subcategory/getAll')
     .then((response) => response.data)
     .catch((error) => {
       throw error;

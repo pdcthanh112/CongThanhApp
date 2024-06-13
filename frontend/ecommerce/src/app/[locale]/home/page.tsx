@@ -2,7 +2,14 @@ import React from 'react'
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <React.Fragment>
+      bannerr
+
+      dang sale
+
+      recent search
+      
+    </React.Fragment>
   )
 }
 
