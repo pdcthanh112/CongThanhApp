@@ -1,10 +1,11 @@
 import { Card, Skeleton } from '@mui/material';
 
 export default function ProductItemCardSkeleton() {
+
   return (
     <Card className=" bg-white p-3 relative">
       <div className="w-full flex items-center justify-center relative">
-        <Skeleton variant="rectangular" width={220} height={324} animation="wave" />
+        <Skeleton variant="rectangular" width={220} height={220} animation="wave" />
       </div>
 
       <div className=" bg-white">

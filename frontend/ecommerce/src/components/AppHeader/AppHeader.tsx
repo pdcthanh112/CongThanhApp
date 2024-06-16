@@ -13,12 +13,13 @@ import { Search as SearchIcon, ArrowDropDownOutlined, NavigateNext } from '@mui/
 import CartModal from '@/components/CartModal';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import NotificationModal from '@/components/NotificationModal';
+import { PATH } from '@/utils/constants/path';
 import { NotificationIcon } from '@/assets/icons';
 import { logoutRequested } from '@/redux/actions/auth';
 import Link from 'next/link';
 import { Category, Customer, Notification } from '@/models/types';
 import { ThemeToggle } from '../Theme/ThemeToggle';
-import { PATH } from '@/config/path';
+import { useTranslations } from 'next-intl';
 
 const AppHeader = () => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
@@ -26,7 +27,7 @@ const AppHeader = () => {
   const listNotification: Notification[] = useAppSelector((state) => state.notification.data);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  // const t = useTranslations('common');
+  const t = useTranslations();
   const { data: session } = useSession();
 
   const [showNotification, setShowNotification] = useState(false);
@@ -49,7 +50,7 @@ const AppHeader = () => {
       <div className="hidden sm:flex items-center h-10 rounded-md flex-grow cursor-pointer">
         <span className="bg-gray-300 h-[2.5rem] w-20 rounded-l-md flex justify-center items-center relative group">
           <span className="">
-            {/* {t('common.all')} */}aaaaaa
+            {t('common.all')}
             <ArrowDropDownOutlined />
           </span>
 

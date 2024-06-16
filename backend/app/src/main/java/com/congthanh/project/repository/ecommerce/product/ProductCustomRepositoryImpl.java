@@ -24,7 +24,7 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 
     @Override
     public List<Product> searchProduct(String keyword) {
-        String sql = "SELECT product.* FROM Product JOIN category on product.category = category.id JOIN subcategory on product.subcategory = subcategory.id WHERE CONCAT(product.name, category.name, subcategory.name) ILIKE :keyword";
+        String sql = "SELECT product.* FROM Product JOIN category on product.category = category.id JOIN subcategory on product.subcategory = subcategory.id WHERE CONCAT(product.name, category.name, subcategory.name, product.slug) ILIKE :keyword";
         TypedQuery<Product> query = entityManager.createQuery(sql, Product.class);
         query.setParameter("keyword", "%" + keyword + "%");
         return query.getResultList();

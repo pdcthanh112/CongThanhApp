@@ -16,7 +16,7 @@ public class ProductImageCustomRepositoryImpl implements ProductImageCustomRepos
     @Override
     public ProductImage getDefaultImageByProduct(String productId) {
         try {
-            String sql = "SELECT i FROM ProductImage i WHERE i.product = :productId AND isDefault = TRUE";
+            String sql = "SELECT i FROM ProductImage i WHERE i.product.id = :productId AND isDefault = TRUE";
             TypedQuery<ProductImage> query = entityManager.createQuery(sql, ProductImage.class);
             query.setParameter("productId", productId);
             return query.getSingleResult();

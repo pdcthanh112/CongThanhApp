@@ -1,5 +1,4 @@
-import Button from './Button';
-import Currency from './Currency';
 import Pagination from './Pagination';
+import { Button } from './button';
 
-export { Button, Currency, Pagination };
+export { Button, Pagination };

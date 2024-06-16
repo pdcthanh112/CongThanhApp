@@ -1,16 +1,15 @@
 import axiosConfig from '@/config/axiosConfig';
-import { cache } from 'react';
-import { Product, ResponseWithPagination } from '@/models/types';
+import { Product, ProductImage, Response, ResponseWithPagination } from '@/models/types';
 
 export const getAllProduct = async (page?: number, limit?: number): Promise<ResponseWithPagination<Product>> => {
   const params = new URLSearchParams();
   page && params.append('page', String(page));
   limit && params.append('limit', String(limit));
   return await axiosConfig
-    .get('product/getAll', {params: params})
+    .get('product/getAll', { params: params })
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
@@ -19,7 +18,7 @@ export const getProductById = async (productId: string): Promise<Product> => {
     .get(`product/getById/${productId}`)
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
@@ -28,7 +27,7 @@ export const getProductBySlug = async (productSlug: string) => {
     .get(`product/getBySlug/${productSlug}`)
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
@@ -37,7 +36,7 @@ export const getProductBySubcategory = async (subcategoryId: any, page: number, 
     .get(`product/getBySubcategory?subcategory=${subcategoryId}&page=${page}&limit=${limit}`)
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
@@ -46,16 +45,16 @@ export const getAttributeByProductId = async (productId: string) => {
     .get(`attribute-value/getByProduct?product=${productId}`)
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
-export const getDefaultImageByProductId = async (productId: string) => {
+export const getDefaultImageByProductId = async (productId: string): Promise<Response<ProductImage>> => {
   return await axiosConfig
     .get(`product-image/getDefaultImage?product=${productId}`)
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
@@ -64,7 +63,7 @@ export const getImageByProductId = async (productId: string) => {
     .get(`product-image/getByProduct?product=${productId}`)
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
@@ -73,6 +72,6 @@ export const getSoldByProduct = async (productId: string) => {
     .get(`product/sold/${productId}`)
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };

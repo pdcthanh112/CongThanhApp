@@ -1,18 +1,19 @@
-import { Product } from '@models/type';
+import { Product } from '@/models/types';
 import ProductItemCard from './ProductItemCard';
 import ProductItemCardSkeleton from './ProductItemCard/ProductItemCardSkeleton';
 
-interface ShowListProductProps {
+type ShowListProductProps = {
   listProduct: Product[];
   loading: boolean;
 }
-const ShowListProduct = ({ listProduct, loading }: ShowListProductProps): React.ReactElement => {
+
+const ShowListProduct = ({ listProduct, loading = true }: ShowListProductProps) => {
   if (loading)
     return (
       <div className="w-[90%] mx-auto grid gap-4 grid-flow-row-dense grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {Array(10).map((_, id) => (
+        {Array.from(Array(10)).map((_, id) => (
           <ProductItemCardSkeleton key={id} />
-        ))}
+         ))} 
       </div>
     );
 

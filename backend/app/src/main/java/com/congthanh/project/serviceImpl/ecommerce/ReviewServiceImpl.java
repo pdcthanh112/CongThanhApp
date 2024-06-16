@@ -78,7 +78,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public StatisticReviewResponse getReviewStatisticOfProduct(String productId) {
-        StatisticReviewResponse result = reviewRepository.getStatisticReviewFromProduct(productId);
+        Product product = productRepository.findById(productId).orElseThrow(() -> new NotFoundException("Product not found"));
+        StatisticReviewResponse result = reviewRepository.getStatisticReviewFromProduct(product.getId());
         return result;
     }
 
