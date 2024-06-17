@@ -4,6 +4,7 @@ const CART_BASE_URL = 'cart';
 const ORDER_BASE_URL = 'order';
 const WISHLIST_BASE_URL = 'wishlist';
 const HISTORY_BASE_URL = 'history';
+const NOTIFICATION_BASE_URL = 'notification';
 
 export const PATH = {
   HOME: '/',
@@ -23,18 +24,29 @@ export const PATH = {
     PRODUCT_LIST: `/${PRODUCT_BASE_URL}/`,
     PRODUCT_DETAIL: `/${PRODUCT_BASE_URL}/`,
   },
-  CART: `/${CART_BASE_URL}/`,
-  ORDER: `/${ORDER_BASE_URL}/`,
-  WISHLIST: `/${WISHLIST_BASE_URL}/`,
-  HISTORY: `/${HISTORY_BASE_URL}/`,
+  CART_PATH_URL: {
+    CART: `/${CART_BASE_URL}/`,
+  },
+  ORDER_PATH_URL: {
+    ORDER: `/${ORDER_BASE_URL}/`,
+  },
+  WISHLIST_PATH_URL: {
+    WISHLIST: `/${WISHLIST_BASE_URL}/`,
+  },
+  HISTORY_PATH_URL: {
+    HISTORY: `/${HISTORY_BASE_URL}/`,
+  },
+  NOTIFICATION_PATH_URL: {
+    NOTIFICATION: `/${NOTIFICATION_BASE_URL}/`,
+  },
 };
 
-
-import AppLogo from '@/assets/images/app-logo.png'
+import AppLogo from '@/assets/images/app-logo.png';
+import DefaultImage from '@/assets/images/default-image.jpg';
 
 export const IMAGE = {
   appLogo: AppLogo,
-  // appLogo: '/assets/images/app_logo.png',
+  defaultImage: DefaultImage,
   appLogoBlack: '/assets/icons/ic_logo_black.svg',
   appLogoSmall: '/assets/images/app_logo_small.png',
   loginPageImage: '/assets/images/login-page-image.png',

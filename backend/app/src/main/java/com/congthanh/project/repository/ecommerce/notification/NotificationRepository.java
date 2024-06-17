@@ -12,7 +12,7 @@ import java.util.List;
 @Transactional
 public interface NotificationRepository extends JpaRepository<Notification, Long>, NotificationCustomRepository {
 
-  @Query(nativeQuery = true, value = "SELECT * FROM ecommerce_notification WHERE customer = ?1")
+  @Query(nativeQuery = true, value = "SELECT * FROM ecommerce_notification WHERE customer = ?1 AND status = 'ACTIVE' ORDER BY created_at DESC")
   List<Notification> getNotificationByCustomer(String customerId);
 
 }

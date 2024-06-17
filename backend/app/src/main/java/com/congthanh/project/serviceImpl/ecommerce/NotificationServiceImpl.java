@@ -2,15 +2,14 @@ package com.congthanh.project.serviceImpl.ecommerce;
 
 import com.congthanh.project.dto.ecommerce.NotificationDTO;
 import com.congthanh.project.entity.ecommerce.Notification;
+import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.NotificationMapper;
 import com.congthanh.project.repository.ecommerce.notification.NotificationRepository;
 import com.congthanh.project.service.ecommerce.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -42,8 +41,22 @@ public class NotificationServiceImpl implements NotificationService {
             .customer(notificationDTO.getCustomer())
             .content(notificationDTO.getContent())
             .title(notificationDTO.getTitle())
+            .url(notificationDTO.getUrl())
+            .isRead(false)
+            .status("ACTIVE")
             .build();
     Notification result = notificationRepository.save(notification);
     return notificationMapper.mapNotificationEntityToDTO(result);
+  }
+
+  @Override
+  public boolean changeNotificationReadStatus(Long notificationId, boolean status) {
+    Notification notification = notificationRepository.findById(notificationId).orElseThrow(() -> new NotFoundException("Notification not found"));
+    boolean result = notificationRepository.changeNotificationReadStatus(notification.getId(), status);
+    if(result) {
+      return result;
+    } else {
+      throw new RuntimeException("Error");
+    }
   }
 }

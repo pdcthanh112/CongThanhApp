@@ -1,5 +1,6 @@
 package com.congthanh.project.dto.ecommerce;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,13 @@ public class NotificationDTO {
 
   private String content;
 
-  private long createdDate;
+  private String url;
+
+  @JsonProperty("isRead")
+  private boolean isRead;
+
+  private long createdAt;
+
+  private String status;
 
 }

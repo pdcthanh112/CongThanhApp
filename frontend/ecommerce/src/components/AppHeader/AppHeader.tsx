@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import React from 'react';
 import './AppHeader.scss';
 import Image from 'next/image';
 import { Card, Avatar, Icon } from '@mui/material';
@@ -20,26 +20,33 @@ import Link from 'next/link';
 import { Category, Customer, Notification } from '@/models/types';
 import { ThemeToggle } from '../Theme/ThemeToggle';
 import { useTranslations } from 'next-intl';
+import { useQuery } from '@tanstack/react-query';
+import { NOTIFICATION_KEY } from '@/utils/constants/queryKey';
+import { getNotificationByCustomer } from '@/api/notificationApi';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 const AppHeader = () => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const appCategory: Category[] = useAppSelector((state) => state.category.data);
-  const listNotification: Notification[] = useAppSelector((state) => state.notification.data);
+
   const dispatch = useAppDispatch();
   const router = useRouter();
   const t = useTranslations();
   const { data: session } = useSession();
 
-  const [showNotification, setShowNotification] = useState(false);
+  const { data: listNotification, isLoading } = useQuery({
+    queryKey: [NOTIFICATION_KEY],
+    queryFn: async () =>
+      await getNotificationByCustomer('e6169aa0-d4a5-4740-b510-9285bbb73a0e').then((response) => response.data),
+    // await getNotificationByCustomer(currentUser.userInfo.accountId).then((response) => response.data),
+  });
 
   const handleLogout = () => {
     signOut();
     dispatch(logoutRequested({ email: 'fjasljflashfiahsd' }));
   };
 
-  const handleSearch = () => {
-    
-  }
+  const handleSearch = () => {};
 
   return (
     <div className="flex items-center bg-slate-400 p-1 flex-grow py-2">
@@ -71,27 +78,33 @@ const AppHeader = () => {
 
         <CartModal />
 
-        <ThemeToggle/>
+        <ThemeToggle />
 
-        <div className="flex items-start justify-center relative">
-          <NotificationIcon width={33} height={33} className="hover:cursor-pointer" onClick={() => setShowNotification(!showNotification)} />
-          {listNotification?.length > 0 && (
-            <span className="absolute top-0 right-0 h-4 w-4 bg-yellow-400 text-center rounded-full text-black font-bold">{listNotification.length}</span>
-          )}
-          {showNotification && (
-            <Card className="absolute top-10 -right-32 py-2 w-[24rem] h-[40rem] overflow-y-scroll z-10">
-              <NotificationModal />
-            </Card>
-          )}
-        </div>
+        <Popover>
+          <PopoverTrigger asChild>
+            <div className="flex items-start justify-center relative">
+              <NotificationIcon
+                width={30}
+                height={30}
+                className="hover:cursor-pointer"
+              />
+              {Number(listNotification?.length) > 0 && (
+                <span className="absolute top-0 right-0 h-4 w-4 bg-yellow-400 text-center rounded-full text-black font-bold">
+                  {listNotification?.filter(item => item.isRead === false).length}
+                </span>
+              )}
+            </div>
+          </PopoverTrigger>
+          <PopoverContent  className="w-[25rem]">
+            <NotificationModal listNotification={listNotification as Notification[]} loading={isLoading} />
+          </PopoverContent>
+        </Popover>
 
         <div className="relative inline-block group">
           <div className="hover:cursor-pointer">
             {session || currentUser ? (
               <div>
-                <div>
-                  {/* {t('common.hello')}, {currentUser.userInfo.name.split(' ').pop()} */}
-                </div>
+                <div>{/* {t('common.hello')}, {currentUser.userInfo.name.split(' ').pop()} */}</div>
                 {/* <div className="font-semibold md:text-sm">{t('header.account_and_info')}</div> */}
               </div>
             ) : (
@@ -111,7 +124,10 @@ const AppHeader = () => {
                     <Avatar src={currentUser.userInfo.image || String(DefaultImage)} />
                     <span className="font-medium text-lg ml-3">{currentUser.userInfo.name}</span>
                   </span>
-                  <Link href={PATH.MANAGE_PATH_URL.PROFILE} className="flex items-center hover:cursor-pointer hover:underline hover:text-yellow-600">
+                  <Link
+                    href={PATH.MANAGE_PATH_URL.PROFILE}
+                    className="flex items-center hover:cursor-pointer hover:underline hover:text-yellow-600"
+                  >
                     {/* {t('common.manage_profile')} */}
                     <Icon component={NavigateNext} />
                   </Link>

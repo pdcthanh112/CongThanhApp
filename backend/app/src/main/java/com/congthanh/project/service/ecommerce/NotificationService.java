@@ -11,4 +11,6 @@ public interface NotificationService {
 
   NotificationDTO createNotification(NotificationDTO notificationDTO);
 
+  boolean changeNotificationReadStatus(Long notificationId, boolean status);
+
 }

@@ -3,5 +3,7 @@ export type Notification = {
   customer: string;
   title: string;
   content: string;
-  createdDate: Date;
+  createdAt: Date;
+  isRead: boolean;
+  status: string
 };
