@@ -29,7 +29,7 @@ const NotificationItem = ({ item }: NotificationItemPropsType) => {
 
   return (
     <div
-      className={`px-4 py-2 hover:cursor-pointer hover:bg-slate-200 flex relative ${!item.isRead && 'bg-green-100'}`}
+      className={`px-4 py-2 hover:cursor-pointer hover:bg-slate-50 flex relative ${!item.isRead && 'bg-green-50'}`}
     >
       <Image src={IMAGE.defaultImage} alt={''} width={70} height={70} className="rounded-full" />
       <div className="mx-3 w-[65%]">

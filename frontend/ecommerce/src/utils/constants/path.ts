@@ -43,6 +43,7 @@ export const PATH = {
 
 import AppLogo from '@/assets/images/app-logo.png';
 import DefaultImage from '@/assets/images/default-image.jpg';
+import CartEmptyImage from '@/assets/images/cart-empty-image.png'
 
 export const IMAGE = {
   appLogo: AppLogo,
@@ -50,4 +51,5 @@ export const IMAGE = {
   appLogoBlack: '/assets/icons/ic_logo_black.svg',
   appLogoSmall: '/assets/images/app_logo_small.png',
   loginPageImage: '/assets/images/login-page-image.png',
+  cartEmpty: CartEmptyImage
 };

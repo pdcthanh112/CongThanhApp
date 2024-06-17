@@ -10,7 +10,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import AppLogo from '@/assets/images/app-logo-removebg.png';
 import DefaultImage from '@/assets/images/default-image.jpg';
 import { Search as SearchIcon, ArrowDropDownOutlined, NavigateNext } from '@mui/icons-material';
-import CartModal from '@/components/CartModal';
+import CartModal from '@/components/Cart/CartModal';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import NotificationModal from '@/components/NotificationModal';
 import { PATH } from '@/utils/constants/path';
@@ -83,19 +83,15 @@ const AppHeader = () => {
         <Popover>
           <PopoverTrigger asChild>
             <div className="flex items-start justify-center relative">
-              <NotificationIcon
-                width={30}
-                height={30}
-                className="hover:cursor-pointer"
-              />
+              <NotificationIcon width={30} height={30} className="hover:cursor-pointer" />
               {Number(listNotification?.length) > 0 && (
                 <span className="absolute top-0 right-0 h-4 w-4 bg-yellow-400 text-center rounded-full text-black font-bold">
-                  {listNotification?.filter(item => item.isRead === false).length}
+                  {listNotification?.filter((item) => item.isRead === false).length}
                 </span>
               )}
             </div>
           </PopoverTrigger>
-          <PopoverContent  className="w-[25rem]">
+          <PopoverContent className="w-[25rem]">
             <NotificationModal listNotification={listNotification as Notification[]} loading={isLoading} />
           </PopoverContent>
         </Popover>

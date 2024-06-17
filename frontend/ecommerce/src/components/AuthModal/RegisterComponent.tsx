@@ -37,10 +37,10 @@ const RegisterComponent = () => {
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <div className="h-20">
+            <div className="h-[4.5rem]">
               <div className="flex items-center border border-gray-500 rounded">
                 <Icon component={Email} className="ml-2" />
-                <Input type="email" {...field} className="border-none" />
+                <Input type="email" {...field} placeholder='Enter your email' className="border-none" />
               </div>
               <FormHelperText error>{errors.email?.message}</FormHelperText>
             </div>
@@ -51,10 +51,10 @@ const RegisterComponent = () => {
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <div className="h-20">
+            <div className="h-[4.5rem]">
               <div className="flex items-center border border-gray-500 rounded">
                 <Icon component={AccountCircle} className="ml-2" />
-                <Input {...field} className="border-none" />
+                <Input {...field} placeholder='Enter your fullname' className="border-none" />
               </div>
               <FormHelperText error>{errors.name?.message}</FormHelperText>
             </div>
@@ -66,10 +66,10 @@ const RegisterComponent = () => {
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <div className="h-20">
+            <div className="h-[4.5rem]">
               <div className="flex items-center border border-gray-500 rounded">
                 <Icon component={Password} className="ml-2" />
-                <Input {...field} type={showPassword ? 'text' : 'password'} className="border-none" />
+                <Input {...field} type={showPassword ? 'text' : 'password'} placeholder='Enter your password' className="border-none" />
                 <Icon
                   component={showPassword ? Visibility : VisibilityOff}
                   fontSize="small"
@@ -87,10 +87,10 @@ const RegisterComponent = () => {
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <div className="h-20">
+            <div className="h-[4.5rem]">
               <div className="flex items-center border border-gray-500 rounded">
                 <Icon component={Password} className="ml-2" />
-                <Input {...field} type={showPassword ? 'text' : 'password'} className="border-none" />
+                <Input {...field} type={showPassword ? 'text' : 'password'} placeholder='Confirm your password' className="border-none" />
                 <Icon
                   component={showPassword ? Visibility : VisibilityOff}
                   fontSize="small"

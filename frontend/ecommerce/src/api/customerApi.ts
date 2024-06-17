@@ -1,5 +1,5 @@
 import axiosConfig from '@/config/axiosConfig';
-import { ChangePasswordForm, ResetPasswordForm, SignupForm } from '@/models/form';
+import { ChangePasswordForm, ResetPasswordForm } from '@/models/form';
 import axios from 'axios';
 
 export const login = async (email: string, password: string) => {

@@ -4,17 +4,27 @@ import { Input } from '@/components/ui/input';
 import { FormHelperText, Icon } from '@mui/material';
 import { Email, Password, Visibility, VisibilityOff } from '@mui/icons-material';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useTranslations } from 'next-intl';
 import { LoginSchema, LoginSchemaType } from '@/models/schema/authSchema';
 import { PATH } from '@/utils/constants/path';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
+import { getAuthLogo } from '@/utils/helper';
 
 const LoginComponent = () => {
+  const t = useTranslations();
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const t = useTranslations();
+  const providers = [
+    { id: 'google', name: 'Google' },
+    { id: 'facebook', name: 'Facebook' },
+    { id: 'twitter', name: 'Twitter' },
+    { id: 'apple', name: 'Apple' },
+  ];
 
   const {
     handleSubmit,
@@ -45,7 +55,7 @@ const LoginComponent = () => {
             <div className="h-20">
               <div className="flex items-center border border-gray-500 rounded">
                 <Icon component={Email} className="ml-2" />
-                <Input type="email" {...field} className="border-none" />
+                <Input type="email" placeholder="Enter your email" {...field} className="border-none" />
               </div>
               <FormHelperText error>{errors.email?.message}</FormHelperText>
             </div>
@@ -60,7 +70,12 @@ const LoginComponent = () => {
             <div className="h-20">
               <div className="flex items-center border border-gray-500 rounded">
                 <Icon component={Password} className="ml-2" />
-                <Input type={showPassword ? 'text' : 'password'} {...field} className="border-none" />
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Enter your password"
+                  {...field}
+                  className="border-none"
+                />
                 <Icon
                   component={showPassword ? Visibility : VisibilityOff}
                   fontSize="small"
@@ -108,6 +123,23 @@ const LoginComponent = () => {
           {/* {isLoadingAuth && <ReactLoading className="ml-2" type="spin" color="#FF4444" width={37} />} */}
         </div>
       </form>
+
+      <div className="flex justify-between mt-5">
+        {providers.map((item: any) => {
+          const data = getAuthLogo(item.id);
+          return (
+            <div
+              key={item.id}
+              title={`Login with ${item.name}`}
+              className={`flex items-center px-3 py-2 rounded-sm text-white font-medium hover:cursor-pointer bg-[${data.bgColor}]`}
+              onClick={() => signIn(item.id)}
+            >
+              <Image src={data.img} alt={''} width={20} />
+              <span className="ml-1 text-sm">{item.name}</span>
+            </div>
+          );
+        })}
+      </div>
     </React.Fragment>
   );
 };
