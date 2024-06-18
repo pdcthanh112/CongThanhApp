@@ -1,4 +1,4 @@
-import { Product } from "@models/type";
+import { Product } from "@/models/types";
 
 export type Wishlist = {
   id: string;

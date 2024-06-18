@@ -5,6 +5,7 @@ const ORDER_BASE_URL = 'order';
 const WISHLIST_BASE_URL = 'wishlist';
 const HISTORY_BASE_URL = 'history';
 const NOTIFICATION_BASE_URL = 'notification';
+const SUPPLIER_BASE_URL = 'supplier';
 
 export const PATH = {
   HOME: '/',
@@ -39,11 +40,14 @@ export const PATH = {
   NOTIFICATION_PATH_URL: {
     NOTIFICATION: `/${NOTIFICATION_BASE_URL}/`,
   },
+  SUPPLIER_PATH_URL: {
+    SUPPLIER_DATAIL: `/${SUPPLIER_BASE_URL}/`,
+  },
 };
 
 import AppLogo from '@/assets/images/app-logo.png';
 import DefaultImage from '@/assets/images/default-image.jpg';
-import CartEmptyImage from '@/assets/images/cart-empty-image.png'
+import CartEmptyImage from '@/assets/images/cart-empty-image.png';
 
 export const IMAGE = {
   appLogo: AppLogo,
@@ -51,5 +55,5 @@ export const IMAGE = {
   appLogoBlack: '/assets/icons/ic_logo_black.svg',
   appLogoSmall: '/assets/images/app_logo_small.png',
   loginPageImage: '/assets/images/login-page-image.png',
-  cartEmpty: CartEmptyImage
+  cartEmpty: CartEmptyImage,
 };

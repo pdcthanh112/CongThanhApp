@@ -25,11 +25,12 @@ import ProductDetailSkeleton from '../ProductDetailSkeleton';
 import { ReviewStatistic } from '@/models/types/Review';
 import { BarChart, Bar, XAxis, ResponsiveContainer } from 'recharts';
 import { Button } from '@/components/ui/button';
+import { PATH } from '@/utils/constants/path';
 
 type ProductDetailProps = {
   product: Product;
   reviewStatistic: ReviewStatistic;
-  supplier: Supplier
+  supplier: Supplier;
 };
 
 export default function ProductDetail({ product, reviewStatistic, supplier }: ProductDetailProps) {
@@ -421,7 +422,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
                 <span>{t('common.contact')}</span>
               </Button>
               <Link
-                href={`/supplier/${supplier.id}`}
+                href={PATH.SUPPLIER_PATH_URL.SUPPLIER_DATAIL + supplier.slug}
                 className=" border-solid border-2 border-gray-300 flex items-center px-2"
               >
                 <Icon component={Storefront} />

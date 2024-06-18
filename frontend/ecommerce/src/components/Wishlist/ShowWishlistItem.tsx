@@ -1,21 +1,26 @@
-import { NextPage } from 'next';
-import { useAppSelector } from '@redux/store';
-import { TableContainer, Paper, Table, TableHead, TableRow, TableBody, TableCell, Icon } from '@mui/material';
+import React from 'react';
+import { Wishlist } from '@/models/types';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { Customer, Product } from '@models/type';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useRouter } from 'next/navigation';
+import { TableContainer, Paper, Table, TableHead, TableRow, TableBody, TableCell } from '@mui/material';
+import { Customer, Product } from '@/models/types';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
 import { getWishlistByCustomer } from 'api/wishlistApi';
 import EmptyWishlistImage from '@assets/images/empty_wishlist.png';
-import WishlistItem from './WishlistItem';
+import { WISHLIST_KEY } from '@/utils/constants/queryKey';
+import { useAppSelector } from '@/redux/store';
+// import WishlistItem from './WishlistItem';
 
-const Wishlist: NextPage = (): React.ReactElement => {
+
+const ShowWishlistItem = () => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
-  const t = useTranslations('common');
+  const t = useTranslations();
 
-  const { data: wishlist, isLoading } = useQuery(['wishlist'], async () => await getWishlistByCustomer(currentUser.userInfo.accountId).then((response) => response.data));
+  const { data: wishlist, isLoading } = useQuery({
+    queryKey: [WISHLIST_KEY],
+    queryFn: async () => await getWishlistByCustomer(currentUser.userInfo.accountId).then((response) => response.data)
+  });
 
   return (
     <div className="bg-white w-full flex justify-center">
@@ -53,11 +58,9 @@ const Wishlist: NextPage = (): React.ReactElement => {
   );
 };
 
-export default Wishlist;
-
 const EmptyWishlist = () => {
   const router = useRouter();
-  const t = useTranslations('common');
+  const t = useTranslations();
   return (
     <div style={{ width: '250%' }}>
       <div className="flex justify-center">
@@ -71,10 +74,4 @@ const EmptyWishlist = () => {
   );
 };
 
-export async function getServerSideProps(context: any) {
-  return {
-    props: {
-      ...(await serverSideTranslations(context.locale, ['common'])),
-    },
-  };
-}
+export default ShowWishlistItem;

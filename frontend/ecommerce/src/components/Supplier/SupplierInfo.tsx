@@ -1,45 +1,44 @@
-import { NextPage } from 'next';
+'use client'
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { getProductFromSupplier, getSupplierById } from '@/api/supplierApi';
-import { useRouter } from 'next/router';
-import { Product } from '@models/type/ProductModel';
-import { PaginationParams } from '@models/type';
-import Image from 'next/image';
+import { PaginationParams, Product, Supplier } from '@/models/types';
 import { Avatar, Icon } from '@mui/material';
-import Button from '@components/UI/Button';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 import { Add, ForumOutlined } from '@mui/icons-material';
-import { Tabs, type TabsProps } from 'antd';
 import { useTranslations } from 'next-intl';
+import { useQuery } from '@tanstack/react-query';
+import { PRODUCT_KEY } from '@/utils/constants/queryKey';
+import { getProductFromSupplier } from '@/api/supplierApi';
+import { Tabs, type TabsProps } from 'antd';
 
-const Store: NextPage = (): React.ReactElement => {
-  const router = useRouter();
-  const { id: storeId } = router.query;
+type SupplierInfoPropsType = {
+  supplier: Supplier;
+};
 
-  const t = useTranslations('common');
+const SupplierInfo = ({ supplier }: SupplierInfoPropsType) => {
+  const t = useTranslations();
 
   const [pagination, setPagination] = useState<PaginationParams>({ page: 1, limit: 10, totalPage: 0 });
 
-  const { data: store, isLoading } = useQuery(['store'], async () => await getSupplierById(storeId).then((response) => response.data));
-  const { data: listProduct, isLoading: isLoadingProduct } = useQuery(
-    ['product', pagination],
-    async () =>
-      await getProductFromSupplier(storeId, 0, 15).then((response) => {
+  const { data: listProduct, isLoading: isLoadingProduct } = useQuery({
+    queryKey: [PRODUCT_KEY, pagination],
+    queryFn: async () =>
+      await getProductFromSupplier(supplier.id, 0, 15).then((response) => {
         setPagination({ ...pagination, totalPage: response.data.totalPage });
         return response.data.responseList;
       }),
-  );
+  });
+
 
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: 'Best seller',
+      label: 'Tab 1',
       children: 'Content of Tab Pane 1',
     },
     {
       key: '2',
-      label: 'All',
+      label: 'Tab 2',
       children: 'Content of Tab Pane 2',
     },
     {
@@ -49,20 +48,23 @@ const Store: NextPage = (): React.ReactElement => {
     },
   ];
 
-
-  if (isLoading || isLoadingProduct) return <div>loading</div>;
-
   return (
     <React.Fragment>
       <div className="bg-white flex justify-center py-5">
         <div className="w-[80%] flex">
           <div className="w-1/3 relative">
-            <Image src={store.background} alt={'Store background'} width={350} height={100} className="relative opacity-90" />
+            <Image
+              src={supplier.background}
+              alt={'Store background'}
+              width={350}
+              height={100}
+              className="relative opacity-90"
+            />
             <div className="absolute top-0 left-0 w-full h-full bg-opacity-50 z-10 p-4 text-white">
               <div className="flex">
-                <Avatar src={store.avatar} style={{ width: '5rem', height: '5rem' }} />
+                <Avatar src={supplier.avatar} style={{ width: '5rem', height: '5rem' }} />
                 <div className=" ml-2">
-                  <h3 className="font-medium text-lg">{store.name}</h3>
+                  <h3 className="font-medium text-lg">{supplier.name}</h3>
                   <span>asljlajslasfjl</span>
                 </div>
               </div>
@@ -84,23 +86,13 @@ const Store: NextPage = (): React.ReactElement => {
       </div>
       <Tabs defaultActiveKey="2" items={items} />
 
-
-      <div>
+      {/* <div>
         {listProduct.map((item: Product) => (
           <>{item.name}</>
         ))}
-      </div>
-      
+      </div> */}
     </React.Fragment>
   );
 };
 
-export default Store;
-
-export async function getServerSideProps({ locale }: any) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  };
-}
+export default SupplierInfo;

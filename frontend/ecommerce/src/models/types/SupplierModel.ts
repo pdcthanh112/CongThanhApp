@@ -3,4 +3,5 @@ export type Supplier = {
   name: string;
   avatar: string;
   background: string;
+  slug: string;
 };
