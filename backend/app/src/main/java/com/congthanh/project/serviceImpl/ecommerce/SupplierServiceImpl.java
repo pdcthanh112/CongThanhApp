@@ -4,6 +4,7 @@ import com.congthanh.project.dto.ecommerce.ProductDTO;
 import com.congthanh.project.dto.ecommerce.SupplierDTO;
 import com.congthanh.project.entity.ecommerce.Supplier;
 import com.congthanh.project.model.ecommerce.mapper.ProductMapper;
+import com.congthanh.project.model.ecommerce.mapper.SupplierMapper;
 import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.entity.ecommerce.Product;
@@ -35,9 +36,15 @@ public class SupplierServiceImpl implements SupplierService {
                 .name(supplier.getName())
                 .avatar(supplier.getAvatar())
                 .background(supplier.getBackground())
-                .domain(supplier.getDomain())
+                .slug(supplier.getSlug())
                 .build();
         return response;
+    }
+
+    @Override
+    public SupplierDTO getSupplierBySlug(String slug) {
+        Supplier result = supplierRepository.getSupplierBySlug(slug);
+        return SupplierMapper.mapSupplierEntityToDTO(result);
     }
 
     @Override
@@ -46,7 +53,7 @@ public class SupplierServiceImpl implements SupplierService {
                 .name(supplierDTO.getName())
                 .avatar(supplierDTO.getAvatar())
                 .background(supplierDTO.getBackground())
-                .domain(supplierDTO.getDomain())
+                .slug(supplierDTO.getSlug())
                 .build();
         return supplierRepository.save(supplier);
     }

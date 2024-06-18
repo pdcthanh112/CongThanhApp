@@ -9,6 +9,8 @@ public interface SupplierService {
 
     SupplierDTO getSupplierById(String id);
 
+    SupplierDTO getSupplierBySlug(String slug);
+
     Supplier createSupplier(SupplierDTO supplierDTO);
 
     ResponseWithPagination<ProductDTO> getProductFromSupplier(String storeId, Integer page, Integer limit);

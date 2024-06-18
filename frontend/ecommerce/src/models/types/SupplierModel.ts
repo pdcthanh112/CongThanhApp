@@ -1,4 +1,4 @@
-export type Store = {
+export type Supplier = {
   id: string;
   name: string;
   avatar: string;

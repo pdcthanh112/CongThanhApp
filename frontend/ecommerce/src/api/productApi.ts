@@ -1,5 +1,5 @@
 import axiosConfig from '@/config/axiosConfig';
-import { Product, ProductImage, Response, ResponseWithPagination } from '@/models/types';
+import { ProductVariantAttribute, Product, ProductImage, Response, ResponseWithPagination } from '@/models/types';
 
 export const getAllProduct = async (page?: number, limit?: number): Promise<ResponseWithPagination<Product>> => {
   const params = new URLSearchParams();
@@ -22,7 +22,7 @@ export const getProductById = async (productId: string): Promise<Product> => {
     });
 };
 
-export const getProductBySlug = async (productSlug: string) => {
+export const getProductBySlug = async (productSlug: string): Promise<Response<Product>> => {
   return await axiosConfig
     .get(`product/getBySlug/${productSlug}`)
     .then((response) => response.data)
@@ -70,6 +70,17 @@ export const getImageByProductId = async (productId: string) => {
 export const getSoldByProduct = async (productId: string) => {
   return await axiosConfig
     .get(`product/sold/${productId}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw Error(error);
+    });
+};
+
+export const getVariantAttributeValueByProduct = async (
+  productId: string
+): Promise<Response<ProductVariantAttribute[]>> => {
+  return await axiosConfig
+    .get(`product/get-variant-attribute?product=${productId}`)
     .then((response) => response.data)
     .catch((error) => {
       throw Error(error);

@@ -1,6 +1,7 @@
 package com.congthanh.project.repository.ecommerce.supplier;
 
 import com.congthanh.project.entity.ecommerce.Product;
+import com.congthanh.project.entity.ecommerce.Supplier;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -12,6 +13,14 @@ public class SupplierCustomRepositoryImpl implements SupplierCustomRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Override
+    public Supplier getSupplierBySlug(String slug) {
+        String sql = "SELECT s FROM Supplier s WHERE s.slug = :slug";
+        TypedQuery<Supplier> query = entityManager.createQuery(sql, Supplier.class);
+        query.setParameter("slug", slug);
+        return query.getSingleResult();
+    }
 
     @Override
     public Page<Product> getProductFromSupplier(String storeId, Pageable pageable) {

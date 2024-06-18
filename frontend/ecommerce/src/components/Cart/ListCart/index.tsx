@@ -9,7 +9,6 @@ import { useTranslations } from 'next-intl';
 import { Delete } from '@mui/icons-material';
 import { Button } from '@/components/ui';
 import { useRouter } from 'next/navigation';
-
 import Image from 'next/image';
 import { IMAGE, PATH } from '@/utils/constants/path';
 import Link from 'next/link';

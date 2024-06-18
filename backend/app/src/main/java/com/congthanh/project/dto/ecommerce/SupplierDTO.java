@@ -22,6 +22,6 @@ public class SupplierDTO {
     private String background;
 
     @NotNull
-    private String domain;
+    private String slug;
 
 }

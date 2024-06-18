@@ -1,5 +1,5 @@
 import createNextIntlPlugin from 'next-intl/plugin';
- 
+
 const withNextIntl = createNextIntlPlugin();
 // const withNextIntl = createNextIntlPlugin('./src/app/i18n.ts');
 
@@ -9,12 +9,13 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/",
-        destination: "/home",
+        source: '/',
+        destination: '/home',
         permanent: true,
       },
     ];
   },
+  
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -30,7 +31,7 @@ const nextConfig = {
         hostname: '*',
       },
     ],
-  }
+  },
 };
 
 export default withNextIntl(nextConfig);

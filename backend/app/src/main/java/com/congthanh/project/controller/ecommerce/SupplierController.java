@@ -26,17 +26,28 @@ public class SupplierController {
     private SupplierService supplierService;
 
     @Autowired
-    private SupplierRepository storeRepository;
+    private SupplierRepository supplierRepository;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response<SupplierDTO>> getStoreById(@PathVariable String id) {
-        SupplierDTO store = supplierService.getSupplierById(id);
+    public ResponseEntity<Response<SupplierDTO>> getSupplierById(@PathVariable String id) {
+        SupplierDTO supplier = supplierService.getSupplierById(id);
         Response<SupplierDTO> response = new Response<>();
-        response.setData(store);
+        response.setData(supplier);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
         response.setMessage("get successfully");
         return ResponseEntity.ok().body(response);
     }
+
+    @GetMapping("/get-by-slug")
+    public ResponseEntity<Response<SupplierDTO>> getSupplierBySlug(@RequestParam("slug") String slug) {
+        SupplierDTO supplier = supplierService.getSupplierBySlug(slug);
+        Response<SupplierDTO> response = new Response<>();
+        response.setData(supplier);
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        response.setMessage("get successfully");
+        return ResponseEntity.ok().body(response);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<Response<Supplier>> createStore(@RequestBody SupplierDTO supplierDTO) {
         Supplier supplier = supplierService.createSupplier(supplierDTO);
@@ -47,8 +58,8 @@ public class SupplierController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/getProductFromStore")
-    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductFromStore(@RequestParam("store") String storeId, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer limit) {
+    @GetMapping("/getProductFromSupplier")
+    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductFromStore(@RequestParam("supplier") String storeId, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer limit) {
         ResponseWithPagination<ProductDTO> data = supplierService.getProductFromSupplier(storeId, page, limit);
         Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
         response.setData(data);
@@ -58,7 +69,7 @@ public class SupplierController {
     }
 
     @QueryMapping(value = "supplier")
-    List<Supplier> stores() {
-        return storeRepository.findAll();
+    List<Supplier> suppliers() {
+        return supplierRepository.findAll();
     }
 }

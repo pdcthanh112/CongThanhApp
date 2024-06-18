@@ -34,12 +34,6 @@ public class CartItemServiceImpl implements CartItemService {
   @Autowired
   private CartItemMapper cartItemMapper;
 
-  @Autowired
-  private CartMapper cartMapper;
-
-  @Autowired
-  private ProductMapper productMapper;
-
   @Override
   public List<CartItemDTO> getItemByCartId(String cartId) {
     List<CartItem> data = cartItemRepository.getAllCartItemByCartId(cartId);
@@ -82,8 +76,8 @@ public class CartItemServiceImpl implements CartItemService {
     CartItemDTO response = CartItemDTO.builder()
             .id(result.getId())
             .quantity(result.getQuantity())
-            .product(productMapper.mapProductEntityToDTO(result.getProduct()))
-            .cart(cartMapper.mapCartEntityToDTO(result.getCart()))
+            .product(ProductMapper.mapProductEntityToDTO(result.getProduct()))
+            .cart(CartMapper.mapCartEntityToDTO(result.getCart()))
             .build();
     return response;
   }

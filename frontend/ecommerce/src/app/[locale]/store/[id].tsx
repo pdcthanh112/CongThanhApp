@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { getProductFromStore, getStoreById } from '@/api/supplierApi';
+import { getProductFromSupplier, getSupplierById } from '@/api/supplierApi';
 import { useRouter } from 'next/router';
 import { Product } from '@models/type/ProductModel';
 import { PaginationParams } from '@models/type';
@@ -21,11 +21,11 @@ const Store: NextPage = (): React.ReactElement => {
 
   const [pagination, setPagination] = useState<PaginationParams>({ page: 1, limit: 10, totalPage: 0 });
 
-  const { data: store, isLoading } = useQuery(['store'], async () => await getStoreById(storeId).then((response) => response.data));
+  const { data: store, isLoading } = useQuery(['store'], async () => await getSupplierById(storeId).then((response) => response.data));
   const { data: listProduct, isLoading: isLoadingProduct } = useQuery(
     ['product', pagination],
     async () =>
-      await getProductFromStore(storeId, 0, 15).then((response) => {
+      await getProductFromSupplier(storeId, 0, 15).then((response) => {
         setPagination({ ...pagination, totalPage: response.data.totalPage });
         return response.data.responseList;
       }),

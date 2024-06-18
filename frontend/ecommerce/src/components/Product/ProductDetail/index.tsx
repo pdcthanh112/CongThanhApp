@@ -2,19 +2,8 @@
 import React, { useRef, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { getAttributeByProductId, getImageByProductId, getProductBySlug, getSoldByProduct } from 'api/productApi';
-import {
-  Rating,
-  Icon,
-  Avatar,
-  TableContainer,
-  Table,
-  TableBody,
-  TableRow,
-  TableCell,
-  Button,
-  Popover,
-} from '@mui/material';
+import { getImageByProductId, getSoldByProduct, getVariantAttributeValueByProduct } from 'api/productApi';
+import { Rating, Icon, Avatar, TableContainer, Table, TableBody, TableRow, TableCell, Popover } from '@mui/material';
 import { Storefront, ForumOutlined, KeyboardArrowDown } from '@mui/icons-material';
 import Image from 'next/image';
 import DefaultImage from '@/assets/images/default-image.jpg';
@@ -27,21 +16,23 @@ import { HeartEmpty, HeartFull } from '@/assets/icons';
 import { toast } from 'react-toastify';
 import { useAddProductToCart } from '@/hooks/cart/cartHook';
 import { getWishlistByCustomer } from 'api/wishlistApi';
-import { getStoreById } from '@/api/supplierApi';
+import { getSupplierById } from '@/api/supplierApi';
 import Link from 'next/link';
-import { Customer, Product, ProductImage, Store, Wishlist } from '@/models/types';
+import { Customer, Product, ProductAttribute, ProductImage, Supplier, Wishlist } from '@/models/types';
 import QuantitySelector from '@/components/QuantitySelector/QuantitySelector';
 import { PRODUCT_KEY, WISHLIST_KEY } from '@/utils/constants/queryKey';
 import ProductDetailSkeleton from '../ProductDetailSkeleton';
 import { ReviewStatistic } from '@/models/types/Review';
 import { BarChart, Bar, XAxis, ResponsiveContainer } from 'recharts';
+import { Button } from '@/components/ui/button';
 
 type ProductDetailProps = {
   product: Product;
   reviewStatistic: ReviewStatistic;
+  supplier: Supplier
 };
 
-export default function ProductDetail({ product, reviewStatistic }: ProductDetailProps) {
+export default function ProductDetail({ product, reviewStatistic, supplier }: ProductDetailProps) {
   console.log('PPPPPPPPPPPPPPP', product);
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const router = useRouter();
@@ -52,7 +43,7 @@ export default function ProductDetail({ product, reviewStatistic }: ProductDetai
 
   const [quantity, setQuantity] = useState(1);
   const [sold, setSold] = useState<number>(0);
-  const [store, setStore] = useState<Store>();
+
   // const [showReviewStatistic, setShowReviewStatistic] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<ProductImage>();
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5]);
@@ -64,6 +55,11 @@ export default function ProductDetail({ product, reviewStatistic }: ProductDetai
 
   const { mutate: addProductToWishlist } = useAddProductToWishlist();
   const { mutate: removeProductFromWishlist } = useRemoveProductFromWishlist();
+
+  const { data: productVariantAttribute } = useQuery({
+    queryKey: ['list-product-attribute-value'],
+    queryFn: async () => await getVariantAttributeValueByProduct(product.id).then((response) => response.data),
+  });
 
   //   const { data: product, isLoading } = useQuery({
   //     queryKey: [PRODUCT_KEY, productSlug],
@@ -127,50 +123,50 @@ export default function ProductDetail({ product, reviewStatistic }: ProductDetai
     }
   };
 
-  // const handleAddToWishlist = (productId: string) => {
-  //   if (currentUser) {
-  //     try {
-  //       addProductToWishlist(
-  //         { customerId: currentUser.userInfo.accountId, productId: productId },
-  //         {
-  //           onSuccess() {
-  //             toast.success(t('wishlist.add_item_to_wishlist_successfully'));
-  //           },
-  //           onError() {
-  //             toast.error(t('wishlist.add_item_to_wishlist_failed'));
-  //           },
-  //         },
-  //       );
-  //     } catch (error) {
-  //       toast.error(t('wishlist.add_item_to_wishlist_failed'));
-  //     }
-  //   } else {
-  //     dispatch(openModalAuth());
-  //   }
-  // };
+  const handleAddToWishlist = (productId: string) => {
+    if (currentUser) {
+      try {
+        addProductToWishlist(
+          { customerId: currentUser.userInfo.accountId, productId: productId },
+          {
+            onSuccess() {
+              toast.success(t('wishlist.add_item_to_wishlist_successfully'));
+            },
+            onError() {
+              toast.error(t('wishlist.add_item_to_wishlist_failed'));
+            },
+          }
+        );
+      } catch (error) {
+        toast.error(t('wishlist.add_item_to_wishlist_failed'));
+      }
+    } else {
+      dispatch(openModalAuth());
+    }
+  };
 
-  // const handleRemoveFromWishlist = (productId: string) => {
-  //   if (currentUser) {
-  //     try {
-  //       removeProductFromWishlist(
-  //         { customerId: currentUser.userInfo.accountId, productId: productId },
-  //         {
-  //           onSuccess() {
-  //             toast.success(t('wishlist.remove_item_from_wishlist_successfully'));
-  //           },
-  //           onError(error) {
-  //             toast.error(t('wishlist.remove_item_from_wishlist_failed'));
-  //             console.log(error);
-  //           },
-  //         },
-  //       );
-  //     } catch (error) {
-  //       toast.error(t('wishlist.remove_item_from_wishlist_failed'));
-  //     }
-  //   } else {
-  //     dispatch(openModalAuth());
-  //   }
-  // };
+  const handleRemoveFromWishlist = (productId: string) => {
+    if (currentUser) {
+      try {
+        removeProductFromWishlist(
+          { customerId: currentUser.userInfo.accountId, productId: productId },
+          {
+            onSuccess() {
+              toast.success(t('wishlist.remove_item_from_wishlist_successfully'));
+            },
+            onError(error) {
+              toast.error(t('wishlist.remove_item_from_wishlist_failed'));
+              console.log(error);
+            },
+          }
+        );
+      } catch (error) {
+        toast.error(t('wishlist.remove_item_from_wishlist_failed'));
+      }
+    } else {
+      dispatch(openModalAuth());
+    }
+  };
 
   const handleZoom = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -355,7 +351,7 @@ export default function ProductDetail({ product, reviewStatistic }: ProductDetai
                 <span
                   className="hover:cursor-pointer"
                   title={t('common.add_to_wishlist')}
-                  // onClick={() => handleAddToWishlist(product.id)}
+                  onClick={() => handleAddToWishlist(product.id)}
                 >
                   <Icon component={HeartEmpty} sx={{ color: 'red' }} />
                 </span>
@@ -363,7 +359,7 @@ export default function ProductDetail({ product, reviewStatistic }: ProductDetai
                 <span
                   className="hover:cursor-pointer"
                   title={t('common.remove_from_wishlist')}
-                  //  onClick={() => handleRemoveFromWishlist(product.id)}
+                  onClick={() => handleRemoveFromWishlist(product.id)}
                 >
                   <Icon component={HeartFull} sx={{ color: 'red' }} />
                 </span>
@@ -371,6 +367,22 @@ export default function ProductDetail({ product, reviewStatistic }: ProductDetai
             </div>
           </div>
           <div className="font-semibold text-3xl text-yellow-400">{formatCurrency(10000000000000, 'vi', 'VND')}</div>
+
+          <div>
+            {productVariantAttribute?.map((item) => (
+              <div key={item.id} className="flex space-y-5">
+                <div className="w-1/5 flex items-center">{item.attributeName}</div>
+                <div className="w-4/5">
+                  {item.value.map((item) => (
+                    <span key={item.id} className="border border-gray-200 rounded px-3 py-2 mr-3 hover:cursor-pointer">
+                      {item.value}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
           <div className="flex mt-10">
             <span className="flex items-center mr-10">{t('product.Quantity')}</span>
             <QuantitySelector
@@ -400,16 +412,16 @@ export default function ProductDetail({ product, reviewStatistic }: ProductDetai
       </div>
       <div className="bg-white mt-10 p-5 flex">
         <div className="w-[35%] flex">
-          <Avatar src={store?.avatar} alt="Store Avatar" style={{ width: '6rem', height: '6rem' }} />
+          <Avatar src={supplier.avatar} alt="Store Avatar" style={{ width: '6rem', height: '6rem' }} />
           <div className="w-full ml-3">
-            <h3 className="mb-2">{store?.name}</h3>
+            <h3 className="mb-2">{supplier.name}</h3>
             <div className="flex">
               <Button className="bg-yellow-50 text-yellow-300 border-solid border-2 border-yellow-300 mr-3">
                 <Icon component={ForumOutlined} />
                 <span>{t('common.contact')}</span>
               </Button>
               <Link
-                href={`/store/${store?.id}`}
+                href={`/supplier/${supplier.id}`}
                 className=" border-solid border-2 border-gray-300 flex items-center px-2"
               >
                 <Icon component={Storefront} />
@@ -436,12 +448,12 @@ export default function ProductDetail({ product, reviewStatistic }: ProductDetai
         <TableContainer>
           <Table>
             <TableBody>
-              {/* {productAttribute?.map((item: AttributeValue) => (
+              {product.attribute?.map((item: ProductAttribute) => (
                 <TableRow key={item.id}>
-                  <TableCell>{item.attribute.name}</TableCell>
+                  <TableCell>{item.attribute}</TableCell>
                   <TableCell>{item.value}</TableCell>
                 </TableRow>
-              ))} */}
+              ))}
             </TableBody>
           </Table>
         </TableContainer>

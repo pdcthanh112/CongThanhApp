@@ -1,6 +1,7 @@
 package com.congthanh.project.service.ecommerce;
 
 import com.congthanh.project.dto.ecommerce.ProductDTO;
+import com.congthanh.project.model.ecommerce.response.ProductVariantAttributeValueResponse;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.entity.ecommerce.Product;
 
@@ -30,4 +31,5 @@ public interface ProductService {
 
   Long getSoldByProduct(String productId);
 
+  List<ProductVariantAttributeValueResponse> getVariantAttributeValueByProduct(String productId);
 }

@@ -7,19 +7,19 @@ export type Product = {
   description: string;
   SKU: string;
   supplier: string;
-  image: ProductImage[]
-  brand: string
+  image: ProductImage[];
+  brand: string;
   status: string;
-  variant: ProductVariant[]
-  attribute: ProductAttribute[]
-}
+  variant: ProductVariant[];
+  attribute: ProductAttribute[];
+};
 
 export type ProductAttribute = {
   id: number;
-  name: string;
-  value: string
-  product: string
-}
+  attribute: string;
+  value: string;
+  product: string;
+};
 
 export type ProductImage = {
   id: number;
@@ -27,15 +27,15 @@ export type ProductImage = {
   imagePath: string;
   alt: string;
   isDefault: boolean;
-}
+};
 
 export type ProductVariant = {
-  id: string
-  product: string
-  name: string
-  price: number
-  image: ProductVariantImage[]
-}
+  id: string;
+  product: string;
+  name: string;
+  price: number;
+  image: ProductVariantImage[];
+};
 
 export type ProductVariantImage = {
   id: number;
@@ -43,4 +43,15 @@ export type ProductVariantImage = {
   imagePath: string;
   alt: string;
   isDefault: boolean;
-}
+};
+
+export type ProductVariantAttribute = {
+  id: number;
+  attributeName: string;
+  value: [
+    {
+      id: number;
+      value: string;
+    }
+  ];
+};

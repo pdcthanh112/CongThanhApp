@@ -50,10 +50,10 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 
     @Override
     public List<Tuple> getProductAttributeValueByProductId(String productId) {
-       String sql = "SELECT product_attribute_value.id, product_attribute_value.value, product_attribute_value.product, product_attribute.name as attribute \n" +
-               "FROM product JOIN product_attribute_value ON product.id = product_attribute_value.product" +
-               "JOIN product_attribute ON product_attribute.id = product_attribute_value.attribute" +
-               "WHERE product.id = ?1";
+        String sql = "SELECT product_attribute_value.id, product_attribute_value.value, product_attribute_value.product, product_attribute.name as attribute " +
+                "FROM product JOIN product_attribute_value ON product.id = product_attribute_value.product " +
+                "JOIN product_attribute ON product_attribute.id = product_attribute_value.attribute " +
+                "WHERE product.id = ?1";
         Query query = entityManager.createNativeQuery(sql, Tuple.class);
         query.setParameter(1, productId);
         return query.getResultList();
@@ -71,6 +71,15 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
     public List<ProductImage> getImageByProduct(String productId) {
         String sql = "SELECT i FROM ProductImage i WHERE i.product.id = :productId ORDER BY isDefault DESC NULLS LAST";
         TypedQuery<ProductImage> query = entityManager.createQuery(sql, ProductImage.class);
+        query.setParameter("productId", productId);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Tuple> getVariantAttributeValueByProduct(String productId) {
+        String sql = "SELECT vav.id as variantAttributeId, va.name as variantAttributeName, vav.value as variantAttributeValue, vav.variantId as variantId FROM VariantAttribute va JOIN VariantAttributeValue vav ON va.id = vav.attributeId\n" +
+                "WHERE vav.variantId IN (SELECT pv.id from ProductVariant pv where pv.product.id = :productId)";
+        Query query = entityManager.createQuery(sql, Tuple.class);
         query.setParameter("productId", productId);
         return query.getResultList();
     }

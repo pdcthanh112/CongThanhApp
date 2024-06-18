@@ -59,7 +59,7 @@ public class CartServiceImpl implements CartService {
     public List<CartDTO> getActiveCartByCustomerId(String customerId) {
         List<CartDTO> response = new ArrayList<>();
         List<Cart> listCart = cartRepository.findActiveCartByCustomerId(customerId);
-        if (listCart.size() > 0) {
+        if (!listCart.isEmpty()) {
             for (Cart cart : listCart) {
                 CartDTO cartTmp = new CartDTO();
                 cartTmp.setId(cart.getId());

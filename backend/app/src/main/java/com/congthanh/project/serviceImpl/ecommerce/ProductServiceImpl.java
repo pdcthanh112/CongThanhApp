@@ -4,6 +4,7 @@ import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.dto.ecommerce.ProductDTO;
 import com.congthanh.project.entity.ecommerce.*;
 import com.congthanh.project.model.ecommerce.response.PaginationInfo;
+import com.congthanh.project.model.ecommerce.response.ProductVariantAttributeValueResponse;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.ProductMapper;
@@ -13,15 +14,14 @@ import com.congthanh.project.repository.ecommerce.supplier.SupplierRepository;
 import com.congthanh.project.repository.ecommerce.subcategory.SubcategoryRepository;
 import com.congthanh.project.service.ecommerce.ProductService;
 import com.congthanh.project.utils.Helper;
+import jakarta.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
             }
             return result;
         }
-    }
+    }   
 
     @Override
     public ProductDTO getProductById(String id) {
@@ -220,5 +220,36 @@ public class ProductServiceImpl implements ProductService {
     public Long getSoldByProduct(String productId) {
         Long result = productRepository.countTotalSoldProduct(productId);
         return result != null ? result : 0;
+    }
+
+    @Override
+    public List<ProductVariantAttributeValueResponse> getVariantAttributeValueByProduct(String productId) {
+        List<Tuple> data = (List<Tuple>) productRepository.getVariantAttributeValueByProduct(productId);
+        if(!data.isEmpty()){
+            Map<String, ProductVariantAttributeValueResponse> responseMap = new HashMap<>();
+            long idCounter = 1;
+
+            for (Tuple row : data) {
+                String attributeName = row.get("variantAttributeName", String.class);
+                String attributeValue = row.get("variantAttributeValue", String.class);
+
+                if (!responseMap.containsKey(attributeName)) {
+                    ProductVariantAttributeValueResponse response = new ProductVariantAttributeValueResponse();
+                    response.setId(idCounter++);
+                    response.setAttributeName(attributeName);
+                    response.setValue(new ArrayList<>());
+                    responseMap.put(attributeName, response);
+                }
+
+                ProductVariantAttributeValueResponse.Value value = new ProductVariantAttributeValueResponse.Value();
+                value.setId(Long.valueOf(row.get("variantAttributeId", Integer.class)));
+                value.setValue(attributeValue);
+
+                responseMap.get(attributeName).getValue().add(value);
+            }
+
+            return new ArrayList<>(responseMap.values());
+        }
+        return null;
     }
 }

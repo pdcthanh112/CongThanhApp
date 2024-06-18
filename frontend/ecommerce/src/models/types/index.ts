@@ -8,7 +8,7 @@ export * from './OrderModel';
 export * from './ProductModel';
 export * from './Request';
 export * from './Response';
-export * from './StoreModel';
+export * from './SupplierModel';
 export * from './SubcategoryModel';
 export * from './VoucherModel';
 export * from './WishlistModel';

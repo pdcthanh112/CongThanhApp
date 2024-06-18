@@ -1,13 +1,10 @@
 package com.congthanh.project.entity.ecommerce;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -28,7 +25,7 @@ public class Supplier {
     @Column(length = 1500)
     private String background;
 
-    private String domain;
+    private String slug;
 
 //    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JsonIgnore

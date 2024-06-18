@@ -29,4 +29,6 @@ public interface ProductCustomRepository {
     List<ProductVariant> getVariantByProductId(String productId);
 
     List<ProductImage> getImageByProduct(String productId);
+
+    Object getVariantAttributeValueByProduct(String productId);
 }
