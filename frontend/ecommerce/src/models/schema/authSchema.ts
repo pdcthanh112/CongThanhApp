@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const LoginSchema = z
   .object({
-    email: z.string().trim().min(1, "Email is required").email(),
+    email: z.string().trim().min(1, "Email is required").email("Email is invalid"),
     password: z.string().trim().min(1, "Password is required"),
     remember: z.boolean(),
     fcmToken: z.string().optional(),

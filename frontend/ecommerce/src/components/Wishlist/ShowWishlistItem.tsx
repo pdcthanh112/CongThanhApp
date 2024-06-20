@@ -1,16 +1,17 @@
+'use client'
 import React from 'react';
-import { Wishlist } from '@/models/types';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { TableContainer, Paper, Table, TableHead, TableRow, TableBody, TableCell } from '@mui/material';
 import { Customer, Product } from '@/models/types';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
-import { getWishlistByCustomer } from 'api/wishlistApi';
-import EmptyWishlistImage from '@assets/images/empty_wishlist.png';
+import { getWishlistByCustomer } from '@/api/wishlistApi';
+import EmptyWishlistImage from '@/assets/images/empty_wishlist.png';
 import { WISHLIST_KEY } from '@/utils/constants/queryKey';
 import { useAppSelector } from '@/redux/store';
-// import WishlistItem from './WishlistItem';
+import WishlistItem from './WishlistItem';
+import Link from 'next/link';
+import { PATH } from '@/utils/constants/path';
 
 
 const ShowWishlistItem = () => {
@@ -21,6 +22,20 @@ const ShowWishlistItem = () => {
     queryKey: [WISHLIST_KEY],
     queryFn: async () => await getWishlistByCustomer(currentUser.userInfo.accountId).then((response) => response.data)
   });
+
+  const EmptyWishlist = () => {
+    return (
+      <div style={{ width: '250%' }}>
+        <div className="flex justify-center">
+          <Image src={EmptyWishlistImage} alt={'Empty wishlist'} width={300} height={300} />
+        </div>
+  
+        <Link href={PATH.HOME} className="flex justify-center hover:cursor-pointer hover:underline">
+          {t('common.back_to_home')}
+        </Link>
+      </div>
+    );
+  };
 
   return (
     <div className="bg-white w-full flex justify-center">
@@ -54,22 +69,6 @@ const ShowWishlistItem = () => {
           )}
         </Table>
       </TableContainer>
-    </div>
-  );
-};
-
-const EmptyWishlist = () => {
-  const router = useRouter();
-  const t = useTranslations();
-  return (
-    <div style={{ width: '250%' }}>
-      <div className="flex justify-center">
-        <Image src={EmptyWishlistImage} alt={'Empty wishlist'} width={300} height={300} />
-      </div>
-
-      <h6 className="flex justify-center hover:cursor-pointer hover:underline" onClick={() => router.push('/')}>
-        {t('common.back_to_home')}
-      </h6>
     </div>
   );
 };

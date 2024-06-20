@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Customer, Product, ProductImage } from '@models/type';
+import { Customer, Product, ProductImage } from '@/models/types';
 import { TableRow, TableCell, Icon } from '@mui/material';
-import DefaultImage from '@assets/images/default-image.jpg';
 import { useRouter } from 'next/router';
 import { Popconfirm } from 'antd';
 import { useTranslations } from 'next-intl';
-import { Button } from '@components/UI';
-import { Delete as DeleteIcon } from '@mui/icons-material';
-import { useRemoveProductFromWishlist } from '@hooks/wishlist/wishlistHook';
-import { useAppSelector } from '@redux/store';
+import { Button } from '@/components/ui/button';
+import { Delete } from '@mui/icons-material';
+import { useRemoveProductFromWishlist } from '@/hooks/wishlist/wishlistHook';
+import { useAppSelector } from '@/redux/store';
 import { toast } from 'react-toastify';
-import { stateStatus } from '@utils/constants';
-import { getDefaultImageByProductId } from 'api/productApi';
+import { getDefaultImageByProductId } from '@/api/productApi';
+import { StateStatus } from '@/utils/constants/enum';
+import { IMAGE } from '@/utils/constants/path';
 
 type PropsType = {
   item: Product;
@@ -39,7 +39,7 @@ const WishlistItem = ({ item }: PropsType) => {
   }, []);
 
   const checkStatus = (quantity: number, status: string) => {
-    if (status === stateStatus.ACTIVE) {
+    if (status === StateStatus.ACTIVE) {
       if (quantity > 0) {
         return <span className="text-status_active-text bg-status_active-background px-2 py-1 rounded">{t('common.in_stock')}</span>;
       } else {
@@ -76,7 +76,7 @@ const WishlistItem = ({ item }: PropsType) => {
   return (
     <TableRow key={item.id}>
       <TableCell component="th" scope="row" style={{ display: 'flex' }}>
-        <Image src={image?.imagePath || DefaultImage} alt={image?.alt || "Product image"} width={100} height={100} loading="lazy" />
+        <Image src={image?.imagePath || IMAGE.defaultImage} alt={image?.alt || "Product image"} width={100} height={100} loading="lazy" />
         <span
           title={item.name}
           style={{ display: 'flex', alignItems: 'center', marginLeft: 20 }}
@@ -99,7 +99,7 @@ const WishlistItem = ({ item }: PropsType) => {
               handleRemoveFromWishlist(item.id);
             }}
             placement="topRight">
-            <Icon titleAccess={t('common.remove_this_item')} component={DeleteIcon} className="hover:cursor-pointer opacity-50 hover:opacity-100" />
+            <Icon titleAccess={t('common.remove_this_item')} component={Delete} className="hover:cursor-pointer opacity-50 hover:opacity-100" />
           </Popconfirm>
         </div>
 

@@ -5,7 +5,6 @@ export type Product = {
   subcategory: number;
   slug: string;
   description: string;
-  SKU: string;
   supplier: string;
   image: ProductImage[];
   brand: string;
@@ -33,6 +32,7 @@ export type ProductVariant = {
   id: string;
   product: string;
   name: string;
+  SKU: string;
   price: number;
   image: ProductVariantImage[];
 };
