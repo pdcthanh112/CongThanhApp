@@ -5,6 +5,7 @@ import com.congthanh.project.entity.ecommerce.ProductImage;
 import com.congthanh.project.entity.ecommerce.ProductVariant;
 import com.congthanh.project.enums.ecommerce.OrderStatus;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 
     @PersistenceContext
+    @Qualifier("ecommerceEntityManagerFactory")
     private EntityManager entityManager;
 
     @Override

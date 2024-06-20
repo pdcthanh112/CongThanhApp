@@ -28,11 +28,11 @@ public class CartItemMapper {
 
     }
 
-    public CartItem mapCartItemDTOToEntity(CartItemDTO cartItemDTO) {
+    public static CartItem mapCartItemDTOToEntity(CartItemDTO cartItemDTO) {
         return modelMapper.map(cartItemDTO, CartItem.class);
     }
 
-    public CartItemDTO mapCartItemEntityToDTO(CartItem cartItem) {
+    public static CartItemDTO mapCartItemEntityToDTO(CartItem cartItem) {
         return modelMapper.map(cartItem, CartItemDTO.class);
     }
 }

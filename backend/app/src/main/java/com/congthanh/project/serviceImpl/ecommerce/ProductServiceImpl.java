@@ -15,7 +15,7 @@ import com.congthanh.project.repository.ecommerce.subcategory.SubcategoryReposit
 import com.congthanh.project.service.ecommerce.ProductService;
 import com.congthanh.project.utils.Helper;
 import jakarta.persistence.Tuple;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,19 +24,16 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private SubcategoryRepository subcategoryRepository;
+    private final SubcategoryRepository subcategoryRepository;
 
-    @Autowired
-    private SupplierRepository supplierRepository;
+    private final SupplierRepository supplierRepository;
 
     private final Helper helper = new Helper();
 

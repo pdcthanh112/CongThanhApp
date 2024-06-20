@@ -12,6 +12,7 @@ import com.congthanh.project.repository.ecommerce.product.ProductRepository;
 import com.congthanh.project.repository.ecommerce.productAttribute.ProductAttributeRepository;
 import com.congthanh.project.service.ecommerce.ProductAttributeValueService;
 import jakarta.persistence.Tuple;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductAttributeValueServiceImpl implements ProductAttributeValueService {
 
-    @Autowired
-    private ProductAttributeValueRepository productAttributeValueRepository;
+    private final ProductAttributeValueRepository productAttributeValueRepository;
 
-    @Autowired
-    private ProductAttributeRepository productAttributeRepository;
+    private final ProductAttributeRepository productAttributeRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    private ProductAttributeValueMapper productAttributeValueMapper;
+    private final ProductRepository productRepository;
 
     @Override
     public List<ProductAttributeValueDTO> getAttributeByProduct(String productId) {
@@ -65,7 +61,7 @@ public class ProductAttributeValueServiceImpl implements ProductAttributeValueSe
                 .value(request.getValue())
                 .build();
         ProductAttributeValue result = productAttributeValueRepository.save(productAttributeValue);
-        return productAttributeValueMapper.mapProductAttributeValueEntityToDTO(result);
+        return ProductAttributeValueMapper.mapProductAttributeValueEntityToDTO(result);
     }
 
     @Override
@@ -76,6 +72,6 @@ public class ProductAttributeValueServiceImpl implements ProductAttributeValueSe
         }
         productAttributeValue.setValue(request.getValue());
         ProductAttributeValue result = productAttributeValueRepository.save(productAttributeValue);
-        return productAttributeValueMapper.mapProductAttributeValueEntityToDTO(result);
+        return ProductAttributeValueMapper.mapProductAttributeValueEntityToDTO(result);
     }
 }

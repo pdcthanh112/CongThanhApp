@@ -4,10 +4,12 @@ import com.congthanh.project.entity.ecommerce.Voucher;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 public class VoucherCustomRepositoryImpl implements VoucherCustomRepository {
 
     @PersistenceContext
+    @Qualifier("ecommerceEntityManagerFactory")
     private EntityManager entityManager;
 
     @Override

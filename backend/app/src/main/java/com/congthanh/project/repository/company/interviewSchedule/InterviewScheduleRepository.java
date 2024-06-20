@@ -1,4 +1,4 @@
-package com.congthanh.project.repository.company;
+package com.congthanh.project.repository.company.interviewSchedule;
 
 import com.congthanh.project.entity.company.InterviewSchedule;
 import jakarta.transaction.Transactional;
@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Transactional
-public interface InterviewScheduleRepository extends JpaRepository<InterviewSchedule, Long> {
+public interface InterviewScheduleRepository extends JpaRepository<InterviewSchedule, Long>, InterviewScheduleCustomRepository {
 }

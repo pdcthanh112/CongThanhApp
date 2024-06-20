@@ -13,8 +13,7 @@ import com.congthanh.project.repository.ecommerce.product.ProductRepository;
 import com.congthanh.project.repository.ecommerce.productVariant.ProductVariantRepository;
 import com.congthanh.project.repository.ecommerce.review.ReviewRepository;
 import com.congthanh.project.service.ecommerce.ReviewService;
-import jakarta.persistence.Tuple;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,16 +24,14 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    private ProductVariantRepository productVariantRepository;
+    private final ProductVariantRepository productVariantRepository;
 
-    @Autowired
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public ResponseWithPagination<ReviewDTO> getReviewByProductId(String productId, Integer page, Integer limit) {

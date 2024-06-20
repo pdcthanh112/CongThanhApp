@@ -12,6 +12,7 @@ import com.congthanh.project.repository.ecommerce.cartItem.CartItemRepository;
 import com.congthanh.project.repository.ecommerce.cart.CartRepository;
 import com.congthanh.project.repository.ecommerce.product.ProductRepository;
 import com.congthanh.project.service.ecommerce.CartItemService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,26 +21,21 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CartItemServiceImpl implements CartItemService {
 
-  @Autowired
-  private CartItemRepository cartItemRepository;
+  private final CartItemRepository cartItemRepository;
 
-  @Autowired
-  private CartRepository cartRepository;
+  private final CartRepository cartRepository;
 
-  @Autowired
-  private ProductRepository productRepository;
-
-  @Autowired
-  private CartItemMapper cartItemMapper;
+  private final ProductRepository productRepository;
 
   @Override
   public List<CartItemDTO> getItemByCartId(String cartId) {
     List<CartItem> data = cartItemRepository.getAllCartItemByCartId(cartId);
     List<CartItemDTO> result = new ArrayList<>();
     for (CartItem item: data) {
-      CartItemDTO itemDTO = cartItemMapper.mapCartItemEntityToDTO(item);
+      CartItemDTO itemDTO = CartItemMapper.mapCartItemEntityToDTO(item);
       result.add(itemDTO);
     }
     return result;
@@ -58,12 +54,12 @@ public class CartItemServiceImpl implements CartItemService {
               .createdAt(new Date().getTime())
               .build();
       CartItem result =  cartItemRepository.save(cartItem);
-      CartItemDTO response = cartItemMapper.mapCartItemEntityToDTO(result);
+      CartItemDTO response = CartItemMapper.mapCartItemEntityToDTO(result);
       return response;
     } else {
       checkExistProduct.setQuantity(checkExistProduct.getQuantity() + quantity);
       CartItem result = cartItemRepository.save(checkExistProduct);
-      CartItemDTO response = cartItemMapper.mapCartItemEntityToDTO(result);
+      CartItemDTO response = CartItemMapper.mapCartItemEntityToDTO(result);
       return response;
     }
   }

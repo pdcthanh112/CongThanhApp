@@ -5,10 +5,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 public class WishlistCustomRepositoryImpl implements WishlistCustomRepository {
 
     @PersistenceContext
+    @Qualifier("ecommerceEntityManagerFactory")
     private EntityManager entityManager;
 
     @Override

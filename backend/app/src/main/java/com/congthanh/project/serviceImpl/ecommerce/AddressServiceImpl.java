@@ -6,25 +6,22 @@ import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.AddressMapper;
 import com.congthanh.project.repository.ecommerce.address.AddressRepository;
 import com.congthanh.project.service.ecommerce.AddressService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
 
-    @Autowired
-    private AddressRepository addressRepository;
-
-    @Autowired
-    private AddressMapper addressMapper;
+    private final AddressRepository addressRepository;
 
     @Override
     public AddressDTO getAddressById(Long addressId) {
         Address result = addressRepository.findById(addressId).orElseThrow(() -> new NotFoundException("address not found"));
-        return addressMapper.mapAddressEntityToDTO(result);
+        return AddressMapper.mapAddressEntityToDTO(result);
     }
 
     @Override
@@ -44,7 +41,7 @@ public class AddressServiceImpl implements AddressService {
         if (addressDTO.isDefault()) {
             this.setDefaultAddressForCustomer(addressDTO.getCustomer(), result.getId());
         }
-        return addressMapper.mapAddressEntityToDTO(result);
+        return AddressMapper.mapAddressEntityToDTO(result);
     }
 
     @Override
@@ -59,7 +56,7 @@ public class AddressServiceImpl implements AddressService {
         exitsAddress.setStreet(addressDTO.getStreet());
         exitsAddress.setPostalCode(addressDTO.getPostalCode());
         Address result = addressRepository.save(exitsAddress);
-        return addressMapper.mapAddressEntityToDTO(result);
+        return AddressMapper.mapAddressEntityToDTO(result);
     }
 
     @Override
@@ -78,7 +75,7 @@ public class AddressServiceImpl implements AddressService {
         if (!data.isEmpty()) {
             List<AddressDTO> result = new ArrayList<>();
             for (Address item : data) {
-                AddressDTO address = addressMapper.mapAddressEntityToDTO(item);
+                AddressDTO address = AddressMapper.mapAddressEntityToDTO(item);
                 result.add(address);
             }
             return result;
@@ -90,7 +87,7 @@ public class AddressServiceImpl implements AddressService {
     public AddressDTO getDefaultAddressOfCustomer(String customerId) {
         Address data = addressRepository.getDefaultAddressOfCustomer(customerId);
         if (data != null) {
-            return addressMapper.mapAddressEntityToDTO(data);
+            return AddressMapper.mapAddressEntityToDTO(data);
         }
         return null;
     }

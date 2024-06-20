@@ -10,11 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CheckoutMapper {
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    private CartMapper cartMapper;
+    private static final ModelMapper modelMapper = new ModelMapper();
 
     @PostConstruct
     private void configureModelMapper() {
@@ -23,11 +19,11 @@ public class CheckoutMapper {
 
     }
 
-    public Checkout mapCheckoutDTOToEntity(CheckoutDTO checkoutDTO) {
+    public static Checkout mapCheckoutDTOToEntity(CheckoutDTO checkoutDTO) {
         return modelMapper.map(checkoutDTO, Checkout.class);
     }
 
-    public CheckoutDTO mapCheckoutEntityToDTO(Checkout checkout) {
+    public static CheckoutDTO mapCheckoutEntityToDTO(Checkout checkout) {
         return modelMapper.map(checkout, CheckoutDTO.class);
     }
 }

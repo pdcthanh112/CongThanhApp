@@ -16,6 +16,7 @@ import com.congthanh.project.service.ecommerce.CheckoutService;
 import com.congthanh.project.service.ecommerce.OrderDetailService;
 import com.congthanh.project.service.ecommerce.OrderService;
 import com.congthanh.project.service.ecommerce.PaymentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,36 +24,27 @@ import java.time.Instant;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CheckoutServiceImpl implements CheckoutService {
 
-    @Autowired
     private CheckoutRepository checkoutRepository;
 
-    @Autowired
     private CartRepository cartRepository;
 
-    @Autowired
     private CartItemRepository cartItemRepository;
 
-    @Autowired
     private VoucherRepository voucherRepository;
 
-    @Autowired
     private OrderService orderService;
 
-    @Autowired
     private OrderDetailService orderDetailService;
 
-    @Autowired
     private PaymentService paymentService;
-
-    @Autowired
-    private CheckoutMapper checkoutMapper;
 
     @Override
     public CheckoutDTO getCheckoutById(int id) {
         Checkout result = checkoutRepository.findById(id).orElseThrow(() -> new NotFoundException("checkout not found"));
-        return checkoutMapper.mapCheckoutEntityToDTO(result);
+        return CheckoutMapper.mapCheckoutEntityToDTO(result);
     }
 
     @Override
@@ -96,6 +88,6 @@ public class CheckoutServiceImpl implements CheckoutService {
 
         cart.setStatus("CHECKED_OUT");
         cartRepository.save(cart);
-        return checkoutMapper.mapCheckoutEntityToDTO(result);
+        return CheckoutMapper.mapCheckoutEntityToDTO(result);
     }
 }

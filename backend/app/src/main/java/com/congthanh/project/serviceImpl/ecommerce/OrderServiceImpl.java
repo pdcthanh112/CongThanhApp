@@ -4,7 +4,6 @@ import com.congthanh.project.dto.ecommerce.*;
 import com.congthanh.project.entity.ecommerce.*;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.CartMapper;
-import com.congthanh.project.model.ecommerce.mapper.OrderMapper;
 import com.congthanh.project.model.ecommerce.mapper.ProductMapper;
 import com.congthanh.project.model.ecommerce.request.CreateOrderRequest;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
@@ -15,6 +14,7 @@ import com.congthanh.project.repository.ecommerce.order.OrderRepository;
 import com.congthanh.project.repository.ecommerce.voucher.VoucherRepository;
 import com.congthanh.project.service.ecommerce.OrderService;
 import jakarta.persistence.Tuple;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,31 +28,18 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired
-    private CartRepository cartRepository;
+    private final CartRepository cartRepository;
 
-    @Autowired
-    private CartItemRepository cartItemRepository;
+    private final CartItemRepository cartItemRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    @Autowired
-    private CheckoutRepository checkoutRepository;
+    private final CheckoutRepository checkoutRepository;
 
-    @Autowired
-    private VoucherRepository voucherRepository;
-
-    @Autowired
-    private OrderMapper orderMapper;
-
-    @Autowired
-    private CartMapper cartMapper;
-
-    @Autowired
-    private ProductMapper productMapper;
+    private final VoucherRepository voucherRepository;
 
     @Override
     public Order createOrder(CreateOrderRequest createOrderRequest) {
@@ -106,8 +93,8 @@ public class OrderServiceImpl implements OrderService {
                         CartItemDTO cartItemTmp = new CartItemDTO();
                         cartItemTmp.setId(cartItemItem.getId());
                         cartItemTmp.setQuantity(cartItemItem.getQuantity());
-                        cartItemTmp.setCart(cartMapper.mapCartEntityToDTO(cart));
-                        cartItemTmp.setProduct(productMapper.mapProductEntityToDTO(cartItemItem.getProduct()));
+                        cartItemTmp.setCart(CartMapper.mapCartEntityToDTO(cart));
+                        cartItemTmp.setProduct(ProductMapper.mapProductEntityToDTO(cartItemItem.getProduct()));
                         cartItems.add(cartItemTmp);
                     }
                     cartTmp.setCartItems(cartItems);

@@ -10,19 +10,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class VoucherMapper {
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private static  final  ModelMapper modelMapper = new ModelMapper();
 
     @PostConstruct
     private void configureModelMapper() {
 
     }
 
-    public Voucher mapVoucherDTOToEntity(VoucherDTO voucherDTO) {
+    public static Voucher mapVoucherDTOToEntity(VoucherDTO voucherDTO) {
         return modelMapper.map(voucherDTO, Voucher.class);
     }
 
-    public VoucherDTO mapVoucherEntityToDTO(Voucher voucher) {
+    public static VoucherDTO mapVoucherEntityToDTO(Voucher voucher) {
         return modelMapper.map(voucher, VoucherDTO.class);
     }
 

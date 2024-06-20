@@ -6,25 +6,22 @@ import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.VoucherMapper;
 import com.congthanh.project.repository.ecommerce.voucher.VoucherRepository;
 import com.congthanh.project.service.ecommerce.VoucherService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class VoucherServiceImpl implements VoucherService {
 
-    @Autowired
-    private VoucherRepository voucherRepository;
-
-    @Autowired
-    private VoucherMapper voucherMapper;
+    private final VoucherRepository voucherRepository;
 
     @Override
     public VoucherDTO getVoucherByCode(String code) {
         Voucher result = voucherRepository.getVoucherByCode(code);
-        return result != null ? voucherMapper.mapVoucherEntityToDTO(result) : null;
+        return result != null ? VoucherMapper.mapVoucherEntityToDTO(result) : null;
     }
 
     @Override
@@ -42,7 +39,7 @@ public class VoucherServiceImpl implements VoucherService {
                 .status("NEW")
                 .build();
         Voucher result = voucherRepository.save(voucher);
-        return voucherMapper.mapVoucherEntityToDTO(result);
+        return VoucherMapper.mapVoucherEntityToDTO(result);
     }
 
     @Override
@@ -58,7 +55,7 @@ public class VoucherServiceImpl implements VoucherService {
         voucher.setEndDate(voucherDTO.getEndDate());
 
         Voucher result = voucherRepository.save(voucher);
-        return voucherMapper.mapVoucherEntityToDTO(result);
+        return VoucherMapper.mapVoucherEntityToDTO(result);
     }
 
     @Override

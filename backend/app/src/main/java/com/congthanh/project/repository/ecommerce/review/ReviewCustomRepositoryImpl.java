@@ -2,11 +2,13 @@ package com.congthanh.project.repository.ecommerce.review;
 
 import com.congthanh.project.model.ecommerce.response.StatisticReviewResponse;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 
 public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
 
     @PersistenceContext
+    @Qualifier("ecommerceEntityManagerFactory")
     private EntityManager entityManager;
 
     @Override

@@ -2,12 +2,14 @@ package com.congthanh.project.repository.ecommerce.productAtrributeValue;
 
 import com.congthanh.project.entity.ecommerce.ProductAttributeValue;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
 public class ProductAttributeValueCustomRepositoryImpl implements ProductAttributeValueCustomRepository{
 
     @PersistenceContext
+    @Qualifier("ecommerceEntityManagerFactory")
     private EntityManager entityManager;
 
     @Override

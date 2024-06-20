@@ -9,6 +9,7 @@ import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.CategoryMapper;
 import com.congthanh.project.repository.ecommerce.category.CategoryRepository;
 import com.congthanh.project.service.ecommerce.CategoryService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,13 +22,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
-  @Autowired
-  private CategoryRepository categoryRepository;
+  private final CategoryRepository categoryRepository;
 
-  @Autowired
-  private ModelMapper modelMapper;
+  private final ModelMapper modelMapper;
 
   @Override
   public Object getAllCategory(Integer page, Integer limit) {

@@ -6,19 +6,18 @@ import com.congthanh.project.entity.ecommerce.Wishlist;
 import com.congthanh.project.repository.ecommerce.wishlist.WishlistRepository;
 import com.congthanh.project.service.ecommerce.WishlistService;
 import jakarta.persistence.Tuple;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class WishlistServiceImpl implements WishlistService {
 
-  @Autowired
-  private WishlistRepository wishlistRepository;
+  private final WishlistRepository wishlistRepository;
 
   @Override
   public boolean addProductToWishlist(String customerId, String productId) {

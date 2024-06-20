@@ -1,4 +1,4 @@
-package com.congthanh.project.repository.management;
+package com.congthanh.project.repository.management.department;
 
 import com.congthanh.project.entity.management.Department;
 import jakarta.transaction.Transactional;
@@ -11,9 +11,9 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public interface DepartmentRepository extends JpaRepository<Department, Integer> {
+public interface DepartmentRepository extends JpaRepository<Department, Integer>, DepartmentCustomRepository {
 
-  Department findByName(String name);
+  Optional<Department> findByName(String name);
 
   @Modifying
   @Query(nativeQuery = true, value = "UPDATE mydream.department SET status = 'Deteted' WHERE id = ?1")

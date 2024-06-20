@@ -3,10 +3,12 @@ package com.congthanh.project.repository.ecommerce.notification;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 public class NotificationCustomRepositoryImpl implements NotificationCustomRepository{
 
     @PersistenceContext
+    @Qualifier("ecommerceEntityManagerFactory")
     private EntityManager entityManager;
 
     @Override

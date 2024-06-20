@@ -11,7 +11,7 @@ import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.repository.ecommerce.orderDetail.OrderDetailRepository;
 import com.congthanh.project.repository.ecommerce.product.ProductRepository;
 import com.congthanh.project.service.ecommerce.OrderDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -20,16 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class OrderDetailServiceImpl implements OrderDetailService {
 
-    @Autowired
-    private OrderDetailRepository orderDetailRepository;
+    private final OrderDetailRepository orderDetailRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    private OrderDetailMapper orderDetailMapper;
+    private final ProductRepository productRepository;
 
     @Override
     public OrderDetailDTO createOrderDetail(CreateOrderDetailRequest createOrderDetailRequest) {
@@ -41,7 +37,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                 .status("NEW")
                 .build();
         OrderDetail result = orderDetailRepository.save(orderDetail);
-        return orderDetailMapper.mapOrderDetailEntityToDTO(result);
+        return OrderDetailMapper.mapOrderDetailEntityToDTO(result);
     }
 
     @Override
@@ -52,7 +48,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             ResponseWithPagination<OrderDetailDTO> response = new ResponseWithPagination<>();
             List<OrderDetailDTO> list = new ArrayList<>();
             for(OrderDetail item: result) {
-                OrderDetailDTO orderDTO = orderDetailMapper.mapOrderDetailEntityToDTO(item);
+                OrderDetailDTO orderDTO = OrderDetailMapper.mapOrderDetailEntityToDTO(item);
                 list.add(orderDTO);
             }
             PaginationInfo paginationInfo = PaginationInfo.builder()

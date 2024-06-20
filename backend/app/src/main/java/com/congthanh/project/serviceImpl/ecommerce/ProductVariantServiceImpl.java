@@ -5,20 +5,19 @@ import com.congthanh.project.entity.ecommerce.ProductVariant;
 import com.congthanh.project.repository.ecommerce.product.ProductRepository;
 import com.congthanh.project.repository.ecommerce.productVariant.ProductVariantRepository;
 import com.congthanh.project.service.ecommerce.ProductVariantService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductVariantServiceImpl implements ProductVariantService {
 
-    @Autowired
-    private ProductVariantRepository productVariantRepository;
+    private final ProductVariantRepository productVariantRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public List<ProductVariantDTO> getProductVariantByProductId(String productId) {

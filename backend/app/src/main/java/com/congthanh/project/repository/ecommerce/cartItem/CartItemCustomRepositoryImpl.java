@@ -4,12 +4,14 @@ import com.congthanh.project.entity.ecommerce.CartItem;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
 public class CartItemCustomRepositoryImpl implements CartItemCustomRepository{
 
     @PersistenceContext
+    @Qualifier("ecommerceEntityManagerFactory")
     private EntityManager entityManager;
 
     @Override

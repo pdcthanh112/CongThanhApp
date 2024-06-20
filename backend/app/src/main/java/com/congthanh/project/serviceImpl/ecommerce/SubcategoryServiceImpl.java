@@ -12,6 +12,7 @@ import com.congthanh.project.repository.ecommerce.category.CategoryRepository;
 import com.congthanh.project.repository.ecommerce.subcategory.SubcategoryRepository;
 import com.congthanh.project.service.ecommerce.SubcategoryService;
 import jakarta.persistence.Tuple;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,19 +25,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class SubcategoryServiceImpl implements SubcategoryService {
 
-    @Autowired
-    private SubcategoryRepository subcategoryRepository;
+    private final SubcategoryRepository subcategoryRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    private SubcategoryMapper subcategoryMapper;
 
     @Override
     public Object getAllSubcategory(Integer page, Integer limit) {
@@ -47,7 +42,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
             List<SubcategoryDTO> list = new ArrayList<>();
             if (result.hasContent()) {
                 for (Subcategory subcategory : result.getContent()) {
-                    SubcategoryDTO subcategoryDTO = modelMapper.map(subcategory, SubcategoryDTO.class);
+                    SubcategoryDTO subcategoryDTO = SubcategoryMapper.mapSubcategoryEntityToDTO(subcategory);
                     list.add(subcategoryDTO);
                 }
                 PaginationInfo paginationInfo = PaginationInfo.builder()
@@ -65,8 +60,8 @@ public class SubcategoryServiceImpl implements SubcategoryService {
         } else {
             List<Subcategory> list = subcategoryRepository.findAll();
             List<SubcategoryDTO> result = new ArrayList<>();
-            for (Subcategory item : list) {
-                SubcategoryDTO subcategoryDTO = modelMapper.map(item, SubcategoryDTO.class);
+            for (Subcategory subcategory : list) {
+                SubcategoryDTO subcategoryDTO = SubcategoryMapper.mapSubcategoryEntityToDTO(subcategory);
                 result.add(subcategoryDTO);
             }
             return result;
@@ -76,7 +71,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
     @Override
     public SubcategoryDTO getSubcategoryById(int id) {
         Subcategory subcategory = subcategoryRepository.findById(id).orElseThrow(() -> new NotFoundException("not found"));
-        SubcategoryDTO result = subcategoryMapper.mapSubcategoryEntityToDTO(subcategory);
+        SubcategoryDTO result = SubcategoryMapper.mapSubcategoryEntityToDTO(subcategory);
         return result;
     }
 

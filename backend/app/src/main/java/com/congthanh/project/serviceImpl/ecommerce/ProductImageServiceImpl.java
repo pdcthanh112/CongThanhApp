@@ -8,29 +8,26 @@ import com.congthanh.project.model.ecommerce.mapper.ProductImageMapper;
 import com.congthanh.project.repository.ecommerce.product.ProductRepository;
 import com.congthanh.project.repository.ecommerce.productImage.ProductImageRepository;
 import com.congthanh.project.service.ecommerce.ProductImageService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductImageServiceImpl implements ProductImageService {
 
-    @Autowired
-    private ProductImageRepository productImageRepository;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    private ProductImageMapper productImageMapper;
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductImageRepository productImageRepository;
 
     @Override
     public List<ProductImageDTO> getImageByProduct(String productId) {
         List<ProductImage> data = productRepository.getImageByProduct(productId);
         List<ProductImageDTO> result = new ArrayList<>();
         for (ProductImage item : data) {
-            ProductImageDTO imageDTO = productImageMapper.mapProductImageEntityToDTO(item);
+            ProductImageDTO imageDTO = ProductImageMapper.mapProductImageEntityToDTO(item);
             result.add(imageDTO);
         }
         return result;
@@ -42,7 +39,7 @@ public class ProductImageServiceImpl implements ProductImageService {
         if (data == null) {
             return null;
         }
-        return productImageMapper.mapProductImageEntityToDTO(data);
+        return ProductImageMapper.mapProductImageEntityToDTO(data);
     }
 
     @Override
@@ -55,6 +52,6 @@ public class ProductImageServiceImpl implements ProductImageService {
                 .isDefault(productImageDTO.isDefault())
                 .build();
         ProductImage result = productImageRepository.save(image);
-        return productImageMapper.mapProductImageEntityToDTO(result);
+        return ProductImageMapper.mapProductImageEntityToDTO(result);
     }
 }

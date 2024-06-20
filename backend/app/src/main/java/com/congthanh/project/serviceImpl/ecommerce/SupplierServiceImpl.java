@@ -10,7 +10,7 @@ import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.entity.ecommerce.Product;
 import com.congthanh.project.repository.ecommerce.supplier.SupplierRepository;
 import com.congthanh.project.service.ecommerce.SupplierService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,13 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SupplierServiceImpl implements SupplierService {
 
-    @Autowired
-    private SupplierRepository supplierRepository;
-
-    @Autowired
-    private ProductMapper productMapper;
+    private final SupplierRepository supplierRepository;
 
     @Override
     public SupplierDTO getSupplierById(String id) {
@@ -66,7 +63,7 @@ public class SupplierServiceImpl implements SupplierService {
         if (result.hasContent()) {
             List<ProductDTO> list = new ArrayList<>();
             for (Product product : result.getContent()) {
-                ProductDTO productDTO = productMapper.mapProductEntityToDTO(product);
+                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
                 list.add(productDTO);
             }
             PaginationInfo paginationInfo = PaginationInfo.builder()

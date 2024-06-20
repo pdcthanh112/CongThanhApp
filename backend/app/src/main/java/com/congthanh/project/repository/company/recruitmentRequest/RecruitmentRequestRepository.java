@@ -1,4 +1,4 @@
-package com.congthanh.project.repository.company;
+package com.congthanh.project.repository.company.recruitmentRequest;
 
 import com.congthanh.project.entity.company.RecruitmentRequest;
 import jakarta.transaction.Transactional;
@@ -9,8 +9,8 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public interface RecruitmentRequestRepository extends JpaRepository<RecruitmentRequest, Long> {
+public interface RecruitmentRequestRepository extends JpaRepository<RecruitmentRequest, Long>, RecruitmentRequestCustomRepository {
 
-  Optional<RecruitmentRequest> getById(int id);
+    Optional<RecruitmentRequest> getById(int id);
 
 }

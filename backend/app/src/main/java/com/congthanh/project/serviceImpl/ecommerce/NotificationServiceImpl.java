@@ -6,6 +6,7 @@ import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.NotificationMapper;
 import com.congthanh.project.repository.ecommerce.notification.NotificationRepository;
 import com.congthanh.project.service.ecommerce.NotificationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
 
-  @Autowired
-  private NotificationRepository notificationRepository;
-
-  @Autowired
-  private NotificationMapper notificationMapper;
+  private final NotificationRepository notificationRepository;
 
   @Override
   public List<NotificationDTO> getNotificationByCustomer(String customerId) {
@@ -27,7 +25,7 @@ public class NotificationServiceImpl implements NotificationService {
     if (data != null || data.size() > 0) {
       List<NotificationDTO> result = new ArrayList<>();
       for (Notification item : data) {
-        NotificationDTO notificationDTO = notificationMapper.mapNotificationEntityToDTO(item);
+        NotificationDTO notificationDTO = NotificationMapper.mapNotificationEntityToDTO(item);
         result.add(notificationDTO);
       }
       return result;
@@ -46,7 +44,7 @@ public class NotificationServiceImpl implements NotificationService {
             .status("ACTIVE")
             .build();
     Notification result = notificationRepository.save(notification);
-    return notificationMapper.mapNotificationEntityToDTO(result);
+    return NotificationMapper.mapNotificationEntityToDTO(result);
   }
 
   @Override

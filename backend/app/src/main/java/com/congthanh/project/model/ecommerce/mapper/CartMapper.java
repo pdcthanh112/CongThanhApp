@@ -13,13 +13,6 @@ public class CartMapper {
 
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    static {
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STRICT)
-                .setFieldMatchingEnabled(true)
-                .setSkipNullEnabled(true);
-    }
-
     @PostConstruct
     private void configureModelMapper() {
 

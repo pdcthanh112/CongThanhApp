@@ -6,7 +6,7 @@ import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.entity.management.Department;
 import com.congthanh.project.entity.management.Position;
-import com.congthanh.project.repository.management.DepartmentRepository;
+import com.congthanh.project.repository.management.department.DepartmentRepository;
 import com.congthanh.project.repository.management.PositionRepository;
 import com.congthanh.project.service.management.PositionService;
 import org.modelmapper.ModelMapper;

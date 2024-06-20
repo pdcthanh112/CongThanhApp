@@ -12,7 +12,7 @@ public class MongoDBConfig extends AbstractMongoClientConfiguration {
 
   @Override
   protected String getDatabaseName() {
-    return "MyDream";
+    return "CongThanhApp";
   }
 
   @Override

@@ -2,13 +2,14 @@ package com.congthanh.project.serviceImpl.management;
 
 import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.dto.management.DepartmentDTO;
+import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.entity.management.Department;
-import com.congthanh.project.repository.management.DepartmentRepository;
+import com.congthanh.project.model.management.mapper.DepartmentMapper;
+import com.congthanh.project.repository.management.department.DepartmentRepository;
 import com.congthanh.project.service.management.DepartmentService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,16 +17,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class DepartmentServiceImplement implements DepartmentService {
 
-  @Autowired
-  private DepartmentRepository departmentRepository;
-
-  @Autowired
-  private ModelMapper modelMapper;
+  private final DepartmentRepository departmentRepository;
 
   @Override
   public Object getAllDepartment(Integer page, Integer limit) {
@@ -59,7 +56,7 @@ public class DepartmentServiceImplement implements DepartmentService {
       List<Department> list = departmentRepository.findAll();
       List<DepartmentDTO> result = new ArrayList<>();
       for (Department department : list) {
-        DepartmentDTO departmentDTO = modelMapper.map(department, DepartmentDTO.class);
+        DepartmentDTO departmentDTO = DepartmentMapper.mapDepartmentEntityToDTO(department);
         result.add(departmentDTO);
       }
       return result;
@@ -68,8 +65,8 @@ public class DepartmentServiceImplement implements DepartmentService {
 
   @Override
   public Department createDepartment(DepartmentDTO departmentDTO) {
-    Optional<Department> existDepartment = departmentRepository.findByName(departmentDTO.getName());
-    if (existDepartment.isPresent()) {
+    Department existDepartment = departmentRepository.findByName(departmentDTO.getName()).orElseThrow(() -> new NotFoundException("Department not found"));
+    if (existDepartment != null) {
       throw new RuntimeException("Department ton tai");
     } else {
       Department department = Department.builder()
