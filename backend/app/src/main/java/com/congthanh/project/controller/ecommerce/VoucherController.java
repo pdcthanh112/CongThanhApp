@@ -5,17 +5,17 @@ import com.congthanh.project.dto.ecommerce.VoucherDTO;
 import com.congthanh.project.model.ecommerce.response.ErrorDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.service.ecommerce.VoucherService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ecommerce/voucher")
+@RequiredArgsConstructor
 public class VoucherController {
 
-    @Autowired
-    private VoucherService voucherService;
+    private final VoucherService voucherService;
 
     @GetMapping("/getByCode")
     public ResponseEntity<Object> getVoucherByCode(@RequestParam("code") String code) {

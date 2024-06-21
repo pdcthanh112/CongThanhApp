@@ -5,7 +5,7 @@ import com.congthanh.project.dto.ecommerce.WishlistDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.service.ecommerce.WishlistService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +14,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/ecommerce/wishlist")
 @Tag(name = "Wishlist API", description = "Wishlist API in CongThanhApp - Ecommerce")
+@RequiredArgsConstructor
 public class WishlistController {
 
-  @Autowired
-  private WishlistService wishlistService;
+  private final WishlistService wishlistService;
 
   @GetMapping("/getByCustomer")
   public ResponseEntity<Response<WishlistDTO>> getWishlistByCustomer(@RequestParam String customerId) {

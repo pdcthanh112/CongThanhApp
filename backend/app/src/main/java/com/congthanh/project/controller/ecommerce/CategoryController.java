@@ -8,7 +8,7 @@ import com.congthanh.project.repository.ecommerce.category.CategoryRepository;
 import com.congthanh.project.service.ecommerce.CategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +19,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/ecommerce/category")
 @Tag(name = "Category API", description = "Category API in CongThanhApp - Ecommerce")
+@RequiredArgsConstructor
 public class CategoryController {
 
-  @Autowired
-  private CategoryRepository categoryRepository;
+  private final CategoryRepository categoryRepository;
 
-  @Autowired
-  private CategoryService categoryService;
+  private final CategoryService categoryService;
 
   @GetMapping("/getAll")
   //@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")

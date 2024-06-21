@@ -5,7 +5,7 @@ import com.congthanh.project.dto.ecommerce.ProductAttributeDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.service.ecommerce.ProductAttributeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/ecommerce/product-attribute")
 @Tag(name = "Product Attribute API", description = "Product attribute API in CongThanhApp - Ecommerce")
+@RequiredArgsConstructor
 public class ProductAttributeController {
 
-    @Autowired
-    private ProductAttributeService productAttributeService;
+    private final ProductAttributeService productAttributeService;
 
     @PostMapping("/create")
     public ResponseEntity<Response<ProductAttributeDTO>> createProductAttribute(@RequestBody ProductAttributeDTO productAttributeDTO) {

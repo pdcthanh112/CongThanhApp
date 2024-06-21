@@ -5,7 +5,7 @@ import com.congthanh.project.dto.ecommerce.AddressDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.service.ecommerce.AddressService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/ecommerce/address")
 @Tag(name = "Address API", description = "Address API in CongThanhApp - Ecommerce")
+@RequiredArgsConstructor
 public class AddressController {
 
-    @Autowired
-    private AddressService addressService;
+    private final AddressService addressService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Response<AddressDTO>> getAddressById(@PathVariable("id") Long addressId) {

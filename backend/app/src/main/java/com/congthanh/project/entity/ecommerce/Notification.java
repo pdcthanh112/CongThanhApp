@@ -14,7 +14,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "ecommerce_notification")
+@Table(name = "notification")
 public class Notification {
 
   @Id

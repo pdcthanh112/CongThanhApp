@@ -8,7 +8,7 @@ import com.congthanh.project.repository.ecommerce.subcategory.SubcategoryReposit
 import com.congthanh.project.service.ecommerce.SubcategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +20,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("/ecommerce/subcategory")
 @Tag(name = "Subcategory API", description = "Subcategory API in CongThanhApp - Ecommerce")
+@RequiredArgsConstructor
 public class SubcategoryController {
 
-  @Autowired
-  private SubcategoryRepository subcategoryRepository;
+  private final SubcategoryRepository subcategoryRepository;
 
-  @Autowired
-  private SubcategoryService subcategoryService;
+  private final SubcategoryService subcategoryService;
 
   @GetMapping("getAll")
   //@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")

@@ -5,7 +5,7 @@ import com.congthanh.project.dto.ecommerce.ProductAttributeValueDTO;
 import com.congthanh.project.model.ecommerce.request.ProductAttributeValueRequest;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.service.ecommerce.ProductAttributeValueService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ecommerce/attribute-value")
+@RequiredArgsConstructor
 public class ProductAttributeValueController {
 
-    @Autowired
-    private ProductAttributeValueService productAttributeValueService;
+    private final ProductAttributeValueService productAttributeValueService;
 
     @GetMapping("/getByProduct")
     public ResponseEntity<Response<List<ProductAttributeValueDTO>>> getAttributeByProduct(@RequestParam("product") String productId) {

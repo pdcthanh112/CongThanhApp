@@ -9,7 +9,7 @@ import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.repository.ecommerce.supplier.SupplierRepository;
 import com.congthanh.project.service.ecommerce.SupplierService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +20,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/ecommerce/supplier")
 @Tag(name = "Supplier API", description = "Supplier API in CongThanhApp - Ecommerce")
+@RequiredArgsConstructor
 public class SupplierController {
 
-    @Autowired
-    private SupplierService supplierService;
+    private final SupplierService supplierService;
 
-    @Autowired
-    private SupplierRepository supplierRepository;
+    private final SupplierRepository supplierRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<Response<SupplierDTO>> getSupplierById(@PathVariable String id) {

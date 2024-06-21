@@ -272,18 +272,20 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
             </button>
-            {product.image?.slice(...currentIndexImages).map((img: any) => {
+            {product.image?.slice(...currentIndexImages).map((img: ProductImage) => {
               const isActive = img === currentImage;
               return (
-                <div key={img.id} className="relative w-full pt-[100%]" onClick={() => setCurrentImage(img)}>
+                <div
+                  key={img.id}
+                  className="relative w-[5rem] h-[5rem]"
+                  onClick={() => setCurrentImage(img)}
+                >
                   <Image
                     src={img.imagePath}
                     alt={img.alt || product.name}
                     fill
                     objectFit="fill"
-                    className={`cursor-pointer absolute top-0 left-0 h-full w-full bg-white object-cover ${
-                      isActive && 'border-2 border-red-400'
-                    }`}
+                    className={`cursor-pointer ${isActive && 'border-2 border-red-400'}`}
                   />
                 </div>
               );

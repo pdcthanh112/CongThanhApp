@@ -7,7 +7,7 @@ import com.congthanh.project.entity.ecommerce.Cart;
 import com.congthanh.project.repository.ecommerce.cart.CartRepository;
 import com.congthanh.project.service.ecommerce.CartService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +18,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/ecommerce/cart")
 @Tag(name = "Cart API", description = "Cart API in CongThanhApp - Ecommerce")
+@RequiredArgsConstructor
 public class CartController {
 
-  @Autowired
-  private CartRepository cartRepository;
+  private final CartRepository cartRepository;
 
-  @Autowired
-  private CartService cartService;
+  private final CartService cartService;
 
   @GetMapping("/{id}")
   public ResponseEntity<Response<CartDTO>> getCartById(@PathVariable String id) {

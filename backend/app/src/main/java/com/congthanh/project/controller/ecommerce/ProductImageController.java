@@ -5,7 +5,7 @@ import com.congthanh.project.dto.ecommerce.ProductImageDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.service.ecommerce.ProductImageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/ecommerce/product-image")
 @Tag(name = "Product image API", description = "Product image API in CongThanhApp - Ecommerce")
+@RequiredArgsConstructor
 public class ProductImageController {
 
-    @Autowired
-    private ProductImageService productImageService;
+    private final ProductImageService productImageService;
 
     @GetMapping("/getByProduct")
     public ResponseEntity<Response<List<ProductImageDTO>>>getImageByProduct(@RequestParam("product") String productId) {

@@ -5,7 +5,7 @@ import com.congthanh.project.dto.ecommerce.NotificationDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.service.ecommerce.NotificationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/ecommerce/notification")
 @Tag(name = "Notification API", description = "Notification API in CongThanhApp - Ecommerce")
+@RequiredArgsConstructor
 public class NotificationController {
 
-  @Autowired
-  private NotificationService notificationService;
+  private final NotificationService notificationService;
 
   @GetMapping("/getByCustomer")
   public ResponseEntity<Response<List<NotificationDTO>>> getNotificationByCustomer(@RequestParam("id") String customerId) {
