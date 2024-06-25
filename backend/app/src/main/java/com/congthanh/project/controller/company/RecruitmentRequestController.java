@@ -1,4 +1,4 @@
-package com.congthanh.project.controller.recruitment;
+package com.congthanh.project.controller.company;
 
 import com.congthanh.project.service.company.RecruitmentRequestService;
 import org.springframework.beans.factory.annotation.Autowired;

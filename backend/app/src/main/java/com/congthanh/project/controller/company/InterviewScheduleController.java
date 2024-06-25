@@ -1,4 +1,4 @@
-package com.congthanh.project.controller.recruitment;
+package com.congthanh.project.controller.company;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

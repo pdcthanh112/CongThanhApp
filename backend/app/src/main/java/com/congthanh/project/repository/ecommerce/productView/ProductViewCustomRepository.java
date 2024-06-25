@@ -1,2 +1,13 @@
-package com.congthanh.project.repository.ecommerce.productView;public interface ProductViewCustomRepository {
+package com.congthanh.project.repository.ecommerce.productView;
+
+import com.congthanh.project.entity.ecommerce.ProductView;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@Transactional
+public interface ProductViewCustomRepository {
+
+    Long getTotalViewOfProduct(String productId);
+
 }
