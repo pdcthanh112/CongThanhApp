@@ -44,7 +44,7 @@ public class SwaggerConfig {
                 .title("CongThanhApp API")
                 .version("1.0")
                 .contact(contact)
-                .description("This API exposes endpoints to manage CongThanhApp.").termsOfService("https://www.bezkoder.com/terms")
+                .description("This API exposes endpoints to manage CongThanhApp.").termsOfService("https://www.pdcthanh.com/terms")
                 .license(mitLicense);
 
         return new OpenAPI().info(info).servers(List.of(devServer, prodServer)).components(
@@ -55,7 +55,8 @@ public class SwaggerConfig {
                                 .type(SecurityScheme.Type.HTTP)
                                 .bearerFormat("jwt") //if it is your case
                                 .name("api")
-                )
+                ).addSecuritySchemes("JavaInUseSecurityScheme", new SecurityScheme()
+                        .name("JavaInUseSecurityScheme").type(SecurityScheme.Type.HTTP).scheme("basic"))
         );
     }
 }
