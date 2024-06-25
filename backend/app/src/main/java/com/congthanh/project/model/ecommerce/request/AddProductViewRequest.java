@@ -1,2 +1,18 @@
-package com.congthanh.project.model.ecommerce.request;public class AddProductViewRequest {
+package com.congthanh.project.model.ecommerce.request;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class AddProductViewRequest {
+
+    private String productId;
+
+    private String customerId;
+
 }

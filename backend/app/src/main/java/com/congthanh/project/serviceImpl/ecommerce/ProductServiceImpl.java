@@ -105,7 +105,7 @@ public class ProductServiceImpl implements ProductService {
             Category category = categoryRepository.findById(Integer.parseInt(productDTO.getCategory())).orElseThrow(() -> new NotFoundException(" not found"));
             Subcategory subcategory = subcategoryRepository.findById(Integer.parseInt(productDTO.getSubcategory())).orElseThrow(() -> new NotFoundException(" not found"));
             Supplier supplier = supplierRepository.findById(productDTO.getSupplier()).orElseThrow(() -> new NotFoundException(" not found"));
-            String productSlug = helper.createSlugFromProductName(productDTO.getName());
+            String productSlug = helper.generateSlug(productDTO.getName());
             Product product = Product.builder()
                     .name(productDTO.getName())
                     .category(category)

@@ -9,6 +9,7 @@ import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.CategoryMapper;
 import com.congthanh.project.repository.ecommerce.category.CategoryRepository;
 import com.congthanh.project.service.ecommerce.CategoryService;
+import com.congthanh.project.utils.Helper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class CategoryServiceImpl implements CategoryService {
   private final CategoryRepository categoryRepository;
 
   private final ModelMapper modelMapper;
+
+  private final Helper helper;
 
   @Override
   public Object getAllCategory(Integer page, Integer limit) {
@@ -79,6 +82,8 @@ public class CategoryServiceImpl implements CategoryService {
       Category category = Category.builder()
               .name(categoryDTO.getName())
               .status(StateStatus.STATUS_ACTIVE)
+              .slug(helper.generateSlug(categoryDTO.getName()))
+              .image(null)
               .build();
       Category result = categoryRepository.save(category);
       CategoryDTO response = CategoryMapper.mapCategoryEntityToDTO(result);

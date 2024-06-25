@@ -6,7 +6,6 @@ import com.congthanh.project.model.ecommerce.mapper.ProductViewMapper;
 import com.congthanh.project.repository.ecommerce.productView.ProductViewRepository;
 import com.congthanh.project.service.ecommerce.ProductViewService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;

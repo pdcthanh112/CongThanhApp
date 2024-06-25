@@ -2,15 +2,15 @@ package com.congthanh.project.controller.ecommerce;
 
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.ecommerce.ProductViewDTO;
+import com.congthanh.project.model.ecommerce.request.AddProductViewRequest;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.service.ecommerce.ProductViewService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/ecommerce/product-view")
@@ -31,10 +31,8 @@ public class ProductViewController {
     }
 
     @PostMapping("/add-product-view")
-    public ResponseEntity<Response<ProductViewDTO>> addProductView(@RequestBody Map<String, String> requestData) {
-        String productId = requestData.get("productId");
-        String customerId = requestData.get("customerId");
-        ProductViewDTO result = productViewService.addProductView(productId, customerId);
+    public ResponseEntity<Response<ProductViewDTO>> addProductView(@RequestBody AddProductViewRequest requestData, HttpSession session) {
+        ProductViewDTO result = productViewService.addProductView(requestData.getProductId(), requestData.getCustomerId());
         Response<ProductViewDTO> response = new Response<>();
         response.setData(result);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
