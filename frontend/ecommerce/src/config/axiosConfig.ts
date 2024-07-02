@@ -1,4 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
+import { useSession } from 'next-auth/react';
+import { useRefreshToken } from '@/hooks/auth/useRefreshToken';
 
 const axiosConfig = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URL}/ecommerce/`,
@@ -8,29 +10,36 @@ const axiosConfig = axios.create({
 });
 
 axiosConfig.interceptors.request.use(
-  function (config) {
+  (config) => {
+    const { data: session } = useSession();
     if (config.headers) {
       if (!config.headers.Authorization) {
-        // const token = store.getState().auth.currentUser?.tokenData.token;
-        // if (token) {
-        //   config.headers.Authorization = `Bearer ${token}`;
-        // }
+        config.headers['Authorization'] = `Bearer ${session?.user?.accessToken}`;
       }
     }
     return config;
   },
-  function (error) {
+  (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
-axios.interceptors.response.use(
-  function (response: AxiosResponse) {
+axiosConfig.interceptors.response.use(
+  (response: AxiosResponse) => {
     return response;
   },
-  function (error) {
+  async (error) => {
+    const { data: session } = useSession();
+    const refreshToken = useRefreshToken();
+    const prevRequest = error?.config;
+    if (error?.response?.status === 401 && !prevRequest?.sent) {
+      prevRequest.sent = true;
+      await refreshToken();
+      prevRequest.headers['Authorization'] = `Bearer ${session?.user?.accessToken}`;
+      return axiosConfig(prevRequest);
+    }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default axiosConfig;

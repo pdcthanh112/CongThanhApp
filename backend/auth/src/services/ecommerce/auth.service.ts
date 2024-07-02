@@ -1,7 +1,7 @@
 import { compare, hash } from 'bcrypt';
-import JWT from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 import { Service } from 'typedi';
-import { SECRET_KEY } from '@config/index';
+import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from '@config/index';
 import { MYSQL_DB } from '@databases/mysql';
 import { ChangePasswordDTO, CustomerLoginDTO, CustomerSignupDTO } from '@dtos/customer.dto';
 import { HttpException } from '@exceptions/httpException';
@@ -14,9 +14,9 @@ import { generateOTP } from '@utils/helper';
 import { OTP } from '@interfaces/otp.interface';
 
 const createToken = (customer: Customer): TokenData => {
-  const dataStoredInToken: DataStoredInToken = { id: customer.id };
+  const dataStoredInToken: DataStoredInToken = { accountId: customer.accountId };
   const expiresIn: number = 60 * 60;
-  const token: string = JWT.sign(dataStoredInToken, SECRET_KEY, { expiresIn });
+  const token: string = sign(dataStoredInToken, ACCESS_TOKEN_SECRET, { expiresIn });
   return { expiresIn, token };
 };
 
@@ -29,7 +29,8 @@ export class AuthService {
   public async login(
     loginData: CustomerLoginDTO,
   ): Promise<{ cookie: string; customerWithoutPassword: Omit<Customer, 'password'>; tokenData: TokenData }> {
-    const findCustomer: Customer = (await MYSQL_DB.Customer.findOne({ where: { email: loginData.email } })).dataValues;
+    const findCustomer = (await MYSQL_DB.Customer.findOne({ where: { email: loginData.email } })).dataValues;
+
     if (!findCustomer) throw new HttpException(409, `This email ${loginData.email} was not found`, 101001);
 
     const findError: LoginError = await MYSQL_DB.LoginError.findOne({ where: { accountId: findCustomer.accountId } });
@@ -238,5 +239,22 @@ export class AuthService {
     await MYSQL_DB.OTP.destroy({ where: { code: data.code } });
 
     return { message: 'OTP verified successfully' };
+  }
+
+  public async refreshAccessToken(refreshToken: string): Promise<any> {
+    console.log('RRRRRRRRRRRRRRRRRRRRRRR', refreshToken)
+    const checkToken = await MYSQL_DB.RefreshToken.findOne({ where: { token: refreshToken } });
+    console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSssss', checkToken)
+    if (checkToken) {
+      if (checkToken.expiresAt < new Date()) throw new HttpException(404, 'Refresh token expires', 101007);
+      const user = verify(refreshToken, REFRESH_TOKEN_SECRET);
+
+      const accessToken = sign({ userId: user }, ACCESS_TOKEN_SECRET, { expiresIn: '5m' });
+
+      return accessToken;
+    } else {
+      throw new HttpException(404, 'Refresh token invalid', 101007);
+    }
+    // res.locals.token = authHeader.split('Bearer ')[1]; // Lưu token vào res.locals
   }
 }

@@ -6,6 +6,7 @@ import CandidateModel from '@models/candidate.model';
 import CustomerModel from '@models/customer.model';
 import LoginErrorModel from '@models/loginError.model';
 import OTPModel from '@models/otp.model';
+import RefreshTokenModel from '@models/refreshToken.model';
 
 export const mysqlConnection = new Sequelize.Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
   dialect: 'mysql',
@@ -35,6 +36,7 @@ export const MYSQL_DB = {
   Candidate: CandidateModel(mysqlConnection),
   OTP: OTPModel(mysqlConnection),
   LoginError: LoginErrorModel(mysqlConnection),
+  RefreshToken: RefreshTokenModel(mysqlConnection),
   mysqlConnection, // connection instance (RAW queries)
   Sequelize, // library
 };

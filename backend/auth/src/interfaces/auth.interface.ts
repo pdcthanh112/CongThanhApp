@@ -2,7 +2,7 @@ import { Request } from "express";
 import { Customer } from "./account.interface";
 
 export interface DataStoredInToken {
-  id: number;
+  accountId: string;
 }
 
 export interface TokenData {

@@ -24,6 +24,7 @@ export class CustomerRoute implements Routes {
     this.router.post(`${this.path}/auth/forget-password`, this.authController.forgetPassword);
     this.router.get(`${this.path}/auth/generate-otp`, this.authController.generateOTP)
     this.router.post(`${this.path}/auth/verify-otp`, this.authController.verifyOTP)
+    this.router.post(`${this.path}/auth/refresh-token`, AuthMiddleware, this.authController.refreshAccessToken)
     // this.router.post('/logout', AuthMiddleware, this.auth.logOut);
 
     // this.router.get(`${this.path}`, this.customerController.getUsers);
