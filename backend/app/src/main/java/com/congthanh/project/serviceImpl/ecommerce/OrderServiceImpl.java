@@ -2,6 +2,7 @@ package com.congthanh.project.serviceImpl.ecommerce;
 
 import com.congthanh.project.dto.ecommerce.*;
 import com.congthanh.project.entity.ecommerce.*;
+import com.congthanh.project.enums.ecommerce.OrderStatus;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.CartMapper;
 import com.congthanh.project.model.ecommerce.mapper.ProductMapper;
@@ -58,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
                 .orderDate(Instant.now().toEpochMilli())
                 .checkout(checkout)
                 .total(orderTotal)
-                .status("NEW")
+                .status(OrderStatus.PENDING)
                 .build();
         return orderRepository.save(order);
     }

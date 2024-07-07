@@ -30,8 +30,6 @@ public class CategoryServiceImpl implements CategoryService {
 
   private final ModelMapper modelMapper;
 
-  private final Helper helper;
-
   @Override
   public Object getAllCategory(Integer page, Integer limit) {
     if (page != null && limit != null) {
@@ -82,7 +80,7 @@ public class CategoryServiceImpl implements CategoryService {
       Category category = Category.builder()
               .name(categoryDTO.getName())
               .status(StateStatus.STATUS_ACTIVE)
-              .slug(helper.generateSlug(categoryDTO.getName()))
+              .slug(new Helper().generateSlug(categoryDTO.getName()))
               .image(null)
               .build();
       Category result = categoryRepository.save(category);

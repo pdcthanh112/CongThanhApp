@@ -242,9 +242,7 @@ export class AuthService {
   }
 
   public async refreshAccessToken(refreshToken: string): Promise<any> {
-    console.log('RRRRRRRRRRRRRRRRRRRRRRR', refreshToken)
     const checkToken = await MYSQL_DB.RefreshToken.findOne({ where: { token: refreshToken } });
-    console.log('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSssss', checkToken)
     if (checkToken) {
       if (checkToken.expiresAt < new Date()) throw new HttpException(404, 'Refresh token expires', 101007);
       const user = verify(refreshToken, REFRESH_TOKEN_SECRET);

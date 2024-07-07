@@ -1,5 +1,6 @@
 package com.congthanh.project.entity.ecommerce;
 
+import com.congthanh.project.enums.ecommerce.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -34,7 +35,8 @@ public class Order {
   @Column(name = "order_date")
   private Long orderDate;
 
-  private String status;
+  @Enumerated(EnumType.STRING)
+  private OrderStatus status;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "checkout", nullable = false, referencedColumnName = "id")
