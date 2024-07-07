@@ -1,5 +1,5 @@
 server:
-  port: 5000
+  port: ${SERVER_PORT}
   servlet:
     context-path: /api
   compression:
@@ -149,7 +149,7 @@ spring:
 
 application:
   jwt:
-    secretKey: securesecuresecure
+    secretKey: ${JWT_SECRET_KEY}
     tokenPrefix: "Bearer "
     tokenExpirationAfterDays: 30
 
