@@ -14,16 +14,16 @@ import { generateOTP } from '@utils/helper';
 import { OTP } from '@interfaces/otp.interface';
 
 const createCookie = (tokenData: TokenData): string => {
-  return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
+  return `Authorization=Bearer ${tokenData.accessToken}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
 };
 
-function generateAccessToken(data: DataStoredInToken): TokenData {
+function generateAccessToken(data: DataStoredInToken): string {
   const convertRole = data.role.split(",").map(item => item.trim())
-  return { token: sign({ accountId: data.accountId, role: convertRole }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED }), expiresIn: 3600 };
+  return sign({ accountId: data.accountId, role: convertRole }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED }) ;
 }
 
-function generateRefreshToken(userId: string) {
-  const refreshToken = sign({ userId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRED });
+function generateRefreshToken(accountId: string) {
+  const refreshToken = sign({ accountId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRED });
   // refreshTokens.add(refreshToken);
   return refreshToken;
 }
@@ -60,7 +60,11 @@ export class AuthService {
         checkLogin.supplierInfo = null;
         const { password, ...customerWithoutPassword } = checkLogin;
 
-        const tokenData = generateAccessToken({accountId: checkLogin.accountId, role: checkLogin.role});
+        const tokenData: TokenData = {
+          accessToken: generateAccessToken({ accountId: checkLogin.accountId, role: checkLogin.role }), 
+          refreshToken: generateRefreshToken(checkLogin.accountId),
+          expiresIn: process.env.REFRESH_TOKEN_EXPIRED
+        };
         const cookie = createCookie(tokenData);
 
         return { cookie, customerWithoutPassword, tokenData };
