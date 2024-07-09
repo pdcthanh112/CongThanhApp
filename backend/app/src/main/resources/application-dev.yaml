@@ -72,6 +72,11 @@ spring:
     user:
       name: user # Tên người dùng mặc định
       password: password # Mật khẩu mặc định
+    jwt:
+      token:
+        secretKey: ${JWT_SECRET_KEY}
+        tokenPrefix: "Bearer "
+        tokenExpirationAfterDays: 30
 
   main:
     allow-circular-references: true
@@ -146,12 +151,6 @@ spring:
         index-type: hnsw
         distance-type: cosine_distance
         dimensions: 384
-
-application:
-  jwt:
-    secretKey: ${JWT_SECRET_KEY}
-    tokenPrefix: "Bearer "
-    tokenExpirationAfterDays: 30
 
 congthanhapp:
   openapi:

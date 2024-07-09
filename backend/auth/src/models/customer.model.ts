@@ -31,10 +31,6 @@ export default function (sequelize: Sequelize): typeof CustomerModel {
         allowNull: false,
         type: DataTypes.STRING(45),
       },
-      password: {
-        allowNull: false,
-        type: DataTypes.STRING(255),
-      },
       accountId: {
         allowNull: false,
         unique: true,

@@ -3,6 +3,7 @@ import { Customer } from "./account.interface";
 
 export interface DataStoredInToken {
   accountId: string;
+  role: string[]
 }
 
 export interface TokenData {

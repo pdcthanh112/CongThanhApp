@@ -1,5 +1,13 @@
 // import { IsString, IsEmail, IsNotEmpty, MinLength, MaxLength, IsPhoneNumber, IsNumber } from 'class-validator';
 
+export class AccountDTO {
+  public id: number;
+  public accountId: string;
+  public email: string;
+  public password: string;
+  public role: string[];
+}
+
 // export class EmployeeLoginDto {
 //   @IsEmail()
 //   public email: string;
@@ -13,7 +21,7 @@
 
 // export class CreateEmployeeDto {
 //   accountId: string;
-//   empAccount: string; 
+//   empAccount: string;
 
 //   public name: string;
 
@@ -34,7 +42,7 @@
 //   public dob?: Date;
 //   public gender: string;
 //   public image?: string;
-  
+
 //   @IsNumber()
 //   public salary: number
 
@@ -50,7 +58,7 @@
 //   public dob: Date;
 //   public gender: string;
 //   public image: string;
-  
+
 //   @IsNumber()
 //   public salary: number
 

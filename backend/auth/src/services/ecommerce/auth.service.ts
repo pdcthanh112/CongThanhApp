@@ -6,51 +6,74 @@ import { MYSQL_DB } from '@databases/mysql';
 import { ChangePasswordDTO, CustomerLoginDTO, CustomerSignupDTO } from '@dtos/customer.dto';
 import { HttpException } from '@exceptions/httpException';
 import { DataStoredInToken, LoginError, TokenData } from '@interfaces/auth.interface';
-import { Customer } from '@interfaces/account.interface';
+import { Account, Customer } from '@interfaces/account.interface';
 import { v4 as uuidv4 } from 'uuid';
 import sendEmail from '@utils/sendEmail';
 import sendSMS from '@utils/sendSMS';
 import { generateOTP } from '@utils/helper';
 import { OTP } from '@interfaces/otp.interface';
 
-const createToken = (customer: Customer): TokenData => {
-  const dataStoredInToken: DataStoredInToken = { accountId: customer.accountId };
-  const expiresIn: number = 60 * 60;
-  const token: string = sign(dataStoredInToken, ACCESS_TOKEN_SECRET, { expiresIn });
-  return { expiresIn, token };
-};
+// const createToken = (customer: Customer) => {
+//   const dataStoredInToken: DataStoredInToken = { accountId: customer.accountId };
+//   const expiresIn: number = 60 * 60;
+//   const token: string = sign(dataStoredInToken, ACCESS_TOKEN_SECRET, { expiresIn });
+//   return { expiresIn, token };
+// };
 
 const createCookie = (tokenData: TokenData): string => {
   return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
 };
 
+function generateAccessToken(accountId: string, role: string): TokenData {
+  const convertRole = role.split(",").map(item => item.trim())
+  return { token: sign({ accountId: accountId, role: convertRole }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED }), expiresIn: 3600 };
+}
+
+function generateRefreshToken(userId: string) {
+  const refreshToken = sign({ userId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRED });
+  // refreshTokens.add(refreshToken);
+  return refreshToken;
+}
+
+// function extractToken(req: Request, res: Response, next: NextFunction) {
+//   const authHeader = req.headers['authorization'];
+//   if (authHeader && authHeader.startsWith('Bearer ')) {
+//     res.locals.token = authHeader.split('Bearer ')[1];
+//     next();
+//   } else {
+//     res.status(401).json({ error: 'Authorization header is missing or invalid' });
+//   }
+// }
+
 @Service()
 export class AuthService {
-  public async login(
-    loginData: CustomerLoginDTO,
-  ): Promise<{ cookie: string; customerWithoutPassword: Omit<Customer, 'password'>; tokenData: TokenData }> {
-    const findCustomer = (await MYSQL_DB.Customer.findOne({ where: { email: loginData.email } })).dataValues;
+  public async login(loginData: CustomerLoginDTO): Promise<{ cookie: string; customerWithoutPassword: Omit<Account, 'password'>; tokenData: TokenData }> {
+    const checkLogin = (await MYSQL_DB.Account.findOne({ where: { email: loginData.email } })).dataValues;
 
-    if (!findCustomer) throw new HttpException(409, `This email ${loginData.email} was not found`, 101001);
+    if (!checkLogin) throw new HttpException(409, `This email ${loginData.email} was not found`, 101001);
 
-    const findError: LoginError = await MYSQL_DB.LoginError.findOne({ where: { accountId: findCustomer.accountId } });
+    const findError: LoginError = await MYSQL_DB.LoginError.findOne({ where: { accountId: checkLogin.accountId } });
 
     if (findError && findError?.lockedUntil > new Date()) {
       throw new HttpException(409, `Your account have been blocked! (until ${findError.lockedUntil})`, 101003);
     } else {
-      const isPasswordMatching: boolean = await compare(loginData.password, findCustomer.password);
+      const isPasswordMatching: boolean = await compare(loginData.password, checkLogin.password);
 
       if (isPasswordMatching) {
-        await MYSQL_DB.LoginError.destroy({ where: { accountId: findCustomer.accountId } });
-        const { password, ...customerWithoutPassword } = findCustomer;
+        await MYSQL_DB.LoginError.destroy({ where: { accountId: checkLogin.accountId } });
+        const customerInfo = await MYSQL_DB.Customer.findOne({where: {accountId: checkLogin.accountId}})
+        //cofn thieeus supplier nuawx 
+        checkLogin.customerInfo = customerInfo
+        checkLogin.supplierInfo = null;
+        const { password, ...customerWithoutPassword } = checkLogin;
 
-        const tokenData = createToken(customerWithoutPassword);
+        const tokenData = generateAccessToken(checkLogin.accountId, checkLogin.role);
         const cookie = createCookie(tokenData);
 
         return { cookie, customerWithoutPassword, tokenData };
       } else {
         await MYSQL_DB.LoginError.upsert({
-          accountId: findCustomer.accountId,
+          accountId: checkLogin.accountId,
           failedAttempts: findError ? findError.failedAttempts + 1 : 1,
         });
 

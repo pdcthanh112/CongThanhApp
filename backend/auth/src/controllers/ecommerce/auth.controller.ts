@@ -5,31 +5,6 @@ import { Customer } from '@interfaces/account.interface';
 import { AuthService } from '@services/ecommerce/auth.service';
 import { RequestWithUser } from '@interfaces/auth.interface';
 import { OTP } from '@interfaces/otp.interface';
-import { sign } from 'jsonwebtoken';
-
-// Hàm tạo access token
-function generateAccessToken(userId: string) {
-  return sign({ userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-}
-
-// Hàm tạo refresh token
-function generateRefreshToken(userId: string) {
-  const refreshToken = sign({ userId }, process.env.REFRESH_TOKEN_SECRET);
-  // refreshTokens.add(refreshToken);
-  return refreshToken;
-}
-
-// Middleware để trích xuất token từ header
-function extractToken(req: Request, res: Response, next: NextFunction) {
-  const authHeader = req.headers['authorization'];
-  if (authHeader && authHeader.startsWith('Bearer ')) {
-    res.locals.token = authHeader.split('Bearer ')[1]; // Lưu token vào res.locals
-    next();
-  } else {
-    res.status(401).json({ error: 'Authorization header is missing or invalid' });
-  }
-}
-
 
 export class AuthController {
   public service = Container.get(AuthService);

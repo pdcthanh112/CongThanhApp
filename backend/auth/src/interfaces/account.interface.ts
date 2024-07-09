@@ -1,13 +1,17 @@
 export interface Account {
-  id?: number;
-  account?: string;
-  empAccount?: string;
+  id: number;
+  accountId?: string;
   email: string;
   password: string;
+  role: string
+  customerInfo?: Customer
+  supplierInfo?: Supplier
+  employeeInfo?: Employee
+  candidateInfo?: Candidate
 }
 
 export interface Customer {
-  id?: number;
+  id: number;
   accountId: string;
   name: string;
   email: string;
@@ -18,6 +22,10 @@ export interface Customer {
   dob: Date;
   gender: string;
   image?: string;
+}
+
+export interface Supplier {
+  id: number
 }
 export interface Employee {
   id?: number;

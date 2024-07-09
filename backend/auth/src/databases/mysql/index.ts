@@ -7,6 +7,7 @@ import CustomerModel from '@models/customer.model';
 import LoginErrorModel from '@models/loginError.model';
 import OTPModel from '@models/otp.model';
 import RefreshTokenModel from '@models/refreshToken.model';
+import AccountModel from '@models/account.model';
 
 export const mysqlConnection = new Sequelize.Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
   dialect: 'mysql',
@@ -31,6 +32,7 @@ export const mysqlConnection = new Sequelize.Sequelize(MYSQL_DATABASE, MYSQL_USE
 });
 
 export const MYSQL_DB = {
+  Account: AccountModel(mysqlConnection),
   Employee: EmployeeModel(mysqlConnection),
   Customer: CustomerModel(mysqlConnection),
   Candidate: CandidateModel(mysqlConnection),
