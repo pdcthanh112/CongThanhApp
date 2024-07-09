@@ -13,20 +13,13 @@ import sendSMS from '@utils/sendSMS';
 import { generateOTP } from '@utils/helper';
 import { OTP } from '@interfaces/otp.interface';
 
-// const createToken = (customer: Customer) => {
-//   const dataStoredInToken: DataStoredInToken = { accountId: customer.accountId };
-//   const expiresIn: number = 60 * 60;
-//   const token: string = sign(dataStoredInToken, ACCESS_TOKEN_SECRET, { expiresIn });
-//   return { expiresIn, token };
-// };
-
 const createCookie = (tokenData: TokenData): string => {
   return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
 };
 
-function generateAccessToken(accountId: string, role: string): TokenData {
-  const convertRole = role.split(",").map(item => item.trim())
-  return { token: sign({ accountId: accountId, role: convertRole }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED }), expiresIn: 3600 };
+function generateAccessToken(data: DataStoredInToken): TokenData {
+  const convertRole = data.role.split(",").map(item => item.trim())
+  return { token: sign({ accountId: data.accountId, role: convertRole }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED }), expiresIn: 3600 };
 }
 
 function generateRefreshToken(userId: string) {
@@ -67,7 +60,7 @@ export class AuthService {
         checkLogin.supplierInfo = null;
         const { password, ...customerWithoutPassword } = checkLogin;
 
-        const tokenData = generateAccessToken(checkLogin.accountId, checkLogin.role);
+        const tokenData = generateAccessToken({accountId: checkLogin.accountId, role: checkLogin.role});
         const cookie = createCookie(tokenData);
 
         return { cookie, customerWithoutPassword, tokenData };
