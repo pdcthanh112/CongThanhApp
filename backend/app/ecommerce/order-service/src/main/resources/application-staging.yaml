@@ -13,7 +13,7 @@ server:
 
 spring:
   application:
-    name: CongThanhApp
+    name: CongThanhApp - Ecommerce - order_service
 
   profiles:
     active: staging
