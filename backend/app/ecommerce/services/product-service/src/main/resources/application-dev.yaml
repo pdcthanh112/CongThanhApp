@@ -152,6 +152,39 @@ spring:
         distance-type: cosine_distance
         dimensions: 384
 
+  cloud:
+    config:
+      uri: http://localhost:8888
+    gateway:
+      routes:
+        - id: cart-service
+          uri: lb://cart-service
+          predicates:
+            - Path=/api/cart/**
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notification/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/orders/**
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/payment/**
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/product/**
+
+  sleuth:
+    sampler:
+      probability: 1.0
+
+  zipkin:
+    base-url: http://localhost:9411
+
 congthanhapp:
   openapi:
     dev-url: http://localhost:5000
@@ -179,3 +212,8 @@ management:
     web:
       exposure:
         include: "*"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
