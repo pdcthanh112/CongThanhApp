@@ -5,15 +5,10 @@ server:
   compression:
     enabled: true
     min-response-size: 1024
-#  ssl:
-#    key-store: classpath:keystore.p12  # Đường dẫn đến keystore
-#    key-store-password: password       # Mật khẩu keystore
-#    key-store-type: PKCS12             # Loại keystore
-#    key-alias: tomcat                  # Alias của key
 
 spring:
   application:
-    name: CongThanhApp - Ecommerce - cart_service
+    name: CongThanhApp-Ecommerce-cart_service
 
   profiles:
     active: dev
@@ -154,7 +149,7 @@ spring:
 
 congthanhapp:
   openapi:
-    dev-url: http://localhost:5000
+    dev-url: http://localhost:${SERVER_PORT}
     prod-url: https://congthanhapp-api.com
 
 springdoc:

@@ -1,5 +1,5 @@
 server:
-  port: 5000
+  port: ${SERVER_PORT}
   servlet:
     context-path: /api
   compression:
@@ -155,7 +155,7 @@ application:
 
 congthanhapp:
   openapi:
-    dev-url: http://localhost:5000
+    dev-url: http://localhost:${SERVER_PORT}
     prod-url: https://congthanhapp-api.com
 
 springdoc:

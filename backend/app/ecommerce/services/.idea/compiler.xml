@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="project (7)" />
+        <module name="project (2)" />
+        <module name="project (4)" />
+        <module name="project (3)" />
+        <module name="project (5)" />
+      </profile>
+      <profile name="Annotation profile for project" enabled="true">
+        <sourceOutputDir name="payment-service/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="payment-service/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="project (8)" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="project (2)" options="-parameters" />
+      <module name="project (3)" options="-parameters" />
+      <module name="project (4)" options="-parameters" />
+      <module name="project (5)" options="-parameters" />
+      <module name="project (6)" options="" />
+      <module name="project (7)" options="-parameters" />
+      <module name="project (8)" options="-parameters" />
+      <module name="project (9)" options="" />
+    </option>
+  </component>
+</project>
