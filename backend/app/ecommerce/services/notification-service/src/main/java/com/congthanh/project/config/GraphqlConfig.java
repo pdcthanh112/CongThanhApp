@@ -9,15 +9,12 @@
 //import graphql.schema.idl.SchemaParser;
 //import graphql.schema.idl.TypeDefinitionRegistry;
 //import org.springframework.util.StreamUtils;
-//import org.springframework.web.bind.annotation.RestController;
-//import javax.annotation.PostConstruct;
 //import java.io.IOException;
 //import java.nio.charset.StandardCharsets;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.core.io.ClassPathResource;
 //import org.springframework.core.io.Resource;
 //import graphql.GraphQL;
-//import graphql.schema.idl.RuntimeWiring;
 //
 //@Configuration
 //public class GraphQLConfig {

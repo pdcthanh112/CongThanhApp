@@ -27,9 +27,11 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authz -> authz
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "ecommerce/product/create").hasAuthority("SUPPLIER")
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/eureka/**").permitAll()
+                        .requestMatchers("/actuator/health", "/actuator/info").permitAll()
                         .requestMatchers("/api/user/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/product/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")

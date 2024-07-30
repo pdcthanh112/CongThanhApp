@@ -2,12 +2,11 @@ package com.congthanh.project.serviceImpl.ecommerce;
 
 import com.congthanh.project.dto.ecommerce.*;
 import com.congthanh.project.entity.ecommerce.*;
-import com.congthanh.project.enums.ecommerce.OrderStatus;
+import com.congthanh.project.enums.OrderStatus;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.CartMapper;
 import com.congthanh.project.model.ecommerce.mapper.ProductMapper;
 import com.congthanh.project.model.ecommerce.request.CreateOrderRequest;
-import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.repository.ecommerce.cartItem.CartItemRepository;
 import com.congthanh.project.repository.ecommerce.cart.CartRepository;
 import com.congthanh.project.repository.ecommerce.checkout.CheckoutRepository;
@@ -16,9 +15,6 @@ import com.congthanh.project.repository.ecommerce.voucher.VoucherRepository;
 import com.congthanh.project.service.ecommerce.OrderService;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

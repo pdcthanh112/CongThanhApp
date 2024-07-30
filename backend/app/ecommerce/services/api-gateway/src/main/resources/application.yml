@@ -2,8 +2,14 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: api-gateway
+
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
         - id: product-service
           uri: lb://PRODUCT-SERVICE
@@ -33,6 +39,6 @@ management:
       exposure:
         include: prometheus
 
-logging:
-  pattern:
-    level: %5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]
+#logging:
+#  pattern:
+#    level: %5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]

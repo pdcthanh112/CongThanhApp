@@ -53,7 +53,7 @@ public class SwaggerConfig {
                         new SecurityScheme()
                                 .scheme("bearer")
                                 .type(SecurityScheme.Type.HTTP)
-                                .bearerFormat("jwt") //if it is your case
+                                .bearerFormat("jwt")
                                 .name("api")
                 ).addSecuritySchemes("JavaInUseSecurityScheme", new SecurityScheme()
                         .name("JavaInUseSecurityScheme").type(SecurityScheme.Type.HTTP).scheme("basic"))

@@ -5,8 +5,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.1</version>
-        <relativePath/>
+        <version>3.3.2</version>
+        <relativePath />
     </parent>
 
     <groupId>com.congthanh</groupId>
@@ -17,8 +17,6 @@
     <description>CongThanhApp - Ecommerce</description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>21</java.version>
     </properties>
 
@@ -26,11 +24,13 @@
         <module>api-gateway</module>
         <module>cart-service</module>
         <module>config-service</module>
+        <module>discovery-service</module>
+        <module>inventory-service</module>
         <module>notification-service</module>
         <module>order-service</module>
         <module>payment-service</module>
         <module>product-service</module>
-        <module>discovery-service</module>
+        <module>promotion-service</module>
     </modules>
 
     <dependencyManagement>
@@ -38,7 +38,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.3.1</version>
+                <version>3.3.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

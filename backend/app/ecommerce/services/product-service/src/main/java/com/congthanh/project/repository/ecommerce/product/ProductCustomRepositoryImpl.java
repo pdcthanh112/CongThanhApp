@@ -3,7 +3,7 @@ package com.congthanh.project.repository.ecommerce.product;
 import com.congthanh.project.entity.ecommerce.Product;
 import com.congthanh.project.entity.ecommerce.ProductImage;
 import com.congthanh.project.entity.ecommerce.ProductVariant;
-import com.congthanh.project.enums.ecommerce.OrderStatus;
+import com.congthanh.project.enums.OrderStatus;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 

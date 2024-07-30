@@ -124,19 +124,20 @@ public class PostgreSQLConfig {
 
     @Primary
     @Bean
-    @ConfigurationProperties(prefix = "spring.postgresql.datasource.ecommerce")
+    @ConfigurationProperties(prefix = "spring.datasource.postgresql.ecommerce")
+//    @ConfigurationProperties(prefix = "spring.postgresql.datasource.ecommerce")
     public DataSource ecommerceDataSource() {
         return DataSourceBuilder.create().build();
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.postgresql.datasource.management")
+    @ConfigurationProperties(prefix = "spring.datasource.postgresql.management")
     public DataSource managementDataSource() {
         return DataSourceBuilder.create().build();
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.postgresql.datasource.company")
+    @ConfigurationProperties(prefix = "spring.datasource.postgresql.company")
     public DataSource companyDataSource() {
         return DataSourceBuilder.create().build();
     }

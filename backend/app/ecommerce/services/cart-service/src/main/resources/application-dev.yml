@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT}
+  port: 5009 # ${SERVER_PORT}
   servlet:
     context-path: /api
   compression:
@@ -51,7 +51,6 @@ spring:
   mongodb:
     uri: mongodb://localhost:27017/MyDream
     database: CongThanhApp
-
 
   graphql:
     graphiql:
