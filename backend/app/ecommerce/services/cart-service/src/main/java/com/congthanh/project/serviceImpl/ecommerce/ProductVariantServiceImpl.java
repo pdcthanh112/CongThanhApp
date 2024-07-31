@@ -2,8 +2,8 @@ package com.congthanh.project.serviceImpl.ecommerce;
 
 import com.congthanh.project.dto.ecommerce.ProductVariantDTO;
 import com.congthanh.project.entity.ecommerce.ProductVariant;
-import com.congthanh.project.repository.ecommerce.product.ProductRepository;
-import com.congthanh.project.repository.ecommerce.productVariant.ProductVariantRepository;
+import com.congthanh.project.repository.product.ProductRepository;
+import com.congthanh.project.repository.productVariant.ProductVariantRepository;
 import com.congthanh.project.service.ecommerce.ProductVariantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

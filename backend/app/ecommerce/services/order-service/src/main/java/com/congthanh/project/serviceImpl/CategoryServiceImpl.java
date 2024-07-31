@@ -6,7 +6,7 @@ import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.entity.ecommerce.Category;
 import com.congthanh.project.exception.NotFoundException;
-import com.congthanh.project.repository.ecommerce.category.CategoryRepository;
+import com.congthanh.project.repository.category.CategoryRepository;
 import com.congthanh.project.utils.Helper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

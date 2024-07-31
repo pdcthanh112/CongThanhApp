@@ -3,7 +3,7 @@ package com.congthanh.project.serviceImpl.ecommerce;
 import com.congthanh.project.dto.ecommerce.ProductDTO;
 import com.congthanh.project.dto.ecommerce.WishlistDTO;
 import com.congthanh.project.entity.ecommerce.Wishlist;
-import com.congthanh.project.repository.ecommerce.wishlist.WishlistRepository;
+import com.congthanh.project.repository.wishlist.WishlistRepository;
 import com.congthanh.project.service.ecommerce.WishlistService;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;

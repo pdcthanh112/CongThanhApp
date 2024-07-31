@@ -3,7 +3,7 @@ package com.congthanh.project.serviceImpl.ecommerce;
 import com.congthanh.project.dto.ecommerce.PaymentDTO;
 import com.congthanh.project.entity.ecommerce.Payment;
 import com.congthanh.project.enums.ecommerce.PaymentStatus;
-import com.congthanh.project.repository.ecommerce.payment.PaymentRepository;
+import com.congthanh.project.repository.payment.PaymentRepository;
 import com.congthanh.project.service.ecommerce.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -8,12 +8,11 @@ import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.CartItemMapper;
 import com.congthanh.project.model.ecommerce.mapper.CartMapper;
 import com.congthanh.project.model.ecommerce.mapper.ProductMapper;
-import com.congthanh.project.repository.ecommerce.cartItem.CartItemRepository;
-import com.congthanh.project.repository.ecommerce.cart.CartRepository;
-import com.congthanh.project.repository.ecommerce.product.ProductRepository;
+import com.congthanh.project.repository.cartItem.CartItemRepository;
+import com.congthanh.project.repository.cart.CartRepository;
+import com.congthanh.project.repository.product.ProductRepository;
 import com.congthanh.project.service.ecommerce.CartItemService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

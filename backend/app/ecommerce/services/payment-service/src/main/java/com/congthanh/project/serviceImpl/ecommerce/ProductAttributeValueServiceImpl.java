@@ -7,13 +7,12 @@ import com.congthanh.project.entity.ecommerce.ProductAttribute;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.ProductAttributeValueMapper;
 import com.congthanh.project.model.ecommerce.request.ProductAttributeValueRequest;
-import com.congthanh.project.repository.ecommerce.productAtrributeValue.ProductAttributeValueRepository;
-import com.congthanh.project.repository.ecommerce.product.ProductRepository;
-import com.congthanh.project.repository.ecommerce.productAttribute.ProductAttributeRepository;
+import com.congthanh.project.repository.productAtrributeValue.ProductAttributeValueRepository;
+import com.congthanh.project.repository.product.ProductRepository;
+import com.congthanh.project.repository.productAttribute.ProductAttributeRepository;
 import com.congthanh.project.service.ecommerce.ProductAttributeValueService;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

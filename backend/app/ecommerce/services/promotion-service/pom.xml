@@ -12,7 +12,7 @@
 	<artifactId>promotion-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>promotion-service</name>
-	<description>promotion-service</description>
+	<description>CongThanhApp - Ecommerce - promotion-service</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -107,6 +107,15 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>

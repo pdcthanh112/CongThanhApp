@@ -4,7 +4,7 @@ import com.congthanh.project.dto.ecommerce.TagDTO;
 import com.congthanh.project.entity.ecommerce.Tag;
 import com.congthanh.project.exception.ecommerce.BadRequestException;
 import com.congthanh.project.model.ecommerce.mapper.TagMapper;
-import com.congthanh.project.repository.ecommerce.tag.TagRepository;
+import com.congthanh.project.repository.tag.TagRepository;
 import com.congthanh.project.service.ecommerce.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

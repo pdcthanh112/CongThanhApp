@@ -3,7 +3,7 @@ package com.congthanh.project.serviceImpl;
 import com.congthanh.project.dto.ecommerce.ProductViewDTO;
 import com.congthanh.project.entity.ecommerce.ProductView;
 import com.congthanh.project.model.ecommerce.mapper.ProductViewMapper;
-import com.congthanh.project.repository.ecommerce.productView.ProductViewRepository;
+import com.congthanh.project.repository.productView.ProductViewRepository;
 import com.congthanh.project.service.ProductViewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.congthanh.project.entity.ecommerce;
+package com.congthanh.project.entity;
 
 import com.congthanh.project.enums.ecommerce.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;

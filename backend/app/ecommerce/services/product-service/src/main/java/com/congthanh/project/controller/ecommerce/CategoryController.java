@@ -4,7 +4,7 @@ import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.ecommerce.CategoryDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.entity.ecommerce.Category;
-import com.congthanh.project.repository.ecommerce.category.CategoryRepository;
+import com.congthanh.project.repository.category.CategoryRepository;
 import com.congthanh.project.service.ecommerce.CategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;

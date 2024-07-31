@@ -25,7 +25,7 @@ public class OrderDTO {
 
     private String orderDate;
 
-    private CheckoutDTO checkout;
+    private String checkout;
 
     @NotNull
     private String status;

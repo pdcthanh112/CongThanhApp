@@ -8,10 +8,10 @@ import com.congthanh.project.model.ecommerce.response.ProductVariantAttributeVal
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.ProductMapper;
-import com.congthanh.project.repository.ecommerce.category.CategoryRepository;
-import com.congthanh.project.repository.ecommerce.product.ProductRepository;
-import com.congthanh.project.repository.ecommerce.supplier.SupplierRepository;
-import com.congthanh.project.repository.ecommerce.subcategory.SubcategoryRepository;
+import com.congthanh.project.repository.category.CategoryRepository;
+import com.congthanh.project.repository.product.ProductRepository;
+import com.congthanh.project.repository.supplier.SupplierRepository;
+import com.congthanh.project.repository.subcategory.SubcategoryRepository;
 import com.congthanh.project.service.ecommerce.ProductService;
 import com.congthanh.project.utils.Helper;
 import jakarta.persistence.Tuple;

@@ -6,7 +6,7 @@ import com.congthanh.project.dto.ecommerce.SupplierDTO;
 import com.congthanh.project.entity.ecommerce.Supplier;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
-import com.congthanh.project.repository.ecommerce.supplier.SupplierRepository;
+import com.congthanh.project.repository.supplier.SupplierRepository;
 import com.congthanh.project.service.ecommerce.SupplierService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

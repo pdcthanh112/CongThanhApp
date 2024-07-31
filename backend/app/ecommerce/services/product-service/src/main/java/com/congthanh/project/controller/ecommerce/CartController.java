@@ -4,7 +4,7 @@ import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.ecommerce.CartDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.entity.ecommerce.Cart;
-import com.congthanh.project.repository.ecommerce.cart.CartRepository;
+import com.congthanh.project.repository.cart.CartRepository;
 import com.congthanh.project.service.ecommerce.CartService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

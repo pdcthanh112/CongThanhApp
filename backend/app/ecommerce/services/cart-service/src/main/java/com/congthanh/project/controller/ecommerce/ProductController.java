@@ -6,7 +6,7 @@ import com.congthanh.project.model.ecommerce.response.ProductVariantAttributeVal
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.entity.ecommerce.Product;
-import com.congthanh.project.repository.ecommerce.product.ProductRepository;
+import com.congthanh.project.repository.product.ProductRepository;
 import com.congthanh.project.service.ecommerce.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

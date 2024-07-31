@@ -8,7 +8,7 @@ import com.congthanh.project.model.ecommerce.mapper.SupplierMapper;
 import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.entity.ecommerce.Product;
-import com.congthanh.project.repository.ecommerce.supplier.SupplierRepository;
+import com.congthanh.project.repository.supplier.SupplierRepository;
 import com.congthanh.project.service.ecommerce.SupplierService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

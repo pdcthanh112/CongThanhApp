@@ -4,7 +4,7 @@ import com.congthanh.project.dto.ecommerce.AddressDTO;
 import com.congthanh.project.entity.ecommerce.Address;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.AddressMapper;
-import com.congthanh.project.repository.ecommerce.address.AddressRepository;
+import com.congthanh.project.repository.address.AddressRepository;
 import com.congthanh.project.service.ecommerce.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
