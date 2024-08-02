@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>com.congthanh</groupId>
-    <artifactId>project</artifactId>
+    <artifactId>order-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>order-service</name>
     <description>CongThanhApp</description>

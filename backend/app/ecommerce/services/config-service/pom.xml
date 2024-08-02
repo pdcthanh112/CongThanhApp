@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.congthanh</groupId>
-	<artifactId>project</artifactId>
+	<artifactId>config-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>config-service</name>
 	<description>config-service</description>

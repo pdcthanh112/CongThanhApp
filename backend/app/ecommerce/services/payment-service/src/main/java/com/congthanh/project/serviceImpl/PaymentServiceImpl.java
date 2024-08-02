@@ -1,7 +1,7 @@
 package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.PaymentDTO;
-import com.congthanh.project.entity.ecommerce.Payment;
+import com.congthanh.project.entity.Payment;
 import com.congthanh.project.enums.PaymentStatus;
 import com.congthanh.project.repository.payment.PaymentRepository;
 import com.congthanh.project.service.PaymentService;
