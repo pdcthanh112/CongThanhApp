@@ -1,7 +1,7 @@
 package com.congthanh.project.serviceImpl.company;
 
 import com.congthanh.project.dto.company.RecruitmentRequestDTO;
-import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
+import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.entity.company.RecruitmentRequest;
 import com.congthanh.project.service.company.RecruitmentRequestService;
 import org.springframework.stereotype.Service;

@@ -2,7 +2,7 @@ package com.congthanh.project.controller.management;
 
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.management.PositionDTO;
-import com.congthanh.project.model.ecommerce.response.Response;
+import com.congthanh.project.model.response.Response;
 import com.congthanh.project.entity.management.Position;
 import com.congthanh.project.service.management.PositionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
