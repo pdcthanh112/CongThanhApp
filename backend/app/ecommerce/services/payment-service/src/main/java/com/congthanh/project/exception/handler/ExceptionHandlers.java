@@ -2,7 +2,7 @@ package com.congthanh.project.exception.handler;
 
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.exception.ecommerce.BadRequestException;
-import com.congthanh.project.model.ecommerce.response.Response;
+import com.congthanh.project.model.response.Response;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.exception.ecommerce.PermissionException;
 import org.springframework.http.ResponseEntity;

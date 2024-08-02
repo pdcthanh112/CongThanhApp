@@ -1,7 +1,7 @@
 package com.congthanh.project.service.company;
 
 import com.congthanh.project.dto.company.RecruitmentRequestDTO;
-import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
+import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.entity.company.RecruitmentRequest;
 
 public interface RecruitmentRequestService {

@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.review;
 
-import com.congthanh.project.model.ecommerce.response.StatisticReviewResponse;
+import com.congthanh.project.model.response.StatisticReviewResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
