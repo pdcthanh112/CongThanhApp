@@ -1,4 +1,4 @@
-package com.congthanh.project.entity.ecommerce;
+package com.congthanh.project.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
