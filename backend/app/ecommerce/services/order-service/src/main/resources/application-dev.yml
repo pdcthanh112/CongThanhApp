@@ -13,7 +13,7 @@ server:
 
 spring:
   application:
-    name: CongThanhApp - Ecommerce - order_service
+    name: congthanhapp-ecommerce-order-service
 
   profiles:
     active: dev

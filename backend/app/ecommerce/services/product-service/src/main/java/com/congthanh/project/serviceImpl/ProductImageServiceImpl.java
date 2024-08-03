@@ -1,4 +1,4 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.ProductImageDTO;
 import com.congthanh.project.entity.Product;
@@ -7,7 +7,7 @@ import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.ProductImageMapper;
 import com.congthanh.project.repository.product.ProductRepository;
 import com.congthanh.project.repository.productImage.ProductImageRepository;
-import com.congthanh.project.service.ecommerce.ProductImageService;
+import com.congthanh.project.service.ProductImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

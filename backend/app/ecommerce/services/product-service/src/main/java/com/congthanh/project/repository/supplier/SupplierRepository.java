@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.supplier;
 
-import com.congthanh.project.entity.ecommerce.Supplier;
+import com.congthanh.project.entity.Supplier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -13,7 +13,7 @@ server:
 
 spring:
   application:
-    name: CongThanhApp - Ecommerce - notification_service
+    name: congthanhapp-ecommerce-notification-service
 
   profiles:
     active: dev

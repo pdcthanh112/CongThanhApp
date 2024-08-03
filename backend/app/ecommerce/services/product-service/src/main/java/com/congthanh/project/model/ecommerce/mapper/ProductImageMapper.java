@@ -1,7 +1,7 @@
 package com.congthanh.project.model.ecommerce.mapper;
 
-import com.congthanh.project.dto.ecommerce.ProductImageDTO;
-import com.congthanh.project.entity.ecommerce.ProductImage;
+import com.congthanh.project.dto.ProductImageDTO;
+import com.congthanh.project.entity.ProductImage;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.shipping;
 
-import com.congthanh.project.entity.ecommerce.Shipping;
+import com.congthanh.project.entity.Shipping;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

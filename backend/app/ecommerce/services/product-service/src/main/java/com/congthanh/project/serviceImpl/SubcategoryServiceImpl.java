@@ -1,4 +1,4 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.dto.SubcategoryDTO;
@@ -10,7 +10,7 @@ import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.SubcategoryMapper;
 import com.congthanh.project.repository.category.CategoryRepository;
 import com.congthanh.project.repository.subcategory.SubcategoryRepository;
-import com.congthanh.project.service.ecommerce.SubcategoryService;
+import com.congthanh.project.service.SubcategoryService;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

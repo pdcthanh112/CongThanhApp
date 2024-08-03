@@ -1,8 +1,8 @@
 package com.congthanh.project.repository.product;
 
-import com.congthanh.project.entity.ecommerce.Product;
-import com.congthanh.project.entity.ecommerce.ProductImage;
-import com.congthanh.project.entity.ecommerce.ProductVariant;
+import com.congthanh.project.entity.Product;
+import com.congthanh.project.entity.ProductImage;
+import com.congthanh.project.entity.ProductVariant;
 import jakarta.persistence.Tuple;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.EntityGraph;

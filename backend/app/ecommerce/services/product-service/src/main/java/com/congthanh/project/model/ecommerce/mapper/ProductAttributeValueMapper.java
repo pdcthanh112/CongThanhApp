@@ -1,7 +1,7 @@
 package com.congthanh.project.model.ecommerce.mapper;
 
-import com.congthanh.project.dto.ecommerce.ProductAttributeValueDTO;
-import com.congthanh.project.entity.ecommerce.ProductAttributeValue;
+import com.congthanh.project.dto.ProductAttributeValueDTO;
+import com.congthanh.project.entity.ProductAttributeValue;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

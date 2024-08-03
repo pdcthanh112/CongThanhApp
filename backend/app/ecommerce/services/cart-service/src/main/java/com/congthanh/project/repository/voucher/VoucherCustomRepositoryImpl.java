@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.voucher;
 
-import com.congthanh.project.entity.ecommerce.Voucher;
+import com.congthanh.project.entity.Voucher;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;

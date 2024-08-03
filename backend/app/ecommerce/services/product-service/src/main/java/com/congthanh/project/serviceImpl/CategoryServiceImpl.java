@@ -1,4 +1,4 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.dto.CategoryDTO;
@@ -8,7 +8,7 @@ import com.congthanh.project.entity.Category;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.CategoryMapper;
 import com.congthanh.project.repository.category.CategoryRepository;
-import com.congthanh.project.service.ecommerce.CategoryService;
+import com.congthanh.project.service.CategoryService;
 import com.congthanh.project.utils.Helper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

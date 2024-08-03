@@ -1,11 +1,11 @@
-package com.congthanh.project.controller.ecommerce;
+package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ecommerce.SubcategoryDTO;
+import com.congthanh.project.dto.SubcategoryDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
-import com.congthanh.project.entity.ecommerce.Subcategory;
+import com.congthanh.project.entity.Subcategory;
 import com.congthanh.project.repository.subcategory.SubcategoryRepository;
-import com.congthanh.project.service.ecommerce.SubcategoryService;
+import com.congthanh.project.service.SubcategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;

@@ -1,13 +1,13 @@
 package com.congthanh.project.model.ecommerce.mapper;
 
-import com.congthanh.project.dto.ecommerce.ProductAttributeValueDTO;
-import com.congthanh.project.dto.ecommerce.ProductDTO;
-import com.congthanh.project.dto.ecommerce.ProductImageDTO;
-import com.congthanh.project.dto.ecommerce.ProductVariantDTO;
-import com.congthanh.project.entity.ecommerce.Product;
-import com.congthanh.project.entity.ecommerce.ProductAttributeValue;
-import com.congthanh.project.entity.ecommerce.ProductImage;
-import com.congthanh.project.entity.ecommerce.ProductVariant;
+import com.congthanh.project.dto.ProductAttributeValueDTO;
+import com.congthanh.project.dto.ProductDTO;
+import com.congthanh.project.dto.ProductImageDTO;
+import com.congthanh.project.dto.ProductVariantDTO;
+import com.congthanh.project.entity.Product;
+import com.congthanh.project.entity.ProductAttributeValue;
+import com.congthanh.project.entity.ProductImage;
+import com.congthanh.project.entity.ProductVariant;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

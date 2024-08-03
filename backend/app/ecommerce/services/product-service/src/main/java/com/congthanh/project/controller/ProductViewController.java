@@ -1,10 +1,10 @@
-package com.congthanh.project.controller.ecommerce;
+package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ecommerce.ProductViewDTO;
+import com.congthanh.project.dto.ProductViewDTO;
 import com.congthanh.project.model.ecommerce.request.AddProductViewRequest;
 import com.congthanh.project.model.ecommerce.response.Response;
-import com.congthanh.project.service.ecommerce.ProductViewService;
+import com.congthanh.project.service.ProductViewService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;

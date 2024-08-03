@@ -1,4 +1,4 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.OrderDetailDTO;
 import com.congthanh.project.entity.OrderDetail;
@@ -10,7 +10,7 @@ import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.repository.orderDetail.OrderDetailRepository;
 import com.congthanh.project.repository.product.ProductRepository;
-import com.congthanh.project.service.ecommerce.OrderDetailService;
+import com.congthanh.project.service.OrderDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.address;
 
-import com.congthanh.project.entity.ecommerce.Address;
+import com.congthanh.project.entity.Address;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

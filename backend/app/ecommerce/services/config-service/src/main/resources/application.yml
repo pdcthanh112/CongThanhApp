@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: CongThanhApp - Ecommerce - Config_service
+    name: congthanhapp-ecommerce-config-service
   cloud:
     config:
       server:

@@ -1,4 +1,4 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.ProductAttributeValueDTO;
 import com.congthanh.project.entity.ProductAttributeValue;
@@ -10,7 +10,7 @@ import com.congthanh.project.model.ecommerce.request.ProductAttributeValueReques
 import com.congthanh.project.repository.productAtrributeValue.ProductAttributeValueRepository;
 import com.congthanh.project.repository.product.ProductRepository;
 import com.congthanh.project.repository.productAttribute.ProductAttributeRepository;
-import com.congthanh.project.service.ecommerce.ProductAttributeValueService;
+import com.congthanh.project.service.ProductAttributeValueService;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

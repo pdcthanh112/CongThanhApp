@@ -1,4 +1,4 @@
-package com.congthanh.project.service.ecommerce;
+package com.congthanh.project.service;
 
 public interface ShippingService {
 }

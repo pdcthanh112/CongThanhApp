@@ -1,4 +1,4 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.dto.ProductDTO;
@@ -6,7 +6,6 @@ import com.congthanh.project.entity.Category;
 import com.congthanh.project.entity.Product;
 import com.congthanh.project.entity.Subcategory;
 import com.congthanh.project.entity.Supplier;
-import com.congthanh.project.entity.ecommerce.*;
 import com.congthanh.project.model.ecommerce.response.PaginationInfo;
 import com.congthanh.project.model.ecommerce.response.ProductVariantAttributeValueResponse;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
@@ -16,7 +15,7 @@ import com.congthanh.project.repository.category.CategoryRepository;
 import com.congthanh.project.repository.product.ProductRepository;
 import com.congthanh.project.repository.supplier.SupplierRepository;
 import com.congthanh.project.repository.subcategory.SubcategoryRepository;
-import com.congthanh.project.service.ecommerce.ProductService;
+import com.congthanh.project.service.ProductService;
 import com.congthanh.project.utils.Helper;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;

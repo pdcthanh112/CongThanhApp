@@ -3,7 +3,7 @@ package com.congthanh.project.controller;
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.dto.SupplierDTO;
-import com.congthanh.project.entity.ecommerce.Supplier;
+import com.congthanh.project.entity.Supplier;
 import com.congthanh.project.model.response.Response;
 import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.repository.supplier.SupplierRepository;

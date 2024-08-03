@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.voucher;
 
-import com.congthanh.project.entity.ecommerce.Voucher;
+import com.congthanh.project.entity.Voucher;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

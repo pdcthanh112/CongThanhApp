@@ -1,6 +1,5 @@
-package com.congthanh.project.model.ecommerce.request;
+package com.congthanh.project.model.request;
 
-import com.congthanh.project.entity.ecommerce.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +15,6 @@ public class CreateOrderDetailRequest {
 
     private int quantity;
 
-    private Order order;
+    private String order;
 
 }

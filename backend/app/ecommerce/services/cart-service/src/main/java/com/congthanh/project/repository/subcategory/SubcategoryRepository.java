@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.subcategory;
 
-import com.congthanh.project.entity.ecommerce.Subcategory;
+import com.congthanh.project.entity.Subcategory;
 import jakarta.persistence.Tuple;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

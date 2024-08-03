@@ -2,12 +2,12 @@ package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.dto.SupplierDTO;
-import com.congthanh.project.entity.ecommerce.Supplier;
+import com.congthanh.project.entity.Supplier;
 import com.congthanh.project.model.mapper.ProductMapper;
 import com.congthanh.project.model.mapper.SupplierMapper;
 import com.congthanh.project.model.response.PaginationInfo;
 import com.congthanh.project.model.response.ResponseWithPagination;
-import com.congthanh.project.entity.ecommerce.Product;
+import com.congthanh.project.entity.Product;
 import com.congthanh.project.repository.supplier.SupplierRepository;
 import com.congthanh.project.service.SupplierService;
 import lombok.RequiredArgsConstructor;

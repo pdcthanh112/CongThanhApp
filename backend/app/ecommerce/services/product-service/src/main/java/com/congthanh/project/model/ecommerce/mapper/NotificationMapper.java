@@ -1,7 +1,7 @@
 package com.congthanh.project.model.ecommerce.mapper;
 
-import com.congthanh.project.dto.ecommerce.NotificationDTO;
-import com.congthanh.project.entity.ecommerce.Notification;
+import com.congthanh.project.dto.NotificationDTO;
+import com.congthanh.project.entity.Notification;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

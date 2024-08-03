@@ -1,8 +1,8 @@
 package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.OrderDetailDTO;
-import com.congthanh.project.entity.ecommerce.OrderDetail;
-import com.congthanh.project.entity.ecommerce.Product;
+import com.congthanh.project.entity.OrderDetail;
+import com.congthanh.project.entity.Product;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.OrderDetailMapper;
 import com.congthanh.project.model.request.CreateOrderDetailRequest;

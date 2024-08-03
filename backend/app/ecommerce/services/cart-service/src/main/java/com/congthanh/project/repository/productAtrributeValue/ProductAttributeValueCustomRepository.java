@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.productAtrributeValue;
 
-import com.congthanh.project.entity.ecommerce.ProductAttributeValue;
+import com.congthanh.project.entity.ProductAttributeValue;
 import jakarta.persistence.Tuple;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;

@@ -1,10 +1,10 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.dto.WishlistDTO;
 import com.congthanh.project.entity.Wishlist;
 import com.congthanh.project.repository.wishlist.WishlistRepository;
-import com.congthanh.project.service.ecommerce.WishlistService;
+import com.congthanh.project.service.WishlistService;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

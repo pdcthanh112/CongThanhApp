@@ -8,7 +8,7 @@ server:
 
 spring:
   application:
-    name: CongThanhApp - Ecommerce - cart-service
+    name: congthanhapp-ecommerce-cart-service
 
 #  profiles:
 #    active: dev

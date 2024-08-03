@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.notification;
 
-import com.congthanh.project.entity.ecommerce.Notification;
+import com.congthanh.project.entity.Notification;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

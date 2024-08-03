@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.wishlist;
 
-import com.congthanh.project.entity.ecommerce.Wishlist;
+import com.congthanh.project.entity.Wishlist;
 import jakarta.persistence.Tuple;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

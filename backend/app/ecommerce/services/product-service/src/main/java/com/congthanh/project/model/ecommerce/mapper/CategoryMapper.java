@@ -1,7 +1,7 @@
 package com.congthanh.project.model.ecommerce.mapper;
 
-import com.congthanh.project.dto.ecommerce.CategoryDTO;
-import com.congthanh.project.entity.ecommerce.Category;
+import com.congthanh.project.dto.CategoryDTO;
+import com.congthanh.project.entity.Category;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.congthanh.project.service.ecommerce;
+package com.congthanh.project.service;
 
 import com.congthanh.project.dto.ProductAttributeValueDTO;
 import com.congthanh.project.model.ecommerce.request.ProductAttributeValueRequest;

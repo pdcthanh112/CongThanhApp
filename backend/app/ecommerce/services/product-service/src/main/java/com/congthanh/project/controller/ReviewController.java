@@ -1,12 +1,12 @@
-package com.congthanh.project.controller.ecommerce;
+package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ecommerce.ReviewDTO;
+import com.congthanh.project.dto.ReviewDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
-import com.congthanh.project.entity.ecommerce.Review;
+import com.congthanh.project.entity.Review;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.model.ecommerce.response.StatisticReviewResponse;
-import com.congthanh.project.service.ecommerce.ReviewService;
+import com.congthanh.project.service.ReviewService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

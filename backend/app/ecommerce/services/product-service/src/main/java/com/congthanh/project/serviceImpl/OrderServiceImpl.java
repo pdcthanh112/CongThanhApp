@@ -1,11 +1,9 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.CartDTO;
 import com.congthanh.project.dto.CartItemDTO;
 import com.congthanh.project.dto.CheckoutDTO;
-import com.congthanh.project.dto.ecommerce.*;
 import com.congthanh.project.entity.*;
-import com.congthanh.project.entity.ecommerce.*;
 import com.congthanh.project.enums.OrderStatus;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.CartMapper;
@@ -16,7 +14,7 @@ import com.congthanh.project.repository.cart.CartRepository;
 import com.congthanh.project.repository.checkout.CheckoutRepository;
 import com.congthanh.project.repository.order.OrderRepository;
 import com.congthanh.project.repository.voucher.VoucherRepository;
-import com.congthanh.project.service.ecommerce.OrderService;
+import com.congthanh.project.service.OrderService;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

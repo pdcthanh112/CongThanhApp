@@ -1,7 +1,7 @@
 package com.congthanh.project.model.ecommerce.mapper;
 
-import com.congthanh.project.dto.ecommerce.SupplierDTO;
-import com.congthanh.project.entity.ecommerce.Supplier;
+import com.congthanh.project.dto.SupplierDTO;
+import com.congthanh.project.entity.Supplier;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

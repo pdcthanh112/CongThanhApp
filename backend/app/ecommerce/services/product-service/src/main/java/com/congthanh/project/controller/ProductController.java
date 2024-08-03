@@ -1,13 +1,13 @@
-package com.congthanh.project.controller.ecommerce;
+package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ecommerce.ProductDTO;
+import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.model.ecommerce.response.ProductVariantAttributeValueResponse;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
-import com.congthanh.project.entity.ecommerce.Product;
+import com.congthanh.project.entity.Product;
 import com.congthanh.project.repository.product.ProductRepository;
-import com.congthanh.project.service.ecommerce.ProductService;
+import com.congthanh.project.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

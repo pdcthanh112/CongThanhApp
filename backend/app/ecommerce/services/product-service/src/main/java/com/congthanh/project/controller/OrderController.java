@@ -1,12 +1,12 @@
-package com.congthanh.project.controller.ecommerce;
+package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ecommerce.CheckoutDTO;
-import com.congthanh.project.dto.ecommerce.OrderDetailDTO;
+import com.congthanh.project.dto.CheckoutDTO;
+import com.congthanh.project.dto.OrderDetailDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
-import com.congthanh.project.service.ecommerce.OrderDetailService;
-import com.congthanh.project.service.ecommerce.OrderService;
+import com.congthanh.project.service.OrderDetailService;
+import com.congthanh.project.service.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

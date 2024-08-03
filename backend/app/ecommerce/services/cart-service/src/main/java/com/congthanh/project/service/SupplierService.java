@@ -2,7 +2,7 @@ package com.congthanh.project.service;
 
 import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.dto.SupplierDTO;
-import com.congthanh.project.entity.ecommerce.Supplier;
+import com.congthanh.project.entity.Supplier;
 import com.congthanh.project.model.response.ResponseWithPagination;
 
 public interface SupplierService {

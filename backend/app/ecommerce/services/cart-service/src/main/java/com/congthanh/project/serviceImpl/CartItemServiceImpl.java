@@ -1,9 +1,9 @@
 package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.CartItemDTO;
-import com.congthanh.project.entity.ecommerce.Cart;
-import com.congthanh.project.entity.ecommerce.CartItem;
-import com.congthanh.project.entity.ecommerce.Product;
+import com.congthanh.project.entity.Cart;
+import com.congthanh.project.entity.CartItem;
+import com.congthanh.project.entity.Product;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.CartItemMapper;
 import com.congthanh.project.model.mapper.CartMapper;

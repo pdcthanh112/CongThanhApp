@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.productImage;
 
-import com.congthanh.project.entity.ecommerce.ProductImage;
+import com.congthanh.project.entity.ProductImage;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;

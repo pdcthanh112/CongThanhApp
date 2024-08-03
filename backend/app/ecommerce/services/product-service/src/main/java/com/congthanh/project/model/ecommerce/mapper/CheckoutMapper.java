@@ -1,10 +1,9 @@
 package com.congthanh.project.model.ecommerce.mapper;
 
-import com.congthanh.project.dto.ecommerce.CheckoutDTO;
-import com.congthanh.project.entity.ecommerce.Checkout;
+import com.congthanh.project.dto.CheckoutDTO;
+import com.congthanh.project.entity.Checkout;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,4 +1,4 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.CartItemDTO;
 import com.congthanh.project.entity.Cart;
@@ -11,7 +11,7 @@ import com.congthanh.project.model.ecommerce.mapper.ProductMapper;
 import com.congthanh.project.repository.cartItem.CartItemRepository;
 import com.congthanh.project.repository.cart.CartRepository;
 import com.congthanh.project.repository.product.ProductRepository;
-import com.congthanh.project.service.ecommerce.CartItemService;
+import com.congthanh.project.service.CartItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

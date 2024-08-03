@@ -1,9 +1,9 @@
-package com.congthanh.project.controller.ecommerce;
+package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ecommerce.ProductVariantDTO;
+import com.congthanh.project.dto.ProductVariantDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
-import com.congthanh.project.service.ecommerce.ProductVariantService;
+import com.congthanh.project.service.ProductVariantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

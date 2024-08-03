@@ -1,7 +1,7 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.repository.shipping.ShippingRepository;
-import com.congthanh.project.service.ecommerce.ShippingService;
+import com.congthanh.project.service.ShippingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

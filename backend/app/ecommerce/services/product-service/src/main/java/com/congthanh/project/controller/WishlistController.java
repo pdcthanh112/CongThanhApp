@@ -1,9 +1,9 @@
-package com.congthanh.project.controller.ecommerce;
+package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ecommerce.WishlistDTO;
+import com.congthanh.project.dto.WishlistDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
-import com.congthanh.project.service.ecommerce.WishlistService;
+import com.congthanh.project.service.WishlistService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

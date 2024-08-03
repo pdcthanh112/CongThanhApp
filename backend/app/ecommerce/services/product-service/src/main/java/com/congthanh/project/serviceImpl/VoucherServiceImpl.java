@@ -1,11 +1,11 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.VoucherDTO;
 import com.congthanh.project.entity.Voucher;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.VoucherMapper;
 import com.congthanh.project.repository.voucher.VoucherRepository;
-import com.congthanh.project.service.ecommerce.VoucherService;
+import com.congthanh.project.service.VoucherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,10 +1,10 @@
-package com.congthanh.project.controller.ecommerce;
+package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ecommerce.ProductAttributeValueDTO;
+import com.congthanh.project.dto.ProductAttributeValueDTO;
 import com.congthanh.project.model.ecommerce.request.ProductAttributeValueRequest;
 import com.congthanh.project.model.ecommerce.response.Response;
-import com.congthanh.project.service.ecommerce.ProductAttributeValueService;
+import com.congthanh.project.service.ProductAttributeValueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

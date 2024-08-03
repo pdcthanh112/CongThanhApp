@@ -1,4 +1,4 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.ReviewDTO;
 import com.congthanh.project.entity.ProductVariant;
@@ -12,7 +12,7 @@ import com.congthanh.project.model.ecommerce.response.StatisticReviewResponse;
 import com.congthanh.project.repository.product.ProductRepository;
 import com.congthanh.project.repository.productVariant.ProductVariantRepository;
 import com.congthanh.project.repository.review.ReviewRepository;
-import com.congthanh.project.service.ecommerce.ReviewService;
+import com.congthanh.project.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.payment;
 
-import com.congthanh.project.entity.ecommerce.Payment;
+import com.congthanh.project.entity.Payment;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

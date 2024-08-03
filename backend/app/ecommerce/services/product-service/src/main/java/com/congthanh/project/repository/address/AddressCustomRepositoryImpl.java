@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.address;
 
-import com.congthanh.project.entity.ecommerce.Address;
+import com.congthanh.project.entity.Address;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;

@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.category;
 
-import com.congthanh.project.entity.ecommerce.Category;
+import com.congthanh.project.entity.Category;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

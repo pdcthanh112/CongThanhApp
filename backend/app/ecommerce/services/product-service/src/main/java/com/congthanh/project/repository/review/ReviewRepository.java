@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.review;
 
-import com.congthanh.project.entity.ecommerce.Review;
+import com.congthanh.project.entity.Review;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

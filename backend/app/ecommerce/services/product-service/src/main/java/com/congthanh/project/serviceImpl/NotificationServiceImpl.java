@@ -1,11 +1,11 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.NotificationDTO;
 import com.congthanh.project.entity.Notification;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.ecommerce.mapper.NotificationMapper;
 import com.congthanh.project.repository.notification.NotificationRepository;
-import com.congthanh.project.service.ecommerce.NotificationService;
+import com.congthanh.project.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,13 +1,13 @@
-package com.congthanh.project.controller.ecommerce;
+package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ecommerce.ProductDTO;
-import com.congthanh.project.dto.ecommerce.SupplierDTO;
-import com.congthanh.project.entity.ecommerce.Supplier;
+import com.congthanh.project.dto.ProductDTO;
+import com.congthanh.project.dto.SupplierDTO;
+import com.congthanh.project.entity.Supplier;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
 import com.congthanh.project.repository.supplier.SupplierRepository;
-import com.congthanh.project.service.ecommerce.SupplierService;
+import com.congthanh.project.service.SupplierService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.QueryMapping;

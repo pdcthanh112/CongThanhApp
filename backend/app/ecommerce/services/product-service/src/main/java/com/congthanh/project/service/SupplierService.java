@@ -1,4 +1,4 @@
-package com.congthanh.project.service.ecommerce;
+package com.congthanh.project.service;
 
 import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.dto.SupplierDTO;

@@ -1,10 +1,10 @@
-package com.congthanh.project.serviceImpl.ecommerce;
+package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.ProductAttributeDTO;
 import com.congthanh.project.entity.ProductAttribute;
 import com.congthanh.project.model.ecommerce.mapper.ProductAttributeMapper;
 import com.congthanh.project.repository.productAttribute.ProductAttributeRepository;
-import com.congthanh.project.service.ecommerce.ProductAttributeService;
+import com.congthanh.project.service.ProductAttributeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

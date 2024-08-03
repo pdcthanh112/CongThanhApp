@@ -1,10 +1,10 @@
-package com.congthanh.project.controller.ecommerce;
+package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ecommerce.VoucherDTO;
+import com.congthanh.project.dto.VoucherDTO;
 import com.congthanh.project.model.ecommerce.response.ErrorDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
-import com.congthanh.project.service.ecommerce.VoucherService;
+import com.congthanh.project.service.VoucherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

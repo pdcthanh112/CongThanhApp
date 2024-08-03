@@ -1,6 +1,5 @@
 package com.congthanh.project.model.ecommerce.response;
 
-import com.congthanh.project.entity.ecommerce.ProductVariant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

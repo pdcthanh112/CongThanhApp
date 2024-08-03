@@ -3,7 +3,7 @@ package com.congthanh.project.service;
 import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.model.response.ProductVariantAttributeValueResponse;
 import com.congthanh.project.model.response.ResponseWithPagination;
-import com.congthanh.project.entity.ecommerce.Product;
+import com.congthanh.project.entity.Product;
 
 import java.util.List;
 

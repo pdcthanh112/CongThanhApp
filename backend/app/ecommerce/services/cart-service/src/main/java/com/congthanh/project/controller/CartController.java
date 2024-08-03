@@ -3,7 +3,7 @@ package com.congthanh.project.controller;
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.CartDTO;
 import com.congthanh.project.model.response.Response;
-import com.congthanh.project.entity.ecommerce.Cart;
+import com.congthanh.project.entity.Cart;
 import com.congthanh.project.repository.cart.CartRepository;
 import com.congthanh.project.service.CartService;
 import io.swagger.v3.oas.annotations.tags.Tag;

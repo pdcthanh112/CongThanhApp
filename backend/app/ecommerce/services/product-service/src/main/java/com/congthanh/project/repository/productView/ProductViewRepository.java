@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.productView;
 
-import com.congthanh.project.entity.ecommerce.ProductView;
+import com.congthanh.project.entity.ProductView;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
