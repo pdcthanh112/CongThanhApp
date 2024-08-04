@@ -15,9 +15,6 @@ spring:
   application:
     name: congthanhapp-ecommerce-inventory-service
 
-  profiles:
-    active: dev
-
   datasource:
     postgresql:
       ecommerce:
@@ -152,38 +149,6 @@ spring:
         distance-type: cosine_distance
         dimensions: 384
 
-  cloud:
-    config:
-      uri: http://localhost:8888
-    gateway:
-      routes:
-        - id: cart-service
-          uri: lb://cart-service
-          predicates:
-            - Path=/api/cart/**
-        - id: notification-service
-          uri: lb://notification-service
-          predicates:
-            - Path=/api/notification/**
-        - id: order-service
-          uri: lb://order-service
-          predicates:
-            - Path=/api/orders/**
-        - id: payment-service
-          uri: lb://payment-service
-          predicates:
-            - Path=/api/payment/**
-        - id: product-service
-          uri: lb://product-service
-          predicates:
-            - Path=/api/product/**
-
-  sleuth:
-    sampler:
-      probability: 1.0
-
-  zipkin:
-    base-url: http://localhost:9411
 
 congthanhapp:
   openapi:
@@ -195,17 +160,6 @@ springdoc:
     tagsSorter: alpha
   enable-spring-security: true
 
-logging:
-  level:
-    root: INFO
-#    com.yourpackage: DEBUG # Thiết lập mức log cho package cụ thể
-#  org.springframework.data.mongodb.core.MongoTemplate: DEBUG
-#    org.springframework.data.redis.core.RedisTemplate: DEBUG
-  file:
-    name: /var/log/myapp.log
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 
 management:
   endpoints:
@@ -217,3 +171,5 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
