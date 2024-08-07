@@ -2,8 +2,8 @@ package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.CheckoutDTO;
-import com.congthanh.project.model.ecommerce.request.CreateCheckoutRequest;
-import com.congthanh.project.model.ecommerce.response.Response;
+import com.congthanh.project.model.request.CreateCheckoutRequest;
+import com.congthanh.project.model.response.Response;
 import com.congthanh.project.service.CheckoutService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

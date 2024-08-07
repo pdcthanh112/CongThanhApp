@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProductVariantImageDTO {
 
-    private long id;
+    private Long id;
 
     private String variant;
 

@@ -4,7 +4,7 @@ import com.congthanh.project.dto.ProductImageDTO;
 import com.congthanh.project.entity.Product;
 import com.congthanh.project.entity.ProductImage;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
-import com.congthanh.project.model.ecommerce.mapper.ProductImageMapper;
+import com.congthanh.project.model.mapper.ProductImageMapper;
 import com.congthanh.project.repository.product.ProductRepository;
 import com.congthanh.project.repository.productImage.ProductImageRepository;
 import com.congthanh.project.service.ProductImageService;

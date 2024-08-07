@@ -3,7 +3,7 @@ package com.congthanh.project.serviceImpl;
 import com.congthanh.project.dto.TagDTO;
 import com.congthanh.project.entity.Tag;
 import com.congthanh.project.exception.ecommerce.BadRequestException;
-import com.congthanh.project.model.ecommerce.mapper.TagMapper;
+import com.congthanh.project.model.mapper.TagMapper;
 import com.congthanh.project.repository.tag.TagRepository;
 import com.congthanh.project.service.TagService;
 import lombok.RequiredArgsConstructor;

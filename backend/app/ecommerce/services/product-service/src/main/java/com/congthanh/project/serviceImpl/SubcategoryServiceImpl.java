@@ -2,12 +2,12 @@ package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.dto.SubcategoryDTO;
-import com.congthanh.project.model.ecommerce.response.PaginationInfo;
-import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
+import com.congthanh.project.model.response.PaginationInfo;
+import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.entity.Category;
 import com.congthanh.project.entity.Subcategory;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
-import com.congthanh.project.model.ecommerce.mapper.SubcategoryMapper;
+import com.congthanh.project.model.mapper.SubcategoryMapper;
 import com.congthanh.project.repository.category.CategoryRepository;
 import com.congthanh.project.repository.subcategory.SubcategoryRepository;
 import com.congthanh.project.service.SubcategoryService;

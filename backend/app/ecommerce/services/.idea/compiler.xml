@@ -10,7 +10,9 @@
         <module name="config-service" />
         <module name="inventory-service" />
         <module name="payment-service" />
+        <module name="customer-service" />
         <module name="promotion-service" />
+        <module name="catalog-service" />
         <module name="api-gateway" />
         <module name="product-service" />
         <module name="order-service" />
@@ -23,7 +25,9 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
       <module name="cart-service" options="-parameters" />
+      <module name="catalog-service" options="-parameters" />
       <module name="config-service" options="-parameters" />
+      <module name="customer-service" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
       <module name="inventory-service" options="-parameters" />
       <module name="notification-service" options="-parameters" />

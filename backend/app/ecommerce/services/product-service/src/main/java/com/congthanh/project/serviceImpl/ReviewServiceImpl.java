@@ -2,13 +2,13 @@ package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.ReviewDTO;
 import com.congthanh.project.entity.ProductVariant;
-import com.congthanh.project.model.ecommerce.mapper.ReviewMapper;
+import com.congthanh.project.model.mapper.ReviewMapper;
 import com.congthanh.project.entity.Product;
 import com.congthanh.project.entity.Review;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
-import com.congthanh.project.model.ecommerce.response.PaginationInfo;
-import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
-import com.congthanh.project.model.ecommerce.response.StatisticReviewResponse;
+import com.congthanh.project.model.response.PaginationInfo;
+import com.congthanh.project.model.response.ResponseWithPagination;
+import com.congthanh.project.model.response.StatisticReviewResponse;
 import com.congthanh.project.repository.product.ProductRepository;
 import com.congthanh.project.repository.productVariant.ProductVariantRepository;
 import com.congthanh.project.repository.review.ReviewRepository;

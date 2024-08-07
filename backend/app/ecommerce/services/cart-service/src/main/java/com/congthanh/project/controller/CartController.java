@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequestMapping("/ecommerce/cart")
 @Tag(name = "Cart API", description = "Cart API in CongThanhApp - Ecommerce")
 @RequiredArgsConstructor
+@Slf4j
 public class CartController {
 
   private final CartRepository cartRepository;
@@ -29,6 +31,7 @@ public class CartController {
 
   @GetMapping("/{id}")
   public ResponseEntity<Response<CartDTO>> getCartById(@PathVariable("id") @NotBlank(message = "Input must not be blank") @Valid final String id) {
+    log.info("Get cart by id");
     CartDTO result = cartService.getCartById(id);
     Response<CartDTO> response = new Response<>();
     response.setData(result);

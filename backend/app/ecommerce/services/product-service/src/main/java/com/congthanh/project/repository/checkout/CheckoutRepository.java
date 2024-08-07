@@ -1,6 +1,5 @@
 package com.congthanh.project.repository.checkout;
 
-import com.congthanh.project.entity.Checkout;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

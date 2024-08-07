@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProductImageDTO {
 
-    private long id;
+    private Long id;
 
     private String product;
 

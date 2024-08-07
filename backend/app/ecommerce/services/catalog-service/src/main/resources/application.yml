@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: congthanhapp-ecommerce-catalog-service
+
+  profiles:
+    active: dev

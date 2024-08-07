@@ -2,9 +2,9 @@ package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.ProductDTO;
-import com.congthanh.project.model.ecommerce.response.ProductVariantAttributeValueResponse;
-import com.congthanh.project.model.ecommerce.response.Response;
-import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
+import com.congthanh.project.model.response.ProductVariantAttributeValueResponse;
+import com.congthanh.project.model.response.Response;
+import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.entity.Product;
 import com.congthanh.project.repository.product.ProductRepository;
 import com.congthanh.project.service.ProductService;

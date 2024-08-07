@@ -2,7 +2,7 @@ package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.SubcategoryDTO;
-import com.congthanh.project.model.ecommerce.response.Response;
+import com.congthanh.project.model.response.Response;
 import com.congthanh.project.entity.Subcategory;
 import com.congthanh.project.repository.subcategory.SubcategoryRepository;
 import com.congthanh.project.service.SubcategoryService;
