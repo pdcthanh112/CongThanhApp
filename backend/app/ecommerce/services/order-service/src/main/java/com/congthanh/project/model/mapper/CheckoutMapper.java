@@ -1,4 +1,4 @@
-package com.congthanh.project.model.mapper;
+package com.congthanh.project.model.ecommerce.mapper;
 
 import com.congthanh.project.dto.CheckoutDTO;
 import com.congthanh.project.entity.Checkout;
