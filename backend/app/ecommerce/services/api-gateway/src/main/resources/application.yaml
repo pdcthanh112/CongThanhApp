@@ -22,11 +22,17 @@ spring:
           uri: lb://CONGTHANHAPP-ECOMMERCE-CATALOG-SERVICE
           predicates:
             - Path=/api/ecommerce/catalog/**
-
-        - id: customer-service
-          uri: lb://CONGTHANHAPP-ECOMMERCE-CUSTOMER-SERVICE
-          predicates:
-            - Path=/api/ecommerce/customer/**
+#        - id: catalog-service
+#          uri: lb://CONGTHANHAPP-ECOMMERCE-CATALOG-SERVICE
+#          predicates:
+#            - Path=/api/ecommerce/catalog/**,/api/ecommerce/category/**,/api/ecommerce/subcategory/**,/api/ecommerce/product-brand/**,/api/ecommerce/product-tag/**
+#          filters:
+#              - RewritePath=/api/ecommerce/(?<segment>.*), /$\{segment}
+#
+#        - id: customer-service
+#          uri: lb://CONGTHANHAPP-ECOMMERCE-CUSTOMER-SERVICE
+#          predicates:
+#            - Path=/api/ecommerce/customer/**
 
         - id: inventory-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-INVENTORY-SERVICE

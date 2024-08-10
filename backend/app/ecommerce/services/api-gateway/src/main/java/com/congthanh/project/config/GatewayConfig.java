@@ -18,6 +18,13 @@ public class GatewayConfig {
                         .uri("lb://cart-service"))
                 .route("catalog_route", r -> r.path("/catalog/**")
                         .uri("lb://catalog-service"))
+//                .route("catalog_route", r -> r.path("/api/ecommerce/catalog/**",
+//                                "/api/ecommerce/category/**",
+//                                "/api/ecommerce/subcategory/**",
+//                                "/api/ecommerce/product-brand/**",
+//                                "/api/ecommerce/product-tag/**")
+//                        .filters(f -> f.rewritePath("/api/ecommerce/(?<segment>.*)", "/${segment}"))
+//                        .uri("lb://catalog-service"))
                 .route("customer_route", r -> r.path("/customer/**")
                         .uri("lb://customer-service"))
                 .route("inventory_route", r -> r.path("/inventory/**")

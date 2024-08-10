@@ -13,4 +13,12 @@ module "kubernetes" {
   # Truyền các biến cần thiết
 }
 
-# Định nghĩa các resource khác nếu cần
+module "logging" {
+  source = "./modules/logging"
+  # Truyền các biến cần thiết
+}
+
+module "monitoring" {
+  source = "./modules/monitoring"
+  # Truyền các biến cần thiết
+}

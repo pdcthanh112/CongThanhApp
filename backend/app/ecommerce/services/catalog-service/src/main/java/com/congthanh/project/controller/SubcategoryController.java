@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/ecommerce/subcategory")
+@RequestMapping("/ecommerce/catalog/subcategory")
 @Tag(name = "Subcategory API", description = "Subcategory API in CongThanhApp - Ecommerce")
 @RequiredArgsConstructor
 public class SubcategoryController {
