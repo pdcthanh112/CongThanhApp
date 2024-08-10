@@ -1,7 +1,5 @@
 package com.congthanh.project.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,8 +32,5 @@ public class Payment {
 
     private String status;
 
-    @OneToOne(mappedBy = "payment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonBackReference
-    @JsonIgnore
-    private Checkout checkout;
+    private Long checkout;
 }

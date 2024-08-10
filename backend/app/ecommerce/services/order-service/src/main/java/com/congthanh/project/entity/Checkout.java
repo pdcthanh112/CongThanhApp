@@ -32,22 +32,22 @@ public class Checkout {
 
   private String phone;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "payment", referencedColumnName = "id", nullable = false)
-  @JsonManagedReference
-  private Payment payment;
+//  @OneToOne(fetch = FetchType.LAZY)
+//  @JoinColumn(name = "payment", referencedColumnName = "id", nullable = false)
+//  @JsonManagedReference
+  private Long payment;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "voucher")
-  private Voucher voucher;
+//  @ManyToOne(fetch = FetchType.LAZY)
+//  @JoinColumn(name = "voucher")
+  private String voucher;
 
   @Column(name = "checkout_date")
   private long checkoutDate;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "cart", referencedColumnName = "id", nullable = false)
-  @JsonManagedReference
-  private Cart cart;
+//  @OneToOne(fetch = FetchType.LAZY)
+//  @JoinColumn(name = "cart", referencedColumnName = "id", nullable = false)
+//  @JsonManagedReference
+  private String cart;
 
   @OneToOne(mappedBy = "checkout", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonBackReference

@@ -18,9 +18,9 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product", nullable = false)
-    private Product product;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "product", nullable = false)
+    private String product;
 
     private int quantity;
 

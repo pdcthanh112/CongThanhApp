@@ -2,6 +2,7 @@ package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.WishlistDTO;
 import com.congthanh.project.entity.Wishlist;
+import com.congthanh.project.model.response.ProductResponse;
 import com.congthanh.project.repository.wishlist.WishlistRepository;
 import com.congthanh.project.service.WishlistService;
 import jakarta.persistence.Tuple;
@@ -47,9 +48,9 @@ public class WishlistServiceImpl implements WishlistService {
         List<Tuple> data = wishlistRepository.findWishlistByCustomer(customerId);
         result.setId(data.get(0).get("wishlistId", Long.class));
         result.setCustomer(data.get(0).get("customer", String.class));
-        Set<ProductDTO> listProduct = new HashSet<>();
+        Set<ProductResponse> listProduct = new HashSet<>();
         for (Tuple item : data) {
-            ProductDTO productDTO = ProductDTO.builder()
+            ProductResponse product = ProductResponse.builder()
                     .id(item.get("productId", String.class))
                     .name(item.get("name", String.class))
                     .category(item.get("category", String.class))
@@ -58,7 +59,7 @@ public class WishlistServiceImpl implements WishlistService {
                     .status(item.get("status", String.class))
                     .slug(item.get("slug", String.class))
                     .build();
-            listProduct.add(productDTO);
+            listProduct.add(product);
         }
         result.setProduct(listProduct);
         return result;

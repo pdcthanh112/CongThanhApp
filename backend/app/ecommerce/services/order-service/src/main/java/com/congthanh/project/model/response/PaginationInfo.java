@@ -1,4 +1,4 @@
-package com.congthanh.project.model.ecommerce.response;
+package com.congthanh.project.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

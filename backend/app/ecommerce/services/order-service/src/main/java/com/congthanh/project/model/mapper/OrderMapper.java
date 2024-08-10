@@ -1,7 +1,7 @@
-package com.congthanh.project.model.ecommerce.mapper;
+package com.congthanh.project.model.mapper;
 
 import com.congthanh.project.dto.ecommerce.OrderDTO;
-import com.congthanh.project.entity.ecommerce.Order;
+import com.congthanh.project.entity.Order;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

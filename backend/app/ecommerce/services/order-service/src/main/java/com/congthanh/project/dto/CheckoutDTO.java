@@ -1,5 +1,7 @@
 package com.congthanh.project.dto;
 
+import com.congthanh.project.model.response.CartResponse;
+import com.congthanh.project.model.response.VoucherResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,8 +29,8 @@ public class CheckoutDTO {
 
   private long checkoutDate;
 
-  private CartDTO cart;
+  private CartResponse cart;
 
-  private VoucherDTO voucher;
+  private VoucherResponse voucher;
 
 }

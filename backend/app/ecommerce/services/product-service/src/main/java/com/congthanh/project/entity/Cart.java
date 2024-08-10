@@ -37,12 +37,12 @@ public class Cart {
   @JsonProperty("isDefault")
   private boolean isDefault;
 
-  @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JsonBackReference
-  @JsonIgnore
-  @ToString.Exclude
-  @EqualsAndHashCode.Exclude
-  private Checkout checkout;
+//  @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//  @JsonBackReference
+//  @JsonIgnore
+//  @ToString.Exclude
+//  @EqualsAndHashCode.Exclude
+  private Long checkout;
 
   @PrePersist
   public void prePersist() {

@@ -15,6 +15,6 @@ public class CreateOrderDetailRequest {
 
     private int quantity;
 
-    private String order;
+    private Long order;
 
 }

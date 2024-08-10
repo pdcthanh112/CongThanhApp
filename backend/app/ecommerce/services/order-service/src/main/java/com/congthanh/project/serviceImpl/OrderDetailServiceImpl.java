@@ -1,20 +1,21 @@
 package com.congthanh.project.serviceImpl;
 
-import com.congthanh.project.dto.ecommerce.OrderDetailDTO;
-import com.congthanh.project.entity.ecommerce.OrderDetail;
-import com.congthanh.project.entity.ecommerce.Product;
+import com.congthanh.project.dto.OrderDetailDTO;
+import com.congthanh.project.entity.Order;
+import com.congthanh.project.entity.OrderDetail;
 import com.congthanh.project.exception.NotFoundException;
-import com.congthanh.project.model.ecommerce.mapper.OrderDetailMapper;
-import com.congthanh.project.model.ecommerce.request.CreateOrderDetailRequest;
-import com.congthanh.project.model.ecommerce.response.PaginationInfo;
-import com.congthanh.project.model.ecommerce.response.ResponseWithPagination;
+import com.congthanh.project.model.mapper.OrderDetailMapper;
+import com.congthanh.project.model.request.CreateOrderDetailRequest;
+import com.congthanh.project.model.response.PaginationInfo;
+import com.congthanh.project.model.response.ResponseWithPagination;
+import com.congthanh.project.model.response.ProductResponse;
 import com.congthanh.project.repository.orderDetail.OrderDetailRepository;
-import com.congthanh.project.repository.product.ProductRepository;
 import com.congthanh.project.service.OrderDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +26,15 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     private final OrderDetailRepository orderDetailRepository;
 
-    private final ProductRepository productRepository;
+    private final WebClient webClient;
 
     @Override
     public OrderDetailDTO createOrderDetail(CreateOrderDetailRequest createOrderDetailRequest) {
-        Product product = productRepository.findById(createOrderDetailRequest.getProductId()).orElseThrow(() -> new NotFoundException("Product not found"));
+        ProductResponse product = webClient.get().uri("/product/" + createOrderDetailRequest.getProductId()).retrieve().bodyToMono(ProductResponse.class).block();
         OrderDetail orderDetail = OrderDetail.builder()
-                .product(product)
+                .product(product.getId())
                 .quantity(createOrderDetailRequest.getQuantity())
-                .orders(createOrderDetailRequest.getOrder())
+                .orders(Order.builder().id(createOrderDetailRequest.getOrder()).build())
                 .status("NEW")
                 .build();
         OrderDetail result = orderDetailRepository.save(orderDetail);

@@ -1,18 +1,21 @@
 package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.*;
+import com.congthanh.project.entity.Checkout;
+import com.congthanh.project.entity.Order;
 import com.congthanh.project.enums.ecommerce.OrderStatus;
 import com.congthanh.project.exception.NotFoundException;
 import com.congthanh.project.model.ecommerce.request.CreateOrderRequest;
-import com.congthanh.project.repository.cartItem.CartItemRepository;
-import com.congthanh.project.repository.cart.CartRepository;
+import com.congthanh.project.model.response.CartItemResponse;
+import com.congthanh.project.model.response.CartResponse;
+import com.congthanh.project.model.response.VoucherResponse;
 import com.congthanh.project.repository.checkout.CheckoutRepository;
 import com.congthanh.project.repository.order.OrderRepository;
-import com.congthanh.project.repository.ecommerce.voucher.VoucherRepository;
 import com.congthanh.project.service.OrderService;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -25,20 +28,16 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    private final CartRepository cartRepository;
-
-    private final CartItemRepository cartItemRepository;
-
     private final OrderRepository orderRepository;
 
     private final CheckoutRepository checkoutRepository;
 
-    private final VoucherRepository voucherRepository;
+    private final WebClient webClient;
 
     @Override
     public Order createOrder(CreateOrderRequest createOrderRequest) {
         Checkout checkout = checkoutRepository.findById((int) createOrderRequest.getCheckout()).orElseThrow(() -> new NotFoundException("Checkout not found"));
-        Voucher voucher = voucherRepository.findById(checkout.getVoucher().getId()).orElseThrow(() -> new NotFoundException("voucher not found"));
+        VoucherResponse voucher = webClient.get().uri("/voucher/{id}", createOrderRequest.getCheckout()).retrieve().bodyToMono(VoucherResponse.class).block();
         BigDecimal orderTotal = createOrderRequest.getTotal();
         if(voucher != null) {
             if(voucher.getType().equals("PROMOTION")) {
@@ -50,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = Order.builder()
                 .customer(createOrderRequest.getCustomer())
                 .orderDate(Instant.now().toEpochMilli())
-                .checkout(checkout)
+                .checkout(checkout.getId())
                 .total(orderTotal)
                 .status(OrderStatus.PENDING)
                 .build();
@@ -72,17 +71,11 @@ public class OrderServiceImpl implements OrderService {
                 checkoutDTO.setPaymentMethod(checkout.get("payment_method", String.class));
                 checkoutDTO.setTotal(checkout.get("total", BigDecimal.class));
 
-                Cart cart = cartRepository.findById(checkout.get("cartId", String.class)).orElseThrow();
+                CartResponse cart = webClient.get().uri("/cart/{id}", checkout.get("cartId", String.class)).retrieve().bodyToMono(CartResponse.class).block();
 
-                CartDTO cartTmp = new CartDTO();
-                cartTmp.setId(cart.getId());
-                cartTmp.setName(cart.getName());
-                cartTmp.setCustomer(cart.getCustomer());
-                cartTmp.setStatus(cart.getStatus());
-                cartTmp.setCreatedDate(cart.getCreatedAt());
-                List<CartItem> listCartItem = cartItemRepository.getAllCartItemByCartId(cart.getId());
+                List<CartItemResponse> listCartItem = cartItemRepository.getAllCartItemByCartId(cart.getId());
                 if (listCartItem.size() > 0) {
-                    Set<CartItemDTO> cartItems = new HashSet<>();
+                    Set<CartItemResponse> cartItems = new HashSet<>();
                     for (CartItem cartItemItem : listCartItem) {
                         CartItemDTO cartItemTmp = new CartItemDTO();
                         cartItemTmp.setId(cartItemItem.getId());
@@ -91,9 +84,9 @@ public class OrderServiceImpl implements OrderService {
                         cartItemTmp.setProduct(ProductMapper.mapProductEntityToDTO(cartItemItem.getProduct()));
                         cartItems.add(cartItemTmp);
                     }
-                    cartTmp.setCartItems(cartItems);
+                    cart.setCartItems(cartItems);
                 }
-                checkoutDTO.setCart(cartTmp);
+                checkoutDTO.setCart(cart);
                 response.add(checkoutDTO);
             }
         } else {
