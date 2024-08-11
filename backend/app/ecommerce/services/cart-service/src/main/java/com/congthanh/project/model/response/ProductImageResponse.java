@@ -1,4 +1,4 @@
-package com.congthanh.project.dto;
+package com.congthanh.project.model.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductImageDTO {
+public class ProductImageResponse {
 
-    private long id;
+    private Long id;
 
     private String product;
 

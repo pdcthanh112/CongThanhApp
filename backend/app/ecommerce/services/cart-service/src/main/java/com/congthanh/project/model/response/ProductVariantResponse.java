@@ -1,4 +1,4 @@
-package com.congthanh.project.dto;
+package com.congthanh.project.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductVariantDTO {
+public class ProductVariantResponse {
 
     private String id;
 
@@ -22,6 +22,6 @@ public class ProductVariantDTO {
 
     private BigDecimal price;
 
-    private List<ProductVariantImageDTO> image;
+    private List<ProductVariantImageResponse> image;
 
 }
