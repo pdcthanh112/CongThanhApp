@@ -3,17 +3,16 @@ package com.congthanh.project.serviceImpl;
 import com.congthanh.project.dto.CartItemDTO;
 import com.congthanh.project.entity.Cart;
 import com.congthanh.project.entity.CartItem;
-import com.congthanh.project.entity.Product;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.CartItemMapper;
 import com.congthanh.project.model.mapper.CartMapper;
-import com.congthanh.project.model.mapper.ProductMapper;
+import com.congthanh.project.model.response.ProductResponse;
 import com.congthanh.project.repository.cartItem.CartItemRepository;
 import com.congthanh.project.repository.cart.CartRepository;
-import com.congthanh.project.repository.product.ProductRepository;
 import com.congthanh.project.service.CartItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +26,7 @@ public class CartItemServiceImpl implements CartItemService {
 
   private final CartRepository cartRepository;
 
-  private final ProductRepository productRepository;
+  private final WebClient webClient;
 
   @Override
   public List<CartItemDTO> getItemByCartId(String cartId) {
@@ -45,9 +44,10 @@ public class CartItemServiceImpl implements CartItemService {
     CartItem checkExistProduct = cartItemRepository.checkExistProductFromCart(cartId, productId);
     if (checkExistProduct == null) {
       Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new NotFoundException("cart not found"));
-      Product product = productRepository.findById(productId).orElseThrow(() -> new NotFoundException("product not found"));
-      CartItem cartItem = CartItem.builder()
-              .product(product)
+      ProductResponse product = webClient.get().uri("/product/" + productId).retrieve().bodyToMono(ProductResponse.class).block();
+        assert product != null;
+        CartItem cartItem = CartItem.builder()
+              .product(product.getId())
               .quantity(quantity)
               .cart(cart)
               .createdAt(new Date().getTime())
