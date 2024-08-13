@@ -21,20 +21,17 @@ def chat_stream(
 
     ppm = res[idx]
 
-    # add_ping returns a prompt structured in Alpaca form
     ppm.add_pingpong(
         PingPong(user_message, "")
     )
     prompt = build_prompts(ppm, global_context, ctx_num_lconv)
 
-    #######
     if internet_option:
         search_prompt = None
         for tmp_prompt, uis in internet_search(ppm, serper_api_key, global_context, ctx_num_lconv):
             search_prompt = tmp_prompt
             yield "", uis, prompt, str(res)
-    
-    # prepare text generating streamer & start generating
+
     gen_kwargs, streamer = pre.build(
         search_prompt if internet_option else prompt,
         res_temp, res_topp, res_topk, res_rpen, res_mnts, 
@@ -43,7 +40,6 @@ def chat_stream(
     )
     pre.start_gen(gen_kwargs)
 
-    # handling stream
     for ppmanager, uis in text_stream(ppm, streamer):
         yield "", uis, prompt, str(res)
 
