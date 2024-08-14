@@ -61,6 +61,11 @@ spring:
           predicates:
             - Path=/review/**
 
+        - id: supplier-service
+          uri: lb://CONGTHANHAPP-ECOMMERCE-SUPPLIER-SERVICE
+          predicates:
+            - Path=/supplier/**
+
 eureka:
   client:
     service-url:

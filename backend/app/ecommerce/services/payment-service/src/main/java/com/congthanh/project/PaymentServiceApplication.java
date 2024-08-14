@@ -9,13 +9,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class PaymentServiceApplication {
-    public static void main(String[] args) {
-      SpringApplication.run(PaymentServiceApplication.class, args);
-    }
 
-    @Bean
-    public WebClient webClient(){
-        return WebClient.builder().build();
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(PaymentServiceApplication.class, args);
+	}
+
+	@Bean
+	public WebClient webClient(){
+		return WebClient.builder().build();
+	}
 
 }
