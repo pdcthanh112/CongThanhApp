@@ -1,6 +1,5 @@
 package com.congthanh.project.repository.tag;
 
-import com.congthanh.project.entity.Tag;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;

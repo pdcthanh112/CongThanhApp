@@ -1,6 +1,5 @@
 package com.congthanh.project.repository;
 
-import com.congthanh.project.entity.Payment;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Qualifier;

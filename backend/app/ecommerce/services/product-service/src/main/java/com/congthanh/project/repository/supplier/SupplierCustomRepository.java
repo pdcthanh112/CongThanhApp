@@ -1,7 +1,6 @@
 package com.congthanh.project.repository.supplier;
 
 import com.congthanh.project.entity.Product;
-import com.congthanh.project.entity.Supplier;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,7 +1,6 @@
 package com.congthanh.project.repository.supplier;
 
 import com.congthanh.project.entity.Product;
-import com.congthanh.project.entity.Supplier;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;

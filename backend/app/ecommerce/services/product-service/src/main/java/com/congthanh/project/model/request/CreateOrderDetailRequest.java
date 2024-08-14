@@ -1,6 +1,5 @@
 package com.congthanh.project.model.request;
 
-import com.congthanh.project.entity.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

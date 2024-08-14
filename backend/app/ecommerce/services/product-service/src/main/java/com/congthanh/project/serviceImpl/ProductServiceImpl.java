@@ -2,10 +2,7 @@ package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.dto.ProductDTO;
-import com.congthanh.project.entity.Category;
 import com.congthanh.project.entity.Product;
-import com.congthanh.project.entity.Subcategory;
-import com.congthanh.project.entity.Supplier;
 import com.congthanh.project.model.response.PaginationInfo;
 import com.congthanh.project.model.response.ProductVariantAttributeValueResponse;
 import com.congthanh.project.model.response.ResponseWithPagination;
