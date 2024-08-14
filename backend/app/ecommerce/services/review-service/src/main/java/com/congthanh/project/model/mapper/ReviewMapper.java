@@ -22,8 +22,8 @@ public class ReviewMapper {
     private void configureModelMapper() {
 
         modelMapper.typeMap(Review.class, ReviewDTO.class)
-                .addMapping(src -> src.getProduct().getId(), ReviewDTO::setProduct)
-                .addMapping(src -> src.getVariant().getId(), ReviewDTO::setVariant);
+                .addMapping(src -> src.getProduct(), ReviewDTO::setProduct)
+                .addMapping(src -> src.getVariant(), ReviewDTO::setVariant);
 
 //        modelMapper.typeMap(ReviewDTO.class, Review.class)
 //                .addMapping(dest -> dest.getProduct(), (src) -> dest.getProduct().setName());

@@ -5,13 +5,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Tuple;
 import jakarta.persistence.TypedQuery;
-import org.springframework.beans.factory.annotation.Qualifier;
-
 
 public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
 
     @PersistenceContext
-    @Qualifier("ecommerceEntityManagerFactory")
     private EntityManager entityManager;
 
     @Override
@@ -27,7 +24,7 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
                 "  COALESCE(CAST(AVG(r.rating) AS FLOAT), 0.0) AS average_rating\n" +
                 "FROM Review r\n" +
                 "LEFT JOIN ReviewMedia rm ON r.id = rm.review.id\n" +
-                "WHERE r.product.id = :productId";
+                "WHERE r.product = :productId";
         TypedQuery<Tuple> query = entityManager.createQuery(sql, Tuple.class);
         query.setParameter("productId", productId);
         Tuple result = query.getSingleResult();

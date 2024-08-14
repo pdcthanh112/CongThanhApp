@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public interface ReviewRepository extends JpaRepository<Review, String>, ReviewCustomRepository {
     @EntityGraph(attributePaths = {"reviewMedia"})
-    @Query("SELECT r FROM Review r LEFT JOIN ReviewMedia rm ON r.id = rm.review.id   WHERE r.product.id = :productId ORDER BY r.createdAt DESC")
+    @Query("SELECT r FROM Review r LEFT JOIN ReviewMedia rm ON r.id = rm.review.id   WHERE r.product = :productId ORDER BY r.createdAt DESC")
     Page<Review> getReviewsByProductId(@Param("productId") String productId, Pageable pageable);
 
 }

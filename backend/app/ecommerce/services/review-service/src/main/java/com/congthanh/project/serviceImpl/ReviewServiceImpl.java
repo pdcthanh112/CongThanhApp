@@ -4,11 +4,7 @@ import com.congthanh.project.dto.ReviewDTO;
 import com.congthanh.project.model.mapper.ReviewMapper;
 import com.congthanh.project.entity.Review;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
-import com.congthanh.project.model.response.PaginationInfo;
-import com.congthanh.project.model.response.ResponseWithPagination;
-import com.congthanh.project.model.response.StatisticReviewResponse;
-import com.congthanh.project.repository.product.ProductRepository;
-import com.congthanh.project.repository.productVariant.ProductVariantRepository;
+import com.congthanh.project.model.response.*;
 import com.congthanh.project.repository.review.ReviewRepository;
 import com.congthanh.project.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,11 +22,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
-    private final ProductRepository productRepository;
-
-    private final ProductVariantRepository productVariantRepository;
-
     private final ReviewRepository reviewRepository;
+
+    private final WebClient webClient;
 
     @Override
     public ResponseWithPagination<ReviewDTO> getReviewByProductId(String productId, Integer page, Integer limit) {
@@ -58,13 +53,14 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review createReview(ReviewDTO reviewDTO) {
-        Product product = productRepository.findById(reviewDTO.getProduct()).orElseThrow(() -> new NotFoundException("Product not found"));
-        ProductVariant variant = productVariantRepository.findById(reviewDTO.getVariant()).orElseThrow(() -> new NotFoundException("Variant not found"));
+        ProductResponse product = webClient.get().uri("/product/" + reviewDTO.getProduct()).retrieve().bodyToMono(ProductResponse.class).block();
+        ProductVariantResponse variant = webClient.get().uri("/product-variant/" + reviewDTO.getVariant()).retrieve().bodyToMono(ProductVariantResponse.class).block();
+        assert product != null && variant != null;
         Review review = Review.builder()
                 .content(reviewDTO.getContent())
                 .rating(reviewDTO.getRating())
-                .product(product)
-                .variant(variant)
+                .product(product.getId())
+                .variant(variant.getId())
                 .customerId(reviewDTO.getCustomerId())
                 .createdAt(new Date().getTime())
                 .build();
@@ -73,7 +69,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public StatisticReviewResponse getReviewStatisticOfProduct(String productId) {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new NotFoundException("Product not found"));
+        ProductResponse product = webClient.get().uri("/product/" + productId).retrieve().bodyToMono(ProductResponse.class).block();
         StatisticReviewResponse result = reviewRepository.getStatisticReviewFromProduct(product.getId());
         return result;
     }
