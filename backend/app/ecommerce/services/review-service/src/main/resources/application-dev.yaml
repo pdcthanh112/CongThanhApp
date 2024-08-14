@@ -1,32 +1,21 @@
 server:
-  port: 5004 # ${SERVER_PORT}
+  port: 5016 # ${SERVER_PORT}
   servlet:
     context-path: /api
   compression:
     enabled: true
     min-response-size: 1024
-#  ssl:
-#    key-store: classpath:keystore.p12  # Đường dẫn đến keystore
-#    key-store-password: password       # Mật khẩu keystore
-#    key-store-type: PKCS12             # Loại keystore
-#    key-alias: tomcat                  # Alias của key
 
 spring:
   application:
-    name: congthanhapp-ecommerce-order-service
-
+    name: congthanhapp-ecommerce-review-service
+  #  config:
+  #    import: optional:file:.env[.properties]
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
     username: postgres
     password: 123456
     driver-class-name: org.postgresql.Driver
-
-
-    mysql:
-      url: jdbc:mysql://localhost:3306/mydream?allowPublicKeyRetrieval=true&useSSL=false
-      username: root
-      password: 123456
-      driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     database: default
@@ -42,7 +31,6 @@ spring:
   mongodb:
     uri: mongodb://localhost:27017/MyDream
     database: CongThanhApp
-
 
   graphql:
     graphiql:
@@ -85,7 +73,7 @@ spring:
     caffeine:
       spec: maximumSize=500,expireAfterAccess=600s
 
-#    Cấu hình upload file
+  #    Cấu hình upload file
   servlet:
     multipart:
       max-file-size: 10MB
@@ -118,13 +106,15 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
-      group-id: my-group
+      group-id: congthanhapp-group
       auto-offset-reset: earliest
+    #      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    #      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
-#  Cấu hình quốc tế hoá i18n
+  #  Cấu hình quốc tế hoá i18n
   messages:
     basename: messages
 
@@ -140,7 +130,7 @@ spring:
 
 congthanhapp:
   openapi:
-    dev-url: http://localhost:5000
+    dev-url: http://localhost:5000 #http://localhost:${SERVER_PORT}
     prod-url: https://congthanhapp-api.com
 
 springdoc:
@@ -165,3 +155,14 @@ management:
     web:
       exposure:
         include: "*"
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #      default-zone: http://eureka:123456@localhost:8761/eureka
+      default-zone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+#    prefer-ip-address: true

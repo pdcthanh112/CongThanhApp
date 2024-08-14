@@ -7,6 +7,7 @@ import com.congthanh.project.entity.Cart;
 import com.congthanh.project.entity.CartItem;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.CartMapper;
+import com.congthanh.project.model.response.ProductResponse;
 import com.congthanh.project.repository.cartItem.CartItemRepository;
 import com.congthanh.project.repository.cart.CartRepository;
 import com.congthanh.project.service.CartService;
@@ -46,7 +47,8 @@ public class CartServiceImpl implements CartService {
                 cartItemTmp.setQuantity(cartItemItem.getQuantity());
                 cartItemTmp.setCart(CartMapper.mapCartEntityToDTO(cart));
                 cartItemTmp.setCreatedDate(cartItemItem.getCreatedAt());
-                cartItemTmp.setProduct(ProductMapper.mapProductEntityToDTO(cartItemItem.getProduct()));
+//                cartItemTmp.setProduct(ProductMapper.mapProductEntityToDTO(cartItemItem.getProduct()));
+                cartItemTmp.setProduct(ProductResponse.builder().build());
 
                 cartItems.add(cartItemTmp);
             }
@@ -75,7 +77,8 @@ public class CartServiceImpl implements CartService {
                         cartItemTmp.setId(cartItemItem.getId());
                         cartItemTmp.setQuantity(cartItemItem.getQuantity());
                         cartItemTmp.setCart(CartMapper.mapCartEntityToDTO(cart));
-                        cartItemTmp.setProduct(ProductMapper.mapProductEntityToDTO(cartItemItem.getProduct()));
+//                        cartItemTmp.setProduct(ProductMapper.mapProductEntityToDTO(cartItemItem.getProduct()));
+                        cartItemTmp.setProduct(ProductResponse.builder().build());
 
                         cartItems.add(cartItemTmp);
                     }

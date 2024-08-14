@@ -71,7 +71,8 @@ public class CartItemServiceImpl implements CartItemService {
     CartItemDTO response = CartItemDTO.builder()
             .id(result.getId())
             .quantity(result.getQuantity())
-            .product(ProductMapper.mapProductEntityToDTO(result.getProduct()))
+//            .product(ProductMapper.mapProductEntityToDTO(result.getProduct()))
+            .product(ProductResponse.builder().build())
             .cart(CartMapper.mapCartEntityToDTO(result.getCart()))
             .build();
     return response;

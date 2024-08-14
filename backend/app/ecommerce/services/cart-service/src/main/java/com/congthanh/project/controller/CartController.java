@@ -50,6 +50,16 @@ public class CartController {
     return ResponseEntity.ok().body(response);
   }
 
+  @GetMapping("/get-item")
+  public ResponseEntity<Response<List<CartDTO>>> getAllItemByCartId(@RequestParam("cart") String cartId) {
+    List<CartDTO> result = cartService.getActiveCartByCustomerId(cartId);
+    Response<List<CartDTO>> response = new Response<>();
+    response.setData(result);
+    response.setStatus(ResponseStatus.STATUS_SUCCESS);
+    response.setMessage(result != null ? "Get xong" : "Cart emply");
+    return ResponseEntity.ok().body(response);
+  }
+
   @PostMapping("/create")
   public ResponseEntity<Response<CartDTO>> createCart(@RequestBody CartDTO cartDTO) {
     CartDTO data = cartService.createCart(cartDTO);

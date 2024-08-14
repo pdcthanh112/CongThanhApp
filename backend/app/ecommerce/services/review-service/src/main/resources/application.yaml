@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: congthanhapp-ecommerce-review-service
+
+  profiles:
+    active: dev

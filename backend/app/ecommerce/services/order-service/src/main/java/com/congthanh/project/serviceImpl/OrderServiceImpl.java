@@ -49,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = Order.builder()
                 .customer(createOrderRequest.getCustomer())
                 .orderDate(Instant.now().toEpochMilli())
-                .checkout(checkout.getId())
+                .checkout(checkout)
                 .total(orderTotal)
                 .status(OrderStatus.PENDING)
                 .build();
@@ -72,16 +72,16 @@ public class OrderServiceImpl implements OrderService {
                 checkoutDTO.setTotal(checkout.get("total", BigDecimal.class));
 
                 CartResponse cart = webClient.get().uri("/cart/{id}", checkout.get("cartId", String.class)).retrieve().bodyToMono(CartResponse.class).block();
-
-                List<CartItemResponse> listCartItem = cartItemRepository.getAllCartItemByCartId(cart.getId());
+                //getAllCartItemByCartId
+                List<CartItemResponse> listCartItem = (List<CartItemResponse>) webClient.get().uri("/get-item/", cart.getId()).retrieve().bodyToMono(CartItemResponse.class).block();
                 if (listCartItem.size() > 0) {
                     Set<CartItemResponse> cartItems = new HashSet<>();
-                    for (CartItem cartItemItem : listCartItem) {
-                        CartItemDTO cartItemTmp = new CartItemDTO();
+                    for (CartItemResponse cartItemItem : listCartItem) {
+                        CartItemResponse cartItemTmp = new CartItemResponse();
                         cartItemTmp.setId(cartItemItem.getId());
                         cartItemTmp.setQuantity(cartItemItem.getQuantity());
-                        cartItemTmp.setCart(CartMapper.mapCartEntityToDTO(cart));
-                        cartItemTmp.setProduct(ProductMapper.mapProductEntityToDTO(cartItemItem.getProduct()));
+                        cartItemTmp.setCart(cart);
+                        cartItemTmp.setProduct(cartItemItem.getProduct());
                         cartItems.add(cartItemTmp);
                     }
                     cart.setCartItems(cartItems);

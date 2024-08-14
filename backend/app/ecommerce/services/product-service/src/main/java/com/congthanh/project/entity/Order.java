@@ -38,10 +38,10 @@ public class Order {
   @Enumerated(EnumType.STRING)
   private OrderStatus status;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "checkout", nullable = false, referencedColumnName = "id")
-  @JsonManagedReference
-  private Checkout checkout;
+//  @OneToOne(fetch = FetchType.LAZY)
+//  @JoinColumn(name = "checkout", nullable = false, referencedColumnName = "id")
+//  @JsonManagedReference
+//  private Checkout checkout;
 
   @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonIgnore
