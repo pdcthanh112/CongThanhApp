@@ -1,5 +1,5 @@
 server:
-  port: 5002 # ${SERVER_PORT}
+  port: 5004 # ${SERVER_PORT}
   servlet:
     context-path: /api
   compression:
@@ -16,22 +16,11 @@ spring:
     name: congthanhapp-ecommerce-inventory-service
 
   datasource:
-    postgresql:
-      ecommerce:
-        url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
-        username: postgres
-        password: 123456
-        driver-class-name: org.postgresql.Driver
-      company:
-        url: jdbc:postgresql://localhost:5432/CongThanhApp-Company
-        username: postgres
-        password: 123456
-        driver-class-name: org.postgresql.Driver
-      management:
-        url: jdbc:postgresql://localhost:5432/CongThanhApp-Management
-        username: postgres
-        password: 123456
-        driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+
 
     mysql:
       url: jdbc:mysql://localhost:3306/mydream?allowPublicKeyRetrieval=true&useSSL=false

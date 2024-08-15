@@ -38,9 +38,6 @@ public class Product {
 //    @JoinColumn(name = "subcategory", nullable = false)
     private Long subcategory;
 
-    @Column(unique = true, name = "SKU")
-    private String SKU;
-
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "supplier")
     private String supplier;

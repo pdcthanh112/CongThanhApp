@@ -1,6 +1,5 @@
 package com.congthanh.project.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,9 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-//@Data
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -31,6 +28,9 @@ public class ProductVariant {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(unique = true, name = "sku")
+    private String SKU;
 
     @Column(name = "price", precision = 19, scale = 4)
     private BigDecimal price;
