@@ -120,7 +120,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
         List<SubcategoryDTO> result = new ArrayList<>();
         for (Tuple item : data) {
             SubcategoryDTO subcategoryDTO = SubcategoryDTO.builder()
-                    .id(item.get("id", Integer.class))
+                    .id(item.get("id", Long.class))
                     .name(item.get("name", String.class))
                     .build();
             result.add(subcategoryDTO);

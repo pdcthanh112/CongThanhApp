@@ -40,12 +40,12 @@ public class ProductVariant {
     @ToString.Exclude
     private Set<ProductVariantImage> image;
 
-    @OneToMany(mappedBy = "productVariant", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<CartItem> cartItems;
-
-    @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Review> review;
+//    @OneToMany(mappedBy = "productVariant", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private Set<CartItem> cartItems;
+//
+//    @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonIgnore
+//    private List<Review> review;
 
 }

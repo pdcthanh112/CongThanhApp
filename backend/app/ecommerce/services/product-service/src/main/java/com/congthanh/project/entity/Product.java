@@ -30,24 +30,24 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category", nullable = false)
-    private Category category;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "category", nullable = false)
+    private Long category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subcategory", nullable = false)
-    private Subcategory subcategory;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "subcategory", nullable = false)
+    private Long subcategory;
 
     @Column(unique = true, name = "SKU")
     private String SKU;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supplier")
-    private Supplier supplier;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "supplier")
+    private String supplier;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "brand")
-    private Brand brand;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "brand")
+    private Long brand;
 
     @Column(columnDefinition = "text")
     private String description;
@@ -75,27 +75,27 @@ public class Product {
     @ToString.Exclude
     private Set<ProductVariant> variant;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Review> review;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<CartItem> cartItems;
-
-    @ManyToMany(mappedBy = "product")
-    @JsonIgnore
-    @JsonBackReference
-    private Set<Wishlist> wishlist;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<OrderDetail> orderDetail;
-
-    @ManyToMany
-    @JoinTable(name = "product_tag",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tag;
+//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonIgnore
+//    private List<Review> review;
+//
+//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private Set<CartItem> cartItems;
+//
+//    @ManyToMany(mappedBy = "product")
+//    @JsonIgnore
+//    @JsonBackReference
+//    private Set<Wishlist> wishlist;
+//
+//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonIgnore
+//    private List<OrderDetail> orderDetail;
+//
+//    @ManyToMany
+//    @JoinTable(name = "product_tag",
+//            joinColumns = @JoinColumn(name = "product_id"),
+//            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+//    private Set<Tag> tag;
 
 }

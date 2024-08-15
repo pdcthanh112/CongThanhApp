@@ -3,15 +3,10 @@ package com.congthanh.project.serviceImpl;
 import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.entity.Product;
-import com.congthanh.project.model.response.PaginationInfo;
-import com.congthanh.project.model.response.ProductVariantAttributeValueResponse;
-import com.congthanh.project.model.response.ResponseWithPagination;
+import com.congthanh.project.model.response.*;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.ProductMapper;
-import com.congthanh.project.repository.category.CategoryRepository;
 import com.congthanh.project.repository.product.ProductRepository;
-import com.congthanh.project.repository.supplier.SupplierRepository;
-import com.congthanh.project.repository.subcategory.SubcategoryRepository;
 import com.congthanh.project.service.ProductService;
 import com.congthanh.project.utils.Helper;
 import jakarta.persistence.Tuple;
@@ -20,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.*;
 
@@ -29,11 +25,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    private final CategoryRepository categoryRepository;
-
-    private final SubcategoryRepository subcategoryRepository;
-
-    private final SupplierRepository supplierRepository;
+    private final WebClient webClient;
 
     private final Helper helper = new Helper();
 
@@ -102,18 +94,19 @@ public class ProductServiceImpl implements ProductService {
         if (existProduct.isPresent()) {
             throw new RuntimeException("Product ton taiii");
         } else {
-            Category category = categoryRepository.findById(Integer.parseInt(productDTO.getCategory())).orElseThrow(() -> new NotFoundException(" not found"));
-            Subcategory subcategory = subcategoryRepository.findById(Integer.parseInt(productDTO.getSubcategory())).orElseThrow(() -> new NotFoundException(" not found"));
-            Supplier supplier = supplierRepository.findById(productDTO.getSupplier()).orElseThrow(() -> new NotFoundException(" not found"));
+            CategoryResponse category = webClient.get().uri("/category/" + productDTO.getCategory()).retrieve().bodyToMono(CategoryResponse.class).block();
+            SubcategoryResponse subcategory = webClient.get().uri("/subcategory/" + productDTO.getSubcategory()).retrieve().bodyToMono(SubcategoryResponse.class).block();
+            SupplierResponse supplier = webClient.get().uri("/supplier/" + productDTO.getSupplier()).retrieve().bodyToMono(SupplierResponse.class).block();
             String productSlug = helper.generateSlug(productDTO.getName());
+            assert category != null && subcategory != null &&supplier != null;
             Product product = Product.builder()
                     .name(productDTO.getName())
-                    .category(category)
-                    .subcategory(subcategory)
+                    .category(category.getId())
+                    .subcategory(subcategory.getId())
                     .description(productDTO.getDescription())
                     .status(StateStatus.STATUS_ACTIVE)
                     .slug(productSlug)
-                    .supplier(supplier)
+                    .supplier(supplier.getId())
                     .build();
             Product result = productRepository.save(product);
             ProductDTO response = ProductMapper.mapProductEntityToDTO(result);

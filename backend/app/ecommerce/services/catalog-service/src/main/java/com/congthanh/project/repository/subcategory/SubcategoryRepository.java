@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public interface SubcategoryRepository extends JpaRepository<Subcategory, Integer>, SubcategoryCustomRepository {
+public interface SubcategoryRepository extends JpaRepository<Subcategory, Long>, SubcategoryCustomRepository {
 
   Optional<Subcategory> findById(int id);
 

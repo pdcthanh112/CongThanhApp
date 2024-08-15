@@ -1,4 +1,4 @@
-package com.congthanh.project.dto;
+package com.congthanh.project.model.response;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,12 +10,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SubcategoryDTO {
+public class SupplierResponse {
 
-    private Long id;
+    private String id;
 
     @NotNull
     private String name;
 
-    private CategoryDTO category;
+    private String avatar;
+
+    private String background;
+
+    @NotNull
+    private String slug;
+
 }

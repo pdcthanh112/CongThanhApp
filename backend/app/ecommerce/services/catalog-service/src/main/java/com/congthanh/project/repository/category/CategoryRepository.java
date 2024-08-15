@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public interface CategoryRepository extends JpaRepository<Category, Integer>, CategoryCustomRepository {
+public interface CategoryRepository extends JpaRepository<Category, Long>, CategoryCustomRepository {
 
   Optional<Category> findById(int id);
 

@@ -10,12 +10,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SubcategoryDTO {
+public class SupplierDTO {
 
-    private Long id;
+    private String id;
 
     @NotNull
     private String name;
 
-    private CategoryDTO category;
+    private String avatar;
+
+    private String background;
+
+    @NotNull
+    private String slug;
+
 }
