@@ -1,28 +1,34 @@
 package com.congthanh.project.model.mapper;
 
-import com.congthanh.project.dto.ecommerce.OrderDTO;
+import com.congthanh.project.dto.OrderDTO;
 import com.congthanh.project.entity.Order;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrderMapper {
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private static final ModelMapper modelMapper = new ModelMapper();
+
+    static {
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT)
+                .setFieldMatchingEnabled(true)
+                .setSkipNullEnabled(true);
+    }
 
     @PostConstruct
     private void configureModelMapper() {
 
     }
 
-    public Order mapOrderDTOToEntity(OrderDTO orderDTO) {
+    public static Order mapOrderDTOToEntity(OrderDTO orderDTO) {
         return modelMapper.map(orderDTO, Order.class);
     }
 
-    public OrderDTO mapOrderEntityToDTO(Order order) {
+    public static OrderDTO mapOrderEntityToDTO(Order order) {
         return modelMapper.map(order, OrderDTO.class);
     }
 }

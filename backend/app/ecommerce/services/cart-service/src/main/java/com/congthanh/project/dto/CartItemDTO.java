@@ -1,6 +1,5 @@
 package com.congthanh.project.dto;
 
-import com.congthanh.project.model.response.ProductResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class InventoryController {
 
-    private final InventoryService inventoryService;
+    private InventoryService inventoryService;
 
     @PostMapping
     public ResponseEntity<Inventory> addInventoryItem(@RequestBody InventoryRequest request) {

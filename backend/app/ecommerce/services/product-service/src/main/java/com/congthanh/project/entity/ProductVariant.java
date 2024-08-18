@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,7 +29,7 @@ public class ProductVariant {
     private String name;
 
     @Column(unique = true, name = "sku")
-    private String SKU;
+    private String sku;
 
     @Column(name = "price", precision = 19, scale = 4)
     private BigDecimal price;

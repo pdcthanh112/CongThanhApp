@@ -1,4 +1,4 @@
-package com.congthanh.project.model.response;
+package com.congthanh.project.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductAttributeValueResponse {
+public class ProductVariantAttributeValueResponse {
     private Long id;
     private String attributeName;
     private List<Value> value;

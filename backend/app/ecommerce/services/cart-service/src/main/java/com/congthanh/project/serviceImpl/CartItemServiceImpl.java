@@ -6,7 +6,7 @@ import com.congthanh.project.entity.CartItem;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.CartItemMapper;
 import com.congthanh.project.model.mapper.CartMapper;
-import com.congthanh.project.model.response.ProductResponse;
+import com.congthanh.project.dto.ProductResponse;
 import com.congthanh.project.repository.cartItem.CartItemRepository;
 import com.congthanh.project.repository.cart.CartRepository;
 import com.congthanh.project.service.CartItemService;

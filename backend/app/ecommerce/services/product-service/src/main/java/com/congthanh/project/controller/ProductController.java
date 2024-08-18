@@ -2,6 +2,7 @@ package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.ProductDTO;
+import com.congthanh.project.model.request.ProductEvent;
 import com.congthanh.project.model.response.ProductVariantAttributeValueResponse;
 import com.congthanh.project.model.response.Response;
 import com.congthanh.project.model.response.ResponseWithPagination;
@@ -16,9 +17,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,11 +30,15 @@ import java.util.List;
 @RequestMapping("/ecommerce/product")
 @Tag(name = "Product API", description = "Product API in CongThanhApp - Ecommerce")
 @RequiredArgsConstructor
+@Slf4j
 public class ProductController {
 
     private final ProductRepository productRepository;
 
     private final ProductService productService;
+
+    private final KafkaTemplate<String, ProductEvent> kafkaTemplate;
+
 
     @GetMapping("/getAll")
     @PermitAll
@@ -93,6 +100,10 @@ public class ProductController {
         response.setData(data);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
         response.setMessage("Created successfully");
+
+        ProductEvent event = new ProductEvent("CREATE", data);
+        kafkaTemplate.send("product-events", event);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

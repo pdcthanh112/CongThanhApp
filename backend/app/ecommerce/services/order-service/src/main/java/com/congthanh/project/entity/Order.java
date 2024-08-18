@@ -1,6 +1,7 @@
 package com.congthanh.project.entity;
 
 import com.congthanh.project.enums.ecommerce.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -8,8 +9,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 
 @Entity
@@ -46,5 +50,15 @@ public class Order {
   @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonIgnore
   private List<OrderDetail> orderDetail;
+
+  @CreatedDate
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  @Column(name = "created_at")
+  private Instant createdAt;
+
+  @LastModifiedDate
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  @Column(name = "updated_at")
+  private Instant updatedAt;
 
 }

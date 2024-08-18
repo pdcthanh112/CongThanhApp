@@ -1,11 +1,13 @@
 package com.congthanh.project.serviceImpl;
 
-import com.congthanh.project.dto.*;
+import com.congthanh.project.dto.CheckoutDTO;
+import com.congthanh.project.dto.OrderDTO;
 import com.congthanh.project.entity.Checkout;
 import com.congthanh.project.entity.Order;
 import com.congthanh.project.enums.ecommerce.OrderStatus;
 import com.congthanh.project.exception.NotFoundException;
 import com.congthanh.project.model.ecommerce.request.CreateOrderRequest;
+import com.congthanh.project.model.mapper.OrderMapper;
 import com.congthanh.project.model.response.CartItemResponse;
 import com.congthanh.project.model.response.CartResponse;
 import com.congthanh.project.model.response.VoucherResponse;
@@ -14,7 +16,10 @@ import com.congthanh.project.repository.order.OrderRepository;
 import com.congthanh.project.service.OrderService;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
@@ -34,8 +39,11 @@ public class OrderServiceImpl implements OrderService {
 
     private final WebClient webClient;
 
+    private final KafkaTemplate<String, Order> kafkaTemplate;
+
     @Override
-    public Order createOrder(CreateOrderRequest createOrderRequest) {
+    @Transactional
+    public OrderDTO createOrder(CreateOrderRequest createOrderRequest) {
         Checkout checkout = checkoutRepository.findById((int) createOrderRequest.getCheckout()).orElseThrow(() -> new NotFoundException("Checkout not found"));
         VoucherResponse voucher = webClient.get().uri("/voucher/{id}", createOrderRequest.getCheckout()).retrieve().bodyToMono(VoucherResponse.class).block();
         BigDecimal orderTotal = createOrderRequest.getTotal();
@@ -53,7 +61,11 @@ public class OrderServiceImpl implements OrderService {
                 .total(orderTotal)
                 .status(OrderStatus.PENDING)
                 .build();
-        return orderRepository.save(order);
+        Order result = orderRepository.save(order);
+
+        kafkaTemplate.send("order-created-topic", result);
+
+        return OrderMapper.mapOrderEntityToDTO(result);
     }
 
     @Override
@@ -93,5 +105,17 @@ public class OrderServiceImpl implements OrderService {
             return null;
         }
         return response;
+    }
+
+    @KafkaListener(topics = "shipment-completed-topic")
+    public void handleShipmentCompleted(ShipmentCompletedEvent event) {
+        // Cập nhật trạng thái đơn hàng thành "Shipped"
+        Order order = orderRepository.findById(event.getOrderId());
+        order.setStatus(OrderStatus.SHIPPED);
+        Order result = orderRepository.save(order);
+
+        // Đẩy sự kiện OrderStatusUpdated lên Kafka
+        OrderStatusUpdatedEvent updatedEvent = new OrderStatusUpdatedEvent(order.getId(), OrderStatus.SHIPPED);
+        kafkaTemplate.send("order-status-updated-topic", result);
     }
 }
