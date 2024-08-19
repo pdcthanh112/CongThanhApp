@@ -1,4 +1,4 @@
-package com.congthanh.project.model.response;
+package com.congthanh.project.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,11 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductVariantImageResponse {
-
-    private Long id;
-
-    private String variant;
+public class CreateVariantImageRequest {
 
     private String imagePath;
 

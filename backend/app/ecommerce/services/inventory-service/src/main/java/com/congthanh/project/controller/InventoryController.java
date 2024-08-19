@@ -1,8 +1,7 @@
 package com.congthanh.project.controller;
 
-import com.congthanh.project.dto.InventoryRequest;
-import com.congthanh.project.dto.InventoryResponse;
-import com.congthanh.project.entity.Inventory;
+import com.congthanh.project.model.request.InventoryRequest;
+import com.congthanh.project.dto.InventoryDTO;
 import com.congthanh.project.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,20 +14,20 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class InventoryController {
 
-    private InventoryService inventoryService;
+    private final InventoryService inventoryService;
 
     @PostMapping
-    public ResponseEntity<Inventory> addInventoryItem(@RequestBody InventoryRequest request) {
+    public ResponseEntity<InventoryDTO> addInventoryItem(@RequestBody InventoryRequest request) {
         return ResponseEntity.ok(inventoryService.addInventoryItem(request));
     }
 
     @PutMapping("/{sku}")
-    public ResponseEntity<Inventory> updateInventoryQuantity(@PathVariable String sku, @RequestParam Integer quantity) {
+    public ResponseEntity<InventoryDTO> updateInventoryQuantity(@PathVariable String sku, @RequestParam Integer quantity) {
         return ResponseEntity.ok(inventoryService.updateInventoryQuantity(sku, quantity));
     }
 
     @GetMapping("/{sku}")
-    public ResponseEntity<InventoryResponse> getInventoryItem(@PathVariable String sku) {
+    public ResponseEntity<InventoryDTO> getInventoryItem(@PathVariable String sku) {
         return ResponseEntity.ok(inventoryService.getInventoryItem(sku));
     }
 

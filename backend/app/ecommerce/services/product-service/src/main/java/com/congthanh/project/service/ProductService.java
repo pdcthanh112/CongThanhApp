@@ -1,6 +1,7 @@
 package com.congthanh.project.service;
 
 import com.congthanh.project.dto.ProductDTO;
+import com.congthanh.project.model.request.CreateProductRequest;
 import com.congthanh.project.model.response.ProductVariantAttributeValueResponse;
 import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.entity.Product;
@@ -17,7 +18,7 @@ public interface ProductService {
 
   ProductDTO getProductBySlug(String slug);
 
-  ProductDTO createProduct(ProductDTO productDTO);
+  ProductDTO createProduct(CreateProductRequest request);
 
   Product updateProduct(ProductDTO productDTO);
 

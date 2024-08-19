@@ -1,5 +1,6 @@
 package com.congthanh.project.serviceImpl;
 
+import com.congthanh.project.dto.OrderResponse;
 import com.congthanh.project.dto.PaymentDTO;
 import com.congthanh.project.entity.Payment;
 import com.congthanh.project.enums.PaymentStatus;
@@ -25,7 +26,7 @@ public class PaymentServiceImpl implements PaymentService {
         Payment payment = Payment.builder()
                 .amount(paymentDTO.getAmount())
                 .paymentMethod(paymentDTO.getPaymentMethod())
-                .createdDate(Instant.now().toEpochMilli())
+                .createdDate(Instant.now())
                 .status(PaymentStatus.NEW.name())
                 .build();
         Payment result = paymentRepository.createPayment(payment);
@@ -33,10 +34,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @KafkaListener(topics = "order-created-topic")
-    private void handleOrderCreated(Order event) {
+    private void handleOrderCreated(OrderResponse event) {
         // Xử lý thanh toán cho đơn hàng
-        Payment payment = paymentProcessor.processPayment(event.getOrderId());
+        Payment payment = null;
 
         kafkaTemplate.send("payment-completed-topic", payment);
     }
 }
+

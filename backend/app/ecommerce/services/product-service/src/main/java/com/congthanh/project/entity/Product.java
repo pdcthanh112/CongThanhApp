@@ -1,11 +1,11 @@
 package com.congthanh.project.entity;
 
+import com.congthanh.project.constant.enums.ProductStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -49,7 +49,8 @@ public class Product {
     @Column(columnDefinition = "text")
     private String description;
 
-    private String status;
+    @Enumerated
+    private ProductStatus status;
 
     @Column(nullable = false, unique = true)
     private String slug;

@@ -9,12 +9,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class InventoryResponse {
+public class ProductResponse {
 
-    private String sku;
+    private String id;
 
-    private Integer quantity;
+    private String name;
+
+    private String category;
+
+    private String subcategory;
+
+    private String description;
 
     private String status;
+
+    private String slug;
 
 }

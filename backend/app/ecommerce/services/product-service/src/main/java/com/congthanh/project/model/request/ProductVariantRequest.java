@@ -6,25 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateCheckoutRequest {
+public class ProductVariantRequest {
 
-    private String customer;
+    private String product;
 
-    private String cartId;
+    private String name;
 
-    private BigDecimal total;
+    private String sku;
 
-    private String voucher;
+    private BigDecimal price;
 
-    private String address;
-
-    private String phone;
-
-    private String payment;
+    private List<CreateVariantImageRequest> image;
 
 }

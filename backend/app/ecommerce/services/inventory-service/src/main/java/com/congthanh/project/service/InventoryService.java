@@ -1,16 +1,16 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.InventoryRequest;
-import com.congthanh.project.dto.InventoryResponse;
+import com.congthanh.project.model.request.InventoryRequest;
+import com.congthanh.project.dto.InventoryDTO;
 import com.congthanh.project.entity.Inventory;
 
 public interface InventoryService {
 
-    Inventory addInventoryItem(InventoryRequest request);
+    InventoryDTO addInventoryItem(InventoryRequest request);
 
-    Inventory updateInventoryQuantity(String sku, Integer quantity);
+    InventoryDTO updateInventoryQuantity(String sku, Integer quantity);
 
-    InventoryResponse getInventoryItem(String sku);
+    InventoryDTO getInventoryItem(String sku);
 
     void removeInventoryItem(String sku);
 

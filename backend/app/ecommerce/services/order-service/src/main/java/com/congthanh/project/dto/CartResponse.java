@@ -1,4 +1,4 @@
-package com.congthanh.project.model.response;
+package com.congthanh.project.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -6,19 +6,25 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductImageResponse {
+public class CartResponse {
 
-    private Long id;
+    private String id;
 
-    private String product;
+    private String name;
 
-    private String imagePath;
+    private String customer;
 
-    private String alt;
+    private long createdDate;
+
+    private String status;
+
+    private Set<CartItemResponse> cartItems;
 
     @JsonProperty("isDefault")
     private boolean isDefault;

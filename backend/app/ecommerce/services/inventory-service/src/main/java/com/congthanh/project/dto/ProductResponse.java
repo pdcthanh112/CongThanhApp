@@ -1,4 +1,4 @@
-package com.congthanh.project.model.response;
+package com.congthanh.project.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ public class ProductResponse {
 
     private String subcategory;
 
-    private String SKU;
+    private String sku;
 
     private String slug;
 

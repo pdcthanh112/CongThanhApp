@@ -33,10 +33,6 @@ public class ProductMapper {
     private void configureModelMapper() {
 
         modelMapper.typeMap(Product.class, ProductDTO.class)
-                .addMapping(src -> src.getCategory().getName(), ProductDTO::setCategory)
-                .addMapping(src -> src.getSubcategory().getName(), ProductDTO::setSubcategory)
-                .addMapping(src -> src.getSupplier().getName(), ProductDTO::setSupplier)
-                .addMapping(src -> src.getBrand().getName(), ProductDTO::setBrand)
 //                .addMapping(src -> src.getImage() != null ? src.getImage().stream().map(productImage -> modelMapper.map(productImage, ProductImageDTO.class))
 //                        .collect(Collectors.toList()) : Collections.emptyList(), ProductDTO::setImage)
         ;

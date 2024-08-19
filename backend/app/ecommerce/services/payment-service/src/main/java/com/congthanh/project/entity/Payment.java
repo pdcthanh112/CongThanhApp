@@ -1,13 +1,12 @@
 package com.congthanh.project.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Entity
 @NoArgsConstructor
@@ -26,11 +25,11 @@ public class Payment {
     @Column(name = "payment_method")
     private String paymentMethod;
 
-    @Column(name = "created_date")
-    private Long createdDate;
+    @Column(name = "created_date", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private Instant createdDate;
 
-    @Column(name = "payment_date")
-    private Long paymentedDate;
+    @Column(name = "payment_date", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private Instant paymentDate;
 
     private String status;
 

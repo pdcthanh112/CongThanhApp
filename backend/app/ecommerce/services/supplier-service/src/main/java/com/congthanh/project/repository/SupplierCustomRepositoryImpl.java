@@ -1,6 +1,7 @@
 package com.congthanh.project.repository;
 
 import com.congthanh.project.entity.Supplier;
+import com.congthanh.project.model.response.ProductResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -22,7 +23,7 @@ public class SupplierCustomRepositoryImpl implements SupplierCustomRepository {
     }
 
     @Override
-    public Page<Product> getProductFromSupplier(String storeId, Pageable pageable) {
+    public Page<ProductResponse> getProductFromSupplier(String storeId, Pageable pageable) {
         String sql = "SELECT p FROM Product p WHERE p.supplier.id = :storeId";
         TypedQuery<Product> query = entityManager.createQuery(sql, Product.class);
         query.setParameter("storeId", storeId);

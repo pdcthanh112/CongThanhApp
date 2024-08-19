@@ -1,8 +1,9 @@
 package com.congthanh.project.serviceImpl;
 
-import com.congthanh.project.constant.common.StateStatus;
+import com.congthanh.project.constant.enums.ProductStatus;
 import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.entity.Product;
+import com.congthanh.project.model.request.CreateProductRequest;
 import com.congthanh.project.model.response.*;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.ProductMapper;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -27,7 +29,11 @@ public class ProductServiceImpl implements ProductService {
 
     private final WebClient webClient;
 
+    private final KafkaTemplate<String, ProductEvent> kafkaTemplate;
+
     private final Helper helper = new Helper();
+
+    record ProductEvent (String eventType, ProductDTO product) { }
 
     @Override
     public Object getAllProduct(Integer page, Integer limit) {
@@ -89,27 +95,31 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO createProduct(ProductDTO productDTO) {
-        Optional<Product> existProduct = productRepository.findByName(productDTO.getName());
+    public ProductDTO createProduct(CreateProductRequest request) {
+        Optional<Product> existProduct = productRepository.findByName(request.getName());
         if (existProduct.isPresent()) {
             throw new RuntimeException("Product ton taiii");
         } else {
-            CategoryResponse category = webClient.get().uri("/category/" + productDTO.getCategory()).retrieve().bodyToMono(CategoryResponse.class).block();
-            SubcategoryResponse subcategory = webClient.get().uri("/subcategory/" + productDTO.getSubcategory()).retrieve().bodyToMono(SubcategoryResponse.class).block();
-            SupplierResponse supplier = webClient.get().uri("/supplier/" + productDTO.getSupplier()).retrieve().bodyToMono(SupplierResponse.class).block();
-            String productSlug = helper.generateSlug(productDTO.getName());
+            CategoryResponse category = webClient.get().uri("/category/" + request.getCategory()).retrieve().bodyToMono(CategoryResponse.class).block();
+            SubcategoryResponse subcategory = webClient.get().uri("/subcategory/" + request.getSubcategory()).retrieve().bodyToMono(SubcategoryResponse.class).block();
+            SupplierResponse supplier = webClient.get().uri("/supplier/" + request.getSupplier()).retrieve().bodyToMono(SupplierResponse.class).block();
+            String productSlug = helper.generateSlug(request.getName());
             assert category != null && subcategory != null &&supplier != null;
             Product product = Product.builder()
-                    .name(productDTO.getName())
+                    .name(request.getName())
                     .category(category.getId())
                     .subcategory(subcategory.getId())
-                    .description(productDTO.getDescription())
-                    .status(StateStatus.STATUS_ACTIVE)
+                    .description(request.getDescription())
+                    .status(ProductStatus.ACTIVE)
                     .slug(productSlug)
                     .supplier(supplier.getId())
                     .build();
-            Product result = productRepository.save(product);
-            ProductDTO response = ProductMapper.mapProductEntityToDTO(result);
+            Product savedProduct = productRepository.save(product);
+            ProductDTO response = ProductMapper.mapProductEntityToDTO(savedProduct);
+
+            ProductEvent productEvent = new ProductEvent("PRODUCT_CREATED", response);
+            kafkaTemplate.send("product-topic", productEvent);
+
             return response;
         }
     }
@@ -130,7 +140,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean deleteProduct(String id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Product not found"));
-        if (product.getStatus().equalsIgnoreCase(StateStatus.STATUS_DELETED)) {
+        if (product.getStatus() == ProductStatus.DELETED) {
             throw new RuntimeException("Product have deleted before");
         } else {
             boolean result = productRepository.deleteProduct(id);
@@ -243,3 +253,4 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 }
+

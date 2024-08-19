@@ -5,23 +5,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.util.List;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductVariantResponse {
+public class ProductVariantResponse implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private String id;
 
     private String product;
 
-    private String name;
-
-    private BigDecimal price;
-
-    private List<ProductVariantImageResponse> image;
+    private String sku;
 
 }

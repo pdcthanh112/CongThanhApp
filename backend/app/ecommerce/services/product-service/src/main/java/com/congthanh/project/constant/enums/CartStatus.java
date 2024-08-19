@@ -1,4 +1,4 @@
-package com.congthanh.project.enums;
+package com.congthanh.project.constant.enums;
 
 public enum CartStatus {
     ALL,

@@ -28,8 +28,7 @@ public class ProductDTO implements Serializable {
 
   private String subcategory;
 
-  private String SKU;
-
+  @NotNull
   private String slug;
 
   private String description;

@@ -8,9 +8,9 @@ import com.congthanh.project.enums.ecommerce.OrderStatus;
 import com.congthanh.project.exception.NotFoundException;
 import com.congthanh.project.model.ecommerce.request.CreateOrderRequest;
 import com.congthanh.project.model.mapper.OrderMapper;
-import com.congthanh.project.model.response.CartItemResponse;
-import com.congthanh.project.model.response.CartResponse;
-import com.congthanh.project.model.response.VoucherResponse;
+import com.congthanh.project.dto.CartItemResponse;
+import com.congthanh.project.dto.CartResponse;
+import com.congthanh.project.dto.VoucherResponse;
 import com.congthanh.project.repository.checkout.CheckoutRepository;
 import com.congthanh.project.repository.order.OrderRepository;
 import com.congthanh.project.service.OrderService;
@@ -39,7 +39,11 @@ public class OrderServiceImpl implements OrderService {
 
     private final WebClient webClient;
 
-    private final KafkaTemplate<String, Order> kafkaTemplate;
+    private final KafkaTemplate<String, OrderEvent> kafkaTemplate;
+
+    record OrderEvent (String eventType, OrderDTO order) { }
+    record ShippingEvent (String eventType, ShippingResponse shipping) { }
+
 
     @Override
     @Transactional
@@ -108,14 +112,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @KafkaListener(topics = "shipment-completed-topic")
-    public void handleShipmentCompleted(ShipmentCompletedEvent event) {
+    public void handleShipmentCompleted(ShippingEvent shippingEvent) {
         // Cập nhật trạng thái đơn hàng thành "Shipped"
-        Order order = orderRepository.findById(event.getOrderId());
+        Order order = orderRepository.findById(shippingEvent.eventType);
         order.setStatus(OrderStatus.SHIPPED);
         Order result = orderRepository.save(order);
 
         // Đẩy sự kiện OrderStatusUpdated lên Kafka
-        OrderStatusUpdatedEvent updatedEvent = new OrderStatusUpdatedEvent(order.getId(), OrderStatus.SHIPPED);
-        kafkaTemplate.send("order-status-updated-topic", result);
+        OrderEvent orderEvent = new OrderEvent("UPDATE", OrderMapper.mapOrderEntityToDTO(result));
+        kafkaTemplate.send("order-topic", orderEvent);
     }
 }
