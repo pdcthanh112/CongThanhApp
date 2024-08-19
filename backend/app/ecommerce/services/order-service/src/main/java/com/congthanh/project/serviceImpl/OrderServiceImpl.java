@@ -4,7 +4,7 @@ import com.congthanh.project.dto.CheckoutDTO;
 import com.congthanh.project.dto.OrderDTO;
 import com.congthanh.project.entity.Checkout;
 import com.congthanh.project.entity.Order;
-import com.congthanh.project.enums.ecommerce.OrderStatus;
+import com.congthanh.project.constant.enums.OrderStatus;
 import com.congthanh.project.exception.NotFoundException;
 import com.congthanh.project.model.ecommerce.request.CreateOrderRequest;
 import com.congthanh.project.model.mapper.OrderMapper;

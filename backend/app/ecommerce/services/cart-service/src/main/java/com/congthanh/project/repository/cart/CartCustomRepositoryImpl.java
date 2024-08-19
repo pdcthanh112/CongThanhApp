@@ -1,7 +1,7 @@
 package com.congthanh.project.repository.cart;
 
 import com.congthanh.project.entity.Cart;
-import com.congthanh.project.enums.CartStatus;
+import com.congthanh.project.constant.enums.CartStatus;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;

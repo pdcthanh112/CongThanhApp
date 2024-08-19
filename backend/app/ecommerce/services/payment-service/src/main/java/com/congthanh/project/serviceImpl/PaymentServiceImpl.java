@@ -3,7 +3,7 @@ package com.congthanh.project.serviceImpl;
 import com.congthanh.project.dto.OrderResponse;
 import com.congthanh.project.dto.PaymentDTO;
 import com.congthanh.project.entity.Payment;
-import com.congthanh.project.enums.PaymentStatus;
+import com.congthanh.project.constant.enums.PaymentStatus;
 import com.congthanh.project.repository.PaymentRepository;
 import com.congthanh.project.service.PaymentService;
 import lombok.RequiredArgsConstructor;

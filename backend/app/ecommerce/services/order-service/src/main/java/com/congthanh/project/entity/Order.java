@@ -1,6 +1,6 @@
 package com.congthanh.project.entity;
 
-import com.congthanh.project.enums.ecommerce.OrderStatus;
+import com.congthanh.project.constant.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
