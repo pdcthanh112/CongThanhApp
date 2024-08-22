@@ -1,4 +1,4 @@
-package com.congthanh.project.model.response;
+package com.congthanh.project.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -16,9 +16,11 @@ public class ProductVariantResponse {
 
     private String id;
 
+    private String name;
+
     private String product;
 
-    private String name;
+    private String sku;
 
     private BigDecimal price;
 

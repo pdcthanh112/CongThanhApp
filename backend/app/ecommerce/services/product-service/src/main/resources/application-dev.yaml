@@ -1,20 +1,35 @@
 server:
-  port: 5007 # ${SERVER_PORT}
+  port: 5008 # ${SERVER_PORT}
   servlet:
     context-path: /api
   compression:
     enabled: true
     min-response-size: 1024
+#  ssl:
+#    key-store: classpath:keystore.p12  # Đường dẫn đến keystore
+#    key-store-password: password       # Mật khẩu keystore
+#    key-store-type: PKCS12             # Loại keystore
+#    key-alias: tomcat                  # Alias của key
 
 spring:
   application:
-    name: congthanhapp-ecommerce-payment-service
+    name: congthanhapp-ecommerce-product-service
+
+#  profiles:
+#    active: dev
 
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
     username: postgres
     password: 123456
     driver-class-name: org.postgresql.Driver
+
+
+    mysql:
+      url: jdbc:mysql://localhost:3306/mydream?allowPublicKeyRetrieval=true&useSSL=false
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     database: default
@@ -30,6 +45,7 @@ spring:
   mongodb:
     uri: mongodb://localhost:27017/MyDream
     database: CongThanhApp
+
 
   graphql:
     graphiql:
@@ -72,7 +88,7 @@ spring:
     caffeine:
       spec: maximumSize=500,expireAfterAccess=600s
 
-  #    Cấu hình upload file
+#    Cấu hình upload file
   servlet:
     multipart:
       max-file-size: 10MB
@@ -105,15 +121,15 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
-      group-id: congthanhapp-group
+      group-id: congthanhapp
       auto-offset-reset: earliest
-    #      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    #      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
-  #  Cấu hình quốc tế hoá i18n
+#  Cấu hình quốc tế hoá i18n
   messages:
     basename: messages
 
@@ -127,9 +143,42 @@ spring:
         distance-type: cosine_distance
         dimensions: 384
 
+  cloud:
+    config:
+      uri: http://localhost:8888
+    gateway:
+      routes:
+        - id: cart-service
+          uri: lb://cart-service
+          predicates:
+            - Path=/api/cart/**
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notification/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/orders/**
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/payment/**
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/product/**
+
+  sleuth:
+    sampler:
+      probability: 1.0
+
+  zipkin:
+    base-url: http://localhost:9411
+
 congthanhapp:
   openapi:
-    dev-url: http://localhost:5000 #http://localhost:${SERVER_PORT}
+    dev-url: http://localhost:5000
     prod-url: https://congthanhapp-api.com
 
 springdoc:
@@ -161,5 +210,3 @@ eureka:
     fetch-registry: true
     service-url:
       default-zone: http://localhost:8761/eureka/
-  instance:
-    hostname: localhost

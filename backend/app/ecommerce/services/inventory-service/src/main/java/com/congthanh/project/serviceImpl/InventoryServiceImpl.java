@@ -24,15 +24,12 @@ public class InventoryServiceImpl implements InventoryService {
 
     private final WebClient webClient;
 
-    record ProductEvent (String eventType, ProductResponse product) { }
-    record ProductVariantEvent (String eventType, ProductVariantResponse variant) { }
-
     public InventoryDTO addInventoryItem(InventoryRequest request) {
         ProductResponse product = webClient.get().uri("/product/" + request.getSku()).retrieve().bodyToMono(ProductResponse.class).block();
         assert product != null;
         Inventory item = Inventory.builder()
                 .sku(product.getSku())
-                .quantity(request.getQuantity())
+                .stock(request.getStock())
                 .build();
         Inventory savedInventory = inventoryRepository.save(item);
         return InventoryMapper.mapCartEntityToDTO(savedInventory);
@@ -41,7 +38,7 @@ public class InventoryServiceImpl implements InventoryService {
     public InventoryDTO updateInventoryQuantity(String sku, Integer quantity) {
         Inventory item = inventoryRepository.findBySku(sku)
                 .orElseThrow(() -> new NotFoundException("Inventory item not found for SKU: " + sku));
-        item.setQuantity(quantity);
+        item.setStock(quantity);
         Inventory savedInventory = inventoryRepository.save(item);
         return InventoryMapper.mapCartEntityToDTO(savedInventory);
     }
@@ -49,7 +46,7 @@ public class InventoryServiceImpl implements InventoryService {
     public InventoryDTO getInventoryItem(String sku) {
         Inventory item = inventoryRepository.findBySku(sku)
                 .orElseThrow(() -> new NotFoundException("Inventory item not found for SKU: " + sku));
-        return new InventoryDTO(item.getId(), item.getSku(), item.getQuantity());
+        return new InventoryDTO(item.getId(), item.getSku(), item.getStock());
     }
 
     public void removeInventoryItem(String sku) {
@@ -60,26 +57,24 @@ public class InventoryServiceImpl implements InventoryService {
 
     public boolean isInStock(String sku, Integer requiredQuantity) {
         return inventoryRepository.findBySku(sku)
-                .map(item -> item.getQuantity() >= requiredQuantity)
+                .map(item -> item.getStock() >= requiredQuantity)
                 .orElse(false);
     }
 
-    @KafkaListener(topics = "product-topic")
-    private void handleCreateProduct(ProductEvent productEvent) {
-        if ("PRODUCT_CREATED".equals(productEvent.eventType())) {
-            ProductResponse product = productEvent.product();
-            InventoryRequest inventory = InventoryRequest.builder().quantity(0).sku(product.getSku()).build();
-            this.addInventoryItem(inventory);
-        }
-    }
+//    @KafkaListener(topics = "product-topic")
+//    private void handleCreateProduct(ProductEvent productEvent) {
+//        if ("PRODUCT_CREATED".equals(productEvent.eventType())) {
+//            ProductResponse product = productEvent.product();
+//            InventoryRequest inventory = InventoryRequest.builder().quantity(0).sku(product.getSku()).build();
+//            this.addInventoryItem(inventory);
+//        }
+//    }
 
-    @KafkaListener(topics = "product-variant-topic")
-    private void handleCreateVariant(ProductVariantEvent variantEvent) {
-        if ("VARIANT_CREATED".equals(variantEvent.eventType())) {
-            ProductVariantResponse variant = variantEvent.variant();
-            Inventory inventory = Inventory.builder().quantity(0).sku(variant.getId()).build();
-            inventoryRepository.save(inventory);
-        }
+    @KafkaListener(topics = "create-product-variant-topic")
+    private void handleCreateVariant(ProductVariantResponse variant) {
+            InventoryRequest inventory = InventoryRequest.builder().stock(0).sku(variant.getSku()).build();
+            this.addInventoryItem(inventory);
+
     }
 
 }

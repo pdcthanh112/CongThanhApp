@@ -2,7 +2,7 @@ package com.congthanh.project.service;
 
 import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.model.request.CreateProductRequest;
-import com.congthanh.project.model.response.ProductVariantAttributeValueResponse;
+import com.congthanh.project.dto.ProductVariantAttributeValueResponse;
 import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.entity.Product;
 
@@ -24,9 +24,9 @@ public interface ProductService {
 
   boolean deleteProduct(String id);
 
-  ResponseWithPagination<ProductDTO> getProductByCategory(int categoryId, int page, int limit);
-
-  ResponseWithPagination<ProductDTO> getProductBySubcategory(int subcategoryId, int page, int limit);
+//  ResponseWithPagination<ProductDTO> getProductByCategory(int categoryId, int page, int limit);
+//
+//  ResponseWithPagination<ProductDTO> getProductBySubcategory(int subcategoryId, int page, int limit);
 
   List<ProductDTO> searchProduct(String keyword);
 

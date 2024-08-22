@@ -2,10 +2,10 @@ package com.congthanh.project.repository.cartItem;
 
 import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.entity.CartItem;
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional

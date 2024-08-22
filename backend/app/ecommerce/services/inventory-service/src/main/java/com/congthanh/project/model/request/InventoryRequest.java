@@ -17,6 +17,6 @@ public class InventoryRequest {
     private String sku;
 
     @Min(0)
-    private Integer quantity;
+    private Integer stock;
 
 }

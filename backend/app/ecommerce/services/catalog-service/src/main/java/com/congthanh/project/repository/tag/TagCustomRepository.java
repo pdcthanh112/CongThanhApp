@@ -1,8 +1,8 @@
 package com.congthanh.project.repository.tag;
 
 import com.congthanh.project.entity.Tag;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 

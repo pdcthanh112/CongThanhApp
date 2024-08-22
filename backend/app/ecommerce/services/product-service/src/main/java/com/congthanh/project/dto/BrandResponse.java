@@ -1,7 +1,5 @@
 package com.congthanh.project.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,14 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class InventoryDTO {
+public class BrandResponse {
 
     private Long id;
 
-    private String sku;
-
-    @Min(0)
-    @NotNull
-    private Integer stock;
+    private String name;
 
 }

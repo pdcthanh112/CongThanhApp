@@ -1,7 +1,7 @@
 package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.enums.ProductStatus;
-import com.congthanh.project.dto.ProductDTO;
+import com.congthanh.project.dto.*;
 import com.congthanh.project.entity.Product;
 import com.congthanh.project.model.request.CreateProductRequest;
 import com.congthanh.project.model.response.*;
@@ -12,6 +12,7 @@ import com.congthanh.project.service.ProductService;
 import com.congthanh.project.utils.Helper;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,17 +24,16 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
     private final WebClient webClient;
 
-    private final KafkaTemplate<String, ProductEvent> kafkaTemplate;
+    private final KafkaTemplate<String, ProductDTO> kafkaTemplate;
 
     private final Helper helper = new Helper();
-
-    record ProductEvent (String eventType, ProductDTO product) { }
 
     @Override
     public Object getAllProduct(Integer page, Integer limit) {
@@ -103,13 +103,17 @@ public class ProductServiceImpl implements ProductService {
             CategoryResponse category = webClient.get().uri("/category/" + request.getCategory()).retrieve().bodyToMono(CategoryResponse.class).block();
             SubcategoryResponse subcategory = webClient.get().uri("/subcategory/" + request.getSubcategory()).retrieve().bodyToMono(SubcategoryResponse.class).block();
             SupplierResponse supplier = webClient.get().uri("/supplier/" + request.getSupplier()).retrieve().bodyToMono(SupplierResponse.class).block();
+            BrandResponse brand = webClient.get().uri("/brand/" + request.getBrand()).retrieve().bodyToMono(BrandResponse.class).block();
+
             String productSlug = helper.generateSlug(request.getName());
-            assert category != null && subcategory != null &&supplier != null;
+
+            assert category != null && subcategory != null && supplier != null && brand != null;
             Product product = Product.builder()
                     .name(request.getName())
                     .category(category.getId())
                     .subcategory(subcategory.getId())
                     .description(request.getDescription())
+                    .brand(brand.getId())
                     .status(ProductStatus.ACTIVE)
                     .slug(productSlug)
                     .supplier(supplier.getId())
@@ -117,8 +121,7 @@ public class ProductServiceImpl implements ProductService {
             Product savedProduct = productRepository.save(product);
             ProductDTO response = ProductMapper.mapProductEntityToDTO(savedProduct);
 
-            ProductEvent productEvent = new ProductEvent("PRODUCT_CREATED", response);
-            kafkaTemplate.send("product-topic", productEvent);
+            kafkaTemplate.send("create-product-topic", response);
 
             return response;
         }
@@ -148,56 +151,56 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    @Override
-    public ResponseWithPagination<ProductDTO> getProductByCategory(int categoryId, int page, int limit) {
-        Pageable pageable = PageRequest.of(page, limit);
-        Page<Product> result = productRepository.findByCategoryId(categoryId, pageable);
-        ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
-        if (result.hasContent()) {
-            List<ProductDTO> list = new ArrayList<>();
-            for (Product product : result.getContent()) {
-                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
-                list.add(productDTO);
-            }
-
-            PaginationInfo paginationInfo = PaginationInfo.builder()
-                    .page(page)
-                    .limit(limit)
-                    .totalPage(result.getTotalPages())
-                    .totalElement(result.getTotalElements())
-                    .build();
-            response.setResponseList(list);
-            response.setPaginationInfo(paginationInfo);
-        } else {
-            throw new RuntimeException("List empty exception");
-        }
-        return response;
-    }
-
-    @Override
-    public ResponseWithPagination<ProductDTO> getProductBySubcategory(int subcategoryId, int page, int limit) {
-        Pageable pageable = PageRequest.of(page, limit);
-        Page<Product> result = productRepository.findBySubcategoryId(subcategoryId, pageable);
-        ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
-        if (result.hasContent()) {
-            List<ProductDTO> list = new ArrayList<>();
-            for (Product product : result.getContent()) {
-                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
-                list.add(productDTO);
-            }
-            PaginationInfo paginationInfo = PaginationInfo.builder()
-                    .page(page)
-                    .limit(limit)
-                    .totalPage(result.getTotalPages())
-                    .totalElement(result.getTotalElements())
-                    .build();
-            response.setResponseList(list);
-            response.setPaginationInfo(paginationInfo);
-        } else {
-            throw new RuntimeException("List empty exception");
-        }
-        return response;
-    }
+//    @Override
+//    public ResponseWithPagination<ProductDTO> getProductByCategory(int categoryId, int page, int limit) {
+//        Pageable pageable = PageRequest.of(page, limit);
+//        Page<Product> result = productRepository.findByCategoryId(categoryId, pageable);
+//        ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
+//        if (result.hasContent()) {
+//            List<ProductDTO> list = new ArrayList<>();
+//            for (Product product : result.getContent()) {
+//                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
+//                list.add(productDTO);
+//            }
+//
+//            PaginationInfo paginationInfo = PaginationInfo.builder()
+//                    .page(page)
+//                    .limit(limit)
+//                    .totalPage(result.getTotalPages())
+//                    .totalElement(result.getTotalElements())
+//                    .build();
+//            response.setResponseList(list);
+//            response.setPaginationInfo(paginationInfo);
+//        } else {
+//            throw new RuntimeException("List empty exception");
+//        }
+//        return response;
+//    }
+//
+//    @Override
+//    public ResponseWithPagination<ProductDTO> getProductBySubcategory(int subcategoryId, int page, int limit) {
+//        Pageable pageable = PageRequest.of(page, limit);
+//        Page<Product> result = productRepository.findBySubcategoryId(subcategoryId, pageable);
+//        ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
+//        if (result.hasContent()) {
+//            List<ProductDTO> list = new ArrayList<>();
+//            for (Product product : result.getContent()) {
+//                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
+//                list.add(productDTO);
+//            }
+//            PaginationInfo paginationInfo = PaginationInfo.builder()
+//                    .page(page)
+//                    .limit(limit)
+//                    .totalPage(result.getTotalPages())
+//                    .totalElement(result.getTotalElements())
+//                    .build();
+//            response.setResponseList(list);
+//            response.setPaginationInfo(paginationInfo);
+//        } else {
+//            throw new RuntimeException("List empty exception");
+//        }
+//        return response;
+//    }
 
     @Override
     public List<ProductDTO> searchProduct(String keyword) {

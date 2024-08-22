@@ -1,4 +1,4 @@
-package com.congthanh.project.model.response;
+package com.congthanh.project.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

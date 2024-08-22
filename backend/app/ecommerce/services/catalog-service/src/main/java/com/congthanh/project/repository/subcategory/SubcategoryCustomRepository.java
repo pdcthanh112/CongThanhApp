@@ -1,7 +1,7 @@
 package com.congthanh.project.repository.subcategory;
 
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
