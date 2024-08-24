@@ -9,10 +9,10 @@
         <relativePath/>
     </parent>
     <groupId>com.congthanh</groupId>
-    <artifactId>discovery-service</artifactId>
+    <artifactId>service-discovery</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>discovery-service</name>
-    <description>discovery-service</description>
+    <name>service-discovery</name>
+    <description>service-discovery</description>
     <url/>
     <licenses>
         <license/>

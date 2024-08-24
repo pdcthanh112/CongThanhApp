@@ -23,7 +23,7 @@ public class ProductResponse {
 
     private String subcategory;
 
-    private String SKU;
+    private String sku;
 
     private String slug;
 

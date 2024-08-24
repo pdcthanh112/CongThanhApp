@@ -12,7 +12,6 @@ import com.congthanh.project.repository.cart.CartRepository;
 import com.congthanh.project.service.CartItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,8 +24,6 @@ public class CartItemServiceImpl implements CartItemService {
   private final CartItemRepository cartItemRepository;
 
   private final CartRepository cartRepository;
-
-  private final WebClient webClient;
 
   @Override
   public List<CartItemDTO> getItemByCartId(String cartId) {
@@ -44,7 +41,7 @@ public class CartItemServiceImpl implements CartItemService {
     CartItem checkExistProduct = cartItemRepository.checkExistProductFromCart(cartId, productId);
     if (checkExistProduct == null) {
       Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new NotFoundException("cart not found"));
-      ProductResponse product = webClient.get().uri("/product/" + productId).retrieve().bodyToMono(ProductResponse.class).block();
+      ProductResponse product = null;
         assert product != null;
         CartItem cartItem = CartItem.builder()
               .product(product.getId())

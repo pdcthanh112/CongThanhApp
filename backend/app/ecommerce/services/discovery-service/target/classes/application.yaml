@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: congthanhapp-ecommerce-discovery-service
+    name: congthanhapp-ecommerce-service-discovery
   security:
     user:
       name: eureka
