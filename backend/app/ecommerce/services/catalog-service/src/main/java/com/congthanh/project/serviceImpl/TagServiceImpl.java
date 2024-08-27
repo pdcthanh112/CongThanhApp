@@ -39,7 +39,7 @@ public class TagServiceImpl implements TagService {
         }
         Tag data = Tag.builder()
                 .name(tagDto.getName())
-                .createdDate(Instant.now().toEpochMilli())
+                .createdDate(Instant.now())
                 .build();
         Tag result = tagRepository.save(data);
         return TagMapper.mapTagEntityToDTO(result);

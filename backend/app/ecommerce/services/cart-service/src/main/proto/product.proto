@@ -1,13 +1,7 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.congthanh.cartservice.grpc";
-
-package ecommerce;
-
-service ProductService {
-  rpc GetProduct (ProductRequest) returns (ProductResponse) {}
-}
+option java_package = "com.congthanh.project.grpc";
 
 message ProductRequest {
   string productId = 1;
@@ -21,4 +15,8 @@ message ProductResponse {
   string sku = 5;
   string slug = 6;
   double price = 7;
+}
+
+service ProductService {
+  rpc GetProductById (ProductRequest) returns (ProductResponse) {}
 }

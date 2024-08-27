@@ -1,16 +1,17 @@
 package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.dto.CartItemDTO;
+import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.entity.Cart;
 import com.congthanh.project.entity.CartItem;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.CartItemMapper;
 import com.congthanh.project.model.mapper.CartMapper;
-import com.congthanh.project.dto.ProductResponse;
 import com.congthanh.project.repository.cartItem.CartItemRepository;
 import com.congthanh.project.repository.cart.CartRepository;
 import com.congthanh.project.service.CartItemService;
 import lombok.RequiredArgsConstructor;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ public class CartItemServiceImpl implements CartItemService {
   private final CartItemRepository cartItemRepository;
 
   private final CartRepository cartRepository;
+
+  @GrpcClient("product-service")
+  private final ProductServiceGrpc.ProductServiceBlockingStub productServiceStub;
 
   @Override
   public List<CartItemDTO> getItemByCartId(String cartId) {
@@ -41,7 +45,10 @@ public class CartItemServiceImpl implements CartItemService {
     CartItem checkExistProduct = cartItemRepository.checkExistProductFromCart(cartId, productId);
     if (checkExistProduct == null) {
       Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new NotFoundException("cart not found"));
-      ProductResponse product = null;
+      ProductRequest request = ProductRequest.newBuilder()
+              .setProductId(productId)
+              .build();
+      ProductResponse product = productServiceStub.getProductById(request);
         assert product != null;
         CartItem cartItem = CartItem.builder()
               .product(product.getId())
@@ -50,13 +57,11 @@ public class CartItemServiceImpl implements CartItemService {
               .createdAt(new Date().getTime())
               .build();
       CartItem result =  cartItemRepository.save(cartItem);
-      CartItemDTO response = CartItemMapper.mapCartItemEntityToDTO(result);
-      return response;
+      return CartItemMapper.mapCartItemEntityToDTO(result);
     } else {
       checkExistProduct.setQuantity(checkExistProduct.getQuantity() + quantity);
       CartItem result = cartItemRepository.save(checkExistProduct);
-      CartItemDTO response = CartItemMapper.mapCartItemEntityToDTO(result);
-      return response;
+      return CartItemMapper.mapCartItemEntityToDTO(result);
     }
   }
 
@@ -69,7 +74,7 @@ public class CartItemServiceImpl implements CartItemService {
             .id(result.getId())
             .quantity(result.getQuantity())
 //            .product(ProductMapper.mapProductEntityToDTO(result.getProduct()))
-            .product(ProductResponse.builder().build())
+            .product(ProductDTO.builder().id(result.getProduct()).build())
             .cart(CartMapper.mapCartEntityToDTO(result.getCart()))
             .build();
     return response;

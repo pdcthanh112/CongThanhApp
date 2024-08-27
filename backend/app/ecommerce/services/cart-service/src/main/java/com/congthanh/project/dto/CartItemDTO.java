@@ -19,7 +19,7 @@ public class CartItemDTO implements Serializable {
 
   private String id;
 
-  private ProductResponse product;
+  private ProductDTO product;
 
   private int quantity;
 

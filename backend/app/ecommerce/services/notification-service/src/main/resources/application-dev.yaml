@@ -137,6 +137,12 @@ spring:
         distance-type: cosine_distance
         dimensions: 384
 
+grpc:
+  server:
+    port: 9090
+    in-process-name: congthanhapp-ecommerce-cart-service
+    reflection-service-enabled: true
+
 congthanhapp:
   openapi:
     dev-url: http://localhost:5000

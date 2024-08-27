@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.Set;
 
 @Entity
@@ -23,7 +24,9 @@ public class Tag {
     private String name;
 
     @Column(name = "created_date")
-    private Long createdDate;
+    private Instant createdDate;
+
+    private String status;
 
 //    @ManyToMany(mappedBy = "tag")
 //    private Set<Product> product;

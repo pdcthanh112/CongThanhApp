@@ -20,7 +20,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -37,13 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final CheckoutRepository checkoutRepository;
 
-    private final WebClient webClient;
-
-    private final KafkaTemplate<String, OrderEvent> kafkaTemplate;
-
-    record OrderEvent (String eventType, OrderDTO order) { }
-    record ShippingEvent (String eventType, ShippingResponse shipping) { }
-
+    private final KafkaTemplate<String, Order> kafkaTemplate;
 
     @Override
     @Transactional

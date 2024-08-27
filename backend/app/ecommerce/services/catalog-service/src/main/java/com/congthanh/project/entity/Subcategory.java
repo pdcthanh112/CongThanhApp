@@ -24,6 +24,8 @@ public class Subcategory {
 
   private String name;
 
+  private String slug;
+
   private String status;
 
   @ManyToOne(fetch = FetchType.LAZY)

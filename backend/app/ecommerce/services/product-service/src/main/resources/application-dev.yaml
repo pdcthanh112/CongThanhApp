@@ -143,31 +143,7 @@ spring:
         distance-type: cosine_distance
         dimensions: 384
 
-  cloud:
-    config:
-      uri: http://localhost:8888
-    gateway:
-      routes:
-        - id: cart-service
-          uri: lb://cart-service
-          predicates:
-            - Path=/api/cart/**
-        - id: notification-service
-          uri: lb://notification-service
-          predicates:
-            - Path=/api/notification/**
-        - id: order-service
-          uri: lb://order-service
-          predicates:
-            - Path=/api/orders/**
-        - id: payment-service
-          uri: lb://payment-service
-          predicates:
-            - Path=/api/payment/**
-        - id: product-service
-          uri: lb://product-service
-          predicates:
-            - Path=/api/product/**
+
 
   sleuth:
     sampler:
@@ -175,6 +151,12 @@ spring:
 
   zipkin:
     base-url: http://localhost:9411
+
+grpc:
+  server:
+    port: 9090
+    in-process-name: congthanhapp-ecommerce-cart-service
+    reflection-service-enabled: true
 
 congthanhapp:
   openapi:

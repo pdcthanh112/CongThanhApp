@@ -17,4 +17,6 @@ public class TagDTO {
 
     private Long createDate;
 
+    private String status;
+
 }
