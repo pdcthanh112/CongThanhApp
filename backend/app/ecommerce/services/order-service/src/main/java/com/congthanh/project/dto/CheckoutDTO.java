@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Data
 @NoArgsConstructor
@@ -30,10 +31,10 @@ public class CheckoutDTO implements Serializable {
 
   private String paymentMethod;
 
-  private long checkoutDate;
+  private Instant checkoutDate;
 
   private CartResponse cart;
 
-  private VoucherResponse voucher;
+  private PromotionDTO voucher;
 
 }

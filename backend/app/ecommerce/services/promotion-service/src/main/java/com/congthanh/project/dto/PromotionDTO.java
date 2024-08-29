@@ -1,23 +1,30 @@
 package com.congthanh.project.dto;
 
+import com.congthanh.project.constant.enums.PromotionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class VoucherDTO {
+public class PromotionDTO implements Serializable {
 
-    private String id;
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private Long id;
 
     private String code;
 
-    private String type;
+    private PromotionType type;
 
     private float value;
 
@@ -31,8 +38,8 @@ public class VoucherDTO {
 
     private String status;
 
-    private long createdDate;
+    private Instant createdAt;
 
-    private long updatedDate;
+    private Instant updatedAt;
 
 }

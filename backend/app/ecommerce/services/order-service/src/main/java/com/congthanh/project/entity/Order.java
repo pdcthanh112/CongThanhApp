@@ -37,7 +37,7 @@ public class Order {
   private BigDecimal total;
 
   @Column(name = "order_date")
-  private Long orderDate;
+  private Instant orderDate;
 
   @Enumerated(EnumType.STRING)
   private OrderStatus status;

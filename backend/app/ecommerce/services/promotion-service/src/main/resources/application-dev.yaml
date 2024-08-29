@@ -131,7 +131,7 @@ spring:
 grpc:
   server:
     port: 9090
-    in-process-name: congthanhapp-ecommerce-cart-service
+    in-process-name: congthanhapp-ecommerce-promotion-service
     reflection-service-enabled: true
 
 congthanhapp:

@@ -26,7 +26,10 @@ public class Cart {
   private String customer;
 
   @Column(name = "created_at")
-  private long createdAt;
+  private Instant createdAt;
+
+  @Column(name = "updated_at")
+  private Instant updatedAt;
 
   private String status;
 
@@ -42,11 +45,11 @@ public class Cart {
 //  @JsonIgnore
 //  @ToString.Exclude
 //  @EqualsAndHashCode.Exclude
-  private Long checkout;
+//  private Long checkout;
 
   @PrePersist
   public void prePersist() {
-    this.createdAt = Instant.now().toEpochMilli();
+    this.createdAt = Instant.now();
   }
 
 

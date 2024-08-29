@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class VoucherResponse {
+public class PromotionDTO {
 
     private String id;
 

@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Entity
 @Data
@@ -42,7 +43,7 @@ public class Checkout {
   private String voucher;
 
   @Column(name = "checkout_date")
-  private long checkoutDate;
+  private Instant checkoutDate;
 
 //  @OneToOne(fetch = FetchType.LAZY)
 //  @JoinColumn(name = "cart", referencedColumnName = "id", nullable = false)

@@ -1,6 +1,6 @@
 package com.congthanh.project.grpc;
 
-import com.congthanh.project.repository.brand.BrandRepository;
+import com.congthanh.project.service.BrandService;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 
@@ -8,6 +8,6 @@ import net.devh.boot.grpc.server.service.GrpcService;
 @RequiredArgsConstructor
 public class BrandGrpcService extends BrandServiceGrpc.BrandServiceImplBase{
 
-    private final BrandRepository brandRepository;
+    private final BrandService brandRepository;
 
 }

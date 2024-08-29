@@ -1,21 +1,26 @@
 package com.congthanh.project.serviceImpl;
 
+import com.congthanh.project.constant.enums.PromotionType;
 import com.congthanh.project.dto.CheckoutDTO;
 import com.congthanh.project.dto.OrderDTO;
 import com.congthanh.project.entity.Checkout;
 import com.congthanh.project.entity.Order;
 import com.congthanh.project.constant.enums.OrderStatus;
 import com.congthanh.project.exception.NotFoundException;
+import com.congthanh.project.grpc.GetPromotionByCodeRequest;
+import com.congthanh.project.grpc.PromotionResponse;
+import com.congthanh.project.grpc.PromotionServiceGrpc;
 import com.congthanh.project.model.ecommerce.request.CreateOrderRequest;
 import com.congthanh.project.model.mapper.OrderMapper;
 import com.congthanh.project.dto.CartItemResponse;
 import com.congthanh.project.dto.CartResponse;
-import com.congthanh.project.dto.VoucherResponse;
+import com.congthanh.project.dto.PromotionDTO;
 import com.congthanh.project.repository.checkout.CheckoutRepository;
 import com.congthanh.project.repository.order.OrderRepository;
 import com.congthanh.project.service.OrderService;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -38,22 +43,26 @@ public class OrderServiceImpl implements OrderService {
 
     private final KafkaTemplate<String, Order> kafkaTemplate;
 
+    @GrpcClient("promotion-service")
+    private final PromotionServiceGrpc.PromotionServiceBlockingStub promotionServiceStub ;
+
     @Override
     @Transactional
     public OrderDTO createOrder(CreateOrderRequest createOrderRequest) {
         Checkout checkout = checkoutRepository.findById((int) createOrderRequest.getCheckout()).orElseThrow(() -> new NotFoundException("Checkout not found"));
-        VoucherResponse voucher = webClient.get().uri("/voucher/{id}", createOrderRequest.getCheckout()).retrieve().bodyToMono(VoucherResponse.class).block();
+        PromotionResponse voucher = promotionServiceStub.getPromotionByCode(GetPromotionByCodeRequest.newBuilder().build());
+//        PromotionDTO promotion =
         BigDecimal orderTotal = createOrderRequest.getTotal();
         if(voucher != null) {
-            if(voucher.getType().equals("PROMOTION")) {
+            if(voucher.getType().equals(PromotionType.VOUCHER)) {
                 orderTotal = checkout.getTotal().subtract(BigDecimal.valueOf(voucher.getValue()));
-            } else if (voucher.getType().equals("DISCOUNT")) {
+            } else if (voucher.getType().equals(PromotionType.DISCOUNT)) {
                 orderTotal = checkout.getTotal().multiply(BigDecimal.valueOf(voucher.getValue()/100));
             }
         }
         Order order = Order.builder()
                 .customer(createOrderRequest.getCustomer())
-                .orderDate(Instant.now().toEpochMilli())
+                .orderDate(Instant.now())
                 .checkout(checkout)
                 .total(orderTotal)
                 .status(OrderStatus.PENDING)
@@ -74,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
             CheckoutDTO checkoutDTO = new CheckoutDTO();
             for (Tuple checkout : listCheckout) {
                 checkoutDTO.setId(checkout.get("checkoutId", Long.class));
-                checkoutDTO.setCheckoutDate(checkout.get("checkout_date", Long.class));
+                checkoutDTO.setCheckoutDate(checkout.get("checkout_date", Instant.class));
                 checkoutDTO.setAddress(checkout.get("address", String.class));
                 checkoutDTO.setPhone(checkout.get("phone", String.class));
                 checkoutDTO.setPaymentMethod(checkout.get("payment_method", String.class));

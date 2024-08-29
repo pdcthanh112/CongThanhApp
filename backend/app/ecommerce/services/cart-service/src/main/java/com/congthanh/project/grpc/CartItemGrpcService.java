@@ -1,6 +1,6 @@
 package com.congthanh.project.grpc;
 
-import com.congthanh.project.repository.cartItem.CartItemRepository;
+import com.congthanh.project.service.CartItemService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -9,7 +9,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 @RequiredArgsConstructor
 public class CartItemGrpcService extends CartItemServiceGrpc.CartItemServiceImplBase {
 
-    private final CartItemRepository cartItemRepository;
+    private final CartItemService cartItemService;
 
     @Override
     public void getCartItem (CartItemRequest request, StreamObserver<CartItemResponse> responseObserver) {

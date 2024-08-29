@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.congthanh</groupId>
-	<artifactId>cart-service</artifactId>
+	<artifactId>catalog-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>catalog-service</name>
 	<description>CongThanhApp</description>

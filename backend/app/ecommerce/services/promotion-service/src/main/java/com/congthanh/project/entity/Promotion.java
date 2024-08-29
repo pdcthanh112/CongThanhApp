@@ -1,6 +1,6 @@
 package com.congthanh.project.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.congthanh.project.constant.enums.PromotionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
@@ -17,16 +16,17 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "voucher")
-public class Voucher {
+public class Promotion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private Long id;
 
     @Column(nullable = false)
     private String code;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private PromotionType type;
 
     @Column(nullable = false)
     private float value;
@@ -46,10 +46,10 @@ public class Voucher {
     private String status;
 
     @Column(name = "created_at")
-    private long createdAt;
+    private Instant createdAt;
 
     @Column(name = "updated_at")
-    private long updatedAt;
+    private Instant updatedAt;
 
 //    @OneToMany(mappedBy = "voucher", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JsonIgnore
@@ -57,12 +57,12 @@ public class Voucher {
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = Instant.now().toEpochMilli();
+        this.createdAt = Instant.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedAt = Instant.now().toEpochMilli();
+        this.updatedAt = Instant.now();
     }
 
 }
