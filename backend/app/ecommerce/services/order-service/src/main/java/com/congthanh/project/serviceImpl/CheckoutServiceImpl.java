@@ -1,5 +1,6 @@
 package com.congthanh.project.serviceImpl;
 
+import com.congthanh.project.service.CheckoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -7,5 +8,5 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CheckoutServiceImpl implements CheckoutService {
 
-    private final CheckoutRe
+    private final CheckoutService checkoutService;
 }

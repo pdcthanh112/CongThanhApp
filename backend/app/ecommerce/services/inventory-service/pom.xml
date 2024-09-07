@@ -185,6 +185,11 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.axonframework</groupId>
+			<artifactId>axon-spring-boot-starter</artifactId>
+			<version>4.9.3</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

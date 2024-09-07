@@ -6,15 +6,13 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import java.math.BigDecimal;
 
 @Data
-public class CreateOrderCommand {
+public class ProcessPaymentCommand {
 
     @TargetAggregateIdentifier
-    public final Long id;
+    private final String paymentId;
 
-    public final String note;
+    private final String orderId;
 
-    public final BigDecimal total;
-
-    public final String status;
+    private final BigDecimal amount;
 
 }

@@ -19,6 +19,6 @@ public class InventoryDTO {
 
     @Min(0)
     @NotNull
-    private Integer stock;
+    private int stock;
 
 }

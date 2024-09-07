@@ -1,10 +1,13 @@
 package com.congthanh.project.cqrs.command.event;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 
+@Data
 public class OrderCreatedEvent {
 
-    public final String id;
+    public final Long id;
 
     public final String note;
 
@@ -12,10 +15,4 @@ public class OrderCreatedEvent {
 
     public final String orderStatus;
 
-    public OrderCreatedEvent(String id, String note, BigDecimal total, String orderStatus) {
-        this.id = id;
-        this.note = note;
-        this.total = total;
-        this.orderStatus = orderStatus;
-    }
 }

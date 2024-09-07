@@ -283,6 +283,12 @@
             <artifactId>axon-spring-boot-starter</artifactId>
             <version>4.9.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-spring</artifactId>
+            <version>4.9.3</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

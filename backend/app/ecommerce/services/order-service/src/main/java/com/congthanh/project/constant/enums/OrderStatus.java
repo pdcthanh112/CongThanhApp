@@ -2,6 +2,7 @@ package com.congthanh.project.constant.enums;
 
 public enum OrderStatus {
     ALL,
+    CREATED,
     PENDING, // Đơn hàng đã được tạo nhưng chưa được thanh toán hoặc xác nhận.
     PROCESSING, // Đơn hàng đang trong quá trình xử lý, bao gồm cả xác nhận thanh toán và chuẩn bị giao hàng.
     SHIPPED, // Đơn hàng đã được giao cho đơn vận chuyển và đang trong quá trình vận chuyển đến địa chỉ của khách hàng.

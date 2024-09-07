@@ -1,52 +1,91 @@
 package com.congthanh.project.saga;
 
-
+import com.congthanh.project.cqrs.command.event.OrderCreatedEvent;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.modelling.saga.SagaEventHandler;
+import org.axonframework.modelling.saga.SagaLifecycle;
 import org.axonframework.modelling.saga.StartSaga;
 import org.axonframework.spring.stereotype.Saga;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.UUID;
+
 @Saga
 public class OrderSaga {
 
-    private CommandGateway commandGateway;
+    @Autowired
+    private transient CommandGateway commandGateway;
 
     @StartSaga
     @SagaEventHandler(associationProperty = "orderId")
-    public void handle(OrderCreatedEvent orderCreatedEvent){
-        String paymentId = UUID.randomUUID().toString();
-        System.out.println("Saga invoked");
+    public void handle(OrderCreatedEvent event) {
+        String orderId = event.getOrderId();
+        System.out.println("Saga started for order: " + orderId);
 
-        //associate Saga
-        SagaLifecycle.associateWith("paymentId", paymentId);
-
-        System.out.println("order id" + orderCreatedEvent.orderId);
-
-        //send the commands
-        commandGateway.send(new CreateInvoiceCommand(paymentId, orderCreatedEvent.orderId));
-    }
-
-    @SagaEventHandler(associationProperty = "paymentId")
-    public void handle(InvoiceCreatedEvent invoiceCreatedEvent){
-        String shippingId = UUID.randomUUID().toString();
-
-        System.out.println("Saga continued");
-
-        //associate Saga with shipping
-        SagaLifecycle.associateWith("shipping", shippingId);
-
-        //send the create shipping command
-        commandGateway.send(new CreateShippingCommand(shippingId, invoiceCreatedEvent.orderId, invoiceCreatedEvent.paymentId));
+        // Gửi command để kiểm tra và đặt trước hàng tồn kho
+        ReserveInventoryCommand reserveInventoryCommand = new ReserveInventoryCommand(orderId, event.getOrderLineItems());
+        commandGateway.send(reserveInventoryCommand);
     }
 
     @SagaEventHandler(associationProperty = "orderId")
-    public void handle(OrderShippedEvent orderShippedEvent){
-        commandGateway.send(new UpdateOrderStatusCommand(orderShippedEvent.orderId, String.valueOf(OrderStatus.SHIPPED)));
+    public void handle(InventoryReservedEvent event) {
+        String orderId = event.getOrderId();
+        System.out.println("Inventory reserved for order: " + orderId);
+
+        // Gửi command để xử lý thanh toán
+        ProcessPaymentCommand processPaymentCommand = new ProcessPaymentCommand(orderId, event.getTotalAmount());
+        commandGateway.send(processPaymentCommand);
     }
 
     @SagaEventHandler(associationProperty = "orderId")
-    public void handle(OrderUpdatedEvent orderUpdatedEvent){
-        SagaLifecycle.end();
+    public void handle(PaymentProcessedEvent event) {
+        String orderId = event.getOrderId();
+        System.out.println("Payment processed for order: " + orderId);
+
+        // Gửi command để hoàn tất đơn hàng
+        CompleteOrderCommand completeOrderCommand = new CompleteOrderCommand(orderId);
+        commandGateway.send(completeOrderCommand);
+    }
+
+    @SagaEventHandler(associationProperty = "orderId")
+    @EndSaga
+    public void handle(OrderCompletedEvent event) {
+        String orderId = event.getOrderId();
+        System.out.println("Order completed: " + orderId);
+    }
+
+    @SagaEventHandler(associationProperty = "orderId")
+    @EndSaga
+    public void handle(OrderCancelledEvent event) {
+        String orderId = event.getOrderId();
+        System.out.println("Order cancelled: " + orderId);
+
+        // Gửi command để hoàn trả hàng tồn kho (nếu cần)
+        ReleaseInventoryCommand releaseInventoryCommand = new ReleaseInventoryCommand(orderId, event.getOrderLineItems());
+        commandGateway.send(releaseInventoryCommand);
+    }
+
+    // Xử lý các trường hợp thất bại
+    @SagaEventHandler(associationProperty = "orderId")
+    public void handle(InventoryReservationFailedEvent event) {
+        String orderId = event.getOrderId();
+        System.out.println("Inventory reservation failed for order: " + orderId);
+
+        // Gửi command để hủy đơn hàng
+        CancelOrderCommand cancelOrderCommand = new CancelOrderCommand(orderId, "Insufficient inventory");
+        commandGateway.send(cancelOrderCommand);
+    }
+
+    @SagaEventHandler(associationProperty = "orderId")
+    public void handle(PaymentFailedEvent event) {
+        String orderId = event.getOrderId();
+        System.out.println("Payment failed for order: " + orderId);
+
+        // Gửi command để hủy đơn hàng và hoàn trả hàng tồn kho
+        CancelOrderCommand cancelOrderCommand = new CancelOrderCommand(orderId, "Payment failed");
+        commandGateway.send(cancelOrderCommand);
+
+        ReleaseInventoryCommand releaseInventoryCommand = new ReleaseInventoryCommand(orderId, event.getOrderLineItems());
+        commandGateway.send(releaseInventoryCommand);
     }
 }

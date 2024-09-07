@@ -1,12 +1,18 @@
 package com.congthanh.project.controller;
 
+import com.congthanh.project.cqrs.command.command.ReleaseInventoryCommand;
+import com.congthanh.project.cqrs.command.command.ReserveInventoryCommand;
 import com.congthanh.project.model.request.InventoryRequest;
 import com.congthanh.project.dto.InventoryDTO;
 import com.congthanh.project.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/ecommerce/inventory")
@@ -15,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 public class InventoryController {
 
     private final InventoryService inventoryService;
+
+    private final CommandGateway commandGateway;
 
     @PostMapping
     public ResponseEntity<InventoryDTO> addInventoryItem(@RequestBody InventoryRequest request) {
@@ -38,8 +46,18 @@ public class InventoryController {
     }
 
     @GetMapping("/{sku}/in-stock")
-    public ResponseEntity<Boolean> isInStock(@PathVariable String sku, @RequestParam Integer quantity) {
+    public ResponseEntity<Boolean> isInStock(@PathVariable String sku, @RequestParam int quantity) {
         return ResponseEntity.ok(inventoryService.isInStock(sku, quantity));
+    }
+
+    @PostMapping("/reserve")
+    public CompletableFuture<String> reserveInventory(@RequestBody ReserveInventoryCommand command) {
+        return commandGateway.send(new ReserveInventoryCommand(UUID.randomUUID().toString(), command.getOrderId(), command.getOrderLineItems()));
+    }
+
+    @PostMapping("/release")
+    public CompletableFuture<String> releaseInventory(@RequestBody ReleaseInventoryCommand command) {
+        return commandGateway.send(new ReleaseInventoryCommand(UUID.randomUUID().toString(), command.getOrderId(), command.getOrderLineItems()));
     }
 
 }

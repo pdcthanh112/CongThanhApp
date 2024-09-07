@@ -18,6 +18,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,10 @@ public class ProductController {
     private final ProductRepository productRepository;
 
     private final ProductService productService;
+
+    private final CommandGateway commandGateway;
+
+    private final QueryGateway queryGateway;
 
     @GetMapping("/getAll")
     @PermitAll
