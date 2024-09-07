@@ -15,17 +15,17 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class PromotionServiceImpl implements PromotionService {
 
-    private final PromotionRepository voucherRepository;
+    private final PromotionRepository promotionRepository;
 
     @Override
-    public PromotionDTO getVoucherByCode(String code) {
-        Promotion result = voucherRepository.getVoucherByCode(code);
-        return result != null ? PromotionMapper.mapVoucherEntityToDTO(result) : null;
+    public PromotionDTO getPromotionByCode(String code) {
+        Promotion result = promotionRepository.getPromotionByCode(code);
+        return result != null ? PromotionMapper.mapPromotionEntityToDTO(result) : null;
     }
 
     @Override
-    public PromotionDTO createVoucher(PromotionDTO promotionDTO) {
-        Promotion existPromotion = voucherRepository.getVoucherByCode(promotionDTO.getCode());
+    public PromotionDTO createPromotion(PromotionDTO promotionDTO) {
+        Promotion existPromotion = promotionRepository.getPromotionByCode(promotionDTO.getCode());
         if (existPromotion != null) throw new RuntimeException("Code exits");
         Promotion promotion = Promotion.builder()
                 .code(promotionDTO.getCode())
@@ -37,13 +37,13 @@ public class PromotionServiceImpl implements PromotionService {
                 .endDate(promotionDTO.getEndDate())
                 .status("NEW")
                 .build();
-        Promotion result = voucherRepository.save(promotion);
-        return PromotionMapper.mapVoucherEntityToDTO(result);
+        Promotion result = promotionRepository.save(promotion);
+        return PromotionMapper.mapPromotionEntityToDTO(result);
     }
 
     @Override
-    public PromotionDTO updateVoucher(String voucherId, PromotionDTO promotionDTO) {
-        Promotion promotion = voucherRepository.findById(voucherId).orElseThrow(() -> new NotFoundException("voucher not found"));
+    public PromotionDTO updatePromotion(Long promotionId, PromotionDTO promotionDTO) {
+        Promotion promotion = promotionRepository.findById(promotionId).orElseThrow(() -> new NotFoundException("Promotion not found"));
 
         promotion.setCode(promotionDTO.getCode());
         promotion.setType(promotionDTO.getType());
@@ -53,13 +53,13 @@ public class PromotionServiceImpl implements PromotionService {
         promotion.setStartDate(promotionDTO.getStartDate());
         promotion.setEndDate(promotionDTO.getEndDate());
 
-        Promotion result = voucherRepository.save(promotion);
-        return PromotionMapper.mapVoucherEntityToDTO(result);
+        Promotion result = promotionRepository.save(promotion);
+        return PromotionMapper.mapPromotionEntityToDTO(result);
     }
 
     @Override
-    public boolean checkValidVoucher(String code) {
-        Promotion promotion = voucherRepository.getVoucherByCode(code);
+    public boolean checkValidPromotion(String code) {
+        Promotion promotion = promotionRepository.getPromotionByCode(code);
 
         LocalDateTime currentDate = LocalDateTime.now();
         if (currentDate.isBefore(promotion.getStartDate()) || currentDate.isAfter(promotion.getEndDate()) || promotion.getStatus().equals("INACTIVE"))

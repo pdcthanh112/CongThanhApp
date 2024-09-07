@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,8 +22,6 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
-
-    private final WebClient webClient;
 
     @Override
     public ResponseWithPagination<ReviewDTO> getReviewByProductId(String productId, Integer page, Integer limit) {
@@ -53,8 +50,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review createReview(ReviewDTO reviewDTO) {
-        ProductResponse product = webClient.get().uri("/product/" + reviewDTO.getProduct()).retrieve().bodyToMono(ProductResponse.class).block();
-        ProductVariantResponse variant = webClient.get().uri("/product-variant/" + reviewDTO.getVariant()).retrieve().bodyToMono(ProductVariantResponse.class).block();
+        ProductResponse product = null;
+        ProductVariantResponse variant = null;
         assert product != null && variant != null;
         Review review = Review.builder()
                 .content(reviewDTO.getContent())
@@ -69,7 +66,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public StatisticReviewResponse getReviewStatisticOfProduct(String productId) {
-        ProductResponse product = webClient.get().uri("/product/" + productId).retrieve().bodyToMono(ProductResponse.class).block();
+        ProductResponse product = null;
         StatisticReviewResponse result = reviewRepository.getStatisticReviewFromProduct(product.getId());
         return result;
     }

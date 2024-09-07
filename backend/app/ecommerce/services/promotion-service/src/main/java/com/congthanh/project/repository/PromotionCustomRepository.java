@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public interface PromotionCustomRepository {
 
-    Promotion getVoucherByCode(String code);
+    Promotion getPromotionByCode(String code);
 
-    Long countUsedVoucher(String voucherId);
+    Long countUsedPromotion(String promotionId);
 
 }

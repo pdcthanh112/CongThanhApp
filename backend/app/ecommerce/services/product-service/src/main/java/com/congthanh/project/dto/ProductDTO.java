@@ -1,5 +1,6 @@
 package com.congthanh.project.dto;
 
+import com.congthanh.project.constant.enums.ProductStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,6 +44,6 @@ public class ProductDTO implements Serializable {
 
   private List<ProductVariantDTO> variant;
 
-  private String status;
+  private ProductStatus status;
 
 }

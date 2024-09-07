@@ -6,20 +6,22 @@ import com.congthanh.project.model.response.ErrorDTO;
 import com.congthanh.project.model.response.Response;
 import com.congthanh.project.service.PromotionService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/ecommerce/voucher")
+@RequestMapping("/ecommerce/promotion")
 @RequiredArgsConstructor
-public class VoucherController {
+@Slf4j
+public class PromotionController {
 
     private final PromotionService promotionService;
 
     @GetMapping("/getByCode")
-    public ResponseEntity<Object> getVoucherByCode(@RequestParam("code") String code) {
-        PromotionDTO data = promotionService.getVoucherByCode(code);
+    public ResponseEntity<Object> getPromotionByCode(@RequestParam("code") String code) {
+        PromotionDTO data = promotionService.getPromotionByCode(code);
         if (data == null) {
             ErrorDTO error = new ErrorDTO();
             error.setErrorCode(40404);
@@ -35,8 +37,8 @@ public class VoucherController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Response<PromotionDTO>> createVoucher(@RequestBody PromotionDTO promotionDTO) {
-        PromotionDTO data = promotionService.createVoucher(promotionDTO);
+    public ResponseEntity<Response<PromotionDTO>> createPromotion(@RequestBody PromotionDTO promotionDTO) {
+        PromotionDTO data = promotionService.createPromotion(promotionDTO);
         Response<PromotionDTO> response = new Response<>();
         response.setData(data);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
@@ -45,8 +47,8 @@ public class VoucherController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Response<PromotionDTO>> updateVoucher(@PathVariable("id") String voucherId, @RequestBody PromotionDTO promotionDTO) {
-        PromotionDTO data = promotionService.updateVoucher(voucherId, promotionDTO);
+    public ResponseEntity<Response<PromotionDTO>> updatePromotion(@PathVariable("id") Long promotionId, @RequestBody PromotionDTO promotionDTO) {
+        PromotionDTO data = promotionService.updatePromotion(promotionId, promotionDTO);
         Response<PromotionDTO> response = new Response<>();
         response.setData(data);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
@@ -55,13 +57,13 @@ public class VoucherController {
     }
 
     @GetMapping("/checkValid")
-    public ResponseEntity<String> validateVoucher(@RequestParam("code") String code) {
-        boolean isVoucherValid = promotionService.checkValidVoucher(code);
+    public ResponseEntity<String> validatePromotion(@RequestParam("code") String code) {
+        boolean isPromotionValid = promotionService.checkValidPromotion(code);
 
-        if (isVoucherValid) {
-            return ResponseEntity.ok("Voucher is valid");
+        if (isPromotionValid) {
+            return ResponseEntity.ok("Promotion is valid");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Voucher is not valid");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Promotion is not valid");
         }
     }
 }

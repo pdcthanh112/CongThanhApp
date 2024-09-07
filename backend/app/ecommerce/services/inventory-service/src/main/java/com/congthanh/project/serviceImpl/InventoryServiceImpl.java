@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 @RequiredArgsConstructor
@@ -22,10 +21,8 @@ public class InventoryServiceImpl implements InventoryService {
 
     private final InventoryRepository inventoryRepository;
 
-    private final WebClient webClient;
-
     public InventoryDTO addInventoryItem(InventoryRequest request) {
-        ProductResponse product = webClient.get().uri("/product/" + request.getSku()).retrieve().bodyToMono(ProductResponse.class).block();
+        ProductResponse product = null;
         assert product != null;
         Inventory item = Inventory.builder()
                 .sku(product.getSku())

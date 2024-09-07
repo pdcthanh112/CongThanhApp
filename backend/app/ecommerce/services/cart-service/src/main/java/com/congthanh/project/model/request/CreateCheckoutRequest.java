@@ -19,7 +19,7 @@ public class CreateCheckoutRequest {
 
     private BigDecimal total;
 
-    private String voucher;
+    private String promotion;
 
     private String address;
 

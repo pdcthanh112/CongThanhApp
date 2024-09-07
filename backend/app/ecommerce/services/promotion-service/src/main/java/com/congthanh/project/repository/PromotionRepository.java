@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Transactional
-public interface PromotionRepository extends JpaRepository<Promotion, String>, PromotionCustomRepository {
+public interface PromotionRepository extends JpaRepository<Promotion, Long>, PromotionCustomRepository {
 }

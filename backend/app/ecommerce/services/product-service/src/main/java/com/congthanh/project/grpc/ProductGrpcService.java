@@ -21,10 +21,8 @@ public class ProductGrpcService extends ProductServiceGrpc.ProductServiceImplBas
                     .setId(product.getId())
                     .setName(product.getName())
                     .build();
-
             responseObserver.onNext(response);
             responseObserver.onCompleted();
-
         } else responseObserver.onError(new NotFoundException("Product not found"));
     }
 

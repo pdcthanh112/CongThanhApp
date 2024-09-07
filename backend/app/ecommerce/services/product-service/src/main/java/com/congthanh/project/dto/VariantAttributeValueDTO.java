@@ -17,9 +17,9 @@ public class VariantAttributeValueDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private int id;
+    private Long id;
 
-    private long attributeId;
+    private Long attributeId;
 
     private String value;
 

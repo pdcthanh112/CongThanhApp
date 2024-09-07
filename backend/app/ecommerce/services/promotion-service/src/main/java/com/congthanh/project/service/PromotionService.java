@@ -4,11 +4,11 @@ import com.congthanh.project.dto.PromotionDTO;
 
 public interface PromotionService {
 
-    PromotionDTO getVoucherByCode(String code);
+    PromotionDTO getPromotionByCode(String code);
 
-    PromotionDTO createVoucher(PromotionDTO promotionDTO);
+    PromotionDTO createPromotion(PromotionDTO promotionDTO);
 
-    PromotionDTO updateVoucher(String voucherId, PromotionDTO promotionDTO);
+    PromotionDTO updatePromotion(Long promotionId, PromotionDTO promotionDTO);
 
-    boolean checkValidVoucher(String code);
+    boolean checkValidPromotion(String code);
 }

@@ -8,6 +8,6 @@ import net.devh.boot.grpc.server.service.GrpcService;
 @RequiredArgsConstructor
 public class BrandGrpcService extends BrandServiceGrpc.BrandServiceImplBase{
 
-    private final BrandService brandRepository;
+    private final BrandService brandService;
 
 }

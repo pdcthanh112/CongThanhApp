@@ -16,11 +16,11 @@ public class PromotionMapper {
 
     }
 
-    public static Promotion mapVoucherDTOToEntity(PromotionDTO promotionDTO) {
+    public static Promotion mapPromotionDTOToEntity(PromotionDTO promotionDTO) {
         return modelMapper.map(promotionDTO, Promotion.class);
     }
 
-    public static PromotionDTO mapVoucherEntityToDTO(Promotion promotion) {
+    public static PromotionDTO mapPromotionEntityToDTO(Promotion promotion) {
         return modelMapper.map(promotion, PromotionDTO.class);
     }
 

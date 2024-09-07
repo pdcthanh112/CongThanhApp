@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +24,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     private final OrderDetailRepository orderDetailRepository;
 
-    private final WebClient webClient;
-
     @Override
     public OrderDetailDTO createOrderDetail(CreateOrderDetailRequest createOrderDetailRequest) {
-        ProductResponse product = webClient.get().uri("/product/" + createOrderDetailRequest.getProductId()).retrieve().bodyToMono(ProductResponse.class).block();
+        ProductResponse product = null;
         OrderDetail orderDetail = OrderDetail.builder()
                 .product(product.getId())
                 .quantity(createOrderDetailRequest.getQuantity())

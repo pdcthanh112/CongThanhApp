@@ -1,6 +1,6 @@
 package com.congthanh.project.grpc;
 
-import com.congthanh.project.repository.category.CategoryRepository;
+import com.congthanh.project.service.CategoryService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -9,7 +9,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 @RequiredArgsConstructor
 public class CategoryGrpcService extends CategoryServiceGrpc.CategoryServiceImplBase {
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
 
     @Override
     public void getCategoryById(CategoryRequest request, StreamObserver<CategoryResponse> responseObserver) {

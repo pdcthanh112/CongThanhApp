@@ -1,6 +1,6 @@
 package com.congthanh.project.grpc;
 
-import com.congthanh.project.repository.tag.TagRepository;
+import com.congthanh.project.service.TagService;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 
@@ -8,6 +8,6 @@ import net.devh.boot.grpc.server.service.GrpcService;
 @RequiredArgsConstructor
 public class TagGrpcService extends TagServiceGrpc.TagServiceImplBase {
 
-    private final TagRepository tagRepository;
+    private final TagService tagService;
 
 }

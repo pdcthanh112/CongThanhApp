@@ -35,7 +35,7 @@ public class CartServiceImpl implements CartService {
         result.setId(cart.getId());
         result.setName(cart.getName());
         result.setCustomer(cart.getCustomer());
-        result.setCreatedDate(cart.getCreatedAt());
+        result.setCreatedAt(cart.getCreatedAt());
         result.setStatus(cart.getStatus());
 
         List<CartItem> listCartItem = cartItemRepository.getAllCartItemByCartId(cart.getId());
@@ -68,7 +68,7 @@ public class CartServiceImpl implements CartService {
                 cartTmp.setName(cart.getName());
                 cartTmp.setCustomer(cart.getCustomer());
                 cartTmp.setStatus(cart.getStatus());
-                cartTmp.setCreatedDate(cart.getCreatedAt());
+                cartTmp.setCreatedAt(cart.getCreatedAt());
                 List<CartItem> listCartItem = cartItemRepository.getAllCartItemByCartId(cart.getId());
                 if (listCartItem.size() > 0) {
                     Set<CartItemDTO> cartItems = new HashSet<>();

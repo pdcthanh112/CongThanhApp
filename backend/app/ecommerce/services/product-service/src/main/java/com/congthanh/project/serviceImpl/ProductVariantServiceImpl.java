@@ -13,7 +13,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +24,6 @@ public class ProductVariantServiceImpl implements ProductVariantService {
     private final ProductVariantRepository productVariantRepository;
 
     private final ProductRepository productRepository;
-
-    private final WebClient webClient;
 
     private final KafkaTemplate<String, ProductVariantDTO> kafkaTemplate;
 

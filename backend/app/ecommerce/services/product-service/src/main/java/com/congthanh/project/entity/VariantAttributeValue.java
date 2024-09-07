@@ -16,9 +16,9 @@ public class VariantAttributeValue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    private long attributeId;
+    private Long attributeId;
 
     private String value;
 

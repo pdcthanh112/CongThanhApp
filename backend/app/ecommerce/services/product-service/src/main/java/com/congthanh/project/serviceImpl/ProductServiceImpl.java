@@ -18,7 +18,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.*;
 
@@ -28,8 +27,6 @@ import java.util.*;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-
-    private final WebClient webClient;
 
     private final KafkaTemplate<String, ProductDTO> kafkaTemplate;
 
@@ -100,10 +97,10 @@ public class ProductServiceImpl implements ProductService {
         if (existProduct.isPresent()) {
             throw new RuntimeException("Product ton taiii");
         } else {
-            CategoryResponse category = webClient.get().uri("/category/" + request.getCategory()).retrieve().bodyToMono(CategoryResponse.class).block();
-            SubcategoryResponse subcategory = webClient.get().uri("/subcategory/" + request.getSubcategory()).retrieve().bodyToMono(SubcategoryResponse.class).block();
-            SupplierResponse supplier = webClient.get().uri("/supplier/" + request.getSupplier()).retrieve().bodyToMono(SupplierResponse.class).block();
-            BrandResponse brand = webClient.get().uri("/brand/" + request.getBrand()).retrieve().bodyToMono(BrandResponse.class).block();
+            CategoryResponse category = null;
+            SubcategoryResponse subcategory = null;
+            SupplierResponse supplier = null;
+            BrandResponse brand = null;
 
             String productSlug = helper.generateSlug(request.getName());
 

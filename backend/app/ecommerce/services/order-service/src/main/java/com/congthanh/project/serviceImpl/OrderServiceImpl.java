@@ -14,7 +14,6 @@ import com.congthanh.project.model.ecommerce.request.CreateOrderRequest;
 import com.congthanh.project.model.mapper.OrderMapper;
 import com.congthanh.project.dto.CartItemResponse;
 import com.congthanh.project.dto.CartResponse;
-import com.congthanh.project.dto.PromotionDTO;
 import com.congthanh.project.repository.checkout.CheckoutRepository;
 import com.congthanh.project.repository.order.OrderRepository;
 import com.congthanh.project.service.OrderService;
@@ -89,9 +88,9 @@ public class OrderServiceImpl implements OrderService {
                 checkoutDTO.setPaymentMethod(checkout.get("payment_method", String.class));
                 checkoutDTO.setTotal(checkout.get("total", BigDecimal.class));
 
-                CartResponse cart = webClient.get().uri("/cart/{id}", checkout.get("cartId", String.class)).retrieve().bodyToMono(CartResponse.class).block();
+                CartResponse cart = null;
                 //getAllCartItemByCartId
-                List<CartItemResponse> listCartItem = (List<CartItemResponse>) webClient.get().uri("/get-item/", cart.getId()).retrieve().bodyToMono(CartItemResponse.class).block();
+                List<CartItemResponse> listCartItem = null;
                 if (listCartItem.size() > 0) {
                     Set<CartItemResponse> cartItems = new HashSet<>();
                     for (CartItemResponse cartItemItem : listCartItem) {
