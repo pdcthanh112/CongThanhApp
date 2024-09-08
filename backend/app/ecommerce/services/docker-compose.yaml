@@ -1,4 +1,4 @@
-version: '3'
+# version: '3'
 services:
   postgres:
     container_name: postgres_container
@@ -54,3 +54,29 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+
+  axonserver:
+    image: axoniq/axonserver
+    hostname: axonserver
+    volumes:
+      - axonserver-data:/data
+      - axonserver-events:/eventdata
+      - axonserver-config:/config:ro
+    ports:
+      - '8024:8024'
+      - '8124:8124'
+      - '8224:8224'
+    networks:
+      - axon-demo
+
+volumes:
+  postgres:
+  pgadmin:
+  axonserver-data:
+  axonserver-events:
+  axonserver-config:
+
+# Định nghĩa networks
+networks:
+  postgres:
+  axon-demo:

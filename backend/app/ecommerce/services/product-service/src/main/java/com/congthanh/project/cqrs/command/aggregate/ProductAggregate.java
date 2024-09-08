@@ -34,6 +34,8 @@ public class ProductAggregate {
     private List<ProductVariantDTO> variant;
     private ProductStatus status;
 
+    public ProductAggregate() {}
+
     @CommandHandler
     public ProductAggregate(CreateProductCommand command) {
         apply(new ProductCreatedEvent(command.getId(), command.getName(), command.getCategory(), command.getSubcategory(), command.getSlug(), command.getDescription(), command.getImage(), command.getAttribute(), command.getSupplier(), command.getBrand(), command.getVariant(), command.getStatus()));

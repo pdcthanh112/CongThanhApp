@@ -9,6 +9,11 @@ import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.axonframework.modelling.command.AggregateLifecycle.apply;
+
 @Aggregate
 public class InventoryAggregate {
 
@@ -16,8 +21,7 @@ public class InventoryAggregate {
     private String inventoryId;
     private Map<String, Integer> inventory = new HashMap<>();
 
-    public InventoryAggregate() {
-    }
+    public InventoryAggregate() {}
 
     @CommandHandler
     public void handle(ReserveInventoryCommand command) {

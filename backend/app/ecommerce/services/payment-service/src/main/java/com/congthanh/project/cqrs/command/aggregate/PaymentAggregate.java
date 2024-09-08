@@ -21,6 +21,8 @@ public class PaymentAggregate {
     private BigDecimal amount;
     private boolean processed;
 
+    public PaymentAggregate() {}
+
     @CommandHandler
     public void handle(ProcessPaymentCommand command) {
         // In a real-world scenario, you would integrate with a payment gateway here

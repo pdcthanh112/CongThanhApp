@@ -8,7 +8,6 @@ import com.congthanh.project.cqrs.command.command.UpdateOrderStatusCommand;
 import com.congthanh.project.cqrs.command.event.OrderCanceledEvent;
 import com.congthanh.project.cqrs.command.event.OrderCompletedEvent;
 import com.congthanh.project.cqrs.command.event.OrderUpdatedEvent;
-import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -31,8 +30,7 @@ public class OrderAggregate {
     private BigDecimal total;
     private OrderStatus status;
 
-    public OrderAggregate() {
-    }
+    public OrderAggregate() {}
 
     @CommandHandler
     public OrderAggregate(CreateOrderCommand command) {
