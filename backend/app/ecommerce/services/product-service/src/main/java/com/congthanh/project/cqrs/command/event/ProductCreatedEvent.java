@@ -15,26 +15,26 @@ public class ProductCreatedEvent {
 
     private final String id;
 
-    private String name;
+    private final String name;
 
-    private String category;
+    private final String category;
 
-    private String subcategory;
+    private final String subcategory;
 
-    private String slug;
+    private final String slug;
 
-    private String description;
+    private final String description;
 
-    private List<ProductImageDTO> image;
+    private final List<ProductImageDTO> image;
 
-    private List<ProductAttributeValueDTO> attribute;
+    private final List<ProductAttributeValueDTO> attribute;
 
-    private String supplier;
+    private final String supplier;
 
-    private String brand;
+    private final String brand;
 
-    private List<ProductVariantDTO> variant;
+    private final List<ProductVariantDTO> variant;
 
-    private ProductStatus status;
+    private final ProductStatus status;
 
 }

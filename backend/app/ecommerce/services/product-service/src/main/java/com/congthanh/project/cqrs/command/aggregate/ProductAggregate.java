@@ -6,7 +6,6 @@ import com.congthanh.project.cqrs.command.event.ProductCreatedEvent;
 import com.congthanh.project.dto.ProductAttributeValueDTO;
 import com.congthanh.project.dto.ProductImageDTO;
 import com.congthanh.project.dto.ProductVariantDTO;
-import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -17,7 +16,6 @@ import java.util.List;
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
 @Aggregate
-@NoArgsConstructor
 public class ProductAggregate {
 
     @AggregateIdentifier

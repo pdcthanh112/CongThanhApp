@@ -1,6 +1,5 @@
 package com.congthanh.project.dto;
 
-import com.congthanh.project.constant.enums.ShippingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,20 +11,16 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ShippingDTO {
+public class ShippingLabelDTO {
 
-    private Long id;
+    private String id;
 
-    private Long order;
+    private String shippingId;
 
-    private String customer;
-
-    private String shippingAddress;
-
-    private ShippingStatus status;
+    private String barcode;
 
     private Instant createdAt;
 
-    private Instant updatedAt;
+    private String labelUrl;
 
 }

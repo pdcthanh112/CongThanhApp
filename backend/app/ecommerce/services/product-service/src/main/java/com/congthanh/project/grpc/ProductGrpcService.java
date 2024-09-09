@@ -14,7 +14,7 @@ public class ProductGrpcService extends ProductServiceGrpc.ProductServiceImplBas
     private final ProductService productService;
 
     @Override
-    public void getProduct(ProductRequest request, StreamObserver<ProductResponse> responseObserver) {
+    public void getProductById(ProductRequest request, StreamObserver<ProductResponse> responseObserver) {
         ProductDTO product = productService.getProductById(request.getProductId());
         if (product != null) {
             ProductResponse response = ProductResponse.newBuilder()

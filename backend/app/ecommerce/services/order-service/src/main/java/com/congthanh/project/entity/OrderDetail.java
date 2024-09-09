@@ -1,5 +1,6 @@
 package com.congthanh.project.entity;
 
+import com.congthanh.project.constant.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,7 @@ public class OrderDetail {
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "product", nullable = false)
-    private String product;
+    private String productVariant;
 
     private int quantity;
 
@@ -28,6 +29,6 @@ public class OrderDetail {
     @JoinColumn(name = "orders", nullable = false)
     private Order orders;
 
-    private String status;
+    private OrderStatus status;
 
 }

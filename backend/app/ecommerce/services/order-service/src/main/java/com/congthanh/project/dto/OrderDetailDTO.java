@@ -1,5 +1,6 @@
 package com.congthanh.project.dto;
 
+import com.congthanh.project.constant.enums.OrderStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -25,14 +25,10 @@ public class OrderDetailDTO implements Serializable {
     private int quantity;
 
     @NotNull
-    private String product;
+    private String productVariant;
 
     private String order;
 
-    private String status;
-
-//    public BigDecimal getTotal() {
-//        return product.getPrice().multiply(BigDecimal.valueOf(quantity));
-//    }
+    private OrderStatus status;
 
 }

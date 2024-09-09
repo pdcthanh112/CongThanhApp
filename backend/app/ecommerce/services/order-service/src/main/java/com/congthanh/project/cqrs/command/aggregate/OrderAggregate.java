@@ -37,16 +37,6 @@ public class OrderAggregate {
         apply(new OrderCreatedEvent(command.getId(), command.getNote(), command.getTotal(), command.getStatus()));
     }
 
-    @CommandHandler
-    public void handle(CompleteOrderCommand command) {
-        apply(new OrderCompletedEvent(command.getOrderId()));
-    }
-
-    @CommandHandler
-    public void handle(CancelOrderCommand command) {
-        apply(new OrderCanceledEvent(command.getOrderId(), command.getReason()));
-    }
-
     @EventSourcingHandler
     public void on(OrderCreatedEvent event) {
         this.id = event.getId();
@@ -55,45 +45,35 @@ public class OrderAggregate {
         this.status = OrderStatus.CREATED;
     }
 
+    @CommandHandler
+    protected void on(UpdateOrderStatusCommand updateOrderStatusCommand) {
+        AggregateLifecycle.apply(new OrderUpdatedEvent(updateOrderStatusCommand.id, updateOrderStatusCommand.orderStatus.name()));
+    }
+
+    @EventSourcingHandler
+    protected void on(OrderUpdatedEvent orderUpdatedEvent) {
+        this.id = id;
+        this.status = OrderStatus.valueOf(String.valueOf(orderUpdatedEvent.orderStatus));
+    }
+
+    @CommandHandler
+    public void handle(CompleteOrderCommand command) {
+        apply(new OrderCompletedEvent(command.getOrderId()));
+    }
+
     @EventSourcingHandler
     public void on(OrderCompletedEvent event) {
         this.status = OrderStatus.COMPLETED;
+    }
+
+    @CommandHandler
+    public void handle(CancelOrderCommand command) {
+        apply(new OrderCanceledEvent(command.getOrderId(), command.getReason()));
     }
 
     @EventSourcingHandler
     public void on(OrderCanceledEvent event) {
         this.status = OrderStatus.CANCELED;
     }
-
-//    @AggregateIdentifier
-//    private Long id;
-//    private String note;
-//    private BigDecimal total;
-//    private OrderStatus orderStatus;
-//
-//    @CommandHandler
-//    public OrderAggregate(CreateOrderCommand createOrderCommand){
-//        AggregateLifecycle.apply(new OrderCreatedEvent(createOrderCommand.id,
-//                createOrderCommand.note, createOrderCommand.total, createOrderCommand.orderStatus));
-//    }
-//
-//    @EventSourcingHandler
-//    protected void on(OrderCreatedEvent orderCreatedEvent){
-//        this.id = orderCreatedEvent.id;
-//        this.note = orderCreatedEvent.note;
-//        this.total = orderCreatedEvent.total;
-//        this.orderStatus = OrderStatus.valueOf(orderCreatedEvent.orderStatus);
-//    }
-//
-//    @CommandHandler
-//    protected void on(UpdateOrderStatusCommand updateOrderStatusCommand){
-//        AggregateLifecycle.apply(new OrderUpdatedEvent(updateOrderStatusCommand.id, updateOrderStatusCommand.orderStatus.name()));
-//    }
-//
-//    @EventSourcingHandler
-//    protected void on(OrderUpdatedEvent orderUpdatedEvent){
-//        this.id = id;
-//        this.orderStatus = OrderStatus.valueOf(String.valueOf(orderUpdatedEvent.orderStatus));
-//    }
 
 }

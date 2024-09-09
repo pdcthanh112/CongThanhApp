@@ -2,7 +2,7 @@
 services:
   postgres:
     container_name: postgres_container
-    image: postgres
+    image: postgres:latest
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123456}
@@ -76,7 +76,6 @@ volumes:
   axonserver-events:
   axonserver-config:
 
-# Định nghĩa networks
 networks:
   postgres:
   axon-demo:

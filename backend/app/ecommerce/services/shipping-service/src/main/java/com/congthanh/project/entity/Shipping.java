@@ -1,11 +1,13 @@
 package com.congthanh.project.entity;
 
+import com.congthanh.project.constant.enums.ShippingStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Entity
 @NoArgsConstructor
@@ -18,9 +20,16 @@ public class Shipping {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "shipping_fee")
-    private BigDecimal shippingFee;
+    private Long order;
 
-    private String status;
+    private String customer;
+
+    private String shippingAddress;
+
+    private ShippingStatus status;
+
+    private Instant createdAt;
+
+    private Instant updatedAt;
 
 }
