@@ -8,7 +8,7 @@ service CategoryService {
 }
 
 message CategoryRequest {
-  string categoryId = 1;
+  int32 categoryId = 1;
 }
 
 message CategoryResponse {

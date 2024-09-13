@@ -159,7 +159,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: prometheus
 
 eureka:
   client:

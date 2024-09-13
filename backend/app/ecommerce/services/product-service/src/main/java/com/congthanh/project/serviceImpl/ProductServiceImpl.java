@@ -3,6 +3,8 @@ package com.congthanh.project.serviceImpl;
 import com.congthanh.project.constant.enums.ProductStatus;
 import com.congthanh.project.dto.*;
 import com.congthanh.project.entity.Product;
+import com.congthanh.project.grpc.CategoryRequest;
+import com.congthanh.project.grpc.CategoryServiceGrpc;
 import com.congthanh.project.model.request.CreateProductRequest;
 import com.congthanh.project.model.response.*;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
@@ -13,6 +15,7 @@ import com.congthanh.project.utils.Helper;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +32,9 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     private final KafkaTemplate<String, ProductDTO> kafkaTemplate;
+
+    @GrpcClient("catalog-service")
+    private final CategoryServiceGrpc.CategoryServiceBlockingStub categoryServiceStub;
 
     private final Helper helper = new Helper();
 
@@ -68,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
             }
             return result;
         }
-    }   
+    }
 
     @Override
     public ProductDTO getProductById(String id) {
@@ -93,35 +99,32 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO createProduct(CreateProductRequest request) {
-        Optional<Product> existProduct = productRepository.findByName(request.getName());
-        if (existProduct.isPresent()) {
-            throw new RuntimeException("Product ton taiii");
-        } else {
-            CategoryResponse category = null;
-            SubcategoryResponse subcategory = null;
-            SupplierResponse supplier = null;
-            BrandResponse brand = null;
 
-            String productSlug = helper.generateSlug(request.getName());
+        CategoryResponse category = categoryServiceStub.getCategoryById(CategoryRequest.newBuilder().setCategoryId(request.getCategory()).build());
+        SubcategoryResponse subcategory = null;
+        SupplierResponse supplier = null;
+        BrandResponse brand = null;
 
-            assert category != null && subcategory != null && supplier != null && brand != null;
-            Product product = Product.builder()
-                    .name(request.getName())
-                    .category(category.getId())
-                    .subcategory(subcategory.getId())
-                    .description(request.getDescription())
-                    .brand(brand.getId())
-                    .status(ProductStatus.ACTIVE)
-                    .slug(productSlug)
-                    .supplier(supplier.getId())
-                    .build();
-            Product savedProduct = productRepository.save(product);
-            ProductDTO response = ProductMapper.mapProductEntityToDTO(savedProduct);
+        String productSlug = helper.generateSlug(request.getName());
 
-            kafkaTemplate.send("create-product-topic", response);
+        assert category != null && subcategory != null && supplier != null && brand != null;
+        Product product = Product.builder()
+                .name(request.getName())
+                .category(category.getId())
+                .subcategory(subcategory.getId())
+                .description(request.getDescription())
+                .brand(brand.getId())
+                .status(ProductStatus.ACTIVE)
+                .slug(productSlug)
+                .supplier(supplier.getId())
+                .build();
+        Product savedProduct = productRepository.save(product);
+        ProductDTO response = ProductMapper.mapProductEntityToDTO(savedProduct);
 
-            return response;
-        }
+        kafkaTemplate.send("create-product-topic", response);
+
+        return response;
+
     }
 
     @Override
@@ -225,7 +228,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductVariantAttributeValueResponse> getVariantAttributeValueByProduct(String productId) {
         List<Tuple> data = (List<Tuple>) productRepository.getVariantAttributeValueByProduct(productId);
-        if(!data.isEmpty()){
+        if (!data.isEmpty()) {
             Map<String, ProductVariantAttributeValueResponse> responseMap = new HashMap<>();
             long idCounter = 1;
 

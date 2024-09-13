@@ -23,6 +23,7 @@ import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -96,7 +97,7 @@ public class ProductController {
 
     @PostMapping("/create")
     @PermitAll
-    public ResponseEntity<Response<ProductDTO>> createProduct(@RequestBody CreateProductRequest request) {
+    public ResponseEntity<Response<ProductDTO>> createProduct(@RequestBody @Validated CreateProductRequest request) {
         ProductDTO data = productService.createProduct(request);
         Response<ProductDTO> response = new Response<>();
         response.setData(data);
