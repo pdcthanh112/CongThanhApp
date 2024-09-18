@@ -18,6 +18,7 @@ import java.util.HashMap;
 
 @Configuration
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "com.congthanh.project.repository")
 public class PostgreSQLConfig {
 
 //    @Primary

@@ -1,5 +1,6 @@
 package com.congthanh.project.dto;
 
+import com.congthanh.project.constant.enums.CartStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +31,7 @@ public class CartDTO implements Serializable {
 
     private Instant updatedAt;
 
-    private String status;
+    private CartStatus status;
 
     private Set<CartItemDTO> cartItems;
 

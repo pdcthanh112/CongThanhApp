@@ -173,3 +173,7 @@ eureka:
   instance:
     hostname: localhost
 #    prefer-ip-address: true
+
+axon:
+  axonserver:
+    servers: localhost:8124

@@ -1,6 +1,8 @@
 package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
+import com.congthanh.project.cqrs.command.service.ProductCommandService;
+import com.congthanh.project.cqrs.query.service.ProductQueryService;
 import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.model.request.CreateProductRequest;
 import com.congthanh.project.dto.ProductVariantAttributeValueResponse;
@@ -38,6 +40,10 @@ public class ProductController {
     private final ProductRepository productRepository;
 
     private final ProductService productService;
+
+    private final ProductCommandService productCommandService;
+
+    private final ProductQueryService productQueryService;
 
     private final CommandGateway commandGateway;
 

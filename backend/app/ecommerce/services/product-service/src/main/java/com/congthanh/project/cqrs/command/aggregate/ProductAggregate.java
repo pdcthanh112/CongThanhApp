@@ -32,7 +32,8 @@ public class ProductAggregate {
     private List<ProductVariantDTO> variant;
     private ProductStatus status;
 
-    public ProductAggregate() {}
+    public ProductAggregate() {
+    }
 
     @CommandHandler
     public ProductAggregate(CreateProductCommand command) {

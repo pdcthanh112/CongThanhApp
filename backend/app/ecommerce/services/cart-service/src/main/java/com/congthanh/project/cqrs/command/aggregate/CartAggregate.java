@@ -22,4 +22,5 @@ public class CartAggregate {
     @JsonProperty("isDefault") private boolean isDefault;
 
     public CartAggregate() {}
+
 }

@@ -4,12 +4,17 @@ import com.congthanh.project.constant.enums.ProductStatus;
 import com.congthanh.project.dto.ProductAttributeValueDTO;
 import com.congthanh.project.dto.ProductImageDTO;
 import com.congthanh.project.dto.ProductVariantDTO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@Builder
 public class CreateProductCommand {
 
     @TargetAggregateIdentifier

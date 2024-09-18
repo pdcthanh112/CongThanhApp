@@ -1,4 +1,4 @@
-//package com.congthanh.project.config;
+package com.congthanh.project.config;
 //
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@
 //import graphql.schema.idl.RuntimeWiring;
 //
 //@Configuration
-//public class GraphQLConfig {
+public class GraphQLConfig {
 //
 //    @Autowired
 //    private GraphQLDataFetcher dataFetcher;
@@ -52,5 +52,4 @@
 ////                .type("Mutation", typeWiring -> typeWiring.dataFetcher("createBook", dataFetcher.createBookDataFetcher()))
 ////                .build();
 ////    }
-//}
-//
+}
