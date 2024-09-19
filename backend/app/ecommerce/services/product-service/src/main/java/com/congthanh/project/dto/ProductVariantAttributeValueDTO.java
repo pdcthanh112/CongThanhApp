@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductVariantAttributeValueResponse {
+public class ProductVariantAttributeValueDTO {
     private Long id;
     private String attributeName;
     private List<Value> value;

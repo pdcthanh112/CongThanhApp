@@ -95,7 +95,20 @@ services:
       - '8124:8124'
       - '8224:8224'
     networks:
-      - axon-demo
+      - app-network
+
+  # product-service:
+  #   build: ./product-service
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - axonserver
+  # shipping-service:
+  #   build: ./shipping-service
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - axonserver
 
 volumes:
   postgres:
@@ -106,4 +119,5 @@ volumes:
 
 networks:
   postgres:
-  axon-demo:
+  app-network:
+    driver: bridge

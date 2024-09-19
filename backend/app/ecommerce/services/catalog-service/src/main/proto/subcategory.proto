@@ -3,6 +3,10 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "com.congthanh.project.grpc";
 
+service SubcategoryService {
+  rpc getSubcategoryById (SubcategoryRequest) returns (SubcategoryResponse) {}
+}
+
 message SubcategoryRequest {
   int32 subcategoryId = 1;
 }
@@ -14,8 +18,4 @@ message SubcategoryResponse {
   string image = 4;
   string status = 5;
   int32 categoryId = 6;
-}
-
-service SubcategoryService {
-  rpc GetSubcategoryById (SubcategoryRequest) returns (SubcategoryResponse) {}
 }

@@ -1,11 +1,9 @@
 package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.cqrs.command.service.ProductCommandService;
-import com.congthanh.project.cqrs.query.service.ProductQueryService;
 import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.model.request.CreateProductRequest;
-import com.congthanh.project.dto.ProductVariantAttributeValueResponse;
+import com.congthanh.project.dto.ProductVariantAttributeValueDTO;
 import com.congthanh.project.model.response.Response;
 import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.entity.Product;
@@ -20,7 +18,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
@@ -40,12 +37,6 @@ public class ProductController {
     private final ProductRepository productRepository;
 
     private final ProductService productService;
-
-    private final ProductCommandService productCommandService;
-
-    private final ProductQueryService productQueryService;
-
-    private final CommandGateway commandGateway;
 
     private final QueryGateway queryGateway;
 
@@ -124,25 +115,25 @@ public class ProductController {
         return ResponseEntity.ok().body("Delete successfully");
     }
 
-//    @GetMapping("/getByCategory")
-//    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductByCategory(@RequestParam int categoryId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
-//        ResponseWithPagination<ProductDTO> data = productService.getProductByCategory(categoryId, page, limit);
-//        Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
-//        response.setData(data);
-//        response.setStatus(ResponseStatus.STATUS_SUCCESS);
-//        response.setMessage("Get successfully");
-//        return ResponseEntity.ok().body(response);
-//    }
-//
-//    @GetMapping("/getBySubcategory")
-//    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductBySubcategory(@RequestParam int subcategory, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
-//        ResponseWithPagination<ProductDTO> data = productService.getProductBySubcategory(subcategory, page, limit);
-//        Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
-//        response.setData(data);
-//        response.setStatus(ResponseStatus.STATUS_SUCCESS);
-//        response.setMessage("Get successfully");
-//        return ResponseEntity.ok().body(response);
-//    }
+    @GetMapping("/getByCategory")
+    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductByCategory(@RequestParam int categoryId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
+        ResponseWithPagination<ProductDTO> data = productService.getProductByCategory(categoryId, page, limit);
+        Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
+        response.setData(data);
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        response.setMessage("Get successfully");
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/getBySubcategory")
+    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductBySubcategory(@RequestParam int subcategory, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
+        ResponseWithPagination<ProductDTO> data = productService.getProductBySubcategory(subcategory, page, limit);
+        Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
+        response.setData(data);
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        response.setMessage("Get successfully");
+        return ResponseEntity.ok().body(response);
+    }
 
     @GetMapping("/search")
     public ResponseEntity<Response<List<ProductDTO>>> searchProduct(@RequestParam String search) {
@@ -165,9 +156,9 @@ public class ProductController {
     }
 
     @GetMapping("/get-variant-attribute")
-    public ResponseEntity<Response<List<ProductVariantAttributeValueResponse>>> getVariantAttributeValueByProduct(@RequestParam("product") String productId) {
-        List<ProductVariantAttributeValueResponse> result = productService.getVariantAttributeValueByProduct(productId);
-        Response<List<ProductVariantAttributeValueResponse>> response = new Response<>();
+    public ResponseEntity<Response<List<ProductVariantAttributeValueDTO>>> getVariantAttributeValueByProduct(@RequestParam("product") String productId) {
+        List<ProductVariantAttributeValueDTO> result = productService.getVariantAttributeValueByProduct(productId);
+        Response<List<ProductVariantAttributeValueDTO>> response = new Response<>();
         response.setData(result);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
         response.setMessage("Get successfully");

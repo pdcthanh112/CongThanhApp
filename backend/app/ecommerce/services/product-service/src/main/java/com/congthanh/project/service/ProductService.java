@@ -2,8 +2,7 @@ package com.congthanh.project.service;
 
 import com.congthanh.project.dto.ProductDTO;
 import com.congthanh.project.model.request.CreateProductRequest;
-import com.congthanh.project.dto.ProductVariantAttributeValueResponse;
-import com.congthanh.project.model.response.ResponseWithPagination;
+import com.congthanh.project.dto.ProductVariantAttributeValueDTO;
 import com.congthanh.project.entity.Product;
 
 import java.util.List;
@@ -32,5 +31,5 @@ public interface ProductService {
 
   Long getSoldByProduct(String productId);
 
-  List<ProductVariantAttributeValueResponse> getVariantAttributeValueByProduct(String productId);
+  List<ProductVariantAttributeValueDTO> getVariantAttributeValueByProduct(String productId);
 }

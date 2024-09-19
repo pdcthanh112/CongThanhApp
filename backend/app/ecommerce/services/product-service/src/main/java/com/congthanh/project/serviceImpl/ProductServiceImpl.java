@@ -1,10 +1,16 @@
 package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.enums.ProductStatus;
+import com.congthanh.project.cqrs.command.service.ProductCommandService;
+import com.congthanh.project.cqrs.query.query.GetProductByIdQuery;
+import com.congthanh.project.cqrs.query.service.ProductQueryService;
 import com.congthanh.project.dto.*;
+import com.congthanh.project.dto.BrandResponse;
 import com.congthanh.project.entity.Product;
-import com.congthanh.project.grpc.CategoryRequest;
-import com.congthanh.project.grpc.CategoryServiceGrpc;
+import com.congthanh.project.grpc.*;
+import com.congthanh.project.grpc.CategoryResponse;
+import com.congthanh.project.grpc.SubcategoryResponse;
+import com.congthanh.project.model.document.ProductQuery;
 import com.congthanh.project.model.request.CreateProductRequest;
 import com.congthanh.project.model.response.*;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
@@ -15,7 +21,8 @@ import com.congthanh.project.utils.Helper;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.axonframework.messaging.responsetypes.ResponseTypes;
+import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,10 +38,16 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
+    private final ProductCommandService productCommandService;
+
+    private final ProductQueryService productQueryService;
+
+    private final QueryGateway queryGateway;
+
     private final KafkaTemplate<String, ProductDTO> kafkaTemplate;
 
-    @GrpcClient("catalog-service")
-    private final CategoryServiceGrpc.CategoryServiceBlockingStub categoryServiceStub;
+    private final CategoryGrpcService categoryGrpcService;
+    private final SubcategoryGrpcService subcategoryGrpcService;
 
     private final Helper helper = new Helper();
 
@@ -78,9 +91,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductById(String id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Product not found"));
-        ProductDTO response = ProductMapper.mapProductEntityToDTO(product);
-        return response;
+//        Product product = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Product not found"));
+//        ProductDTO response = ProductMapper.mapProductEntityToDTO(product);
+        ProductQuery data = queryGateway.query(new GetProductByIdQuery(id), ResponseTypes.instanceOf(ProductQuery.class)).join();
+        return ProductDTO.builder()
+                .id(data.getId())
+                .name(data.getName())
+                .description(data.getDescription())
+                .slug(data.getSlug())
+                .category(data.getCategory())
+                .subcategory(data.getSubcategory())
+                .status(data.getStatus())
+                .build();
     }
 
     @Override
@@ -100,8 +122,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO createProduct(CreateProductRequest request) {
 
-        CategoryResponse category = categoryServiceStub.getCategoryById(CategoryRequest.newBuilder().setCategoryId(request.getCategory()).build());
-        SubcategoryResponse subcategory = null;
+        CategoryResponse category = categoryGrpcService.getCategoryById(request.getCategory());
+        SubcategoryResponse subcategory = subcategoryGrpcService.getSubcategoryById(request.getSubcategory());
         SupplierResponse supplier = null;
         BrandResponse brand = null;
 
@@ -110,8 +132,8 @@ public class ProductServiceImpl implements ProductService {
         assert category != null && subcategory != null && supplier != null && brand != null;
         Product product = Product.builder()
                 .name(request.getName())
-                .category(category.getId())
-                .subcategory(subcategory.getId())
+                .category(Long.valueOf(category.getId()))
+                .subcategory(Long.valueOf(subcategory.getId()))
                 .description(request.getDescription())
                 .brand(brand.getId())
                 .status(ProductStatus.ACTIVE)
@@ -226,10 +248,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductVariantAttributeValueResponse> getVariantAttributeValueByProduct(String productId) {
+    public List<ProductVariantAttributeValueDTO> getVariantAttributeValueByProduct(String productId) {
         List<Tuple> data = (List<Tuple>) productRepository.getVariantAttributeValueByProduct(productId);
         if (!data.isEmpty()) {
-            Map<String, ProductVariantAttributeValueResponse> responseMap = new HashMap<>();
+            Map<String, ProductVariantAttributeValueDTO> responseMap = new HashMap<>();
             long idCounter = 1;
 
             for (Tuple row : data) {
@@ -237,14 +259,14 @@ public class ProductServiceImpl implements ProductService {
                 String attributeValue = row.get("variantAttributeValue", String.class);
 
                 if (!responseMap.containsKey(attributeName)) {
-                    ProductVariantAttributeValueResponse response = new ProductVariantAttributeValueResponse();
+                    ProductVariantAttributeValueDTO response = new ProductVariantAttributeValueDTO();
                     response.setId(idCounter++);
                     response.setAttributeName(attributeName);
                     response.setValue(new ArrayList<>());
                     responseMap.put(attributeName, response);
                 }
 
-                ProductVariantAttributeValueResponse.Value value = new ProductVariantAttributeValueResponse.Value();
+                ProductVariantAttributeValueDTO.Value value = new ProductVariantAttributeValueDTO.Value();
                 value.setId(Long.valueOf(row.get("variantAttributeId", Integer.class)));
                 value.setValue(attributeValue);
 

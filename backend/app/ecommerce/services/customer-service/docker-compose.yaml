@@ -1,9 +1,9 @@
 version: '3'
 services:
-  promotion-service:
-    build: ./promotion-service
+  customer-service:
+    build: ./customer-service
     ports:
-      - "5009:5009"
+      - "5003:5003"
     networks:
       - app-network
     depends_on:

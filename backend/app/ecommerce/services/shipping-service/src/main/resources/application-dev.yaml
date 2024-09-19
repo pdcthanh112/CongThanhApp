@@ -1,5 +1,5 @@
 server:
-  port: 5012 # ${SERVER_PORT}
+  port: 5011 # ${SERVER_PORT}
   servlet:
     context-path: /api
   compression:
@@ -172,3 +172,7 @@ eureka:
   instance:
     hostname: localhost
 #    prefer-ip-address: true
+
+axon:
+  axonserver:
+    servers: localhost:8124

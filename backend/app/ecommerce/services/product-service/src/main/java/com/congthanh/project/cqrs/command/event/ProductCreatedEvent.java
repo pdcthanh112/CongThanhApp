@@ -5,12 +5,14 @@ import com.congthanh.project.dto.ProductAttributeValueDTO;
 import com.congthanh.project.dto.ProductImageDTO;
 import com.congthanh.project.dto.ProductVariantDTO;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
+@Builder
 public class ProductCreatedEvent {
 
     private final String id;

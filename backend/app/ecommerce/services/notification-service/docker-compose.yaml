@@ -1,17 +1,10 @@
 version: '3'
 services:
-  user-service:
-    build: ./user-service
+  notification-service:
+    build: ./notification-service
     ports:
-      - "8081:8081"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/userdb
+      - "5005:5005"
+    networks:
+      - app-network
     depends_on:
-      - postgres
-
-  postgres:
-    image: postgres:13
-    environment:
-      POSTGRES_DB: userdb
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      - axonserver
