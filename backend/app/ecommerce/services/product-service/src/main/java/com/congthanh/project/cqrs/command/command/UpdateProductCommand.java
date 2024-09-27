@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @Builder
-public class CreateProductCommand {
+public class UpdateProductCommand {
 
     @TargetAggregateIdentifier
     private final String id;
@@ -40,5 +40,4 @@ public class CreateProductCommand {
     private final List<ProductVariantDTO> variant;
 
     private final ProductStatus status;
-
 }

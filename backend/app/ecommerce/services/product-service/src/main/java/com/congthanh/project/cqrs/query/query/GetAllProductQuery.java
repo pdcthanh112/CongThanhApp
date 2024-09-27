@@ -1,12 +1,14 @@
 package com.congthanh.project.cqrs.query.query;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class GetAllProductQuery {
 
-    private final Integer page;
+    private Integer page;
 
-    private final Integer limit;
+    private Integer limit;
 
 }

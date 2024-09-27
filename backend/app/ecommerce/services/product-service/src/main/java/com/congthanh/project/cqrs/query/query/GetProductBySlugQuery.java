@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class GetProductByIdQuery {
+public class GetProductBySlugQuery {
 
-    private String productId;
+    private String slug;
 
 }

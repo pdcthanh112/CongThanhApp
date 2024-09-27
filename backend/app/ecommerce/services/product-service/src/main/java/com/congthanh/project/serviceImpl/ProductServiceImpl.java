@@ -1,11 +1,9 @@
 package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.enums.ProductStatus;
-import com.congthanh.project.cqrs.command.service.ProductCommandService;
 import com.congthanh.project.cqrs.query.query.GetProductByIdQuery;
-import com.congthanh.project.cqrs.query.service.ProductQueryService;
+import com.congthanh.project.cqrs.query.query.GetProductBySlugQuery;
 import com.congthanh.project.dto.*;
-import com.congthanh.project.dto.BrandResponse;
 import com.congthanh.project.entity.Product;
 import com.congthanh.project.grpc.*;
 import com.congthanh.project.grpc.CategoryResponse;
@@ -21,6 +19,7 @@ import com.congthanh.project.utils.Helper;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.data.domain.Page;
@@ -38,10 +37,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    private final ProductCommandService productCommandService;
-
-    private final ProductQueryService productQueryService;
-
+    private final CommandGateway commandGateway;
     private final QueryGateway queryGateway;
 
     private final KafkaTemplate<String, ProductDTO> kafkaTemplate;
@@ -91,8 +87,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductById(String id) {
-//        Product product = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Product not found"));
-//        ProductDTO response = ProductMapper.mapProductEntityToDTO(product);
         ProductQuery data = queryGateway.query(new GetProductByIdQuery(id), ResponseTypes.instanceOf(ProductQuery.class)).join();
         return ProductDTO.builder()
                 .id(data.getId())
@@ -114,10 +108,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductBySlug(String slug) {
-        Product product = productRepository.findProductBySlug(slug).orElseThrow(() -> new NotFoundException("Product not found"));
-        ProductDTO response = ProductMapper.mapProductEntityToDTO(product);
-        return response;
+        ProductQuery data = queryGateway.query(new GetProductBySlugQuery(slug), ResponseTypes.instanceOf(ProductQuery.class)).join();
+        return ProductDTO.builder()
+                .id(data.getId())
+                .name(data.getName())
+                .slug(data.getSlug())
+                .build();
     }
+
 
     @Override
     public ProductDTO createProduct(CreateProductRequest request) {
@@ -132,10 +130,10 @@ public class ProductServiceImpl implements ProductService {
         assert category != null && subcategory != null && supplier != null && brand != null;
         Product product = Product.builder()
                 .name(request.getName())
-                .category(Long.valueOf(category.getId()))
-                .subcategory(Long.valueOf(subcategory.getId()))
+                .category((long) category.getId())
+                .subcategory((long) subcategory.getId())
                 .description(request.getDescription())
-                .brand(brand.getId())
+                .brand((long) brand.getId())
                 .status(ProductStatus.ACTIVE)
                 .slug(productSlug)
                 .supplier(supplier.getId())

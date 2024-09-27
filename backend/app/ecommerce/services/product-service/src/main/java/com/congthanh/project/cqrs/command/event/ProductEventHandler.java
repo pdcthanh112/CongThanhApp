@@ -1,22 +1,19 @@
-package com.congthanh.project.cqrs.command.service;
+package com.congthanh.project.cqrs.command.event;
 
-import com.congthanh.project.cqrs.command.event.ProductCreatedEvent;
 import com.congthanh.project.model.document.ProductQuery;
 import com.congthanh.project.repository.product.ProductQueryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Service;
+import org.axonframework.eventhandling.EventHandler;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class ProductEventHandler {
 
     private final ProductQueryRepository productQueryRepository;
 
-    @EventListener
-    @RabbitListener(queues = "productQueue")
-    public void handleProductCreatedEvent(ProductCreatedEvent event) {
+    @EventHandler
+    public void on(ProductCreatedEvent event) {
         ProductQuery product = ProductQuery.builder()
                 .id(event.getId())
                 .name(event.getName())
@@ -26,7 +23,6 @@ public class ProductEventHandler {
                 .description(event.getDescription())
                 .brand(event.getBrand())
                 .build();
-
         productQueryRepository.save(product);
     }
 
