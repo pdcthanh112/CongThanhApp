@@ -1,5 +1,6 @@
 server:
-  port: 5005  #${SERVER_PORT}
+  port: ${SERVER_PORT:5005}
+#  port: ${NOTIFICATION_SERVICE_PORT}
   servlet:
     context-path: /api
   compression:
@@ -14,6 +15,8 @@ server:
 spring:
   application:
     name: congthanhapp-ecommerce-notification-service
+  config:
+    import: optional:file:.env[.properties]
 
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce

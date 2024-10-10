@@ -5,8 +5,8 @@ import com.congthanh.project.cqrs.query.query.GetAllProductQuery;
 import com.congthanh.project.cqrs.query.query.GetProductByIdQuery;
 import com.congthanh.project.cqrs.query.query.GetProductBySlugQuery;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
-import com.congthanh.project.model.document.ProductQuery;
-import com.congthanh.project.repository.product.ProductQueryRepository;
+import com.congthanh.project.model.document.ProductDocument;
+import com.congthanh.project.repository.product.ProductDocumentRepository;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
@@ -20,33 +20,33 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductProjection {
 
-    private final ProductQueryRepository productQueryRepository;
+    private final ProductDocumentRepository productDocumentRepository;
 
     @QueryHandler
-    public List<ProductQuery> getAllProduct(GetAllProductQuery query) {
+    public List<ProductDocument> getAllProduct(GetAllProductQuery query) {
         Pageable pageable = PageRequest.of(query.getPage(), query.getLimit());
-        List<ProductQuery> result = productQueryRepository.findAll(pageable).getContent();
+        List<ProductDocument> result = productDocumentRepository.findAll(pageable).getContent();
         return result;
     }
 
     @QueryHandler
-    public ProductQuery getProductById(GetProductByIdQuery product) {
-        ProductQuery result = productQueryRepository.findById(product.getProductId()).orElseThrow(() -> new NotFoundException("Product not found"));
+    public ProductDocument getProductById(GetProductByIdQuery product) {
+        ProductDocument result = productDocumentRepository.findById(product.getProductId()).orElseThrow(() -> new NotFoundException("Product not found"));
         return result;
     }
 
     @QueryHandler
-    public ProductQuery getProductById(GetProductBySlugQuery product) {
-        ProductQuery result = productQueryRepository.findById(product.getSlug()).orElseThrow(() -> new NotFoundException("Product not found"));
+    public ProductDocument getProductById(GetProductBySlugQuery product) {
+        ProductDocument result = productDocumentRepository.findById(product.getSlug()).orElseThrow(() -> new NotFoundException("Product not found"));
         return result;
     }
 
     @EventHandler
     public void on(ProductCreatedEvent event) {
-        ProductQuery productQuery = new ProductQuery();
+        ProductDocument productQuery = new ProductDocument();
         productQuery.setId(event.getId());
         productQuery.setName(event.getName());
-        productQueryRepository.save(productQuery);
+        productDocumentRepository.save(productQuery);
     }
 
 }

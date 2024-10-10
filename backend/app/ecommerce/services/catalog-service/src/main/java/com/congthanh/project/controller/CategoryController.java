@@ -3,6 +3,7 @@ package com.congthanh.project.controller;
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.CategoryDTO;
 import com.congthanh.project.entity.Category;
+import com.congthanh.project.model.request.CreateCategoryRequest;
 import com.congthanh.project.model.response.Response;
 import com.congthanh.project.repository.category.CategoryRepository;
 import com.congthanh.project.service.CategoryService;
@@ -50,8 +51,8 @@ public class CategoryController {
 
   @PostMapping("/create")
   @PermitAll
-  public ResponseEntity<Response<CategoryDTO>> createCategory(@RequestBody CategoryDTO categoryDTO) {
-    CategoryDTO data = categoryService.createCategory(categoryDTO);
+  public ResponseEntity<Response<CategoryDTO>> createCategory(@RequestBody CreateCategoryRequest request) {
+    CategoryDTO data = categoryService.createCategory(request);
     Response<CategoryDTO> response = new Response<>();
     response.setData(data);
     response.setMessage("Create successfully");

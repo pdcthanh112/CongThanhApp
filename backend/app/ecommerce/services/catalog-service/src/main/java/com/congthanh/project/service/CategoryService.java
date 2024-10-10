@@ -1,6 +1,7 @@
 package com.congthanh.project.service;
 
 import com.congthanh.project.dto.CategoryDTO;
+import com.congthanh.project.model.request.CreateCategoryRequest;
 
 public interface CategoryService {
 
@@ -8,7 +9,7 @@ public interface CategoryService {
 
   CategoryDTO getCategoryById(int id);
 
-  CategoryDTO createCategory(CategoryDTO categoryDTO);
+  CategoryDTO createCategory(CreateCategoryRequest category);
 
   CategoryDTO updateCategory(CategoryDTO categoryDTO);
 

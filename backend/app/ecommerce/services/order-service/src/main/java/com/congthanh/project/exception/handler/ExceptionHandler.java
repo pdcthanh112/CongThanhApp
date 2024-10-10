@@ -6,13 +6,12 @@ import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.exception.NotFoundException;
 import com.congthanh.project.exception.PermissionException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ExceptionHandlers extends RuntimeException {
+public class ExceptionHandler extends RuntimeException {
 
-    @ExceptionHandler(value = NotFoundException.class)
+    @org.springframework.web.bind.annotation.ExceptionHandler(value = NotFoundException.class)
     public ResponseEntity<Object> notFoundException(NotFoundException exception) {
         Response response = new Response();
         response.setMessage(exception.getMessage());
@@ -20,7 +19,7 @@ public class ExceptionHandlers extends RuntimeException {
         return ResponseEntity.badRequest().body(response);
     }
 
-    @ExceptionHandler(value = PermissionException.class)
+    @org.springframework.web.bind.annotation.ExceptionHandler(value = PermissionException.class)
     public ResponseEntity<Object> permissionException(PermissionException exception) {
         Response response = new Response();
         response.setMessage(exception.getMessage());
@@ -28,7 +27,7 @@ public class ExceptionHandlers extends RuntimeException {
         return ResponseEntity.badRequest().body(response);
     }
 
-    @ExceptionHandler(value = BadRequestException.class)
+    @org.springframework.web.bind.annotation.ExceptionHandler(value = BadRequestException.class)
     public ResponseEntity<Object> badRequestException(BadRequestException exception) {
         Response response = new Response();
         response.setMessage(exception.getMessage());

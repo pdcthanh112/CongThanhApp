@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddProductViewRequest {
+public class CreateCategoryRequest {
 
-    private String productId;
+    private String name;
 
-    private String customerId;
+    private String description;
+
+    private String image;
 
 }

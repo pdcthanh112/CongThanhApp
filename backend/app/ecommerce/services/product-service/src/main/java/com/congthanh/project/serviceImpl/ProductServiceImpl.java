@@ -1,13 +1,12 @@
 package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.enums.ProductStatus;
+import com.congthanh.project.cqrs.command.command.CreateProductCommand;
 import com.congthanh.project.cqrs.query.query.GetProductByIdQuery;
 import com.congthanh.project.cqrs.query.query.GetProductBySlugQuery;
 import com.congthanh.project.dto.*;
 import com.congthanh.project.entity.Product;
 import com.congthanh.project.grpc.*;
-import com.congthanh.project.grpc.CategoryResponse;
-import com.congthanh.project.grpc.SubcategoryResponse;
 import com.congthanh.project.model.document.ProductQuery;
 import com.congthanh.project.model.request.CreateProductRequest;
 import com.congthanh.project.model.response.*;
@@ -116,10 +115,8 @@ public class ProductServiceImpl implements ProductService {
                 .build();
     }
 
-
     @Override
     public ProductDTO createProduct(CreateProductRequest request) {
-
         CategoryResponse category = categoryGrpcService.getCategoryById(request.getCategory());
         SubcategoryResponse subcategory = subcategoryGrpcService.getSubcategoryById(request.getSubcategory());
         SupplierResponse supplier = null;
@@ -128,22 +125,19 @@ public class ProductServiceImpl implements ProductService {
         String productSlug = helper.generateSlug(request.getName());
 
         assert category != null && subcategory != null && supplier != null && brand != null;
-        Product product = Product.builder()
+        CreateProductCommand product = CreateProductCommand.builder()
                 .name(request.getName())
                 .category((long) category.getId())
                 .subcategory((long) subcategory.getId())
                 .description(request.getDescription())
-                .brand((long) brand.getId())
+                .brand(String.valueOf(brand.getId()))
                 .status(ProductStatus.ACTIVE)
                 .slug(productSlug)
                 .supplier(supplier.getId())
                 .build();
-        Product savedProduct = productRepository.save(product);
-        ProductDTO response = ProductMapper.mapProductEntityToDTO(savedProduct);
-
-        kafkaTemplate.send("create-product-topic", response);
-
-        return response;
+        ProductDTO result = commandGateway.sendAndWait(product);
+        kafkaTemplate.send("create-product-topic", result);
+        return result;
 
     }
 

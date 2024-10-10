@@ -11,7 +11,6 @@ import com.congthanh.project.cqrs.command.event.OrderUpdatedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
-import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import com.congthanh.project.cqrs.command.event.OrderCreatedEvent;
 
@@ -30,15 +29,16 @@ public class OrderAggregate {
     private BigDecimal total;
     private OrderStatus status;
 
-    public OrderAggregate() {}
+    public OrderAggregate() {
+    }
 
     @CommandHandler
-    public OrderAggregate(CreateOrderCommand command) {
+    public void handleCreateOrder(CreateOrderCommand command) {
         apply(new OrderCreatedEvent(command.getId(), command.getNote(), command.getTotal(), command.getStatus()));
     }
 
     @EventSourcingHandler
-    public void on(OrderCreatedEvent event) {
+    public void onOrderCreated(OrderCreatedEvent event) {
         this.id = event.getId();
         this.note = event.getNote();
         this.orderLineItems = new ArrayList<>(event.getOrderLineItems());
@@ -46,12 +46,12 @@ public class OrderAggregate {
     }
 
     @CommandHandler
-    protected void on(UpdateOrderStatusCommand updateOrderStatusCommand) {
-        AggregateLifecycle.apply(new OrderUpdatedEvent(updateOrderStatusCommand.id, updateOrderStatusCommand.orderStatus.name()));
+    protected void handleUpdateOrder(UpdateOrderStatusCommand updateOrderStatusCommand) {
+        apply(new OrderUpdatedEvent(updateOrderStatusCommand.id, updateOrderStatusCommand.orderStatus.name()));
     }
 
     @EventSourcingHandler
-    protected void on(OrderUpdatedEvent orderUpdatedEvent) {
+    protected void onOrderUpdated(OrderUpdatedEvent orderUpdatedEvent) {
         this.id = id;
         this.status = OrderStatus.valueOf(String.valueOf(orderUpdatedEvent.orderStatus));
     }

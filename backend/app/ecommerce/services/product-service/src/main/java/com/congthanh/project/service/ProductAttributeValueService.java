@@ -1,7 +1,6 @@
 package com.congthanh.project.service;
 
 import com.congthanh.project.dto.ProductAttributeValueDTO;
-import com.congthanh.project.model.request.ProductAttributeValueRequest;
 
 import java.util.List;
 

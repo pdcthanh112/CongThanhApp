@@ -2,7 +2,9 @@ package com.congthanh.project.cqrs.command.aggregate;
 
 import com.congthanh.project.constant.enums.ProductStatus;
 import com.congthanh.project.cqrs.command.command.CreateProductCommand;
+import com.congthanh.project.cqrs.command.command.UpdateProductCommand;
 import com.congthanh.project.cqrs.command.event.ProductCreatedEvent;
+import com.congthanh.project.cqrs.command.event.ProductUpdatedEvent;
 import com.congthanh.project.dto.ProductAttributeValueDTO;
 import com.congthanh.project.dto.ProductImageDTO;
 import com.congthanh.project.dto.ProductVariantDTO;
@@ -36,12 +38,12 @@ public class ProductAggregate {
     }
 
     @CommandHandler
-    public ProductAggregate(CreateProductCommand command) {
+    public void handleCreateProduct(CreateProductCommand command) {
         apply(new ProductCreatedEvent(command.getId(), command.getName(), command.getCategory(), command.getSubcategory(), command.getSlug(), command.getDescription(), command.getImage(), command.getAttribute(), command.getSupplier(), command.getBrand(), command.getVariant(), command.getStatus()));
     }
 
     @EventSourcingHandler
-    public void on(ProductCreatedEvent event) {
+    public void onProductCreated(ProductCreatedEvent event) {
         this.id = event.getId();
         this.name = event.getName();
         this.category = event.getCategory();
@@ -54,6 +56,16 @@ public class ProductAggregate {
         this.brand = event.getBrand();
         this.variant = event.getVariant();
         this.status = event.getStatus();
+    }
+
+    @CommandHandler
+    public void handleUpdateProduct(UpdateProductCommand command) {
+        apply(new ProductUpdatedEvent(command.getId()));
+    }
+
+    @EventSourcingHandler
+    public void onProductUpdated(ProductUpdatedEvent event) {
+        this.id = event.getId();
     }
 
 }

@@ -1,8 +1,10 @@
 package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.common.StateStatus;
+import com.congthanh.project.cqrs.command.command.category.CreateCategoryCommand;
 import com.congthanh.project.dto.CategoryDTO;
 import com.congthanh.project.entity.Category;
+import com.congthanh.project.model.request.CreateCategoryRequest;
 import com.congthanh.project.model.response.PaginationInfo;
 import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
@@ -11,6 +13,8 @@ import com.congthanh.project.repository.category.CategoryRepository;
 import com.congthanh.project.service.CategoryService;
 import com.congthanh.project.utils.Helper;
 import lombok.RequiredArgsConstructor;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.queryhandling.QueryGateway;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +30,9 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+
+    private final CommandGateway commandGateway;
+    private final QueryGateway queryGateway;
 
     private final ModelMapper modelMapper;
 
@@ -71,19 +78,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
-        Optional<Category> existCategory = categoryRepository.findByName(categoryDTO.getName());
+    public CategoryDTO createCategory(CreateCategoryRequest request) {
+        Optional<Category> existCategory = categoryRepository.findByName(request.getName());
         if (existCategory.isPresent()) {
             throw new RuntimeException("Category ton tai");
         } else {
-            Category category = Category.builder()
-                    .name(categoryDTO.getName())
+            CreateCategoryCommand category = CreateCategoryCommand.builder()
+                    .name(request.getName())
                     .status(StateStatus.STATUS_ACTIVE)
-                    .slug(new Helper().generateSlug(categoryDTO.getName()))
+                    .slug(new Helper().generateSlug(request.getName()))
                     .image(null)
                     .build();
-            Category result = categoryRepository.save(category);
-            CategoryDTO response = CategoryMapper.mapCategoryEntityToDTO(result);
+            CategoryDTO response = commandGateway.sendAndWait(category);
             return response;
         }
     }

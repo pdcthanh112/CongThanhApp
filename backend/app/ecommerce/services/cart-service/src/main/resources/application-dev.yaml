@@ -1,5 +1,6 @@
 server:
-  port: 5001 # ${SERVER_PORT}
+  port: ${CART_SERVICE_PORT}
+#  port: 5001 # ${SERVER_PORT}
   servlet:
     context-path: /api
   compression:

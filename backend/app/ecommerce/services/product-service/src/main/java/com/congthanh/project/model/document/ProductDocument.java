@@ -14,12 +14,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document
+@Document(collation = "product")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductQuery {
+public class ProductDocument {
 
     @Id
     private String id;

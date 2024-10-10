@@ -25,6 +25,8 @@ public class Category {
 
     private String slug;
 
+    private String description;
+
     private String image;
 
     private String status;

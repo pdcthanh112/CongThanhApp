@@ -19,9 +19,9 @@ public class ProductCreatedEvent {
 
     private final String name;
 
-    private final String category;
+    private final Long category;
 
-    private final String subcategory;
+    private final Long subcategory;
 
     private final String slug;
 

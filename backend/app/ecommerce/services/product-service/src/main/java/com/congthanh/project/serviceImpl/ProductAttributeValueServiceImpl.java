@@ -6,7 +6,6 @@ import com.congthanh.project.entity.Product;
 import com.congthanh.project.entity.ProductAttribute;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.ProductAttributeValueMapper;
-import com.congthanh.project.model.request.ProductAttributeValueRequest;
 import com.congthanh.project.repository.productAtrributeValue.ProductAttributeValueRepository;
 import com.congthanh.project.repository.product.ProductRepository;
 import com.congthanh.project.repository.productAttribute.ProductAttributeRepository;
