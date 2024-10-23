@@ -4,12 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @Builder
-public class CategoryCreatedEvent {
+public class CategoryCreatedEvent implements Serializable {
 
-    private final Long id;
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private final String id;
 
     private final String name;
 

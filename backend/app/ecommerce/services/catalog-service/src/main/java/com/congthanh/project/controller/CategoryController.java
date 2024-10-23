@@ -9,6 +9,7 @@ import com.congthanh.project.repository.category.CategoryRepository;
 import com.congthanh.project.service.CategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class CategoryController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Response<CategoryDTO>> getCategoryById(@PathVariable("id") int id) {
+  public ResponseEntity<Response<CategoryDTO>> getCategoryById(@PathVariable("id") String id) {
     CategoryDTO data = categoryService.getCategoryById(id);
     Response<CategoryDTO> response = new Response<>();
     response.setData(data);
@@ -51,7 +52,7 @@ public class CategoryController {
 
   @PostMapping("/create")
   @PermitAll
-  public ResponseEntity<Response<CategoryDTO>> createCategory(@RequestBody CreateCategoryRequest request) {
+  public ResponseEntity<Response<CategoryDTO>> createCategory(@RequestBody @Valid CreateCategoryRequest request) {
     CategoryDTO data = categoryService.createCategory(request);
     Response<CategoryDTO> response = new Response<>();
     response.setData(data);
@@ -71,7 +72,7 @@ public class CategoryController {
   }
 
   @DeleteMapping("/delete/{id}")
-  public ResponseEntity<String> deleteCategory(@RequestParam("id") int id) {
+  public ResponseEntity<String> deleteCategory(@RequestParam("id") String id) {
     boolean result = categoryService.deleteCategory(id);
     return ResponseEntity.status(HttpStatus.OK).body("Delete successfully");
   }

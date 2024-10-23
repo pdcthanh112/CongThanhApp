@@ -11,13 +11,13 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public interface CategoryRepository extends JpaRepository<Category, Long>, CategoryCustomRepository {
+public interface CategoryRepository extends JpaRepository<Category, String>, CategoryCustomRepository {
 
-  Optional<Category> findById(int id);
+//  Optional<Category> findById(String id);
 
   Optional<Category> findByName(String name);
 
   @Modifying
   @Query(nativeQuery = true, value = "UPDATE mydream.category SET status = 'Deleted' WHERE id = ?1 ")
-  boolean deleteCategory(int id);
+  boolean deleteCategory(String id);
 }

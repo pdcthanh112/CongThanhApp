@@ -17,5 +17,12 @@ public class SubcategoryDTO {
     @NotNull
     private String name;
 
+    private String slug;
+
+    private String description;
+
+    private String image;
+
     private CategoryDTO category;
+
 }

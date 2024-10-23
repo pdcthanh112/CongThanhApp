@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
@@ -72,7 +73,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO getCategoryById(int id) {
+    public CategoryDTO getCategoryById(String id) {
         Category category = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException(("not found")));
         return CategoryMapper.mapCategoryEntityToDTO(category);
     }
@@ -82,16 +83,17 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> existCategory = categoryRepository.findByName(request.getName());
         if (existCategory.isPresent()) {
             throw new RuntimeException("Category ton tai");
-        } else {
-            CreateCategoryCommand category = CreateCategoryCommand.builder()
-                    .name(request.getName())
-                    .status(StateStatus.STATUS_ACTIVE)
-                    .slug(new Helper().generateSlug(request.getName()))
-                    .image(null)
-                    .build();
-            CategoryDTO response = commandGateway.sendAndWait(category);
-            return response;
         }
+        CreateCategoryCommand category = CreateCategoryCommand.builder()
+                .id(ThreadLocalRandom.current().nextLong(100))
+                .name(request.getName())
+                .status(StateStatus.STATUS_ACTIVE)
+                .description(request.getDescription())
+                .slug(new Helper().generateSlug(request.getName()))
+                .image(null)
+                .build();
+        Object response = commandGateway.sendAndWait(category);
+        return null;
     }
 
     @Override
@@ -106,7 +108,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public boolean deleteCategory(int id) {
+    public boolean deleteCategory(String id) {
         Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
         if (category.getStatus().equalsIgnoreCase(StateStatus.STATUS_DELETED)) {
             throw new RuntimeException("Category have deleted before");

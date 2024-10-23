@@ -8,13 +8,14 @@ service CategoryService {
 }
 
 message CategoryRequest {
-  int32 categoryId = 1;
+  uint64 categoryId = 1;
 }
 
 message CategoryResponse {
-  int32 id = 1;
+  uint64 id = 1;
   string name = 2;
   string slug = 3;
-  string image = 4;
-  string status = 5;
+  string description = 4;
+  string image = 5;
+  string status = 6;
 }

@@ -7,12 +7,12 @@ public interface CategoryService {
 
   Object getAllCategory(Integer pageNo, Integer pageSize);
 
-  CategoryDTO getCategoryById(int id);
+  CategoryDTO getCategoryById(String id);
 
   CategoryDTO createCategory(CreateCategoryRequest category);
 
   CategoryDTO updateCategory(CategoryDTO categoryDTO);
 
-  boolean deleteCategory(int id);
+  boolean deleteCategory(String id);
 
 }

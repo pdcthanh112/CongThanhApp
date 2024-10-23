@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AxonConfig {
+public class AxonConfig{
 
     public AxonConfig(EventProcessingConfigurer configurer) {
 //        configurer.registerSaga(SagaConfigurer.defaultConfiguration());

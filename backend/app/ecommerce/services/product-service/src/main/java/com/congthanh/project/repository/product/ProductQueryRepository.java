@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ProductDocumentRepository extends MongoRepository<ProductDocument, String> {
+public interface ProductQueryRepository extends MongoRepository<ProductDocument, String> {
 
     Optional<ProductDocument> findByProductId(String productId);
 

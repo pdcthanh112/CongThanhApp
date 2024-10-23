@@ -11,7 +11,7 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 public class CategoryUpdatedEvent {
 
     @TargetAggregateIdentifier
-    private final Long id;
+    private final String id;
 
     private final String name;
 

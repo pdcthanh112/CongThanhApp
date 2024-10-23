@@ -1,8 +1,10 @@
 package com.congthanh.project.cqrs.command.aggregate;
 
 import com.congthanh.project.cqrs.command.command.category.CreateCategoryCommand;
+import com.congthanh.project.cqrs.command.command.category.DeleteCategoryCommand;
 import com.congthanh.project.cqrs.command.command.category.UpdateCategoryCommand;
 import com.congthanh.project.cqrs.command.event.category.CategoryCreatedEvent;
+import com.congthanh.project.cqrs.command.event.category.CategoryDeletedEvent;
 import com.congthanh.project.cqrs.command.event.category.CategoryUpdatedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -26,8 +28,16 @@ public class CategoryAggregate {
     }
 
     @CommandHandler
-    public void handleCreateCategory(CreateCategoryCommand command) {
-        apply(new CategoryCreatedEvent(command.getId(), command.getName(), command.getSlug(), command.getDescription(), command.getImage(), command.getStatus()));
+    public CategoryAggregate(CreateCategoryCommand command) {
+        System.out.println("AGGREGATE command"+command);
+        apply(CategoryCreatedEvent.builder()
+                .id(command.getId())  // Quan trọng: phải có ID
+                .name(command.getName())
+                .slug(command.getSlug())
+                .description(command.getDescription())
+                .image(command.getImage())
+                .status(command.getStatus())
+                .build());
     }
 
     @EventSourcingHandler
@@ -39,7 +49,6 @@ public class CategoryAggregate {
         this.image = event.getImage();
         this.status = event.getStatus();
     }
-
     @CommandHandler
     public void handleUpdateCategory(UpdateCategoryCommand command) {
         apply(new CategoryUpdatedEvent(command.getId(), command.getName(), command.getSlug(), command.getDescription(), command.getImage(), command.getStatus()));
@@ -53,6 +62,21 @@ public class CategoryAggregate {
         this.description = event.getDescription();
         this.image = event.getImage();
         this.status = event.getStatus();
+    }
+
+    @CommandHandler
+    public void handleDeleteCategory(DeleteCategoryCommand command) {
+        apply(new CategoryDeletedEvent(command.getCategoryId()));
+    }
+
+    @EventSourcingHandler
+    public void onCategoryDeleted(CategoryDeletedEvent event) {
+        this.id = event.getId();
+//        this.name = event.getName();
+//        this.slug = event.getSlug();
+//        this.description = event.getDescription();
+//        this.image = event.getImage();
+//        this.status = event.getStatus();
     }
 
 }
