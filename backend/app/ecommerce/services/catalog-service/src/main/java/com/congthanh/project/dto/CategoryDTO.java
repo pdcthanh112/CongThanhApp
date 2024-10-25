@@ -23,6 +23,8 @@ public class CategoryDTO {
 
   private String image;
 
+  private String parentId;
+
   private String status;
 
 }

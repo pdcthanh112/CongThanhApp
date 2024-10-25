@@ -4,6 +4,7 @@ import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.CategoryDTO;
 import com.congthanh.project.entity.Category;
 import com.congthanh.project.model.request.CreateCategoryRequest;
+import com.congthanh.project.model.request.UpdateCategoryRequest;
 import com.congthanh.project.model.response.Response;
 import com.congthanh.project.repository.category.CategoryRepository;
 import com.congthanh.project.service.CategoryService;
@@ -62,11 +63,11 @@ public class CategoryController {
   }
 
   @PutMapping("/update")
-  public ResponseEntity<Response<CategoryDTO>> updateCategory(@RequestBody CategoryDTO categoryDTO) {
-    CategoryDTO data = categoryService.updateCategory(categoryDTO);
+  public ResponseEntity<Response<CategoryDTO>> updateCategory(@RequestBody @Valid UpdateCategoryRequest request, String categoryId) {
+    CategoryDTO data = categoryService.updateCategory(request, categoryId);
     Response<CategoryDTO> response = new Response<>();
     response.setData(data);
-    response.setMessage("Create successfully");
+    response.setMessage("Updated successfully");
     response.setStatus(ResponseStatus.STATUS_SUCCESS);
     return ResponseEntity.ok().body(response);
   }

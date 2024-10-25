@@ -1,21 +1,17 @@
-package com.congthanh.project.cqrs.command.event.category;
+package com.congthanh.project.cqrs.command.command.category;
 
 import com.congthanh.project.constant.enums.CategoryStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.io.Serial;
-import java.io.Serializable;
+import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 @Data
 @AllArgsConstructor
 @Builder
-public class CategoryUpdatedEvent implements Serializable {
+public class AddSubcategoryCommand {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
-
+    @TargetAggregateIdentifier
     private final String id;
 
     private final String name;

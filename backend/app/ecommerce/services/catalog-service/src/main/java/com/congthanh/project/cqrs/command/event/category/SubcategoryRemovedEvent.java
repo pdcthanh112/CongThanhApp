@@ -1,6 +1,5 @@
 package com.congthanh.project.cqrs.command.event.category;
 
-import com.congthanh.project.constant.enums.CategoryStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +10,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @Builder
-public class CategoryUpdatedEvent implements Serializable {
+public class SubcategoryRemovedEvent implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -27,7 +26,5 @@ public class CategoryUpdatedEvent implements Serializable {
     private final String image;
 
     private final String parentId;
-
-    private final CategoryStatus status;
 
 }

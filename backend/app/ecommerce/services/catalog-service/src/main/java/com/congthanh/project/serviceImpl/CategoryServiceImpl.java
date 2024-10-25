@@ -2,9 +2,11 @@ package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.common.StateStatus;
 import com.congthanh.project.cqrs.command.command.category.CreateCategoryCommand;
+import com.congthanh.project.cqrs.command.command.category.UpdateCategoryCommand;
 import com.congthanh.project.dto.CategoryDTO;
 import com.congthanh.project.entity.Category;
 import com.congthanh.project.model.request.CreateCategoryRequest;
+import com.congthanh.project.model.request.UpdateCategoryRequest;
 import com.congthanh.project.model.response.PaginationInfo;
 import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
@@ -24,7 +26,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -85,26 +87,32 @@ public class CategoryServiceImpl implements CategoryService {
             throw new RuntimeException("Category ton tai");
         }
         CreateCategoryCommand category = CreateCategoryCommand.builder()
-                .id(ThreadLocalRandom.current().nextLong(100))
+                .id(UUID.randomUUID().toString())
                 .name(request.getName())
                 .status(StateStatus.STATUS_ACTIVE)
                 .description(request.getDescription())
                 .slug(new Helper().generateSlug(request.getName()))
                 .image(null)
+                .parentId(request.getParentId())
                 .build();
-        Object response = commandGateway.sendAndWait(category);
-        return null;
+        var response = commandGateway.sendAndWait(category);
+        return (CategoryDTO) response;
     }
 
     @Override
-    public CategoryDTO updateCategory(CategoryDTO categoryDTO) {
-        Category category = categoryRepository.findById(categoryDTO.getId()).orElseThrow(() -> new RuntimeException("Category not found"));
-
-        category.setName(categoryDTO.getName());
-        category.setImage(category.getImage());
-
-        Category result = categoryRepository.save(category);
-        return CategoryMapper.mapCategoryEntityToDTO(result);
+    public CategoryDTO updateCategory(UpdateCategoryRequest request, String categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new NotFoundException("Category not found"));
+        UpdateCategoryCommand command = UpdateCategoryCommand.builder()
+                .id(category.getId())
+                .name(request.getName())
+                .description(request.getDescription())
+                .slug(request.getSlug())
+                .image(request.getImage())
+                .status(StateStatus.STATUS_ACTIVE)
+                .parentId(category.getParentId())
+                .build();
+        var response = commandGateway.sendAndWait(command);
+        return (CategoryDTO) response;
     }
 
     @Override

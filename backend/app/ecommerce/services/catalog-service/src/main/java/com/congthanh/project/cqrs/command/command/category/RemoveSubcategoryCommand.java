@@ -7,8 +7,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class DeleteCategoryCommand {
+public class RemoveSubcategoryCommand {
 
     private final String categoryId;
+
+    private final String parentId;
 
 }

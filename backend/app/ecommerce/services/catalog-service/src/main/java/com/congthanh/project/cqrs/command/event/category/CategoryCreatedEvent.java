@@ -1,5 +1,6 @@
 package com.congthanh.project.cqrs.command.event.category;
 
+import com.congthanh.project.constant.enums.CategoryStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,8 @@ public class CategoryCreatedEvent implements Serializable {
 
     private final String image;
 
-    private final String status;
+    private final String parentId;
+
+    private final CategoryStatus status;
 
 }

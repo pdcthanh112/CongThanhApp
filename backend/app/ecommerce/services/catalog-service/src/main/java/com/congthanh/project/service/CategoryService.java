@@ -2,6 +2,7 @@ package com.congthanh.project.service;
 
 import com.congthanh.project.dto.CategoryDTO;
 import com.congthanh.project.model.request.CreateCategoryRequest;
+import com.congthanh.project.model.request.UpdateCategoryRequest;
 
 public interface CategoryService {
 
@@ -11,7 +12,7 @@ public interface CategoryService {
 
   CategoryDTO createCategory(CreateCategoryRequest category);
 
-  CategoryDTO updateCategory(CategoryDTO categoryDTO);
+  CategoryDTO updateCategory(UpdateCategoryRequest request, String categoryId);
 
   boolean deleteCategory(String id);
 

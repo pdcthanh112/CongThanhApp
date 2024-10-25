@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @Builder
-public class CategoryUpdatedEvent implements Serializable {
+public class SubcategoryAddedEvent implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

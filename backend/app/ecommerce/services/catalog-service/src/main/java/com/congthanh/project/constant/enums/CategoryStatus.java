@@ -1,10 +1,8 @@
 package com.congthanh.project.constant.enums;
 
-public enum CartStatus {
-    ALL,
+public enum CategoryStatus {
     ACTIVE,
     INACTIVE
-
 }
 
 

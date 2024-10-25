@@ -1,5 +1,8 @@
 package com.congthanh.project.model.document;
 
+import com.congthanh.project.constant.enums.CategoryStatus;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,19 +19,22 @@ import java.util.Set;
 @Builder
 public class CategoryDocument {
 
+    @Id
     private String id;
 
     @NotNull
     private String name;
 
+    @NotNull
     private String slug;
 
     private String description;
 
     private String image;
 
-    private String status;
+    @Enumerated
+    private CategoryStatus status;
 
-    Set<SubcategoryDocument> subcategories;
+    private Set<SubcategoryDocument> subcategories;
 
 }

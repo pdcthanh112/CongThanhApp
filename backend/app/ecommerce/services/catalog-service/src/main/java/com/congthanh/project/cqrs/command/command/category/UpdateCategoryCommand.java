@@ -1,5 +1,6 @@
 package com.congthanh.project.cqrs.command.command.category;
 
+import com.congthanh.project.constant.enums.CategoryStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,7 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 public class UpdateCategoryCommand {
 
     @TargetAggregateIdentifier
-    private final Long id;
+    private final String id;
 
     private final String name;
 
@@ -21,6 +22,8 @@ public class UpdateCategoryCommand {
 
     private final String image;
 
-    private final String status;
+    private String parentId;
+
+    private final CategoryStatus status;
 
 }

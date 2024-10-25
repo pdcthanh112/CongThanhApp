@@ -1,13 +1,11 @@
 package com.congthanh.project.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.congthanh.project.constant.enums.CategoryStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Set;
 
 @Entity
 @Data
@@ -18,25 +16,23 @@ import java.util.Set;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+//    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String slug;
 
     private String description;
 
     private String image;
 
-    private String status;
+    @Column(name = "parent_id")
+    private String parentId;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Subcategory> subcategories;
-
-//    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-//    @JsonIgnore
-//    private List<Product> product;
+    @Enumerated(EnumType.STRING)
+    private CategoryStatus status;
 
 }

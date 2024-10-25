@@ -16,7 +16,7 @@ public class CategoryEventListener {
 
     @RabbitListener(queues = RabbitMQConfig.QUEUE_NAME)
     public void handleCategoryCreated(CategoryCreatedEvent event) {
-        System.out.println("CategoryEventListener"+event);
+
         CategoryDocument document = CategoryDocument.builder()
                 .id(event.getId())
                 .name(event.getName())
