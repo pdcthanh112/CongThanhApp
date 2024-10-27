@@ -2,8 +2,10 @@ package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.ProductAttributeValueDTO;
+import com.congthanh.project.model.request.ProductAttributeValueRequest;
 import com.congthanh.project.model.response.Response;
 import com.congthanh.project.service.ProductAttributeValueService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,7 @@ public class ProductAttributeValueController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Response<ProductAttributeValueDTO>> createAttributeValue(@RequestBody ProductAttributeValueRequest request) {
+    public ResponseEntity<Response<ProductAttributeValueDTO>> createAttributeValue(@RequestBody @Valid ProductAttributeValueRequest request) {
         ProductAttributeValueDTO result = productAttributeValueService.createAttributeValue(request);
         Response<ProductAttributeValueDTO> response = new Response<>();
         response.setData(result);
@@ -38,7 +40,7 @@ public class ProductAttributeValueController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    public ResponseEntity<Response<ProductAttributeValueDTO>> updateAttributeValue(@RequestBody ProductAttributeValueRequest request) {
+    public ResponseEntity<Response<ProductAttributeValueDTO>> updateAttributeValue(@RequestBody @Valid ProductAttributeValueRequest request) {
         ProductAttributeValueDTO result = productAttributeValueService.updateAttributeValue(request);
         Response<ProductAttributeValueDTO> response = new Response<>();
         response.setData(result);

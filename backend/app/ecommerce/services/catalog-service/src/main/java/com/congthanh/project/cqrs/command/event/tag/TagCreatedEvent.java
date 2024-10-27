@@ -1,18 +1,21 @@
-package com.congthanh.project.dto;
+package com.congthanh.project.cqrs.command.event.tag;
 
 import com.congthanh.project.constant.enums.TagStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.Instant;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TagDTO {
+public class TagCreatedEvent implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private Long id;
 

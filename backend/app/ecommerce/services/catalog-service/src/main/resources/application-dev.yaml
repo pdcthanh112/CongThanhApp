@@ -211,3 +211,7 @@ axon:
 #    enabled: true
 #    url: https://console.axoniq.io
 
+snowflake:
+  worker-id: 1
+  datacenter-id: 1
+

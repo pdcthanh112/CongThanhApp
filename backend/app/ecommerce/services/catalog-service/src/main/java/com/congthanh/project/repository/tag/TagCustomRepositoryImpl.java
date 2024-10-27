@@ -17,10 +17,10 @@ public class TagCustomRepositoryImpl implements TagCustomRepository{
 
     @Override
     public Optional<Tag> findByTagName(String tagName) {
-        String sql = "SELECT t FROM Tag t WHERE t.name ILIKE :productId";
+        String sql = "SELECT t FROM Tag t WHERE t.name ILIKE :tagName";
 
         TypedQuery<Tag> query = entityManager.createQuery(sql, Tag.class);
-        query.setParameter("productId", "%" + tagName + "%");
+        query.setParameter("tagName", "%" + tagName + "%");
 
         return Optional.ofNullable(query.getSingleResult());
     }

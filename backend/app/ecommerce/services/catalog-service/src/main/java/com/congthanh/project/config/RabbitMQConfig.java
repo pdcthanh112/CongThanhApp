@@ -33,7 +33,8 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
+        return BindingBuilder.bind(queue).to(exchange).with("category.*");
+//        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
     }
 
     @Bean
@@ -41,7 +42,7 @@ public class RabbitMQConfig {
         Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
         DefaultClassMapper classMapper = new DefaultClassMapper();
         classMapper.setTrustedPackages("com.congthanh.project.cqrs.command.event.category",
-                "com.congthanh.project.cqrs.command.event.*", "com.congthanh.project.cqrs.command.event.category");
+                "com.congthanh.project.*", "com.congthanh.project.cqrs.command.event.category");
         converter.setClassMapper(classMapper);
         return converter;
     }

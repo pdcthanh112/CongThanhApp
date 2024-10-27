@@ -1,26 +1,26 @@
-package com.congthanh.project.dto;
+package com.congthanh.project.cqrs.command.command.tag;
 
 import com.congthanh.project.constant.enums.TagStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import java.time.Instant;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TagDTO {
+public class CreateTagCommand {
 
+    @TargetAggregateIdentifier
     private Long id;
 
     private String name;
 
-    private Instant createAt;
+    private Instant createdAt;
 
-    private Instant updateAt;
+    private Instant updatedAt;
 
     private TagStatus status;
 

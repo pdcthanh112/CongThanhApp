@@ -1,4 +1,4 @@
-package com.congthanh.project.cqrs.command.command.category;
+package com.congthanh.project.cqrs.command.command.tag;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,9 +8,9 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 @Data
 @AllArgsConstructor
 @Builder
-public class DeleteCategoryCommand {
+public class DeleteTagCommand {
 
     @TargetAggregateIdentifier
-    private final String categoryId;
+    private long tagId;
 
 }

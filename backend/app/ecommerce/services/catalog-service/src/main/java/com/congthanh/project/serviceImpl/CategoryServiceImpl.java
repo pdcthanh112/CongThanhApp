@@ -1,6 +1,6 @@
 package com.congthanh.project.serviceImpl;
 
-import com.congthanh.project.constant.common.StateStatus;
+import com.congthanh.project.constant.enums.CategoryStatus;
 import com.congthanh.project.cqrs.command.command.category.CreateCategoryCommand;
 import com.congthanh.project.cqrs.command.command.category.UpdateCategoryCommand;
 import com.congthanh.project.dto.CategoryDTO;
@@ -89,11 +89,11 @@ public class CategoryServiceImpl implements CategoryService {
         CreateCategoryCommand category = CreateCategoryCommand.builder()
                 .id(UUID.randomUUID().toString())
                 .name(request.getName())
-                .status(StateStatus.STATUS_ACTIVE)
+                .status(CategoryStatus.ACTIVE)
                 .description(request.getDescription())
                 .slug(new Helper().generateSlug(request.getName()))
-                .image(null)
-                .parentId(request.getParentId())
+                .image(request.getImage())
+                .parentId(null)
                 .build();
         var response = commandGateway.sendAndWait(category);
         return (CategoryDTO) response;
@@ -108,7 +108,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .description(request.getDescription())
                 .slug(request.getSlug())
                 .image(request.getImage())
-                .status(StateStatus.STATUS_ACTIVE)
+                .status(CategoryStatus.ACTIVE)
                 .parentId(category.getParentId())
                 .build();
         var response = commandGateway.sendAndWait(command);
@@ -118,7 +118,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public boolean deleteCategory(String id) {
         Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
-        if (category.getStatus().equalsIgnoreCase(StateStatus.STATUS_DELETED)) {
+        if (category.getStatus().equals(CategoryStatus.INACTIVE)) {
             throw new RuntimeException("Category have deleted before");
         } else {
             boolean result = categoryRepository.deleteCategory(id);

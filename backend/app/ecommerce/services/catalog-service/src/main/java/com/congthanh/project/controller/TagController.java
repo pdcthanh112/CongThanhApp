@@ -2,19 +2,19 @@ package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.TagDTO;
+import com.congthanh.project.model.request.CreateTagRequest;
 import com.congthanh.project.model.response.Response;
 import com.congthanh.project.service.TagService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
-@Repository
+@RestController
 @RequestMapping("/ecommerce/tag")
 @Tag(name = "Product Tag API", description = "Product tag API in CongThanhApp - Ecommerce")
 @RequiredArgsConstructor
@@ -33,8 +33,8 @@ public class TagController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Response<TagDTO>> createTag(@RequestBody TagDTO tagDTO) {
-        TagDTO data = tagService.createTag(tagDTO);
+    public ResponseEntity<Response<TagDTO>> createTag(@RequestBody CreateTagRequest request) {
+        TagDTO data = tagService.createTag(request);
         Response<TagDTO> response = new Response<>();
         response.setData(data);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);

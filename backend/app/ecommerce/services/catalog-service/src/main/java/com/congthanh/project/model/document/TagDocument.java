@@ -1,38 +1,31 @@
-package com.congthanh.project.entity;
+package com.congthanh.project.model.document;
 
 import com.congthanh.project.constant.enums.TagStatus;
-import jakarta.persistence.*;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
-@Entity
+@Document(collection = "tag")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "tag")
-public class Tag {
+public class TagDocument {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    @Column(name = "created_at")
     private Instant createdAt;
 
-    @Column(name = "updated_at")
     private Instant updatedAt;
 
-    @Enumerated(EnumType.STRING)
     private TagStatus status;
-
-//    @ManyToMany(mappedBy = "tag")
-//    private Set<Product> product;
 
 }
