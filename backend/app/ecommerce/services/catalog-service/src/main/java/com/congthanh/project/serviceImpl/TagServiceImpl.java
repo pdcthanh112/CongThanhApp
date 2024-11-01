@@ -55,7 +55,7 @@ public class TagServiceImpl implements TagService {
                 .updatedAt(Instant.now())
                 .status(TagStatus.ACTIVE)
                 .build();
-        System.out.println("Data"+tag);
+
         var response = commandGateway.sendAndWait(tag);
 //        return (TagDTO) response;
         return null;

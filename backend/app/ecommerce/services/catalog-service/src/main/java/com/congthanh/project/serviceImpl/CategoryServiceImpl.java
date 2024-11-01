@@ -96,7 +96,8 @@ public class CategoryServiceImpl implements CategoryService {
                 .parentId(null)
                 .build();
         var response = commandGateway.sendAndWait(category);
-        return (CategoryDTO) response;
+//        return (CategoryDTO) response;
+        return null;
     }
 
     @Override
@@ -112,7 +113,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .parentId(category.getParentId())
                 .build();
         var response = commandGateway.sendAndWait(command);
-        return (CategoryDTO) response;
+        return null;
     }
 
     @Override

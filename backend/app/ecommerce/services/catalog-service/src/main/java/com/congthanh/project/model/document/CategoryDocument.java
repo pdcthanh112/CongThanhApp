@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
 import java.util.Set;
 
 @Document(collection = "category")
@@ -36,5 +37,9 @@ public class CategoryDocument {
     private CategoryStatus status;
 
     private Set<SubcategoryDocument> subcategories;
+
+    private Instant createdAt;
+
+    private Instant updatedAt;
 
 }

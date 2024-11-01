@@ -42,13 +42,23 @@ public class TagController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+//    @PutMapping("/update")
+//    public ResponseEntity<Response<TagDTO>> updateTag(@RequestBody UpdateTagRequest request) {
+//        TagDTO data = tagService.createTag(request);
+//        Response<TagDTO> response = new Response<>();
+//        response.setData(data);
+//        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+//        response.setMessage("Created successfully");
+//        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+//    }
+
     @PostMapping("/add-product-tag")
     public ResponseEntity<Response<?>> addTagFromProduct(@RequestBody Map<String, String> requestData) {
         Long tagId = Long.valueOf(requestData.get("tagId"));
         String productId = requestData.get("productId");
         boolean result = tagService.addTagFromProduct(tagId, productId);
         Response<String> response = new Response<>();
-        if(result) {
+        if (result) {
             response.setData("true");
             response.setStatus(ResponseStatus.STATUS_SUCCESS);
             response.setMessage("Add successfully");
@@ -66,7 +76,7 @@ public class TagController {
         String productId = requestData.get("productId");
         boolean result = tagService.removeTagFromProduct(tagId, productId);
         Response<String> response = new Response<>();
-        if(result) {
+        if (result) {
             response.setData("true");
             response.setStatus(ResponseStatus.STATUS_SUCCESS);
             response.setMessage("Remove successfully");

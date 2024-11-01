@@ -1,6 +1,7 @@
 package com.congthanh.project.cqrs.command.event.category;
 
 import com.congthanh.project.config.RabbitMQConfig;
+import com.congthanh.project.constant.common.RabbitMQConstants;
 import com.congthanh.project.constant.enums.CategoryStatus;
 import com.congthanh.project.entity.Category;
 import com.congthanh.project.repository.category.CategoryRepository;
@@ -21,22 +22,41 @@ public class CategoryEventHandler {
 
     private final RabbitTemplate rabbitTemplate;
 
+    //    @EventHandler
+//    public void on(CategoryCreatedEvent event) {
+//        Category category = Category.builder()
+//                .id(event.getId())
+//                .name(event.getName())
+//                .slug(event.getSlug())
+//                .description(event.getDescription())
+//                .image(event.getImage())
+//                .parentId(null)
+//                .status(CategoryStatus.ACTIVE)
+//                .build();
+//        var result = categoryRepository.save(category);
+//        log.info("Lưu Category {} vào Postgres thành công, ID: {}",
+//                result.getName(), result.getId());
+//        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Category.ROUTING_KEY, event);
+//    }
     @EventHandler
     public void on(CategoryCreatedEvent event) {
-        Category category = Category.builder()
-                .id(event.getId())
-                .name(event.getName())
-                .slug(event.getSlug())
-                .description(event.getDescription())
-                .image(event.getImage())
-                .parentId(null)
-                .status(CategoryStatus.ACTIVE)
-                .build();
-        var result = categoryRepository.save(category);
-        log.info("Lưu Category {} vào Postgres thành công, ID: {}",
-                result.getName(), result.getId());
-
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConfig.ROUTING_KEY, result);
+        try {
+            Category category = Category.builder()
+                    .id(event.getId())
+                    .name(event.getName())
+                    .slug(event.getSlug())
+                    .description(event.getDescription())
+                    .image(event.getImage())
+                    .parentId(null)
+                    .status(CategoryStatus.ACTIVE)
+                    .build();
+            var result = categoryRepository.save(category);
+            log.info("Lưu Category {} vào Postgres thành công, ID: {}", result.getName(), result.getId());
+            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Category.ROUTING_KEY, event);
+        } catch (Exception e) {
+            log.error("Error sending event: ", e);
+            throw e;
+        }
     }
 
     @EventHandler
@@ -54,7 +74,7 @@ public class CategoryEventHandler {
         var result = categoryRepository.save(category);
         log.info("Cập nhật Category {} vào Postgres thành công, ID: {}",
                 result.getName(), result.getId());
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConfig.ROUTING_KEY, event);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Category.ROUTING_KEY, event);
     }
 
     @EventHandler
@@ -70,7 +90,7 @@ public class CategoryEventHandler {
                 .build();
         categoryRepository.save(category);
 
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConfig.ROUTING_KEY, event);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Category.ROUTING_KEY, event);
     }
 
 }
