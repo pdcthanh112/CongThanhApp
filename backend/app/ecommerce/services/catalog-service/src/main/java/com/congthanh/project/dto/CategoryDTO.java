@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,5 +28,9 @@ public class CategoryDTO {
   private String parentId;
 
   private String status;
+
+  private Instant createdAt;
+
+  private Instant updatedAt;
 
 }

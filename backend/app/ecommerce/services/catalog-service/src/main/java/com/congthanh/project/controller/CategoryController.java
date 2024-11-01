@@ -62,8 +62,8 @@ public class CategoryController {
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  @PutMapping("/update")
-  public ResponseEntity<Response<CategoryDTO>> updateCategory(@RequestBody @Valid UpdateCategoryRequest request, String categoryId) {
+  @PutMapping("/update/{id}")
+  public ResponseEntity<Response<CategoryDTO>> updateCategory(@RequestBody @Valid UpdateCategoryRequest request, @PathVariable("id") String categoryId) {
     CategoryDTO data = categoryService.updateCategory(request, categoryId);
     Response<CategoryDTO> response = new Response<>();
     response.setData(data);

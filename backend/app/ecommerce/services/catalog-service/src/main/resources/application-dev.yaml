@@ -52,10 +52,9 @@ spring:
     port: 5672
     username: congthanh
     password: 123456
-  amqp:
-    deserialization:
-      trust:
-        all: true
+  activemq:
+    packages:
+#      trust-all: true
 
   graphql:
     graphiql:
@@ -77,9 +76,9 @@ spring:
         tokenPrefix: "Bearer "
         tokenExpirationAfterDays: 30
 
-  main:
-    allow-circular-references: true
-    allow-bean-definition-overriding: true
+#  main:
+#    allow-circular-references: true
+#    allow-bean-definition-overriding: true
 
   mail:
     host: smtp.example.com
@@ -112,7 +111,7 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
-      group-id: congthanhapp-group
+      group-id: catalog-service-group
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer

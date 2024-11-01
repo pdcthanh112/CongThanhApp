@@ -89,16 +89,16 @@ services:
       - RABBITMQ_DEFAULT_USER=congthanh    
       - RABBITMQ_DEFAULT_PASS=123456    
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit disk_free_limit 2147483648 # 2GB
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-      - rabbitmq_log:/var/log/rabbitmq
-    networks:
-      - rabbitmq_network
-    healthcheck:
-      test: ["CMD", "rabbitmqctl", "status"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+    # volumes:
+    #   - rabbitmq_data:/var/lib/rabbitmq
+    #   - rabbitmq_log:/var/log/rabbitmq
+    # networks:
+    #   - rabbitmq_network
+    # healthcheck:
+    #   test: ["CMD", "rabbitmqctl", "status"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 5
     restart: unless-stopped
 
   # prometheus:
@@ -169,5 +169,5 @@ networks:
   postgres:
   app-network:
     driver: bridge
-  rabbitmq_network:
-    driver: bridge
+  # rabbitmq_network:
+  #   driver: bridge

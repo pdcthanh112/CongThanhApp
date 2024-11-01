@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -34,5 +36,9 @@ public class Category {
 
     @Enumerated(EnumType.STRING)
     private CategoryStatus status;
+
+    private Instant createdAt;
+
+    private Instant updatedAt;
 
 }

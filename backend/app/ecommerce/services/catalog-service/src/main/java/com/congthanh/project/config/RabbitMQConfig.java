@@ -1,5 +1,6 @@
 package com.congthanh.project.config;
 
+import com.congthanh.project.constant.common.RabbitMQConstants;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -17,32 +18,40 @@ import org.springframework.context.annotation.Configuration;
 @EnableRabbit
 public class RabbitMQConfig {
 
-    public static final String QUEUE_NAME = "category_queue";
-    public static final String EXCHANGE_NAME = "category_exchange";
-    public static final String ROUTING_KEY = "category.created";
+    public static final String EXCHANGE_NAME = "catalog_service_exchange";
 
     @Bean
-    public Queue queue() {
-        return new Queue(QUEUE_NAME, false);
+    public Queue categoryQueue() {
+        return new Queue(RabbitMQConstants.Category.QUEUE_NAME, false);
     }
 
     @Bean
-    public TopicExchange userExchange() {
+    public Queue tagQueue() {
+        return new Queue(RabbitMQConstants.Tag.QUEUE_NAME, false);
+    }
+
+    @Bean
+    public Queue brandQueue() {
+        return new Queue(RabbitMQConstants.Brand.QUEUE_NAME, false);
+    }
+
+    @Bean
+    public TopicExchange exchange() {
         return new TopicExchange(EXCHANGE_NAME);
     }
 
     @Bean
-    public Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("category.*");
-//        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
+    public Binding categoryBinding() {
+//        return BindingBuilder.bind(queue).to(exchange).with("category.*");
+        return BindingBuilder.bind(categoryQueue()).to(exchange()).with(RabbitMQConstants.Category.ROUTING_KEY);
     }
 
     @Bean
     public MessageConverter jsonMessageConverter() {
         Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
         DefaultClassMapper classMapper = new DefaultClassMapper();
-        classMapper.setTrustedPackages("com.congthanh.project.cqrs.command.event.category",
-                "com.congthanh.project.*", "com.congthanh.project.cqrs.command.event.category");
+
+        classMapper.setTrustedPackages("*", "**", "com.congthanh.project.**", "com.congthanh.project.entity.*");
         converter.setClassMapper(classMapper);
         return converter;
     }
