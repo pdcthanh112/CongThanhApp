@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 
 @Data
 @AllArgsConstructor
@@ -29,5 +30,9 @@ public class CategoryCreatedEvent implements Serializable {
     private final String parentId;
 
     private final CategoryStatus status;
+
+    private final Instant createdAt;
+
+    private final Instant updatedAt;
 
 }

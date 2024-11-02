@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
+import java.time.Instant;
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -25,5 +27,9 @@ public class UpdateCategoryCommand {
     private String parentId;
 
     private final CategoryStatus status;
+
+    private final Instant createdAt;
+
+    private final Instant updatedAt;
 
 }

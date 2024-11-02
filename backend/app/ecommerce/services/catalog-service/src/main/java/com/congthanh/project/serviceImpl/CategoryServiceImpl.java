@@ -23,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -94,6 +95,8 @@ public class CategoryServiceImpl implements CategoryService {
                 .slug(new Helper().generateSlug(request.getName()))
                 .image(request.getImage())
                 .parentId(null)
+                .createdAt(Instant.now())
+                .updatedAt(Instant.now())
                 .build();
         var response = commandGateway.sendAndWait(category);
 //        return (CategoryDTO) response;

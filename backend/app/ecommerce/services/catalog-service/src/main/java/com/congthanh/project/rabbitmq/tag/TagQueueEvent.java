@@ -1,4 +1,4 @@
-package com.congthanh.project.rabbitmq.category;
+package com.congthanh.project.rabbitmq.tag;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +12,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryQueueEvent<T> implements Serializable {
+public class TagQueueEvent<T> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private CategoryEventType eventType;
+    private TagEventType eventType;
 
     private T data;
 
