@@ -1,5 +1,5 @@
 package com.congthanh.project.rabbitmq.category;
 
-public enum EventType {
+public enum CategoryEventType {
     CREATE, UPDATE, DELETE
 }

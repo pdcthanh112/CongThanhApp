@@ -8,6 +8,8 @@ import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
+import java.time.Instant;
+
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
 @Aggregate
@@ -21,6 +23,8 @@ public class CategoryAggregate {
     private String image;
     private String parentId;
     private CategoryStatus status;
+    private Instant createdAt;
+    private Instant updatedAt;
 
     public CategoryAggregate() {
     }
@@ -36,7 +40,7 @@ public class CategoryAggregate {
 //                .status(command.getStatus())
 //                .build());
 
-        apply(new CategoryCreatedEvent(command.getId(), command.getName(), command.getSlug(), command.getDescription(), command.getImage(), command.getParentId(), command.getStatus()));
+        apply(new CategoryCreatedEvent(command.getId(), command.getName(), command.getSlug(), command.getDescription(), command.getImage(), command.getParentId(), command.getStatus(), command.getCreatedAt(), command.getUpdatedAt()));
     }
 
     @EventSourcingHandler
@@ -52,7 +56,7 @@ public class CategoryAggregate {
 
     @CommandHandler
     public void handleUpdateCategory(UpdateCategoryCommand command) {
-        apply(new CategoryUpdatedEvent(command.getId(), command.getName(), command.getSlug(), command.getDescription(), command.getImage(), command.getParentId(), command.getStatus()));
+        apply(new CategoryUpdatedEvent(command.getId(), command.getName(), command.getSlug(), command.getDescription(), command.getImage(), command.getParentId(), command.getCreatedAt(), command.getUpdatedAt(), command.getStatus()));
     }
 
     @EventSourcingHandler
