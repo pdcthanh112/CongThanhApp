@@ -7,6 +7,7 @@ import com.congthanh.project.cqrs.query.query.GetProductBySlugQuery;
 import com.congthanh.project.dto.*;
 import com.congthanh.project.entity.Product;
 import com.congthanh.project.grpc.*;
+import com.congthanh.project.model.document.ProductDocument;
 import com.congthanh.project.model.document.ProductQuery;
 import com.congthanh.project.model.request.CreateProductRequest;
 import com.congthanh.project.model.response.*;
@@ -86,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductById(String id) {
-        ProductQuery data = queryGateway.query(new GetProductByIdQuery(id), ResponseTypes.instanceOf(ProductQuery.class)).join();
+        ProductDocument data = queryGateway.query(new GetProductByIdQuery(id), ResponseTypes.instanceOf(ProductDocument.class)).join();
         return ProductDTO.builder()
                 .id(data.getId())
                 .name(data.getName())

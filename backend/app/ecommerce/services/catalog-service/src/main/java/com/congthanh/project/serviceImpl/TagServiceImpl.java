@@ -3,14 +3,17 @@ package com.congthanh.project.serviceImpl;
 import com.congthanh.project.constant.enums.TagStatus;
 import com.congthanh.project.cqrs.command.command.tag.CreateTagCommand;
 import com.congthanh.project.cqrs.command.command.tag.UpdateTagCommand;
+import com.congthanh.project.cqrs.query.query.tag.GetAllTagQuery;
 import com.congthanh.project.cqrs.query.query.tag.GetTagByIdQuery;
 import com.congthanh.project.dto.TagDTO;
 import com.congthanh.project.entity.Tag;
 import com.congthanh.project.exception.ecommerce.BadRequestException;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
+import com.congthanh.project.model.document.TagDocument;
 import com.congthanh.project.model.mapper.TagMapper;
 import com.congthanh.project.model.request.CreateTagRequest;
 import com.congthanh.project.model.request.UpdateTagRequest;
+import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.repository.tag.TagRepository;
 import com.congthanh.project.service.TagService;
 import com.congthanh.project.utils.SnowflakeIdGenerator;
@@ -24,6 +27,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,22 +41,40 @@ public class TagServiceImpl implements TagService {
     private final SnowflakeIdGenerator snowflakeIdGenerator;
 
     @Override
-    public List<TagDTO> getAllTags() {
-        List<Tag> listTag = tagRepository.findAll();
-        List<TagDTO> result = new ArrayList<>();
-        for (Tag tag : listTag) {
-            TagDTO tagDTO = TagMapper.mapTagEntityToDTO(tag);
-            result.add(tagDTO);
-        }
-        return result;
+    public ResponseWithPagination<TagDTO> getAllTags() {
+
+        GetAllTagQuery query = new GetAllTagQuery();
+
+        ResponseWithPagination<TagDocument> data = queryGateway.query(query, ResponseTypes.instanceOf(ResponseWithPagination.class)).join();
+
+        List<TagDTO> list = data.getResponseList().stream()
+                .map(tag -> TagDTO.builder()
+                        .id(tag.getId())
+                        .name(tag.getName())
+                        .createAt(tag.getCreatedAt())
+                        .updateAt(tag.getUpdatedAt())
+                        .status(tag.getStatus())
+                        .build())
+                .collect(Collectors.toList());
+
+        return ResponseWithPagination.<TagDTO>builder()
+                .responseList(list)
+                .paginationInfo(data.getPaginationInfo())
+                .build();
     }
 
     @Override
     public TagDTO getTagById(Long id) {
         GetTagByIdQuery query = new GetTagByIdQuery(id);
-        var result = queryGateway.query(query, ResponseTypes.instanceOf(TagDTO.class));
-        System.out.println("Rssssssssssssssssssss"+result);
-        return null;
+        TagDocument result = queryGateway.query(query, ResponseTypes.instanceOf(TagDocument.class)).join();
+
+        return TagDTO.builder()
+                .id(result.getId())
+                .name(result.getName())
+                .createAt(result.getCreatedAt())
+                .updateAt(result.getUpdatedAt())
+                .status(result.getStatus())
+                .build();
     }
 
     @Override

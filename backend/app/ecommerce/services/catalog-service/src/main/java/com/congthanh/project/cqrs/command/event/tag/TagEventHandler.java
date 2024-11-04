@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.eventhandling.ResetHandler;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
@@ -59,5 +60,10 @@ public class TagEventHandler {
                 .data(event)
                 .build();
         rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Tag.ROUTING_KEY, queueEvent);
+    }
+
+    @ResetHandler
+    public void reset() {
+        tagRepository.deleteAllInBatch();
     }
 }
