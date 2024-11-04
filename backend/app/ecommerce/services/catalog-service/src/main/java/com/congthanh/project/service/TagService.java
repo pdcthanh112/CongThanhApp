@@ -3,12 +3,13 @@ package com.congthanh.project.service;
 import com.congthanh.project.dto.TagDTO;
 import com.congthanh.project.model.request.CreateTagRequest;
 import com.congthanh.project.model.request.UpdateTagRequest;
+import com.congthanh.project.model.response.ResponseWithPagination;
 
 import java.util.List;
 
 public interface TagService {
 
-    List<TagDTO> getAllTags();
+    ResponseWithPagination<TagDTO> getAllTags();
 
     TagDTO getTagById(Long id);
 

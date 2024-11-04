@@ -1,11 +1,7 @@
-package com.congthanh.project.cqrs.query.event;
+package com.congthanh.project.cqrs.command.event.tag;
 
 import com.congthanh.project.constant.common.RabbitMQConstants;
 import com.congthanh.project.constant.enums.TagStatus;
-import com.congthanh.project.cqrs.command.event.tag.TagCreatedEvent;
-import com.congthanh.project.cqrs.command.event.tag.TagDeletedEvent;
-import com.congthanh.project.cqrs.command.event.tag.TagUpdatedEvent;
-import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.document.TagDocument;
 import com.congthanh.project.rabbitmq.tag.TagEventType;
 import com.congthanh.project.rabbitmq.tag.TagQueueEvent;

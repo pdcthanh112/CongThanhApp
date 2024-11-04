@@ -41,12 +41,4 @@ public class ProductProjection {
         return result;
     }
 
-    @EventHandler
-    public void on(ProductCreatedEvent event) {
-        ProductDocument productQuery = new ProductDocument();
-        productQuery.setId(event.getId());
-        productQuery.setName(event.getName());
-        productQueryRepository.save(productQuery);
-    }
-
 }

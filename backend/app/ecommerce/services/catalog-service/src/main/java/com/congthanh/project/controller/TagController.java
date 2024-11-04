@@ -5,6 +5,7 @@ import com.congthanh.project.dto.TagDTO;
 import com.congthanh.project.model.request.CreateTagRequest;
 import com.congthanh.project.model.request.UpdateTagRequest;
 import com.congthanh.project.model.response.Response;
+import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.service.TagService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,16 +24,19 @@ public class TagController {
     private final TagService tagService;
 
     @GetMapping("/getAll")
-    public ResponseEntity<Response<List<TagDTO>>> getAllTags() {
-        List<TagDTO> data = tagService.getAllTags();
-        Response<List<TagDTO>> response = new Response<>();
+    public ResponseEntity<Response<ResponseWithPagination<TagDTO>>> getAllTags(@RequestParam(defaultValue = "0") int page,
+                                                                               @RequestParam(defaultValue = "10") int limit,
+                                                                               @RequestParam(defaultValue = "id") String sortBy,
+                                                                               @RequestParam(defaultValue = "ASC") String sortDirection) {
+        ResponseWithPagination<TagDTO> data = tagService.getAllTags();
+        Response<ResponseWithPagination<TagDTO>> response = new Response<>();
         response.setData(data);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
         response.setMessage("Get successfully");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/")
+    @GetMapping("/getById")
     public ResponseEntity<Response<TagDTO>> getTagById(@RequestParam("id") Long id) {
         TagDTO data = tagService.getTagById(id);
         Response<TagDTO> response = new Response<>();

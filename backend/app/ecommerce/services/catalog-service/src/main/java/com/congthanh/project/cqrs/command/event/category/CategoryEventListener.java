@@ -1,9 +1,6 @@
-package com.congthanh.project.cqrs.query.event;
+package com.congthanh.project.cqrs.command.event.category;
 
 import com.congthanh.project.constant.common.RabbitMQConstants;
-import com.congthanh.project.cqrs.command.event.category.CategoryCreatedEvent;
-import com.congthanh.project.cqrs.command.event.category.CategoryDeletedEvent;
-import com.congthanh.project.cqrs.command.event.category.CategoryUpdatedEvent;
 import com.congthanh.project.model.document.CategoryDocument;
 import com.congthanh.project.rabbitmq.category.CategoryEventType;
 import com.congthanh.project.rabbitmq.category.CategoryQueueEvent;
