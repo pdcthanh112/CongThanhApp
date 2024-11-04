@@ -2,16 +2,21 @@ package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.enums.TagStatus;
 import com.congthanh.project.cqrs.command.command.tag.CreateTagCommand;
+import com.congthanh.project.cqrs.command.command.tag.UpdateTagCommand;
+import com.congthanh.project.cqrs.query.query.tag.GetTagByIdQuery;
 import com.congthanh.project.dto.TagDTO;
 import com.congthanh.project.entity.Tag;
 import com.congthanh.project.exception.ecommerce.BadRequestException;
+import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.TagMapper;
 import com.congthanh.project.model.request.CreateTagRequest;
+import com.congthanh.project.model.request.UpdateTagRequest;
 import com.congthanh.project.repository.tag.TagRepository;
 import com.congthanh.project.service.TagService;
 import com.congthanh.project.utils.SnowflakeIdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.stereotype.Service;
 
@@ -43,21 +48,43 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public TagDTO getTagById(Long id) {
+        GetTagByIdQuery query = new GetTagByIdQuery(id);
+        var result = queryGateway.query(query, ResponseTypes.instanceOf(TagDTO.class));
+        System.out.println("Rssssssssssssssssssss"+result);
+        return null;
+    }
+
+    @Override
     public TagDTO createTag(CreateTagRequest request) {
-//        Optional<Tag> check = tagRepository.findByTagName(request.getTagName());
-//        if (check.isPresent()) {
-//            throw new RuntimeException("Tag name already exist");
-//        }
-        CreateTagCommand tag = CreateTagCommand.builder()
+        Optional<Tag> check = tagRepository.findByName(request.getName());
+        if (check.isPresent()) {
+            throw new RuntimeException("Tag name already exist");
+        }
+        CreateTagCommand event = CreateTagCommand.builder()
                 .id(snowflakeIdGenerator.nextId())
-                .name(request.getTagName())
+                .name(request.getName())
                 .createdAt(Instant.now())
                 .updatedAt(Instant.now())
                 .status(TagStatus.ACTIVE)
                 .build();
 
-        var response = commandGateway.sendAndWait(tag);
-//        return (TagDTO) response;
+        var response = commandGateway.sendAndWait(event);
+        return null;
+    }
+
+    @Override
+    public TagDTO updateTag(UpdateTagRequest request, Long tagId) {
+        Tag tag = tagRepository.findById(tagId).orElseThrow(() -> new NotFoundException("Tag not fount"));
+        UpdateTagCommand event = UpdateTagCommand.builder()
+                .id(tagId)
+                .name(request.getName())
+                .createAt(tag.getCreatedAt())
+                .updateAt(Instant.now())
+                .build();
+
+        var result = commandGateway.sendAndWait(event);
+
         return null;
     }
 

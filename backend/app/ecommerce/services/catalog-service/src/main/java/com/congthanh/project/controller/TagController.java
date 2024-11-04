@@ -3,6 +3,7 @@ package com.congthanh.project.controller;
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.TagDTO;
 import com.congthanh.project.model.request.CreateTagRequest;
+import com.congthanh.project.model.request.UpdateTagRequest;
 import com.congthanh.project.model.response.Response;
 import com.congthanh.project.service.TagService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,6 +33,16 @@ public class TagController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/")
+    public ResponseEntity<Response<TagDTO>> getTagById(@RequestParam("id") Long id) {
+        TagDTO data = tagService.getTagById(id);
+        Response<TagDTO> response = new Response<>();
+        response.setData(data);
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        response.setMessage("Get successfully");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<Response<TagDTO>> createTag(@RequestBody CreateTagRequest request) {
         TagDTO data = tagService.createTag(request);
@@ -42,15 +53,15 @@ public class TagController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-//    @PutMapping("/update")
-//    public ResponseEntity<Response<TagDTO>> updateTag(@RequestBody UpdateTagRequest request) {
-//        TagDTO data = tagService.createTag(request);
-//        Response<TagDTO> response = new Response<>();
-//        response.setData(data);
-//        response.setStatus(ResponseStatus.STATUS_SUCCESS);
-//        response.setMessage("Created successfully");
-//        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-//    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Response<TagDTO>> updateTag(@RequestBody UpdateTagRequest request, @PathVariable("id") Long tagId) {
+        TagDTO data = tagService.updateTag(request, tagId);
+        Response<TagDTO> response = new Response<>();
+        response.setData(data);
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        response.setMessage("Updated successfully");
+        return ResponseEntity.ok().body(response);
+    }
 
     @PostMapping("/add-product-tag")
     public ResponseEntity<Response<?>> addTagFromProduct(@RequestBody Map<String, String> requestData) {

@@ -3,7 +3,9 @@ package com.congthanh.project.cqrs.query.event;
 import com.congthanh.project.constant.common.RabbitMQConstants;
 import com.congthanh.project.constant.enums.TagStatus;
 import com.congthanh.project.cqrs.command.event.tag.TagCreatedEvent;
+import com.congthanh.project.cqrs.command.event.tag.TagDeletedEvent;
 import com.congthanh.project.cqrs.command.event.tag.TagUpdatedEvent;
+import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.document.TagDocument;
 import com.congthanh.project.rabbitmq.tag.TagEventType;
 import com.congthanh.project.rabbitmq.tag.TagQueueEvent;
@@ -37,6 +39,10 @@ public class TagEventListener {
                 TagUpdatedEvent updatedEvent = objectMapper.convertValue(event.getData(), TagUpdatedEvent.class);
                 handleTagUpdated(updatedEvent);
             }
+            case TagEventType.DELETE -> {
+                TagDeletedEvent deletedEvent = objectMapper.convertValue(event.getData(), TagDeletedEvent.class);
+                handTagDeleted(deletedEvent);
+            }
         }
 
     }
@@ -50,13 +56,23 @@ public class TagEventListener {
                 .status(TagStatus.ACTIVE)
                 .build();
         var result = tagDocumentRepository.save(tag);
-        log.info("Lưu Tag {} vào Mongo thành công, ID: {}",
-                result.getName(), result.getId());
+        log.info("Save Tag {} into Mongo successfully, ID: {}", result.getName(), result.getId());
     }
 
     private void handleTagUpdated(TagUpdatedEvent event) {
-        TagDocument tag = tagDocumentRepository.findById(event.getId()).orElse(null);
+        TagDocument tag = TagDocument.builder()
+                .id(event.getId())
+                .name(event.getName())
+                .createdAt(event.getCreateAt())
+                .updatedAt(event.getUpdateAt())
+                .status(event.getStatus())
+                .build();
+        var result = tagDocumentRepository.save(tag);
+        log.info("Update Tag {} into Mongo successfully, ID: {}", result.getName(), result.getId());
+    }
 
+    private void handTagDeleted(TagDeletedEvent event) {
+        tagDocumentRepository.deleteTagDocument(event.getTagId());
     }
 
 }

@@ -16,21 +16,6 @@ public class TagCustomRepositoryImpl implements TagCustomRepository{
     private EntityManager entityManager;
 
     @Override
-    public Optional<Tag> findByTagName(String tagName) {
-        String sql = "SELECT t FROM Tag t WHERE t.name ILIKE :tagName";
-
-        TypedQuery<Tag> query = entityManager.createQuery(sql, Tag.class);
-        query.setParameter("tagName", "%" + tagName + "%");
-
-        return Optional.ofNullable(query.getSingleResult());
-    }
-
-    @Override
-    public boolean existsByTagName(String tagName) {
-        return false;
-    }
-
-    @Override
     public Tag checkExistsTagInProduct(Long tagId, String productId) {
         String sql = "SELECT t FROM product_tag t WHERE tag_id = ?1 AND product_id = ?2";
 

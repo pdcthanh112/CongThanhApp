@@ -42,8 +42,12 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding categoryBinding() {
-//        return BindingBuilder.bind(queue).to(exchange).with("category.*");
         return BindingBuilder.bind(categoryQueue()).to(exchange()).with(RabbitMQConstants.Category.ROUTING_KEY);
+    }
+
+    @Bean
+    public Binding tagBinding() {
+        return BindingBuilder.bind(tagQueue()).to(exchange()).with(RabbitMQConstants.Tag.ROUTING_KEY);
     }
 
     @Bean

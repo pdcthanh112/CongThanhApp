@@ -114,6 +114,8 @@ public class CategoryServiceImpl implements CategoryService {
                 .image(request.getImage())
                 .status(CategoryStatus.ACTIVE)
                 .parentId(category.getParentId())
+                .createdAt(category.getCreatedAt())
+                .updatedAt(Instant.now())
                 .build();
         var response = commandGateway.sendAndWait(command);
         return null;

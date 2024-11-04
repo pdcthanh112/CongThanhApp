@@ -55,8 +55,7 @@ public class CategoryEventListener {
                     .updatedAt(event.getUpdatedAt())
                     .build();
             var result = categoryDocumentRepository.save(document);
-            log.info("Lưu Category {} vào Mongo thành công, ID: {}",
-                    result.getName(), result.getId());
+            log.info("Save Category {} into Mongo successfully, ID: {}", result.getName(), result.getId());
         } catch (Exception e) {
             log.error("Error processing event: ", e);
             throw e;
@@ -64,7 +63,7 @@ public class CategoryEventListener {
     }
 
     private void handCategoryUpdated(CategoryUpdatedEvent event) {
-        CategoryDocument document = CategoryDocument.builder()
+        CategoryDocument category = CategoryDocument.builder()
                 .id(event.getId())
                 .name(event.getName())
                 .slug(event.getSlug())
@@ -74,9 +73,8 @@ public class CategoryEventListener {
                 .createdAt(event.getCreatedAt())
                 .updatedAt(event.getUpdatedAt())
                 .build();
-        var result = categoryDocumentRepository.save(document);
-        log.info("Cập nhật Category {} vào Mongo thành công, ID: {}",
-                result.getName(), result.getId());
+        var result = categoryDocumentRepository.save(category);
+        log.info("Update Category {} into Mongo successfully, ID: {}", result.getName(), result.getId());
     }
 
     private void handleCategoryDeleted(CategoryDeletedEvent event) {

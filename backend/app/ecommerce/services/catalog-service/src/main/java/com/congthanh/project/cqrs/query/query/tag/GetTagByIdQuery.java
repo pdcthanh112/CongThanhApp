@@ -1,4 +1,4 @@
-package com.congthanh.project.model.request;
+package com.congthanh.project.cqrs.query.query.tag;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateTagRequest {
+public class GetTagByIdQuery {
 
-    private String name;
+    private Long id;
 
 }

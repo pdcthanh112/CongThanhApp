@@ -37,7 +37,7 @@ public class CategoryEventHandler {
                     .status(CategoryStatus.ACTIVE)
                     .build();
             var result = categoryRepository.save(category);
-            log.info("Lưu Category {} vào Postgres thành công, ID: {}", result.getName(), result.getId());
+            log.info("Save Category {} into Postgres successfully, ID: {}", result.getName(), result.getId());
             CategoryQueueEvent<CategoryCreatedEvent> queueEvent = CategoryQueueEvent.<CategoryCreatedEvent>builder()
                     .eventType(CategoryEventType.CREATE)
                     .data(event)
@@ -48,26 +48,6 @@ public class CategoryEventHandler {
             throw e;
         }
     }
-//@EventHandler
-//    public void on(CategoryCreatedEvent event) {
-//        try {
-//            Category category = Category.builder()
-//                    .id(event.getId())
-//                    .name(event.getName())
-//                    .slug(event.getSlug())
-//                    .description(event.getDescription())
-//                    .image(event.getImage())
-//                    .parentId(null)
-//                    .status(CategoryStatus.ACTIVE)
-//                    .build();
-//            var result = categoryRepository.save(category);
-//            log.info("Lưu Category {} vào Postgres thành công, ID: {}", result.getName(), result.getId());
-//            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Category.ROUTING_KEY, event);
-//        } catch (Exception e) {
-//            log.error("Error sending event: ", e);
-//            throw e;
-//        }
-//    }
 
     @EventHandler
     public void on(CategoryUpdatedEvent event) {
@@ -82,8 +62,7 @@ public class CategoryEventHandler {
                 .build();
 
         var result = categoryRepository.save(category);
-        log.info("Cập nhật Category {} vào Postgres thành công, ID: {}",
-                result.getName(), result.getId());
+        log.info("Update Category {} into Postgres successfully, ID: {}", result.getName(), result.getId());
 
         CategoryQueueEvent<CategoryUpdatedEvent> queueEvent = CategoryQueueEvent.<CategoryUpdatedEvent>builder()
                 .eventType(CategoryEventType.UPDATE)
