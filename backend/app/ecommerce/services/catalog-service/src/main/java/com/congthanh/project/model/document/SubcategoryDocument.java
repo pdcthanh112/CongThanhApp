@@ -3,14 +3,21 @@ package com.congthanh.project.model.document;
 import com.congthanh.project.constant.enums.CategoryStatus;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
+
+import java.time.Instant;
 
 //@Document
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class SubcategoryDocument {
 
-    private Long id;
+    private String id;
 
     @NotNull
     private String name;
@@ -24,5 +31,9 @@ public class SubcategoryDocument {
 
     @Enumerated
     private CategoryStatus status;
+
+    private Instant createdAt;
+
+    private Instant updatedAt;
 
 }

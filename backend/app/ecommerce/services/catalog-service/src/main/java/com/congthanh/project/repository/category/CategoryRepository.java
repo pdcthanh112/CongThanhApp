@@ -17,7 +17,4 @@ public interface CategoryRepository extends JpaRepository<Category, String>, Cat
 
   Optional<Category> findByName(String name);
 
-  @Modifying
-  @Query(nativeQuery = true, value = "UPDATE mydream.category SET status = 'Deleted' WHERE id = ?1 ")
-  boolean deleteCategory(String id);
 }

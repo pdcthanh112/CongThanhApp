@@ -27,27 +27,23 @@ public class CategoryEventHandler {
 
     @EventHandler
     public void on(CategoryCreatedEvent event) {
-        try {
-            Category category = Category.builder()
-                    .id(event.getId())
-                    .name(event.getName())
-                    .slug(event.getSlug())
-                    .description(event.getDescription())
-                    .image(event.getImage())
-                    .parentId(null)
-                    .status(CategoryStatus.ACTIVE)
-                    .build();
-            var result = categoryRepository.save(category);
-            log.info("Save Category {} into Postgres successfully, ID: {}", result.getName(), result.getId());
-            CategoryQueueEvent<CategoryCreatedEvent> queueEvent = CategoryQueueEvent.<CategoryCreatedEvent>builder()
-                    .eventType(CategoryEventType.CREATE)
-                    .data(event)
-                    .build();
-            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Category.ROUTING_KEY, queueEvent);
-        } catch (Exception e) {
-            log.error("Error sending event: ", e);
-            throw e;
-        }
+        Category category = Category.builder()
+                .id(event.getId())
+                .name(event.getName())
+                .slug(event.getSlug())
+                .description(event.getDescription())
+                .image(event.getImage())
+                .parentId(null)
+                .status(CategoryStatus.ACTIVE)
+                .build();
+        var result = categoryRepository.save(category);
+        log.info("Save Category {} into Postgres successfully, ID: {}", result.getName(), result.getId());
+        CategoryQueueEvent<CategoryCreatedEvent> queueEvent = CategoryQueueEvent.<CategoryCreatedEvent>builder()
+                .eventType(CategoryEventType.CREATE)
+                .data(event)
+                .build();
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Category.ROUTING_KEY, queueEvent);
+
     }
 
     @EventHandler
@@ -61,10 +57,8 @@ public class CategoryEventHandler {
                 .parentId(event.getParentId())
                 .status(event.getStatus())
                 .build();
-
         var result = categoryRepository.save(category);
         log.info("Update Category {} into Postgres successfully, ID: {}", result.getName(), result.getId());
-
         CategoryQueueEvent<CategoryUpdatedEvent> queueEvent = CategoryQueueEvent.<CategoryUpdatedEvent>builder()
                 .eventType(CategoryEventType.UPDATE)
                 .data(event)
@@ -83,9 +77,53 @@ public class CategoryEventHandler {
                 .parentId(null)
                 .status(CategoryStatus.INACTIVE)
                 .build();
-        categoryRepository.save(category);
+        var result = categoryRepository.save(category);
+        log.info("Delete Category {} in Postgres successfully, ID: {}", result.getName(), result.getId());
+        CategoryQueueEvent<CategoryDeletedEvent> queueEvent = CategoryQueueEvent.<CategoryDeletedEvent>builder()
+                .eventType(CategoryEventType.DELETE)
+                .data(event)
+                .build();
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Category.ROUTING_KEY, queueEvent);
+    }
 
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Category.ROUTING_KEY, event);
+    @EventHandler
+    public void on(SubcategoryAddedEvent event) {
+        Category category = Category.builder()
+                .id(event.getId())
+                .name(event.getName())
+                .slug(event.getSlug())
+                .description(event.getDescription())
+                .image(event.getImage())
+                .parentId(event.getParentId())
+                .status(CategoryStatus.ACTIVE)
+                .build();
+        var result = categoryRepository.save(category);
+        log.info("Add SubCategory {} with ID: {} into Postgres successfully, for parent: {}", result.getName(), result.getId(), result.getParentId());
+        CategoryQueueEvent<SubcategoryAddedEvent> queueEvent = CategoryQueueEvent.<SubcategoryAddedEvent>builder()
+                .eventType(CategoryEventType.ADD_SUBCATEGORY)
+                .data(event)
+                .build();
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Category.ROUTING_KEY, queueEvent);
+    }
+
+    @EventHandler
+    public void on(SubcategoryRemovedEvent event) {
+        Category category = Category.builder()
+                .id(event.getId())
+                .name(event.getName())
+                .slug(event.getSlug())
+                .description(event.getDescription())
+                .image(event.getImage())
+                .parentId(event.getParentId())
+                .status(CategoryStatus.ACTIVE)
+                .build();
+        var result = categoryRepository.save(category);
+        log.info("Remove SubCategory {} with ID: {} into Postgres successfully, for parent: {}", result.getName(), result.getId(), result.getParentId());
+        CategoryQueueEvent<SubcategoryRemovedEvent> queueEvent = CategoryQueueEvent.<SubcategoryRemovedEvent>builder()
+                .eventType(CategoryEventType.REMOVE_SUBCATEGORY)
+                .data(event)
+                .build();
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Category.ROUTING_KEY, queueEvent);
     }
 
     @ResetHandler

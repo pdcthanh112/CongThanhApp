@@ -1,5 +1,6 @@
 package com.congthanh.project.dto;
 
+import com.congthanh.project.constant.enums.CategoryStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,10 +28,10 @@ public class CategoryDTO {
 
   private String parentId;
 
-  private String status;
-
   private Instant createdAt;
 
   private Instant updatedAt;
+
+  private CategoryStatus status;
 
 }
