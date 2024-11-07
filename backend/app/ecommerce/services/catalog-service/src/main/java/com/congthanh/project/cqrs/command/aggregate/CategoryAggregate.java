@@ -88,7 +88,7 @@ public class CategoryAggregate {
 
     @CommandHandler
     public void handleAddSubcategory(AddSubcategoryCommand command) {
-        apply(new SubcategoryAddedEvent(command.getId(), command.getName(), command.getSlug(), command.getDescription(), command.getImage(), command.getParentId(), command.getStatus()));
+        apply(new SubcategoryAddedEvent(command.getId(), command.getName(), command.getSlug(), command.getDescription(), command.getImage(), command.getParentId(), command.getCreatedAt(), command.getUpdatedAt(), command.getStatus()));
     }
 
     @EventSourcingHandler
@@ -115,6 +115,10 @@ public class CategoryAggregate {
         this.slug = event.getSlug();
         this.description = event.getDescription();
         this.image = event.getImage();
+        this.parentId = event.getParentId();
+        this.createdAt = event.getCreatedAt();
+        this.updatedAt = event.getUpdatedAt();
+        this.status = event.getStatus();
     }
 
 }

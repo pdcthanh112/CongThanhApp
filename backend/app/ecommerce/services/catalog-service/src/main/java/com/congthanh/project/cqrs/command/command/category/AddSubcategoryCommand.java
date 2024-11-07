@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
+import java.time.Instant;
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -23,6 +25,10 @@ public class AddSubcategoryCommand {
     private final String image;
 
     private final String parentId;
+
+    private final Instant createdAt;
+
+    private final Instant updatedAt;
 
     private final CategoryStatus status;
 

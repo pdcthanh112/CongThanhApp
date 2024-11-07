@@ -1,21 +1,23 @@
 package com.congthanh.project.serviceImpl;
 
 import com.congthanh.project.constant.enums.CategoryStatus;
-import com.congthanh.project.cqrs.command.command.category.CreateCategoryCommand;
-import com.congthanh.project.cqrs.command.command.category.UpdateCategoryCommand;
+import com.congthanh.project.cqrs.command.command.category.*;
+import com.congthanh.project.cqrs.query.query.category.GetCategoryByIdQuery;
 import com.congthanh.project.dto.CategoryDTO;
 import com.congthanh.project.entity.Category;
+import com.congthanh.project.model.document.CategoryDocument;
+import com.congthanh.project.model.request.AddSubcategoryRequest;
 import com.congthanh.project.model.request.CreateCategoryRequest;
 import com.congthanh.project.model.request.UpdateCategoryRequest;
 import com.congthanh.project.model.response.PaginationInfo;
 import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
-import com.congthanh.project.model.mapper.CategoryMapper;
 import com.congthanh.project.repository.category.CategoryRepository;
 import com.congthanh.project.service.CategoryService;
 import com.congthanh.project.utils.Helper;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -36,6 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     private final CommandGateway commandGateway;
+
     private final QueryGateway queryGateway;
 
     private final ModelMapper modelMapper;
@@ -77,8 +80,19 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDTO getCategoryById(String id) {
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException(("not found")));
-        return CategoryMapper.mapCategoryEntityToDTO(category);
+        GetCategoryByIdQuery query = new GetCategoryByIdQuery(id);
+        CategoryDocument result = queryGateway.query(query, ResponseTypes.instanceOf(CategoryDocument.class)).join();
+
+        return CategoryDTO.builder()
+                .id(result.getId())
+                .name(result.getName())
+                .slug(result.getSlug())
+                .description(result.getDescription())
+                .image(result.getImage())
+                .createdAt(result.getCreatedAt())
+                .updatedAt(result.getUpdatedAt())
+                .status(result.getStatus())
+                .build();
     }
 
     @Override
@@ -122,14 +136,42 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public boolean deleteCategory(String id) {
+    public void deleteCategory(String id) {
         Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
         if (category.getStatus().equals(CategoryStatus.INACTIVE)) {
             throw new RuntimeException("Category have deleted before");
         } else {
-            boolean result = categoryRepository.deleteCategory(id);
-            return result;
+            DeleteCategoryCommand command = DeleteCategoryCommand.builder()
+                    .categoryId(id)
+                    .build();
+            commandGateway.sendAndWait(command);
         }
+    }
+
+    @Override
+    public void addSubcategory(AddSubcategoryRequest data, String parentId) {
+        Category category = categoryRepository.findById(parentId).orElseThrow(() -> new RuntimeException("Category not found"));
+        AddSubcategoryCommand command = AddSubcategoryCommand.builder()
+                .id(UUID.randomUUID().toString())
+                .name(data.getName())
+                .status(CategoryStatus.ACTIVE)
+                .description(data.getDescription())
+                .slug(new Helper().generateSlug(data.getName()))
+                .image(data.getImage())
+                .parentId(parentId)
+                .createdAt(Instant.now())
+                .updatedAt(Instant.now())
+                .build();
+        commandGateway.sendAndWait(command);
+    }
+
+    @Override
+    public void removeSubcategory(String categoryId, String parentId) {
+        RemoveSubcategoryCommand command = RemoveSubcategoryCommand.builder()
+                .categoryId(categoryId)
+                .parentId(parentId)
+                .build();
+        commandGateway.sendAndWait(command);
     }
 
 }

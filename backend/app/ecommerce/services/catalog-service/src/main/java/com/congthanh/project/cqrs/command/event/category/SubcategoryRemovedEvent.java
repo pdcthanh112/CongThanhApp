@@ -1,11 +1,13 @@
 package com.congthanh.project.cqrs.command.event.category;
 
+import com.congthanh.project.constant.enums.CategoryStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 
 @Data
 @AllArgsConstructor
@@ -26,5 +28,11 @@ public class SubcategoryRemovedEvent implements Serializable {
     private final String image;
 
     private final String parentId;
+
+    private final Instant createdAt;
+
+    private final Instant updatedAt;
+
+    private final CategoryStatus status;
 
 }

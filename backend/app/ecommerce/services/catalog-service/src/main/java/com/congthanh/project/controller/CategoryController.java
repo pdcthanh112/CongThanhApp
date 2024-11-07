@@ -3,6 +3,7 @@ package com.congthanh.project.controller;
 import com.congthanh.project.constant.common.ResponseStatus;
 import com.congthanh.project.dto.CategoryDTO;
 import com.congthanh.project.entity.Category;
+import com.congthanh.project.model.request.AddSubcategoryRequest;
 import com.congthanh.project.model.request.CreateCategoryRequest;
 import com.congthanh.project.model.request.UpdateCategoryRequest;
 import com.congthanh.project.model.response.Response;
@@ -74,7 +75,23 @@ public class CategoryController {
 
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<String> deleteCategory(@RequestParam("id") String id) {
-    boolean result = categoryService.deleteCategory(id);
+    categoryService.deleteCategory(id);
+    return ResponseEntity.status(HttpStatus.OK).body("Delete successfully");
+  }
+
+  @PostMapping("/{id}/add-subcategory")
+  public ResponseEntity<Response<CategoryDTO>> addSubcategory(@RequestBody @Valid AddSubcategoryRequest request, @PathVariable("id") String parentId) {
+    categoryService.addSubcategory(request, parentId);
+    Response<CategoryDTO> response = new Response<>();
+    response.setData(null);
+    response.setMessage("Add subcategory successfully");
+    response.setStatus(ResponseStatus.STATUS_SUCCESS);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+  }
+
+  @DeleteMapping("/{parentId}/remove-subcategory/{categoryId}")
+  public ResponseEntity<String> removeSubcategory(@PathVariable("parentId") String parentId, @PathVariable("categoryId") String categoryId) {
+    categoryService.removeSubcategory(categoryId, parentId);
     return ResponseEntity.status(HttpStatus.OK).body("Delete successfully");
   }
 
