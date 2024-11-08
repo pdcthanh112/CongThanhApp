@@ -15,13 +15,12 @@ import lombok.NoArgsConstructor;
 public class Inventory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(unique = true, nullable = false)
     private String sku;
 
     @Column(nullable = false)
-    private int stock;
+    private int quantity;
 
 }

@@ -24,7 +24,6 @@ public class ProductAggregate {
     private String id;
     private String name;
     private String category;
-    private String subcategory;
     private String slug;
     private String description;
     private List<ProductImageDTO> image;
@@ -38,7 +37,7 @@ public class ProductAggregate {
     }
 
     @CommandHandler
-    public void handleCreateProduct(CreateProductCommand command) {
+    public ProductAggregate(CreateProductCommand command) {
         apply(new ProductCreatedEvent(command.getId(), command.getName(), command.getCategory(), command.getSubcategory(), command.getSlug(), command.getDescription(), command.getImage(), command.getAttribute(), command.getSupplier(), command.getBrand(), command.getVariant(), command.getStatus()));
     }
 
@@ -47,7 +46,6 @@ public class ProductAggregate {
         this.id = event.getId();
         this.name = event.getName();
         this.category = event.getCategory();
-        this.subcategory = event.getSubcategory();
         this.slug = event.getSlug();
         this.description = event.getDescription();
         this.image = event.getImage();
