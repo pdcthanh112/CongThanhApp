@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class InventoryDTO {
 
-    private Long id;
+    private String id;
 
     private String sku;
 
     @Min(0)
     @NotNull
-    private int stock;
+    private int quantity;
 
 }

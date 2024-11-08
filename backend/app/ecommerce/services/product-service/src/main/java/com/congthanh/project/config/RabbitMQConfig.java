@@ -11,19 +11,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
+    public static final String EXCHANGE_NAME = "product_service_exchange";
+
     @Bean
     public Queue productQueue() {
         return new Queue("productQueue", false);
     }
 
     @Bean
-    public TopicExchange productExchange() {
-        return new TopicExchange("productExchange");
+    public TopicExchange exchange() {
+        return new TopicExchange(EXCHANGE_NAME);
     }
 
     @Bean
-    public Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("product.created");
+    public Binding productBinding() {
+        return BindingBuilder.bind(productQueue()).to(exchange()).with("product.created");
     }
 
     @Bean
