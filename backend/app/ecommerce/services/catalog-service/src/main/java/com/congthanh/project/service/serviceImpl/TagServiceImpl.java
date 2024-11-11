@@ -10,7 +10,6 @@ import com.congthanh.project.entity.Tag;
 import com.congthanh.project.exception.ecommerce.BadRequestException;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.document.TagDocument;
-import com.congthanh.project.model.mapper.TagMapper;
 import com.congthanh.project.model.request.CreateTagRequest;
 import com.congthanh.project.model.request.UpdateTagRequest;
 import com.congthanh.project.model.response.ResponseWithPagination;
@@ -24,7 +23,6 @@ import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -92,6 +90,7 @@ public class TagServiceImpl implements TagService {
                 .build();
 
         var response = commandGateway.sendAndWait(event);
+
         return null;
     }
 

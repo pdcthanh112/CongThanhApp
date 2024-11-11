@@ -3,6 +3,8 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "com.congthanh.project.grpc";
 
+import "google/protobuf/timestamp.proto";
+
 service CategoryService {
   rpc getCategoryById (CategoryRequest) returns (CategoryResponse) {}
 }
@@ -17,5 +19,13 @@ message CategoryResponse {
   string slug = 3;
   string description = 4;
   string image = 5;
-  string status = 6;
+  string parentId = 6;
+  google.protobuf.Timestamp createdAt = 7;
+  google.protobuf.Timestamp updatedAt = 8;
+  string status = 9;
 }
+
+//enum CategoryStatus {
+//  ACTIVE = 0;
+//  INACTIVE = 1;
+//}

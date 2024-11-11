@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collation = "product")
+@Document(collection = "product")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,9 +26,7 @@ public class ProductDocument {
 
     private String name;
 
-    private String category;
-
-    private String subcategory;
+    private CategoryDocument category;
 
     @NotNull
     private String slug;

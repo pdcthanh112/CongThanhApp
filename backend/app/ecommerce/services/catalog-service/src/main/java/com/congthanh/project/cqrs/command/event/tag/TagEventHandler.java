@@ -2,7 +2,6 @@ package com.congthanh.project.cqrs.command.event.tag;
 
 import com.congthanh.project.config.RabbitMQConfig;
 import com.congthanh.project.constant.common.RabbitMQConstants;
-import com.congthanh.project.constant.enums.TagStatus;
 import com.congthanh.project.entity.Tag;
 import com.congthanh.project.rabbitmq.tag.TagEventType;
 import com.congthanh.project.rabbitmq.tag.TagQueueEvent;

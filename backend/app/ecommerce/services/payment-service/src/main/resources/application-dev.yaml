@@ -173,3 +173,15 @@ eureka:
 snowflake:
   worker-id: 1
   datacenter-id: 1
+
+paypal:
+  client:
+    id: AapCm_Cys06LVePLm0NR2S2UYIt2j26KKn321OtvCRT7vwWJ3O1kxOLWNBNxrCr26BLGTTWrdC_tD_9I
+    secret: EPBgT8fDYn_DXjPxrG_xPuBZEcUkYgZCtFCFFKJlNx8tTqIfCbUMX4nKoS4GKoQT3C1vK4taUY397YT_
+  mode: sandbox # 'live' for production
+
+stripe:
+  api:
+    key: sk_test_51QJqCNAhMlLU3M6EMdkbkBq81BwIaEbZBfGNArb3lbSFx0GBG9aU2hV9685sd5Rd8PrjMbkja5Dm9qF5JMwGnjBi00vfPWhtdL
+    webhook-secret: aa
+

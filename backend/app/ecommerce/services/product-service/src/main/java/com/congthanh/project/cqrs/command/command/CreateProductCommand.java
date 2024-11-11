@@ -21,7 +21,7 @@ public class CreateProductCommand {
 
     private final String name;
 
-    private final Long category;
+    private final String category;
 
     private final Long subcategory;
 

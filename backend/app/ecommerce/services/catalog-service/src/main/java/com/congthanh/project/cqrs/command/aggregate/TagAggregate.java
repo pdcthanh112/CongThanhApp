@@ -43,7 +43,6 @@ public class TagAggregate {
 
     @CommandHandler
     public void handleUpdateTag(UpdateTagCommand command) {
-        System.out.println("aggregate");
         apply(new TagUpdatedEvent(command.getId(), command.getName(), command.getCreateAt(), command.getUpdateAt(), command.getStatus()));
     }
 
