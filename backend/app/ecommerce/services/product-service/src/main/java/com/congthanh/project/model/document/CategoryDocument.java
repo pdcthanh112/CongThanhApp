@@ -1,4 +1,4 @@
-package com.congthanh.project.model.request;
+package com.congthanh.project.model.document;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddProductViewRequest {
+public class CategoryDocument {
 
-    private String productId;
+    private String id;
 
-    private String customerId;
+    private String name;
+
+    private CategoryDocument subcategory;
 
 }

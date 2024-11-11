@@ -7,8 +7,9 @@ import com.congthanh.project.cqrs.query.query.GetProductBySlugQuery;
 import com.congthanh.project.dto.*;
 import com.congthanh.project.entity.Product;
 import com.congthanh.project.grpc.*;
+import com.congthanh.project.model.document.CategoryDocument;
 import com.congthanh.project.model.document.ProductDocument;
-import com.congthanh.project.model.document.ProductQuery;
+import com.congthanh.project.model.document.ProductDocument;
 import com.congthanh.project.model.request.CreateProductRequest;
 import com.congthanh.project.model.response.*;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
@@ -93,8 +94,7 @@ public class ProductServiceImpl implements ProductService {
                 .name(data.getName())
                 .description(data.getDescription())
                 .slug(data.getSlug())
-                .category(data.getCategory())
-                .subcategory(data.getSubcategory())
+//                .category(Category.build())
                 .status(data.getStatus())
                 .build();
     }
@@ -108,33 +108,32 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductBySlug(String slug) {
-        ProductQuery data = queryGateway.query(new GetProductBySlugQuery(slug), ResponseTypes.instanceOf(ProductQuery.class)).join();
-        return ProductDTO.builder()
-                .id(data.getId())
-                .name(data.getName())
-                .slug(data.getSlug())
-                .build();
+//        ProductQuery data = queryGateway.query(new GetProductBySlugQuery(slug), ResponseTypes.instanceOf(ProductQuery.class)).join();
+//        return ProductDTO.builder()
+//                .id(data.getId())
+//                .name(data.getName())
+//                .slug(data.getSlug())
+//                .build();
+        return null;
     }
 
     @Override
     public ProductDTO createProduct(CreateProductRequest request) {
         CategoryResponse category = categoryGrpcService.getCategoryById(request.getCategory());
-        SubcategoryResponse subcategory = subcategoryGrpcService.getSubcategoryById(request.getSubcategory());
-        SupplierResponse supplier = null;
+//        SupplierResponse supplier = null;
         BrandResponse brand = null;
 
         String productSlug = helper.generateSlug(request.getName());
 
-        assert category != null && subcategory != null && supplier != null && brand != null;
+//        assert category != null && subcategory != null && supplier != null && brand != null;
         CreateProductCommand product = CreateProductCommand.builder()
                 .name(request.getName())
-                .category((long) category.getId())
-                .subcategory((long) subcategory.getId())
+                .category(category.getId())
                 .description(request.getDescription())
                 .brand(String.valueOf(brand.getId()))
                 .status(ProductStatus.ACTIVE)
                 .slug(productSlug)
-                .supplier(supplier.getId())
+//                .supplier(supplier.getId())
                 .build();
         ProductDTO result = commandGateway.sendAndWait(product);
         kafkaTemplate.send("create-product-topic", result);

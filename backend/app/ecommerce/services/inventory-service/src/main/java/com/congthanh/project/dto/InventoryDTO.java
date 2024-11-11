@@ -15,6 +15,7 @@ public class InventoryDTO {
 
     private String id;
 
+    @NotNull
     private String sku;
 
     @Min(0)

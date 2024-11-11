@@ -1,14 +1,21 @@
 package com.congthanh.project.entity;
 
+import com.congthanh.project.constant.enums.PaymentMethod;
+import com.congthanh.project.constant.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -16,25 +23,39 @@ import java.time.Instant;
 public class Payment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "amount", precision = 38, scale = 2)
     private BigDecimal amount;
 
+    private String currency;
+
     @Column(name = "payment_method")
-    private String paymentMethod;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
-    @Column(name = "created_date", columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    private Instant createdDate;
+    @Column(name = "created_at")
+    @CreatedDate
+    private Instant createdAt;
 
-    @Column(name = "payment_date", columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    private Instant paymentDate;
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 
-    private String status;
+    @Column(name = "payment_at")
+    private Instant paymentAt;
+
+    private String transactionId;  // ID từ payment provider
+    private String paymentUrl;     // URL redirect để thanh toán (nếu có)
+
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status;
 
 //    @OneToOne(mappedBy = "payment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JsonBackReference
 //    @JsonIgnore
     private Long checkout;
+
+    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
+    private List<PaymentTransaction> transactions;
 }

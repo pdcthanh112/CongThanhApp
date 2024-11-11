@@ -27,7 +27,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .amount(paymentDTO.getAmount())
                 .paymentMethod(paymentDTO.getPaymentMethod())
                 .createdDate(Instant.now())
-                .status(PaymentStatus.NEW.name())
+                .status(PaymentStatus.PENDING)
                 .build();
         Payment result = paymentRepository.createPayment(payment);
         return result;

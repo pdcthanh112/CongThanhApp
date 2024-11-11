@@ -1,0 +1,44 @@
+package com.congthanh.project.entity;
+
+import com.congthanh.project.constant.enums.TransactionStatus;
+import com.congthanh.project.constant.enums.TransactionType;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.math.BigDecimal;
+import java.time.Instant;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "payment_transactions")
+public class PaymentTransaction {
+
+    @Id
+    private String id;
+
+    @ManyToOne
+    private Payment payment;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus status;
+
+    private BigDecimal amount;
+    private String currency;
+
+    private String providerTransactionId;
+    private String providerResponse;
+
+    @CreatedDate
+    private Instant createdAt;
+
+}
