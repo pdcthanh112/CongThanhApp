@@ -4,13 +4,15 @@ server:
 spring:
   application:
     name: congthanhapp-ecommerce-config-service
+  profiles:
+    active: native
+
   cloud:
     config:
       server:
         native:
           search-locations: classpath:/configurations
-        git:
-          uri: https://github.com/your-username/your-config-repo
+
 
 eureka:
   client:

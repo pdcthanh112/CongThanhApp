@@ -36,6 +36,7 @@
         <module>review-service</module>
         <module>shipping-service</module>
         <module>supplier-service</module>
+        <module>warehouse-service</module>
     </modules>
 
     <dependencyManagement>

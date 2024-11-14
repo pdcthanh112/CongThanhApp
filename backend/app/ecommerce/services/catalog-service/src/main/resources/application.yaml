@@ -1,6 +1,10 @@
 spring:
   application:
     name: congthanhapp-ecommerce-catalog-service
+  config:
+    import:
+      - optional:file:./.env
+      - configserver:http://localhost:8888/
 
   profiles:
     active: dev

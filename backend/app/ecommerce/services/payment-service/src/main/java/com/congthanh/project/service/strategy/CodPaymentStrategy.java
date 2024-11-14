@@ -1,4 +1,4 @@
-package com.congthanh.project.service.processor;
+package com.congthanh.project.service.strategy;
 
 import com.congthanh.project.constant.enums.PaymentMethod;
 import com.congthanh.project.constant.enums.PaymentStatus;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class CodPaymentProcessor implements PaymentProcessor {
+public class CodPaymentStrategy implements PaymentStrategy {
 
     private final PaymentRepository paymentRepository;
 
@@ -48,9 +48,9 @@ public class CodPaymentProcessor implements PaymentProcessor {
     }
 
     @Override
-    public PaymentResponse processPayment(String paymentId, Map<String, String> params) {
-        Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new NotFoundException("Payment not found"+paymentId));
+    public PaymentResponse processPayment(PaymentRequest request) {
+        Payment payment = paymentRepository.findById(request.getOrderId())
+                .orElseThrow(() -> new NotFoundException("Payment not found" + request.getPaymentMethod()));
 
         // COD payment is marked as CONFIRMED when order is confirmed
         payment.setStatus(PaymentStatus.CONFIRMED);
@@ -71,6 +71,11 @@ public class CodPaymentProcessor implements PaymentProcessor {
                 .paymentId(payment.getId())
                 .status(payment.getStatus())
                 .build();
+    }
+
+    @Override
+    public PaymentResponse refundPayment(String paymentId, RefundRequest request) {
+        return null;
     }
 
     @Override
