@@ -1,9 +1,11 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.PaymentDTO;
-import com.congthanh.project.entity.Payment;
+import com.congthanh.project.constant.enums.PaymentMethod;
+import com.congthanh.project.model.request.PaymentRequest;
+import com.congthanh.project.model.response.PaymentResponse;
 
 public interface PaymentService {
 
-    Payment createPayment(PaymentDTO paymentDTO);
+    PaymentResponse processPayment(PaymentMethod method, PaymentRequest request);
+
 }

@@ -25,7 +25,9 @@ public class PaymentRequest {
     private PaymentMethod paymentMethod;
 
     private String description;
+
     private String returnUrl;
+
     private String cancelUrl;
 
     // Card payment specific fields
@@ -34,9 +36,5 @@ public class PaymentRequest {
     // Bank transfer specific fields
     private BankDetails bankDetails;
 
-    // COD specific fields
-    private DeliveryAddress deliveryAddress;
-
-    // Additional metadata
-    private Map<String, String> metadata;
+    private Map<String, String> additionalInfo;
 }

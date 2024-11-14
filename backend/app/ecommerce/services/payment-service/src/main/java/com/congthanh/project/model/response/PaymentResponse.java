@@ -14,18 +14,27 @@ import java.util.Map;
 @Builder
 public class PaymentResponse {
     private Long paymentId;
+
     private PaymentStatus status;
+
     private PaymentMethod paymentMethod;
+
     private BigDecimal amount;
+
     private String currency;
+
     private String orderId;
 
     private String transactionId;
-    private String paymentUrl;       // URL để redirect user đến trang thanh toán
+
     private Instant createdAt;
+
     private Instant updatedAt;
 
     private Map<String, String> additionalData;
+
     private String message;
+
     private List<String> errors;
+
 }

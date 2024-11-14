@@ -1,4 +1,4 @@
-package com.congthanh.project.service.processor;
+package com.congthanh.project.service.strategy;
 
 import com.congthanh.project.model.request.PaymentRequest;
 import com.congthanh.project.model.request.RefundRequest;
@@ -7,11 +7,16 @@ import com.congthanh.project.model.response.RefundResponse;
 
 import java.util.Map;
 
-public interface PaymentProcessor {
+public interface PaymentStrategy {
 
     PaymentResponse initializePayment(PaymentRequest request);
-    PaymentResponse processPayment(String paymentId, Map<String, String> params);
+
+    PaymentResponse processPayment(PaymentRequest request);
+
+    PaymentResponse refundPayment(String paymentId, RefundRequest request);
+
     PaymentResponse validatePayment(String paymentId);
+
     RefundResponse processRefund(RefundRequest request);
 
 }

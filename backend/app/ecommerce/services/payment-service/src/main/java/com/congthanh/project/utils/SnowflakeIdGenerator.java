@@ -22,13 +22,19 @@ public class SnowflakeIdGenerator {
     private long lastTimestamp = -1L;
     private long sequence = 0L;
 
-    @Value("${snowflake.worker-id}")
-    private final long workerId;
+//    @Value("${snowflake.worker-id}")
+//    private final long workerId ;
+//
+//    @Value("${snowflake.datacenter-id}")
+//    private final long datacenterId;
 
-    @Value("${snowflake.datacenter-id}")
-    private final long datacenterId;
+    private long workerId;
+    private long datacenterId;
 
-    public SnowflakeIdGenerator(long workerId, long datacenterId) {
+    //    public SnowflakeIdGenerator(long workerId, long datacenterId) {
+    public SnowflakeIdGenerator(
+            @Value("${snowflake.worker-id}") long workerId,
+            @Value("${snowflake.datacenter-id}") long datacenterId) {
         if (workerId > maxWorkerId || workerId < 0) {
             throw new IllegalArgumentException(String.format("Worker ID can't be greater than %d or less than 0", maxWorkerId));
         }

@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: congthanhapp-ecommerce-catalog-service
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+      retry:
+        initial-interval: 3000
+        multiplier: 1.3
+        max-interval: 10000
+        max-attempts: 20
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  cloud:
+    config:
+      uri: http://localhost:8888
+      label: develop  # nhánh git chứa config cho môi trường dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  cloud:
+    config:
+      uri: http://test-config-server:8888  # hoặc IP/domain của config server môi trường test
+      label: test     # nhánh git chứa config cho môi trường test
+
+---
+spring:
+  config:
+    activate:
+      on-profile: staging
+  cloud:
+    config:
+      uri: http://staging-config-server:8888
+      label: staging  # nhánh git chứa config cho môi trường staging
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  cloud:
+    config:
+      uri: http://prod-config-server:8888
+      label: master   # nhánh git chứa config cho môi trường production
+      username: ${CONFIG_SERVER_USERNAME}  # credentials cho production
+      password: ${CONFIG_SERVER_PASSWORD}

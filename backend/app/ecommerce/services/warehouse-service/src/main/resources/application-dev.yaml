@@ -1,15 +1,18 @@
 server:
-  port: 5008 #${SERVER_PORT}
-  servlet:
-    context-path: /api
-  compression:
-    enabled: true
-    min-response-size: 1024
+  port: 5016 # ${SERVER_PORT}
+#  servlet:
+#    context-path: /api
+#  compression:
+#    enabled: true
+#    min-response-size: 1024
 
 spring:
   application:
-    name: congthanhapp-ecommerce-payment-service
-
+    name: congthanhapp-ecommerce-warehouse-service
+  config:
+    import: optional:file:.env[.properties]
+    activate:
+      on-profile: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
     username: postgres
@@ -20,16 +23,38 @@ spring:
     database: default
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-  mongodb:
-    uri: mongodb://localhost:27017/MyDream
-    database: CongThanhApp
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/CongThanhApp-Ecommerce
+      database: CongThanhApp-Ecommerce
+
+    redis:
+      port: 6379
+      password: your_password_if_any
+      database: 0
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: congthanh
+    password: 123456
+  activemq:
+    packages:
+  #      trust-all: true
 
   graphql:
     graphiql:
@@ -47,13 +72,13 @@ spring:
       password: password # Mật khẩu mặc định
     jwt:
       token:
-        secretKey: ${JWT_SECRET_KEY}
+        secretKey: "secretKey" # ${JWT_SECRET_KEY}
         tokenPrefix: "Bearer "
         tokenExpirationAfterDays: 30
 
-  main:
-    allow-circular-references: true
-    allow-bean-definition-overriding: true
+  #  main:
+  #    allow-circular-references: true
+  #    allow-bean-definition-overriding: true
 
   mail:
     host: smtp.example.com
@@ -83,32 +108,13 @@ spring:
       allowed-origins: "http://localhost:3000"
       allowed-methods: GET,POST,PUT,PATCH,DELETE
 
-  data:
-    redis:
-      port: 6379
-      password: your_password_if_any
-      database: 0
-      timeout: 2000ms
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          min-idle: 0
-          max-wait: -1ms
-
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
-      group-id: congthanhapp-group
+      group-id: catalog-service-group
       auto-offset-reset: earliest
-    #      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    #      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -116,16 +122,20 @@ spring:
   #  Cấu hình quốc tế hoá i18n
   messages:
     basename: messages
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
-  ai:
-    ollama:
-      embedding:
-        enabled: false
-    vectorstore:
-      pgvector:
-        index-type: hnsw
-        distance-type: cosine_distance
-        dimensions: 384
+ai:
+  ollama:
+    embedding:
+    enabled: false
+  vectorstore:
+    pgvector:
+      index-type: hnsw
+      distance-type: cosine_distance
+      dimensions: 384
 
 grpc:
   server:
@@ -156,6 +166,13 @@ springdoc:
 #    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 
 management:
+  endpoint:
+    prometheus:
+      enabled: true
+    refresh:
+      enabled: true
+    restart:
+      enabled: true
   endpoints:
     web:
       exposure:
@@ -166,24 +183,34 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
+      #      default-zone: http://eureka:123456@localhost:8761/eureka
       default-zone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
+#    prefer-ip-address: true
+
+axon:
+  axonserver:
+    servers: localhost:8124
+    enabled: true
+  eventhandling:
+    processors:
+      catalog-service:
+        mode: tracking
+        thread-count: 4
+        initial-segment-count: 1
+        batch-size: 100
+  datasource:
+    jdbc-url: jdbc:h2:mem:axondb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+#axoniq:
+#  console:
+#    enabled: true
+#    url: https://console.axoniq.io
 
 snowflake:
   worker-id: 1
   datacenter-id: 1
-
-paypal:
-  client:
-    id: ARyn0ImfB1VNxiCQk6rHxnpaU80AZCpSAmHuG_xh2Wtggyo3NX-bL3dPusB5ngXOqROSeWAcJSFdDa_v
-    secret: EKBIF7_abytr1Xig0MUWrBiXT-rPRPtmfxuSxrMpUTkd_UW-NxrBcI05PAHrCFkwY5g52htXRnE9htTz
-#    id: AapCm_Cys06LVePLm0NR2S2UYIt2j26KKn321OtvCRT7vwWJ3O1kxOLWNBNxrCr26BLGTTWrdC_tD_9I
-#    secret: EPBgT8fDYn_DXjPxrG_xPuBZEcUkYgZCtFCFFKJlNx8tTqIfCbUMX4nKoS4GKoQT3C1vK4taUY397YT_
-  mode: sandbox # 'live' for production
-
-stripe:
-  api:
-    key: sk_test_51QJqCNAhMlLU3M6EMdkbkBq81BwIaEbZBfGNArb3lbSFx0GBG9aU2hV9685sd5Rd8PrjMbkja5Dm9qF5JMwGnjBi00vfPWhtdL
-    webhook-secret: aa
 
