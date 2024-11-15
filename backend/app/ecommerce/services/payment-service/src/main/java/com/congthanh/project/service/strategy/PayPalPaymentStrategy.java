@@ -65,12 +65,13 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
         payment.setPayer(payer);
         payment.setTransactions(Arrays.asList(transaction));
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("canceUrl");
-        redirectUrls.setReturnUrl("successUrl");
+        redirectUrls.setCancelUrl("http://localhost:3000/en/payment/success");
+        redirectUrls.setReturnUrl("http://localhost:3000/en/payment/fail");
         payment.setRedirectUrls(redirectUrls);
 
 //        return payment.create(apiContext);
         try {
+            System.out.println("TRYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
             Payment payment1 = payment.create(apiContext);
             System.out.println("RRRRRRRRRRRRRRR" + payment1);
             return PaymentResponse.builder()

@@ -1,7 +1,7 @@
 server:
   port: 5002 # ${SERVER_PORT}
-#  servlet:
-#    context-path: /api
+  servlet:
+    context-path: /api
 #  compression:
 #    enabled: true
 #    min-response-size: 1024
