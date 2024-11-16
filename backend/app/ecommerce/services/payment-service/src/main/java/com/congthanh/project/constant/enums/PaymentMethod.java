@@ -4,8 +4,12 @@ public enum PaymentMethod {
     CASH_ON_DELIVERY,
     CREDIT_DEBIT_CARD,
     E_WALLET,
+    GOOGLE_PAY,
+    SAMSUNG_PAY,
+    APPLE_PAY,
     BANK_TRANSFER,
     PAYPAL,
-    STRIPE;
+    STRIPE,
+    BITCOIN,
 }
 

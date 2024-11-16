@@ -11,12 +11,6 @@ import java.util.Map;
 @Component
 public class PaymentValidator {
 
-    private final CODValidationUtils cODValidationUtils;
-
-    public PaymentValidator(CODValidationUtils cODValidationUtils) {
-        this.cODValidationUtils = cODValidationUtils;
-    }
-
     public void validate(PaymentRequest request) {
         // Validate common fields first
         ValidationResult commonValidation = PaymentValidationUtils.validateCommonFields(request);
@@ -72,6 +66,11 @@ public class PaymentValidator {
         String returnUrl = request.getAdditionalInfo().get("returnUrl");
         if (returnUrl != null) {
             return PayPalValidationUtils.validateReturnUrl(returnUrl);
+        }
+
+        String cancelUrl = request.getAdditionalInfo().get("returnUrl");
+        if (cancelUrl != null) {
+            return PayPalValidationUtils.validateReturnUrl(cancelUrl);
         }
 
         return ValidationResult.success();

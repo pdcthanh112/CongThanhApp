@@ -12,6 +12,7 @@ import com.congthanh.project.model.request.RefundRequest;
 import com.congthanh.project.model.response.PaymentResponse;
 import com.congthanh.project.model.response.RefundResponse;
 import com.congthanh.project.repository.PaymentRepository;
+import com.congthanh.project.service.PaymentValidator;
 import com.congthanh.project.utils.SnowflakeIdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,13 @@ public class CodPaymentStrategy implements PaymentStrategy {
     private final PaymentRepository paymentRepository;
 
     private final SnowflakeIdGenerator snowflakeIdGenerator;
+
+    private final PaymentValidator paymentValidator;
+
+    @Override
+    public PaymentMethod paymentMethod() {
+        return PaymentMethod.CASH_ON_DELIVERY;
+    }
 
     @Override
     public PaymentResponse initializePayment(PaymentRequest request) {
@@ -53,7 +61,7 @@ public class CodPaymentStrategy implements PaymentStrategy {
                 .orElseThrow(() -> new NotFoundException("Payment not found" + request.getPaymentMethod()));
 
         // COD payment is marked as CONFIRMED when order is confirmed
-        payment.setStatus(PaymentStatus.CONFIRMED);
+        payment.setStatus(PaymentStatus.PROCESSING);
         payment = paymentRepository.save(payment);
 
         // Create transaction record
@@ -79,8 +87,8 @@ public class CodPaymentStrategy implements PaymentStrategy {
     }
 
     @Override
-    public PaymentResponse validatePayment(String paymentId) {
-        return null;
+    public void validatePayment(PaymentRequest request) {
+        paymentValidator.validate(request);
     }
 
     @Override

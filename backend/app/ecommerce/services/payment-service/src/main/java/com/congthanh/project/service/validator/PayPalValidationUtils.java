@@ -32,4 +32,13 @@ public class PayPalValidationUtils {
         }
     }
 
+    public static ValidationResult validateCancelUrl(String url) {
+        try {
+            new URL(url).toURI();
+            return ValidationResult.success();
+        } catch (Exception e) {
+            return ValidationResult.error("Invalid cancel URL");
+        }
+    }
+
 }

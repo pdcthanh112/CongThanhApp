@@ -1,5 +1,8 @@
 package com.congthanh.project.service.validator;
 
+import lombok.Getter;
+
+@Getter
 public class ValidationResult {
 
     private final boolean valid;
@@ -16,14 +19,6 @@ public class ValidationResult {
 
     public static ValidationResult error(String message) {
         return new ValidationResult(false, message);
-    }
-
-    public boolean isValid() {
-        return valid;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
     }
 
 }

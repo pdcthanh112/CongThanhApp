@@ -26,25 +26,13 @@ public class PaymentController {
     @PostMapping("/process")
     public ResponseEntity<PaymentResponse> processPayment(@RequestParam("method") PaymentMethod method, @RequestBody PaymentRequest request) {
         PaymentResponse result = paymentService.processPayment(method, request);
-        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCC"+result);
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/paypal")
-    public ResponseEntity<?> testpaypal(@RequestBody PaymentRequest request) {
-//        try {
-            PaymentResponse payment = paymentService.processPayment(PaymentMethod.PAYPAL, request);
-
-//            for (Links links : payment.getLinks()) {
-//                if (links.getRel().equals("approval_url")) {
-//                    return ResponseEntity.ok("redirect:" + links.getHref());
-//                }
-//            }
-//        } catch (PayPalRESTException e) {
-//            System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEE" + e.getMessage());
-//        }
-//        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCC"+payment);
-        return ResponseEntity.ok(payment);
+    @PostMapping("/execute")
+    public ResponseEntity<PaymentResponse> executePayment(@RequestParam("method") PaymentMethod method, @RequestBody PaymentRequest request) {
+        PaymentResponse result = paymentService.executePayment(method, request);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/methods")

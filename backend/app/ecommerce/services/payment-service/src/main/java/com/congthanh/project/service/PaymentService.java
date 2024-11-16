@@ -8,4 +8,5 @@ public interface PaymentService {
 
     PaymentResponse processPayment(PaymentMethod method, PaymentRequest request);
 
+    PaymentResponse executePayment(PaymentMethod method, PaymentRequest request);
 }

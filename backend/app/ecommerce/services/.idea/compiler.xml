@@ -13,8 +13,8 @@
         <module name="customer-service" />
         <module name="warehouse-service" />
         <module name="review-service" />
-        <module name="promotion-service" />
         <module name="catalog-service" />
+        <module name="promotion-service" />
         <module name="product-service" />
         <module name="notification-service" />
         <module name="inventory-service" />

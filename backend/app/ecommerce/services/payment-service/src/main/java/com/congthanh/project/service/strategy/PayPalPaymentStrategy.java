@@ -1,19 +1,18 @@
 package com.congthanh.project.service.strategy;
 
+import com.congthanh.project.constant.enums.PaymentMethod;
 import com.congthanh.project.model.request.PaymentRequest;
 import com.congthanh.project.model.request.RefundRequest;
 import com.congthanh.project.model.response.PaymentResponse;
 import com.congthanh.project.model.response.RefundResponse;
+import com.congthanh.project.service.PaymentValidator;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -21,13 +20,11 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
 
     private final APIContext apiContext;
 
-//    private final PayPalClient paypalClient;
+    private final PaymentValidator paymentValidator;
 
-    @Autowired
-    public PayPalPaymentStrategy(@Value("${paypal.client.id}") String clientId,
-                                 @Value("${paypal.client.secret}") String clientSecret,
-                                 @Value("${paypal.mode}") String mode) {
-        this.apiContext = new APIContext(clientId, clientSecret, mode);
+    @Override
+    public PaymentMethod paymentMethod() {
+        return PaymentMethod.PAYPAL;
     }
 
     @Override
@@ -37,18 +34,6 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
 
     @Override
     public PaymentResponse processPayment(PaymentRequest request) {
-        System.out.println("paypal strategy");
-//        PayPalPayment payment = paypalClient.createPayment(
-//                request.getAmount(),
-//                request.getCurrency(),
-//                "http://your-domain/payment/paypal/callback"
-//        );
-//
-//        return new PaymentResult(
-//                payment.getId(),
-//                PaymentStatus.PENDING,
-//                payment.getApprovalUrl()
-//        );
         Amount amount = new Amount();
         amount.setCurrency(request.getCurrency());
         amount.setTotal(String.format("%.2f", request.getAmount()));
@@ -61,26 +46,23 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
         payer.setPaymentMethod(request.getPaymentMethod().toString().toLowerCase());
 
         Payment payment = new Payment();
-        payment.setIntent("order");
+        payment.setIntent(request.getAdditionalInfo().get("intent"));
         payment.setPayer(payer);
         payment.setTransactions(Arrays.asList(transaction));
+
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:3000/en/payment/success");
-        redirectUrls.setReturnUrl("http://localhost:3000/en/payment/fail");
+        redirectUrls.setCancelUrl(request.getAdditionalInfo().get("cancelUrl"));
+        redirectUrls.setReturnUrl(request.getAdditionalInfo().get("returnUrl"));
         payment.setRedirectUrls(redirectUrls);
 
-//        return payment.create(apiContext);
         try {
-            System.out.println("TRYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
-            Payment payment1 = payment.create(apiContext);
-            System.out.println("RRRRRRRRRRRRRRR" + payment1);
+            Payment result = payment.create(apiContext);
             return PaymentResponse.builder()
-                    .orderId(payment1.getId())
+                    .orderId(result.getId())
                     .build();
         } catch (PayPalRESTException e) {
             throw new RuntimeException(e);
         }
-
 
     }
 
@@ -90,8 +72,8 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
     }
 
     @Override
-    public PaymentResponse validatePayment(String paymentId) {
-        return null;
+    public void validatePayment(PaymentRequest request) {
+        paymentValidator.validate(request);
     }
 
     @Override
@@ -99,31 +81,8 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
         return null;
     }
 
-    public Payment createPayment(Double total, String currency, String method,
-                                 String intent, String description, String cancelUrl, String successUrl) throws PayPalRESTException {
-        Amount amount = new Amount();
-        amount.setCurrency(currency);
-        amount.setTotal(String.format("%.2f", total));
-
-        Transaction transaction = new Transaction();
-        transaction.setDescription(description);
-        transaction.setAmount(amount);
-
-        Payer payer = new Payer();
-        payer.setPaymentMethod(method.toLowerCase());
-
-        Payment payment = new Payment();
-        payment.setIntent(intent);
-        payment.setPayer(payer);
-        payment.setTransactions(Arrays.asList(transaction));
-        RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl(cancelUrl);
-        redirectUrls.setReturnUrl(successUrl);
-        payment.setRedirectUrls(redirectUrls);
-
-        return payment.create(apiContext);
-    }
-
+    //trên giao diện bấm thanh toán thì gọi hàm này để hoàn tất giao dịch
+    //hàm trên chỉ để tạo thanh toán và chuyển đến trang thanh toán
     public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
         Payment payment = new Payment();
         payment.setId(paymentId);
