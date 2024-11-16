@@ -26,15 +26,11 @@ public class PaymentRequest {
 
     private String description;
 
-    private String returnUrl;
-
-    private String cancelUrl;
-
-    // Card payment specific fields
-    private CardDetails cardDetails;
-
-    // Bank transfer specific fields
-    private BankDetails bankDetails;
+//    // Card payment specific fields
+//    private CardDetails cardDetails;
+//
+//    // Bank transfer specific fields
+//    private BankDetails bankDetails;
 
     private Map<String, String> additionalInfo;
 }

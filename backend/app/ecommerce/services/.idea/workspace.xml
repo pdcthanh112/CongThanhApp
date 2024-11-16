@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5ea49186-cb6e-44e6-a9ca-fa2c25b450eb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/PaypalPaymentIntent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/ApplePaymentStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/GooglePaymentStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/SamsungPaymentStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warehouse-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ai/chatbot/PreTrain.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ai/chatbot/PreTrain.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/PaymentMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/PaymentMethod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/PaymentStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/PaymentStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/controller/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/request/PaymentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/request/PaymentRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/serviceImpl/PaymentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/serviceImpl/PaymentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CodPaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CodPaymentStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CreditCardPaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CreditCardPaymentStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/PayPalPaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/PayPalPaymentStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/PaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/PaymentStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/validator/PayPalValidationUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/validator/PayPalValidationUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/validator/ValidationResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/validator/ValidationResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/supplier-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/supplier-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/WarehouseServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/resources/application-dev.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/test/java/com/congthanh/project/WarehouseServiceApplicationTests.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "pdcthanh112"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/pdcthanh112/CongThanhApp.git",
+    "accountId": "3a90bd41-1ac7-427a-9cb7-a235bc067b06"
+  }
+}]]></component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="2owCkoflJ2tuQEYEwIiFaDqQMCr" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.ApiGatewayApplication.executor": "Run",
+    "Spring Boot.ConfigServiceApplication.executor": "Run",
+    "Spring Boot.PaymentServiceApplication.executor": "Run",
+    "Spring Boot.ServiceDiscoveryApplication.executor": "Run",
+    "git-widget-placeholder": "dev",
+    "jdk.selected.JAVA_MODULE": "22",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/pdcth/OneDrive/Desktop/CongThanhApp/backend/app/ecommerce/services/warehouse-service/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\warehouse-service\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ApiGatewayApplication">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="product-service" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="product-service" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ApiGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="api-gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.ApiGatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CartServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="cart-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.CartServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CatalogServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="catalog-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.CatalogServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ConfigServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="config-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.ConfigServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CustomerServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="customer-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.CustomerServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InventoryServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="inventory-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.InventoryServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NotificationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="notification-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.NotificationServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="order-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.OrderServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PaymentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="payment-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.PaymentServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="product-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.ProductServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PromotionServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="promotion-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.PromotionServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReviewServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="review-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.ReviewServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServiceDiscoveryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="service-discovery" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.ServiceDiscoveryApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShippingServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="shipping-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.ShippingServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SupplierServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="supplier-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.SupplierServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WarehouseServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="warehouse-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.WarehouseServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.ApiGatewayApplication" />
+      <item itemvalue="Spring Boot.ServiceDiscoveryApplication" />
+      <item itemvalue="Spring Boot.ConfigServiceApplication" />
+      <item itemvalue="Spring Boot.CartServiceApplication" />
+      <item itemvalue="Spring Boot.CatalogServiceApplication" />
+      <item itemvalue="Spring Boot.CustomerServiceApplication" />
+      <item itemvalue="Spring Boot.InventoryServiceApplication" />
+      <item itemvalue="Spring Boot.NotificationServiceApplication" />
+      <item itemvalue="Spring Boot.OrderServiceApplication" />
+      <item itemvalue="Spring Boot.PaymentServiceApplication" />
+      <item itemvalue="Spring Boot.ProductServiceApplication" />
+      <item itemvalue="Spring Boot.PromotionServiceApplication" />
+      <item itemvalue="Spring Boot.ReviewServiceApplication" />
+      <item itemvalue="Spring Boot.ShippingServiceApplication" />
+      <item itemvalue="Spring Boot.SupplierServiceApplication" />
+      <item itemvalue="Spring Boot.WarehouseServiceApplication" />
+    </list>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5ea49186-cb6e-44e6-a9ca-fa2c25b450eb" name="Changes" comment="" />
+      <created>1731771399102</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731771399102</updated>
+      <workItem from="1731771400263" duration="3223000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

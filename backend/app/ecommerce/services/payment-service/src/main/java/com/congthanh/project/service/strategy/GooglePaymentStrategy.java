@@ -9,19 +9,15 @@ import com.congthanh.project.service.PaymentValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-
 @Component
 @RequiredArgsConstructor
-public class CreditCardPaymentStrategy implements PaymentStrategy {
-
-//    private final CreditCardGateway gateway;
+public class GooglePaymentStrategy implements PaymentStrategy {
 
     private final PaymentValidator paymentValidator;
 
     @Override
     public PaymentMethod paymentMethod() {
-        return PaymentMethod.CREDIT_DEBIT_CARD;
+        return PaymentMethod.GOOGLE_PAY;
     }
 
     @Override
@@ -31,17 +27,6 @@ public class CreditCardPaymentStrategy implements PaymentStrategy {
 
     @Override
     public PaymentResponse processPayment(PaymentRequest request) {
-//        GatewayResponse response = gateway.processPayment(
-//                request.getAmount(),
-//                request.getAdditionalData().get("cardNumber"),
-//                request.getAdditionalData().get("cvv")
-//        );
-//
-//        return new PaymentResult(
-//                response.getTransactionId(),
-//                mapGatewayStatus(response.getStatus()),
-//                response.getMessage()
-//        );
         return null;
     }
 
@@ -59,5 +44,4 @@ public class CreditCardPaymentStrategy implements PaymentStrategy {
     public RefundResponse processRefund(RefundRequest request) {
         return null;
     }
-
 }
