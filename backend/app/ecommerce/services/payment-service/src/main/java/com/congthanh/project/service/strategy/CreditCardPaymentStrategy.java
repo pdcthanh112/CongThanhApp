@@ -46,6 +46,11 @@ public class CreditCardPaymentStrategy implements PaymentStrategy {
     }
 
     @Override
+    public PaymentResponse executePayment(PaymentRequest request) {
+        return null;
+    }
+
+    @Override
     public PaymentResponse refundPayment(String paymentId, RefundRequest request) {
         return null;
     }

@@ -50,7 +50,7 @@ public class CodPaymentStrategy implements PaymentStrategy {
         // Update order status
 
         return PaymentResponse.builder()
-                .paymentId(result.getId())
+                .paymentId(result.getId().toString())
                 .status(PaymentStatus.PENDING)
                 .build();
     }
@@ -76,9 +76,14 @@ public class CodPaymentStrategy implements PaymentStrategy {
         payment.getTransactions().add(transaction);
 
         return PaymentResponse.builder()
-                .paymentId(payment.getId())
+                .paymentId(payment.getId().toString())
                 .status(payment.getStatus())
                 .build();
+    }
+
+    @Override
+    public PaymentResponse executePayment(PaymentRequest request) {
+        return null;
     }
 
     @Override

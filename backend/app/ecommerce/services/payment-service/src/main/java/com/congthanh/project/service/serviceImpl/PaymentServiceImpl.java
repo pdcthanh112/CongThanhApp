@@ -53,7 +53,12 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentResponse executePayment(PaymentMethod method, PaymentRequest request) {
-        return null;
+        PaymentStrategy strategy = paymentStrategies.get(method);
+        if (strategy == null) {
+            throw new UnsupportedPaymentMethodException("Method" + request.getPaymentMethod() + " is not supported");
+        }
+        PaymentResponse result = strategy.executePayment(request);
+        return result;
     }
 
 //    @KafkaListener(topics = "order-created-topic")

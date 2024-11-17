@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -57,13 +59,52 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
 
         try {
             Payment result = payment.create(apiContext);
+            System.out.println("RESULTTTTTTTTTTTTTTTTTT"+result);
             return PaymentResponse.builder()
-                    .orderId(result.getId())
+                    .paymentId(result.getId())
+                    .paymentMethod(PaymentMethod.PAYPAL)
+                    .additionalInfo(result.getLinks().stream()
+                            .filter(link -> link.getRel().equals("approval_url"))
+                            .findFirst()
+                            .map(link -> {
+                                Map<String, String> map = new HashMap<>();
+                                map.put("approvalUrl", link.getHref());
+                                return map;
+                            })
+                            .orElseGet(HashMap::new))
                     .build();
+
+//            Map<String, String> additionalInfo = new HashMap<>();
+//            for (Links links : result.getLinks()) {
+//                if (links.getRel().equals("approval_url")) {
+//                    additionalInfo.put("approvalUrl", links.getHref());
+//                }
+//            }
+//            response.setAdditionalInfo(additionalInfo);
+
+//            return response;
         } catch (PayPalRESTException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public PaymentResponse executePayment(PaymentRequest request) {
+        System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+        String paymentId = request.getAdditionalInfo().get("paymentId");
+        String payerId = request.getAdditionalInfo().get("payerId");
+        Payment payment = new Payment();
+        payment.setId(paymentId);
+        PaymentExecution paymentExecution = new PaymentExecution();
+        paymentExecution.setPayerId(payerId);
+        try {
+            Payment result = payment.execute(apiContext, paymentExecution);
+            System.out.println("SÊRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"+result);
+            return null;
+        } catch (PayPalRESTException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -79,16 +120,6 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
     @Override
     public RefundResponse processRefund(RefundRequest request) {
         return null;
-    }
-
-    //trên giao diện bấm thanh toán thì gọi hàm này để hoàn tất giao dịch
-    //hàm trên chỉ để tạo thanh toán và chuyển đến trang thanh toán
-    public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
-        Payment payment = new Payment();
-        payment.setId(paymentId);
-        PaymentExecution paymentExecution = new PaymentExecution();
-        paymentExecution.setPayerId(payerId);
-        return payment.execute(apiContext, paymentExecution);
     }
 
 }
