@@ -2,9 +2,9 @@ server:
   port: 5018 # ${SERVER_PORT}
   servlet:
     context-path: /api
-  compression:
-    enabled: true
-    min-response-size: 1024
+#  compression:
+#    enabled: true
+#    min-response-size: 1024
 
 spring:
   application:

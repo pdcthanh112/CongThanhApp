@@ -5,41 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ea49186-cb6e-44e6-a9ca-fa2c25b450eb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/PaypalPaymentIntent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/ApplePaymentStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/GooglePaymentStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/SamsungPaymentStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../../ai/chatbot/PreTrain.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ai/chatbot/PreTrain.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/PaymentMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/PaymentMethod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/PaymentStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/PaymentStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/controller/PaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/request/PaymentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/request/PaymentRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/response/PaymentResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/response/PaymentResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/serviceImpl/PaymentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/serviceImpl/PaymentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/ApplePaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/ApplePaymentStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CodPaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CodPaymentStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CreditCardPaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CreditCardPaymentStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/GooglePaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/GooglePaymentStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/PayPalPaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/PayPalPaymentStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/PaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/PaymentStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/validator/PayPalValidationUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/validator/PayPalValidationUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/validator/ValidationResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/validator/ValidationResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/supplier-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/supplier-service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/warehouse-service/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/warehouse-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/warehouse-service/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/warehouse-service/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/warehouse-service/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/WarehouseServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/SamsungPaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/SamsungPaymentStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/utils/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/utils/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/resources/application-dev.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/warehouse-service/src/test/java/com/congthanh/project/WarehouseServiceApplicationTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,26 +30,26 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "pdcthanh112"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;pdcthanh112&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/pdcthanh112/CongThanhApp.git",
-    "accountId": "3a90bd41-1ac7-427a-9cb7-a235bc067b06"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/pdcthanh112/CongThanhApp.git&quot;,
+    &quot;accountId&quot;: &quot;3a90bd41-1ac7-427a-9cb7-a235bc067b06&quot;
   }
-}]]></component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 2
-}]]></component>
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2owCkoflJ2tuQEYEwIiFaDqQMCr" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -81,10 +62,13 @@
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.ApiGatewayApplication.executor": "Run",
     "Spring Boot.ConfigServiceApplication.executor": "Run",
     "Spring Boot.PaymentServiceApplication.executor": "Run",
     "Spring Boot.ServiceDiscoveryApplication.executor": "Run",
+    "Spring Boot.WarehouseServiceApplication (1).executor": "Run",
+    "Spring Boot.WarehouseServiceApplication.executor": "Run",
     "git-widget-placeholder": "dev",
     "jdk.selected.JAVA_MODULE": "22",
     "kotlin-language-version-configured": "true",
@@ -121,19 +105,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.ApiGatewayApplication">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="product-service" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="product-service" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ApiGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="api-gateway" />
@@ -199,6 +170,13 @@
       </method>
     </configuration>
     <configuration name="PaymentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <additionalParameters>
+        <param>
+          <option name="enabled" value="true" />
+          <option name="name" value="management.endpoint.env.show-values" />
+          <option name="value" value="when_authorized" />
+        </param>
+      </additionalParameters>
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="payment-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.PaymentServiceApplication" />
@@ -284,8 +262,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -298,6 +276,8 @@
       <option name="presentableId" value="Default" />
       <updated>1731771399102</updated>
       <workItem from="1731771400263" duration="3223000" />
+      <workItem from="1731815736892" duration="5134000" />
+      <workItem from="1731832690421" duration="7684000" />
     </task>
     <servers />
   </component>

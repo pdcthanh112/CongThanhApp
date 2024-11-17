@@ -13,7 +13,8 @@ import java.util.Map;
 @Data
 @Builder
 public class PaymentResponse {
-    private Long paymentId;
+
+    private String paymentId;
 
     private PaymentStatus status;
 
@@ -31,7 +32,7 @@ public class PaymentResponse {
 
     private Instant updatedAt;
 
-    private Map<String, String> additionalData;
+    private Map<String, String> additionalInfo;
 
     private String message;
 

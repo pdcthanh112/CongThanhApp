@@ -16,6 +16,8 @@ public interface PaymentStrategy {
 
     PaymentResponse processPayment(PaymentRequest request);
 
+    PaymentResponse executePayment(PaymentRequest request);
+
     PaymentResponse refundPayment(String paymentId, RefundRequest request);
 
     void validatePayment(PaymentRequest request);
