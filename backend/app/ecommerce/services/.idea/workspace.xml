@@ -5,54 +5,68 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ea49186-cb6e-44e6-a9ca-fa2c25b450eb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/config/StripeConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/controller/BankTransferController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/controller/CardPaymentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/controller/PaymentExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/controller/PaymentWebhookController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/exception/ecommerce/EncryptionException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/exception/ecommerce/PaymentGatewayTemporaryErrorException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/exception/ecommerce/PaymentRetryExhaustedException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/request/CardTokenizeRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/paymentTransaction/PaymentTransactionCustomRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/paymentTransaction/PaymentTransactionCustomRepositoryImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/paymentTransaction/PaymentTransactionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/FraudCheckResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/FraudDetectionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentRetryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentTransactionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/SecurePaymentEncryptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/WebhookProcessingService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/factory/PaymentProviderFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/factory/PaymentStrategyFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/serviceImpl/PaymentTransactionServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/serviceImpl/WebhookProcessingServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/BitcoinPaymentStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CashPaymentStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/constant/common/ErrorCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../../ai/chatbot/LLM_LangChain/gens/batch_gen.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ai/chatbot/LLM_LangChain/gens/batch_gen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../../ai/chatbot/PreTrain.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ai/chatbot/PreTrain.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart-service/src/main/resources/messages/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart-service/src/main/resources/messages/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart-service/src/main/resources/messages/messages_vi.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart-service/src/main/resources/messages/messages_zh.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/entity/AbstractAuditEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/listener/CustomAuditingEntityListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/catalog-service/src/main/resources/messages/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/catalog-service/src/main/resources/messages/messages_vi.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/catalog-service/src/main/resources/messages/messages_zh.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/src/main/resources/application-prod.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/src/main/resources/application-staging.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/src/main/resources/application-test.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/src/main/resources/messages/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/src/main/resources/messages/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/src/main/resources/messages/messages_vi.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-service/src/main/resources/messages/messages_zh.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventory-service/src/main/resources/messages/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventory-service/src/main/resources/messages/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventory-service/src/main/resources/messages/messages_vi.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inventory-service/src/main/resources/messages/messages_zh.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/messages/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/messages/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/messages/messages_vi.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/resources/messages/messages_zh.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/messages/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/messages/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/messages/messages_vi.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/messages/messages_zh.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/resources/messages/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/resources/messages/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/resources/messages/messages_vi.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment-service/src/main/resources/messages/messages_zh.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product-service/src/main/resources/messages/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product-service/src/main/resources/messages/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product-service/src/main/resources/messages/messages_vi.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product-service/src/main/resources/messages/messages_zh.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/promotion-service/src/main/resources/application-prod.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/promotion-service/src/main/resources/application-staging.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/promotion-service/src/main/resources/application-test.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/promotion-service/src/main/resources/messages/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/promotion-service/src/main/resources/messages/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/promotion-service/src/main/resources/messages/messages_vi.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/promotion-service/src/main/resources/messages/messages_zh.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/review-service/src/main/resources/application-prod.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/review-service/src/main/resources/application-staging.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/review-service/src/main/resources/application-test.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/review-service/src/main/resources/messages/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/review-service/src/main/resources/messages/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/review-service/src/main/resources/messages/messages_vi.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/review-service/src/main/resources/messages/messages_zh.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shipping-service/src/main/resources/application-prod.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shipping-service/src/main/resources/application-staging.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shipping-service/src/main/resources/application-test.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shipping-service/src/main/resources/messages/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shipping-service/src/main/resources/messages/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shipping-service/src/main/resources/messages/messages_vi.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shipping-service/src/main/resources/messages/messages_zh.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/PaymentMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/PaymentMethod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/TransactionStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/constant/enums/TransactionStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/controller/PaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/entity/PaymentTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/entity/PaymentTransaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/exception/ecommerce/PaymentValidationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/exception/ecommerce/PaymentValidationException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/PaymentCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/payment/PaymentCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/PaymentCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/payment/PaymentCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/PaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/payment/PaymentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/StripeService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/serviceImpl/PaymentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/serviceImpl/PaymentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/ApplePaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/ApplePaymentStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CodPaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CodPaymentStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CreditCardPaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CreditCardPaymentStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/GooglePaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/GooglePaymentStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/PayPalPaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/PayPalPaymentStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/PaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/PaymentStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/SamsungPaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/SamsungPaymentStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/resources/application-dev.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../../frontend/ecommerce/src/app/[locale]/payment/success/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../frontend/ecommerce/src/app/[locale]/payment/success/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/entity/Brand.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/entity/Brand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/entity/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/entity/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/entity/Tag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/entity/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/entity/Inventory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,44 +110,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ApiGatewayApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ConfigServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.PaymentServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ServiceDiscoveryApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.WarehouseServiceApplication (1).executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.WarehouseServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;22&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/pdcth/OneDrive/Desktop/CongThanhApp/backend/app/ecommerce/services/warehouse-service/src/main/resources&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.ApiGatewayApplication.executor": "Run",
+    "Spring Boot.ConfigServiceApplication.executor": "Run",
+    "Spring Boot.PaymentServiceApplication.executor": "Run",
+    "Spring Boot.ServiceDiscoveryApplication.executor": "Run",
+    "Spring Boot.WarehouseServiceApplication (1).executor": "Run",
+    "Spring Boot.WarehouseServiceApplication.executor": "Run",
+    "git-widget-placeholder": "dev",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "22",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/pdcth/OneDrive/Desktop/CongThanhApp/backend/app/ecommerce/services/shipping-service/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\warehouse-service\src\main\resources" />
+      <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\shipping-service\src\main\resources" />
+      <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\review-service\src\main\resources" />
+      <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\promotion-service\src\main\resources" />
+      <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\product-service\src\main\resources" />
+      <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\payment-service\src\main\resources" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -321,7 +339,8 @@
       <workItem from="1731815736892" duration="5134000" />
       <workItem from="1731832690421" duration="7911000" />
       <workItem from="1731905300609" duration="10026000" />
-      <workItem from="1731985376230" duration="11841000" />
+      <workItem from="1731985376230" duration="13182000" />
+      <workItem from="1732164388672" duration="6685000" />
     </task>
     <servers />
   </component>

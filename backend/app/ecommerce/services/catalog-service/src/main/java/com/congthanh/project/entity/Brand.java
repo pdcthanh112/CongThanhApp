@@ -1,26 +1,21 @@
 package com.congthanh.project.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Brand {
+@SuperBuilder
+public class Brand extends AbstractAuditEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-
-//    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-//    @JsonIgnore
-//    private List<Product> product;
 
 }

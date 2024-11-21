@@ -2,10 +2,8 @@ package com.congthanh.project.entity;
 
 import com.congthanh.project.constant.enums.CategoryStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.Instant;
 
@@ -13,9 +11,10 @@ import java.time.Instant;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
 @Table(name = "category")
-public class Category {
+public class Category  extends AbstractAuditEntity{
 
     @Id
 //    @GeneratedValue(strategy = GenerationType.UUID)

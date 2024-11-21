@@ -23,4 +23,6 @@ public class Inventory {
     @Column(nullable = false)
     private int quantity;
 
+    private String warehouse;
+
 }
