@@ -1,10 +1,15 @@
 package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.enums.PaymentMethod;
+import com.congthanh.project.constant.enums.TransactionStatus;
 import com.congthanh.project.model.request.PaymentRequest;
 import com.congthanh.project.model.response.PaymentResponse;
 import com.congthanh.project.service.PaymentService;
+import com.congthanh.project.service.PaymentTransactionService;
 import com.congthanh.project.utils.Helper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +29,27 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
+    private final PaymentTransactionService transactionService;
+
+    @Operation(
+            summary = "Initialize payment",
+            description = "Creates a new payment transaction and returns necessary data for payment processing"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Payment initialized successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request parameters"
+            )
+    })
     @PostMapping("/process")
     public ResponseEntity<PaymentResponse> processPayment(@RequestParam("method") PaymentMethod method, @RequestBody PaymentRequest request, HttpServletRequest httpServletRequest) {
         String cancelUrl = Helper.getBaseURl(httpServletRequest) + "/payment/cancel";
         String successUrl = Helper.getBaseURl(httpServletRequest) + "/payment/success";
-        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCC"+successUrl+"//////////"+cancelUrl);
+        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCC" + successUrl + "//////////" + cancelUrl);
         PaymentResponse result = paymentService.processPayment(method, request);
         return ResponseEntity.ok(result);
     }
@@ -43,6 +64,11 @@ public class PaymentController {
                 .build();
         PaymentResponse result = paymentService.executePayment(PaymentMethod.PAYPAL, request);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/{transactionId}/status")
+    public ResponseEntity<TransactionStatus> getPaymentStatus(@PathVariable("transactionId") Long transactionId) {
+        return ResponseEntity.ok(transactionService.getTransactionStatus(transactionId));
     }
 
     @GetMapping("/methods")

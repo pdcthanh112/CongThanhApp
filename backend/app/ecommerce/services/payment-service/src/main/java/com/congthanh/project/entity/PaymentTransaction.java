@@ -17,11 +17,11 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "payment_transactions")
+@Table(name = "payment_transaction")
 public class PaymentTransaction {
 
     @Id
-    private String id;
+    private Long id;
 
     @ManyToOne
     private Payment payment;
@@ -33,12 +33,14 @@ public class PaymentTransaction {
     private TransactionStatus status;
 
     private BigDecimal amount;
+
     private String currency;
 
     private String providerTransactionId;
-    private String providerResponse;
 
     @CreatedDate
     private Instant createdAt;
+
+    private Instant updatedAt;
 
 }

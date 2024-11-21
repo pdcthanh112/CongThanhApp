@@ -30,11 +30,6 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
     }
 
     @Override
-    public PaymentResponse initializePayment(PaymentRequest request) {
-        return null;
-    }
-
-    @Override
     public PaymentResponse processPayment(PaymentRequest request) {
         Amount amount = new Amount();
         amount.setCurrency(request.getCurrency());

@@ -21,11 +21,6 @@ public class SamsungPaymentStrategy implements PaymentStrategy {
     }
 
     @Override
-    public PaymentResponse initializePayment(PaymentRequest request) {
-        return null;
-    }
-
-    @Override
     public PaymentResponse processPayment(PaymentRequest request) {
         return null;
     }

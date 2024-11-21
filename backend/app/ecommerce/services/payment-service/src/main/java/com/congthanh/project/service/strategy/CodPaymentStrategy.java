@@ -11,13 +11,11 @@ import com.congthanh.project.model.request.PaymentRequest;
 import com.congthanh.project.model.request.RefundRequest;
 import com.congthanh.project.model.response.PaymentResponse;
 import com.congthanh.project.model.response.RefundResponse;
-import com.congthanh.project.repository.PaymentRepository;
+import com.congthanh.project.repository.payment.PaymentRepository;
 import com.congthanh.project.service.PaymentValidator;
 import com.congthanh.project.utils.SnowflakeIdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -35,7 +33,7 @@ public class CodPaymentStrategy implements PaymentStrategy {
     }
 
     @Override
-    public PaymentResponse initializePayment(PaymentRequest request) {
+    public PaymentResponse processPayment(PaymentRequest request) {
         Payment payment = Payment.builder()
                 .id(snowflakeIdGenerator.nextId())
                 .paymentMethod(PaymentMethod.CASH_ON_DELIVERY)
@@ -56,7 +54,7 @@ public class CodPaymentStrategy implements PaymentStrategy {
     }
 
     @Override
-    public PaymentResponse processPayment(PaymentRequest request) {
+    public PaymentResponse executePayment(PaymentRequest request) {
         Payment payment = paymentRepository.findById(request.getOrderId())
                 .orElseThrow(() -> new NotFoundException("Payment not found" + request.getPaymentMethod()));
 
@@ -79,11 +77,6 @@ public class CodPaymentStrategy implements PaymentStrategy {
                 .paymentId(payment.getId().toString())
                 .status(payment.getStatus())
                 .build();
-    }
-
-    @Override
-    public PaymentResponse executePayment(PaymentRequest request) {
-        return null;
     }
 
     @Override

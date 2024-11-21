@@ -5,19 +5,11 @@ import com.congthanh.project.model.request.PaymentRequest;
 import com.congthanh.project.model.request.RefundRequest;
 import com.congthanh.project.model.response.PaymentResponse;
 import com.congthanh.project.model.response.RefundResponse;
-import com.congthanh.project.service.PaymentValidator;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
-@Component
-@RequiredArgsConstructor
-public class ApplePaymentStrategy implements PaymentStrategy {
-
-    private final PaymentValidator paymentValidator;
-
+public class CashPaymentStrategy implements PaymentStrategy {
     @Override
     public PaymentMethod paymentMethod() {
-        return PaymentMethod.APPLE_PAY;
+        return null;
     }
 
     @Override
@@ -37,7 +29,7 @@ public class ApplePaymentStrategy implements PaymentStrategy {
 
     @Override
     public void validatePayment(PaymentRequest request) {
-        paymentValidator.validate(request);
+
     }
 
     @Override

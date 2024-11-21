@@ -9,6 +9,10 @@ export default function PaymentSuccess() {
     const token = searchParams.get('token');
     const payerId = searchParams.get('PayerID');
 
+  const handleExecutePaypalPayment = () => {
+    
+  }
+
     return (
         <div>
             <h1>Payment Success</h1>
