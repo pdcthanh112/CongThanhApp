@@ -1,8 +1,6 @@
 import torch
 
-def get_output_batch(
-    model, tokenizer, prompts, generation_config, device='cuda'
-):
+def get_output_batch(model, tokenizer, prompts, generation_config, device='cuda'):
     if len(prompts) == 1:
         encoding = tokenizer(prompts, return_tensors="pt")
         input_ids = encoding["input_ids"].to(device)

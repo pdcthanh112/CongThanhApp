@@ -5,6 +5,7 @@ import com.congthanh.project.exception.ecommerce.UnsupportedPaymentMethodExcepti
 import com.congthanh.project.model.request.PaymentRequest;
 import com.congthanh.project.model.response.PaymentResponse;
 import com.congthanh.project.service.PaymentService;
+import com.congthanh.project.service.factory.PaymentStrategyFactory;
 import com.congthanh.project.service.strategy.PaymentStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,29 +21,17 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PaymentServiceImpl implements PaymentService {
 
-    private final Map<PaymentMethod, PaymentStrategy> paymentStrategies;
-
-    @Autowired
-    public PaymentServiceImpl(List<PaymentStrategy> strategyList) {
-        this.paymentStrategies = strategyList.stream()
-                .collect(Collectors.toMap(
-                        PaymentStrategy::paymentMethod,
-                        strategy -> strategy
-                ));
-    }
+    private final PaymentStrategyFactory strategyFactory;
 
     @Override
     public PaymentResponse processPayment(PaymentMethod method, PaymentRequest request) {
-        PaymentStrategy strategy = paymentStrategies.get(method);
-        if (strategy == null) {
-            throw new UnsupportedPaymentMethodException("Method" + request.getPaymentMethod() + " is not supported");
-        }
+        PaymentStrategy strategy = strategyFactory.createPaymentStrategy(request.getPaymentMethod());
 
         strategy.validatePayment(request);
 
         try {
             PaymentResponse result = strategy.processPayment(request);
-            // Log payment attempt
+            log.info("Payment processed successfully");
             return result;
         } catch (Exception e) {
             // Handle exceptions, log errors
@@ -53,10 +42,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentResponse executePayment(PaymentMethod method, PaymentRequest request) {
-        PaymentStrategy strategy = paymentStrategies.get(method);
-        if (strategy == null) {
-            throw new UnsupportedPaymentMethodException("Method" + request.getPaymentMethod() + " is not supported");
-        }
+        PaymentStrategy strategy = strategyFactory.createPaymentStrategy(request.getPaymentMethod());
+
         PaymentResponse result = strategy.executePayment(request);
         return result;
     }

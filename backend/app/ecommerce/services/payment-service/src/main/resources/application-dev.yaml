@@ -185,5 +185,7 @@ paypal:
 stripe:
   api:
     key: sk_test_51QJqCNAhMlLU3M6EMdkbkBq81BwIaEbZBfGNArb3lbSFx0GBG9aU2hV9685sd5Rd8PrjMbkja5Dm9qF5JMwGnjBi00vfPWhtdL
-    webhook-secret: aa
 
+payment:
+  encryption:
+    iv: 123456789abcdef

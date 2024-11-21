@@ -12,8 +12,6 @@ public interface PaymentStrategy {
 
     PaymentMethod paymentMethod();
 
-    PaymentResponse initializePayment(PaymentRequest request);
-
     PaymentResponse processPayment(PaymentRequest request);
 
     PaymentResponse executePayment(PaymentRequest request);

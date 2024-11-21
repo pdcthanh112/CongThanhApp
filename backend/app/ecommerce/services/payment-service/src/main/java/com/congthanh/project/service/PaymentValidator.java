@@ -27,7 +27,7 @@ public class PaymentValidator {
 
     private ValidationResult validateByMethod(PaymentRequest request) {
         switch (request.getPaymentMethod()) {
-            case PaymentMethod.CREDIT_DEBIT_CARD:
+            case PaymentMethod.CREDIT_CARD:
                 return validateCreditCard(request);
             case PAYPAL:
                 return validatePayPal(request);

@@ -1,6 +1,7 @@
 package com.congthanh.project.exception.ecommerce;
 
 public class PaymentValidationException extends RuntimeException {
+
     public PaymentValidationException() {
         super();
     }

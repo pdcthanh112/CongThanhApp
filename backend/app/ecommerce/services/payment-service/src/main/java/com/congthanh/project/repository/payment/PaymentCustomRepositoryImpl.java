@@ -1,4 +1,4 @@
-package com.congthanh.project.repository;
+package com.congthanh.project.repository.payment;
 
 import com.congthanh.project.entity.Payment;
 import jakarta.persistence.EntityManager;
