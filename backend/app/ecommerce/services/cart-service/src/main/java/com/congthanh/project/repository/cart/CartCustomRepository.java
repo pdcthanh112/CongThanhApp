@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.cart;
 
-import com.congthanh.project.entity.Cart;
+import com.congthanh.project.model.entity.Cart;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

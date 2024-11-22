@@ -1,8 +1,8 @@
 package com.congthanh.project.repository.product;
 
-import com.congthanh.project.entity.Product;
-import com.congthanh.project.entity.ProductImage;
-import com.congthanh.project.entity.ProductVariant;
+import com.congthanh.project.model.entity.Product;
+import com.congthanh.project.model.entity.ProductImage;
+import com.congthanh.project.model.entity.ProductVariant;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 

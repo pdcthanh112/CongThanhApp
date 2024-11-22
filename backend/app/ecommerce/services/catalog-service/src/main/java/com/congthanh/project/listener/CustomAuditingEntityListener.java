@@ -1,6 +1,6 @@
 package com.congthanh.project.listener;
 
-import com.congthanh.project.entity.AbstractAuditEntity;
+import com.congthanh.project.model.entity.AbstractAuditEntity;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import org.jetbrains.annotations.NotNull;

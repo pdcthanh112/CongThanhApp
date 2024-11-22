@@ -1,6 +1,6 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.PromotionDTO;
+import com.congthanh.project.model.dto.PromotionDTO;
 
 public interface PromotionService {
 

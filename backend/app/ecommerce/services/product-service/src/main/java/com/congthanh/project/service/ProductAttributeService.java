@@ -1,6 +1,6 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.ProductAttributeDTO;
+import com.congthanh.project.model.dto.ProductAttributeDTO;
 
 public interface ProductAttributeService {
 

@@ -1,8 +1,7 @@
 package com.congthanh.project.service;
 
 import com.congthanh.project.model.request.InventoryRequest;
-import com.congthanh.project.dto.InventoryDTO;
-import com.congthanh.project.entity.Inventory;
+import com.congthanh.project.model.dto.InventoryDTO;
 
 public interface InventoryService {
 

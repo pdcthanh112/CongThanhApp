@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.orderDetail;
 
-import com.congthanh.project.entity.OrderDetail;
+import com.congthanh.project.model.entity.OrderDetail;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;

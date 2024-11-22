@@ -1,8 +1,8 @@
 package com.congthanh.project.model.request;
 
-import com.congthanh.project.dto.ProductAttributeValueDTO;
-import com.congthanh.project.dto.ProductImageDTO;
-import com.congthanh.project.dto.ProductVariantDTO;
+import com.congthanh.project.model.dto.ProductAttributeValueDTO;
+import com.congthanh.project.model.dto.ProductImageDTO;
+import com.congthanh.project.model.dto.ProductVariantDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,20 +24,17 @@ public class CreateProductRequest {
     private Integer category;
 
     @NotNull
-    private Integer subcategory;
-
-    @NotNull
     private String slug;
 
     private String description;
 
-    private List<ProductImageDTO> image;
-
-    private List<ProductAttributeValueDTO> attribute;
-
     private String supplier;
 
     private String brand;
+
+    private List<ProductImageDTO> image;
+
+    private List<ProductAttributeValueDTO> attribute;
 
     private List<ProductVariantDTO> variant;
 

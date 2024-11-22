@@ -1,7 +1,7 @@
 package com.congthanh.project.service.serviceImpl;
 
-import com.congthanh.project.dto.SupplierDTO;
-import com.congthanh.project.entity.Supplier;
+import com.congthanh.project.model.dto.SupplierDTO;
+import com.congthanh.project.model.entity.Supplier;
 import com.congthanh.project.model.mapper.SupplierMapper;
 import com.congthanh.project.model.response.PaginationInfo;
 import com.congthanh.project.model.response.ProductResponse;

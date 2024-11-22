@@ -1,7 +1,7 @@
 package com.congthanh.project.service.serviceImpl;
 
-import com.congthanh.project.dto.NotificationDTO;
-import com.congthanh.project.entity.Notification;
+import com.congthanh.project.model.dto.NotificationDTO;
+import com.congthanh.project.model.entity.Notification;
 import com.congthanh.project.exception.NotFoundException;
 import com.congthanh.project.model.mapper.NotificationMapper;
 import com.congthanh.project.repository.NotificationRepository;

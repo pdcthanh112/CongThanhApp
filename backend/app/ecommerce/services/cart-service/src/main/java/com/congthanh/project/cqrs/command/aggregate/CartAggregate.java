@@ -1,6 +1,6 @@
 package com.congthanh.project.cqrs.command.aggregate;
 
-import com.congthanh.project.dto.CartItemDTO;
+import com.congthanh.project.model.dto.CartItemDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;

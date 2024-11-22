@@ -1,7 +1,7 @@
 package com.congthanh.project.repository.cartItem;
 
 import com.congthanh.project.constant.common.StateStatus;
-import com.congthanh.project.entity.CartItem;
+import com.congthanh.project.model.entity.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

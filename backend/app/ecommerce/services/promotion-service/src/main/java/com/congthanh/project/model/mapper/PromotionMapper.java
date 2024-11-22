@@ -1,7 +1,7 @@
 package com.congthanh.project.model.mapper;
 
-import com.congthanh.project.dto.PromotionDTO;
-import com.congthanh.project.entity.Promotion;
+import com.congthanh.project.model.dto.PromotionDTO;
+import com.congthanh.project.model.entity.Promotion;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,9 @@
 package com.congthanh.project.cqrs.command.command;
 
 import com.congthanh.project.constant.enums.ProductStatus;
-import com.congthanh.project.dto.ProductAttributeValueDTO;
-import com.congthanh.project.dto.ProductImageDTO;
-import com.congthanh.project.dto.ProductVariantDTO;
+import com.congthanh.project.model.dto.ProductAttributeValueDTO;
+import com.congthanh.project.model.dto.ProductImageDTO;
+import com.congthanh.project.model.dto.ProductVariantDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

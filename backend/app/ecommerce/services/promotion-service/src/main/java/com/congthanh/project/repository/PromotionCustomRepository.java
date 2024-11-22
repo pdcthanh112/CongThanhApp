@@ -1,6 +1,6 @@
 package com.congthanh.project.repository;
 
-import com.congthanh.project.entity.Promotion;
+import com.congthanh.project.model.entity.Promotion;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 

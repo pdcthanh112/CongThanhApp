@@ -1,13 +1,13 @@
 package com.congthanh.project.service.serviceImpl;
 
-import com.congthanh.project.dto.OrderDetailDTO;
-import com.congthanh.project.entity.Order;
-import com.congthanh.project.entity.OrderDetail;
+import com.congthanh.project.model.dto.OrderDetailDTO;
+import com.congthanh.project.model.entity.Order;
+import com.congthanh.project.model.entity.OrderDetail;
 import com.congthanh.project.model.mapper.OrderDetailMapper;
 import com.congthanh.project.model.request.CreateOrderDetailRequest;
 import com.congthanh.project.model.response.PaginationInfo;
 import com.congthanh.project.model.response.ResponseWithPagination;
-import com.congthanh.project.dto.ProductResponse;
+import com.congthanh.project.model.dto.ProductResponse;
 import com.congthanh.project.repository.orderDetail.OrderDetailRepository;
 import com.congthanh.project.service.OrderDetailService;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.congthanh.project.service.serviceImpl;
 
-import com.congthanh.project.dto.ProductViewDTO;
-import com.congthanh.project.entity.ProductView;
+import com.congthanh.project.model.dto.ProductViewDTO;
+import com.congthanh.project.model.entity.ProductView;
 import com.congthanh.project.model.mapper.ProductViewMapper;
 import com.congthanh.project.repository.productView.ProductViewRepository;
 import com.congthanh.project.service.ProductViewService;

@@ -1,6 +1,6 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.CategoryDTO;
+import com.congthanh.project.model.dto.CategoryDTO;
 import com.congthanh.project.model.request.AddSubcategoryRequest;
 import com.congthanh.project.model.request.CreateCategoryRequest;
 import com.congthanh.project.model.request.UpdateCategoryRequest;

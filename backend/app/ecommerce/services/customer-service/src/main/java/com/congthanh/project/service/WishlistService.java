@@ -1,6 +1,6 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.WishlistDTO;
+import com.congthanh.project.model.dto.WishlistDTO;
 
 public interface WishlistService {
 

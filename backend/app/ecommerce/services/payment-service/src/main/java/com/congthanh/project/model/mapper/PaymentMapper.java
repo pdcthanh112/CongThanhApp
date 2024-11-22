@@ -1,7 +1,7 @@
 package com.congthanh.project.model.mapper;
 
-import com.congthanh.project.dto.PaymentDTO;
-import com.congthanh.project.entity.Payment;
+import com.congthanh.project.model.dto.PaymentDTO;
+import com.congthanh.project.model.entity.Payment;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

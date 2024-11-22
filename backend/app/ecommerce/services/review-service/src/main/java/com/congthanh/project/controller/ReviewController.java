@@ -1,9 +1,9 @@
 package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ReviewDTO;
+import com.congthanh.project.model.dto.ReviewDTO;
 import com.congthanh.project.model.response.Response;
-import com.congthanh.project.entity.Review;
+import com.congthanh.project.model.entity.Review;
 import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.model.response.StatisticReviewResponse;
 import com.congthanh.project.service.ReviewService;

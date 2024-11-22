@@ -1,7 +1,7 @@
 package com.congthanh.project.model.mapper;
 
-import com.congthanh.project.dto.ReviewDTO;
-import com.congthanh.project.entity.Review;
+import com.congthanh.project.model.dto.ReviewDTO;
+import com.congthanh.project.model.entity.Review;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

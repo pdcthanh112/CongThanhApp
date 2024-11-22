@@ -1,7 +1,7 @@
 package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.TagDTO;
+import com.congthanh.project.model.dto.TagDTO;
 import com.congthanh.project.model.request.CreateTagRequest;
 import com.congthanh.project.model.request.UpdateTagRequest;
 import com.congthanh.project.model.response.Response;

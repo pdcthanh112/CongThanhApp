@@ -1,7 +1,7 @@
 package com.congthanh.project.model.mapper;
 
-import com.congthanh.project.dto.InventoryDTO;
-import com.congthanh.project.entity.Inventory;
+import com.congthanh.project.model.dto.InventoryDTO;
+import com.congthanh.project.model.entity.Inventory;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

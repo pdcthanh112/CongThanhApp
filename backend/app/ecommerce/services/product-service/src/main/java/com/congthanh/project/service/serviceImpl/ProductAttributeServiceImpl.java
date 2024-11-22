@@ -1,7 +1,7 @@
 package com.congthanh.project.service.serviceImpl;
 
-import com.congthanh.project.dto.ProductAttributeDTO;
-import com.congthanh.project.entity.ProductAttribute;
+import com.congthanh.project.model.dto.ProductAttributeDTO;
+import com.congthanh.project.model.entity.ProductAttribute;
 import com.congthanh.project.model.mapper.ProductAttributeMapper;
 import com.congthanh.project.repository.productAttribute.ProductAttributeRepository;
 import com.congthanh.project.service.ProductAttributeService;

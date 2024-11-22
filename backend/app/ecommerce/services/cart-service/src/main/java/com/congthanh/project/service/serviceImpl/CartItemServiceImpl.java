@@ -1,9 +1,9 @@
 package com.congthanh.project.service.serviceImpl;
 
-import com.congthanh.project.dto.CartItemDTO;
-import com.congthanh.project.dto.ProductDTO;
-import com.congthanh.project.entity.Cart;
-import com.congthanh.project.entity.CartItem;
+import com.congthanh.project.model.dto.CartItemDTO;
+import com.congthanh.project.model.dto.ProductDTO;
+import com.congthanh.project.model.entity.Cart;
+import com.congthanh.project.model.entity.CartItem;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.grpc.ProductRequest;
 import com.congthanh.project.grpc.ProductResponse;

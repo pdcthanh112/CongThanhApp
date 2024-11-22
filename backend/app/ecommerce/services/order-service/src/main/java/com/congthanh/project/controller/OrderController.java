@@ -1,8 +1,8 @@
 package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.CheckoutDTO;
-import com.congthanh.project.dto.OrderDetailDTO;
+import com.congthanh.project.model.dto.CheckoutDTO;
+import com.congthanh.project.model.dto.OrderDetailDTO;
 import com.congthanh.project.model.ecommerce.response.Response;
 import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.service.OrderDetailService;

@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.attributeValue;
 
-import com.congthanh.project.entity.ProductAttributeValue;
+import com.congthanh.project.model.entity.ProductAttributeValue;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 

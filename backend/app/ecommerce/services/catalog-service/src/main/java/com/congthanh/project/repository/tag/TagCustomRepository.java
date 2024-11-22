@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.tag;
 
-import com.congthanh.project.entity.Tag;
+import com.congthanh.project.model.entity.Tag;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,8 +1,8 @@
 package com.congthanh.project.service.serviceImpl;
 
-import com.congthanh.project.dto.ProductDTO;
-import com.congthanh.project.dto.ProductVariantDTO;
-import com.congthanh.project.entity.ProductVariant;
+import com.congthanh.project.model.dto.ProductDTO;
+import com.congthanh.project.model.dto.ProductVariantDTO;
+import com.congthanh.project.model.entity.ProductVariant;
 import com.congthanh.project.model.mapper.ProductVariantMapper;
 import com.congthanh.project.model.request.ProductVariantRequest;
 import com.congthanh.project.repository.product.ProductRepository;

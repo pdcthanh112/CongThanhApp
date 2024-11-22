@@ -1,9 +1,9 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.ProductDTO;
+import com.congthanh.project.model.dto.ProductDTO;
 import com.congthanh.project.model.request.CreateProductRequest;
-import com.congthanh.project.dto.ProductVariantAttributeValueDTO;
-import com.congthanh.project.entity.Product;
+import com.congthanh.project.model.dto.ProductVariantAttributeValueDTO;
+import com.congthanh.project.model.entity.Product;
 
 import java.util.List;
 

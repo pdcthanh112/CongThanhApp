@@ -1,7 +1,7 @@
 package com.congthanh.project.service.serviceImpl;
 
 import com.congthanh.project.constant.enums.TransactionStatus;
-import com.congthanh.project.entity.PaymentTransaction;
+import com.congthanh.project.model.entity.PaymentTransaction;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.request.PaymentRequest;
 import com.congthanh.project.repository.paymentTransaction.PaymentTransactionRepository;

@@ -1,6 +1,6 @@
 package com.congthanh.project.grpc;
 
-import com.congthanh.project.dto.ProductDTO;
+import com.congthanh.project.model.dto.ProductDTO;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.service.ProductService;
 import io.grpc.stub.StreamObserver;

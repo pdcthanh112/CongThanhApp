@@ -1,7 +1,7 @@
 package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ProductViewDTO;
+import com.congthanh.project.model.dto.ProductViewDTO;
 import com.congthanh.project.model.response.Response;
 import com.congthanh.project.service.ProductViewService;
 import io.swagger.v3.oas.annotations.tags.Tag;

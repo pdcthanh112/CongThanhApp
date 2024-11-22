@@ -3,7 +3,7 @@ package com.congthanh.project.controller;
 import com.congthanh.project.cqrs.command.command.ReleaseInventoryCommand;
 import com.congthanh.project.cqrs.command.command.ReserveInventoryCommand;
 import com.congthanh.project.model.request.InventoryRequest;
-import com.congthanh.project.dto.InventoryDTO;
+import com.congthanh.project.model.dto.InventoryDTO;
 import com.congthanh.project.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

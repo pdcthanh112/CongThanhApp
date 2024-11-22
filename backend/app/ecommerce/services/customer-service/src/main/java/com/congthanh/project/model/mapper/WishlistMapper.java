@@ -1,7 +1,7 @@
 package com.congthanh.project.model.mapper;
 
-import com.congthanh.project.dto.WishlistDTO;
-import com.congthanh.project.entity.Wishlist;
+import com.congthanh.project.model.dto.WishlistDTO;
+import com.congthanh.project.model.entity.Wishlist;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
