@@ -1,6 +1,6 @@
 package com.congthanh.project.repository;
 
-import com.congthanh.project.entity.Inventory;
+import com.congthanh.project.model.entity.Inventory;
 
 import java.util.Optional;
 

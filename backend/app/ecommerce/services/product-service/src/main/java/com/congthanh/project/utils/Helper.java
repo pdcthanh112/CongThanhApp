@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class Helper {
 
-  public String generateSlug(String productName) {
+  public static String generateSlug(String productName) {
     String normalizedString = Normalizer.normalize(productName, Normalizer.Form.NFD);
     Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
     String slug = pattern.matcher(normalizedString)

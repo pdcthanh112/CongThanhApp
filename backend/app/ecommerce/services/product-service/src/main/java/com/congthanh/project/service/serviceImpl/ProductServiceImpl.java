@@ -3,19 +3,19 @@ package com.congthanh.project.service.serviceImpl;
 import com.congthanh.project.constant.enums.ProductStatus;
 import com.congthanh.project.cqrs.command.command.CreateProductCommand;
 import com.congthanh.project.cqrs.query.query.GetProductByIdQuery;
-import com.congthanh.project.cqrs.query.query.GetProductBySlugQuery;
-import com.congthanh.project.dto.*;
-import com.congthanh.project.entity.Product;
+import com.congthanh.project.model.dto.ProductDTO;
+import com.congthanh.project.model.dto.ProductVariantAttributeValueDTO;
+import com.congthanh.project.model.entity.Product;
 import com.congthanh.project.grpc.*;
-import com.congthanh.project.model.document.CategoryDocument;
-import com.congthanh.project.model.document.ProductDocument;
 import com.congthanh.project.model.document.ProductDocument;
 import com.congthanh.project.model.request.CreateProductRequest;
 import com.congthanh.project.model.response.*;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.ProductMapper;
 import com.congthanh.project.repository.product.ProductRepository;
+import com.congthanh.project.service.ProductAttributeService;
 import com.congthanh.project.service.ProductService;
+import com.congthanh.project.service.ProductVariantService;
 import com.congthanh.project.utils.Helper;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
@@ -37,16 +37,12 @@ import java.util.*;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-
+    private final ProductVariantService productVariantService;
+    private final ProductAttributeService productAttributeService;
     private final CommandGateway commandGateway;
     private final QueryGateway queryGateway;
-
     private final KafkaTemplate<String, ProductDTO> kafkaTemplate;
-
     private final CategoryGrpcService categoryGrpcService;
-    private final SubcategoryGrpcService subcategoryGrpcService;
-
-    private final Helper helper = new Helper();
 
     @Override
     public Object getAllProduct(Integer page, Integer limit) {
@@ -123,7 +119,7 @@ public class ProductServiceImpl implements ProductService {
 //        SupplierResponse supplier = null;
         BrandResponse brand = null;
 
-        String productSlug = helper.generateSlug(request.getName());
+        String productSlug = Helper.generateSlug(request.getName());
 
 //        assert category != null && subcategory != null && supplier != null && brand != null;
         CreateProductCommand product = CreateProductCommand.builder()
@@ -269,5 +265,6 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
+
 }
 

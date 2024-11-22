@@ -1,14 +1,16 @@
 package com.congthanh.project.cqrs.command.event;
 
-import com.congthanh.project.entity.Product;
+import com.congthanh.project.model.entity.Product;
 import com.congthanh.project.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.eventhandling.ResetHandler;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ProductEventHandler {
 
     private final ProductRepository productRepository;
@@ -18,8 +20,7 @@ public class ProductEventHandler {
         Product product = Product.builder()
                 .id(event.getId())
                 .name(event.getName())
-                .category(event.getCategory())
-                .subcategory(event.getSubcategory())
+                .category(event.getCategory()
                 .slug(event.getSlug())
                 .description(event.getDescription())
 //                .brand(event.getBrand())

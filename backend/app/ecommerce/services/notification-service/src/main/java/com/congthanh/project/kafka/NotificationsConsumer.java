@@ -1,7 +1,7 @@
 package com.congthanh.project.kafka;
 
 import com.congthanh.project.constant.enums.NotificationType;
-import com.congthanh.project.entity.Notification;
+import com.congthanh.project.model.entity.Notification;
 import com.congthanh.project.kafka.payment.PaymentConfirmation;
 import com.congthanh.project.repository.NotificationRepository;
 import com.congthanh.project.service.email.EmailService;

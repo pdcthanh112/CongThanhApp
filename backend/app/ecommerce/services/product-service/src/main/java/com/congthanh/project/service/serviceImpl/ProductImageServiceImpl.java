@@ -1,8 +1,8 @@
 package com.congthanh.project.service.serviceImpl;
 
-import com.congthanh.project.dto.ProductImageDTO;
-import com.congthanh.project.entity.Product;
-import com.congthanh.project.entity.ProductImage;
+import com.congthanh.project.model.dto.ProductImageDTO;
+import com.congthanh.project.model.entity.Product;
+import com.congthanh.project.model.entity.ProductImage;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.ProductImageMapper;
 import com.congthanh.project.repository.product.ProductRepository;

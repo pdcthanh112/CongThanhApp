@@ -1,7 +1,7 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.ReviewDTO;
-import com.congthanh.project.entity.Review;
+import com.congthanh.project.model.dto.ReviewDTO;
+import com.congthanh.project.model.entity.Review;
 import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.model.response.StatisticReviewResponse;
 

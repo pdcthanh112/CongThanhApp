@@ -1,10 +1,11 @@
 package com.congthanh.project.service.serviceImpl;
 
+import com.congthanh.project.constant.common.ErrorCode;
 import com.congthanh.project.constant.enums.CategoryStatus;
 import com.congthanh.project.cqrs.command.command.category.*;
 import com.congthanh.project.cqrs.query.query.category.GetCategoryByIdQuery;
-import com.congthanh.project.dto.CategoryDTO;
-import com.congthanh.project.entity.Category;
+import com.congthanh.project.model.dto.CategoryDTO;
+import com.congthanh.project.model.entity.Category;
 import com.congthanh.project.model.document.CategoryDocument;
 import com.congthanh.project.model.request.AddSubcategoryRequest;
 import com.congthanh.project.model.request.CreateCategoryRequest;
@@ -36,11 +37,8 @@ import java.util.UUID;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-
     private final CommandGateway commandGateway;
-
     private final QueryGateway queryGateway;
-
     private final ModelMapper modelMapper;
 
     @Override
@@ -119,7 +117,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDTO updateCategory(UpdateCategoryRequest request, String categoryId) {
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new NotFoundException("Category not found"));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new NotFoundException(String.format(ErrorCode.CATEGORY_NOT_FOUND, categoryId)));
         UpdateCategoryCommand command = UpdateCategoryCommand.builder()
                 .id(category.getId())
                 .name(request.getName())
@@ -137,7 +135,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(String id) {
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format(ErrorCode.CATEGORY_NOT_FOUND, id)));
         if (category.getStatus().equals(CategoryStatus.INACTIVE)) {
             throw new RuntimeException("Category have deleted before");
         } else {
@@ -150,7 +148,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void addSubcategory(AddSubcategoryRequest data, String parentId) {
-        Category category = categoryRepository.findById(parentId).orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(parentId).orElseThrow(() -> new NotFoundException("Category not found"));
         AddSubcategoryCommand command = AddSubcategoryCommand.builder()
                 .id(UUID.randomUUID().toString())
                 .name(data.getName())

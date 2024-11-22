@@ -1,12 +1,13 @@
 package com.congthanh.project.service.serviceImpl;
 
+import com.congthanh.project.constant.common.ErrorCode;
 import com.congthanh.project.constant.enums.TagStatus;
 import com.congthanh.project.cqrs.command.command.tag.CreateTagCommand;
 import com.congthanh.project.cqrs.command.command.tag.UpdateTagCommand;
 import com.congthanh.project.cqrs.query.query.tag.GetAllTagQuery;
 import com.congthanh.project.cqrs.query.query.tag.GetTagByIdQuery;
-import com.congthanh.project.dto.TagDTO;
-import com.congthanh.project.entity.Tag;
+import com.congthanh.project.model.dto.TagDTO;
+import com.congthanh.project.model.entity.Tag;
 import com.congthanh.project.exception.ecommerce.BadRequestException;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.document.TagDocument;
@@ -107,6 +108,11 @@ public class TagServiceImpl implements TagService {
         var result = commandGateway.sendAndWait(event);
 
         return null;
+    }
+
+    @Override
+    public void deleteTag(Long tagId) {
+        Tag tag = tagRepository.findById(tagId).orElseThrow(() -> new NotFoundException(String.format(ErrorCode.TAG_NOT_FOUND, tagId)));
     }
 
     @Override

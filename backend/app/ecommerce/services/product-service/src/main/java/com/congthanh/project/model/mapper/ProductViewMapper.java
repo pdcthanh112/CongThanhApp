@@ -1,7 +1,7 @@
 package com.congthanh.project.model.mapper;
 
-import com.congthanh.project.dto.ProductViewDTO;
-import com.congthanh.project.entity.ProductView;
+import com.congthanh.project.model.dto.ProductViewDTO;
+import com.congthanh.project.model.entity.ProductView;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

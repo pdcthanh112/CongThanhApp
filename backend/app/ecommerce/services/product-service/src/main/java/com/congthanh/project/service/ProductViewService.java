@@ -1,6 +1,6 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.ProductViewDTO;
+import com.congthanh.project.model.dto.ProductViewDTO;
 
 public interface ProductViewService {
 

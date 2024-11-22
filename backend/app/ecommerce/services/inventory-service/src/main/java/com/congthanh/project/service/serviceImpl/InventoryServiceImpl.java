@@ -2,8 +2,8 @@ package com.congthanh.project.service.serviceImpl;
 
 import com.congthanh.project.model.mapper.InventoryMapper;
 import com.congthanh.project.model.request.InventoryRequest;
-import com.congthanh.project.dto.InventoryDTO;
-import com.congthanh.project.entity.Inventory;
+import com.congthanh.project.model.dto.InventoryDTO;
+import com.congthanh.project.model.entity.Inventory;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.repository.InventoryRepository;
 import com.congthanh.project.service.InventoryService;

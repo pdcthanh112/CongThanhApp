@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.productAtrributeValue;
 
-import com.congthanh.project.entity.ProductAttributeValue;
+import com.congthanh.project.model.entity.ProductAttributeValue;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,7 @@
 package com.congthanh.project.model.mapper;
 
-import com.congthanh.project.dto.ShippingDTO;
-import com.congthanh.project.entity.Shipping;
+import com.congthanh.project.model.dto.ShippingDTO;
+import com.congthanh.project.model.entity.Shipping;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

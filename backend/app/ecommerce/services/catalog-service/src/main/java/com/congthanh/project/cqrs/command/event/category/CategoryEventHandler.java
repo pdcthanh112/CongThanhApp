@@ -3,7 +3,7 @@ package com.congthanh.project.cqrs.command.event.category;
 import com.congthanh.project.config.RabbitMQConfig;
 import com.congthanh.project.constant.common.RabbitMQConstants;
 import com.congthanh.project.constant.enums.CategoryStatus;
-import com.congthanh.project.entity.Category;
+import com.congthanh.project.model.entity.Category;
 import com.congthanh.project.rabbitmq.category.CategoryEventType;
 import com.congthanh.project.rabbitmq.category.CategoryQueueEvent;
 import com.congthanh.project.repository.category.CategoryRepository;

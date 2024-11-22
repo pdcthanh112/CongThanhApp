@@ -1,7 +1,7 @@
 package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.ProductVariantDTO;
+import com.congthanh.project.model.dto.ProductVariantDTO;
 import com.congthanh.project.model.response.Response;
 import com.congthanh.project.service.ProductVariantService;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.order;
 
-import com.congthanh.project.entity.Order;
+import com.congthanh.project.model.entity.Order;
 import jakarta.persistence.Tuple;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

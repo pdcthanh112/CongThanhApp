@@ -1,9 +1,7 @@
 package com.congthanh.project.repository.product;
 
-import com.congthanh.project.entity.Product;
+import com.congthanh.project.model.entity.Product;
 import jakarta.transaction.Transactional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

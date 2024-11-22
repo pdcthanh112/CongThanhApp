@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.productAttribute;
 
-import com.congthanh.project.entity.ProductAttribute;
+import com.congthanh.project.model.entity.ProductAttribute;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

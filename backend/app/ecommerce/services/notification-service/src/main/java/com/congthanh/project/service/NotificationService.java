@@ -1,6 +1,6 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.NotificationDTO;
+import com.congthanh.project.model.dto.NotificationDTO;
 
 import java.util.List;
 

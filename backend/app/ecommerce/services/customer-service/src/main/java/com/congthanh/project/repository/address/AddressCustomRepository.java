@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.address;
 
-import com.congthanh.project.entity.Address;
+import com.congthanh.project.model.entity.Address;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;

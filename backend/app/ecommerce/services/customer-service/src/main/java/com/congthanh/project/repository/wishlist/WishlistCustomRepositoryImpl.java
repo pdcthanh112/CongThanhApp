@@ -1,6 +1,6 @@
 package com.congthanh.project.repository.wishlist;
 
-import com.congthanh.project.entity.Wishlist;
+import com.congthanh.project.model.entity.Wishlist;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;

@@ -1,6 +1,6 @@
 package com.congthanh.project.repository;
 
-import com.congthanh.project.entity.Supplier;
+import com.congthanh.project.model.entity.Supplier;
 import com.congthanh.project.model.response.ProductResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;

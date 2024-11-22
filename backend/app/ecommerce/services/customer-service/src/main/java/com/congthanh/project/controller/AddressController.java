@@ -1,7 +1,7 @@
 package com.congthanh.project.controller;
 
 import com.congthanh.project.constant.common.ResponseStatus;
-import com.congthanh.project.dto.AddressDTO;
+import com.congthanh.project.model.dto.AddressDTO;
 import com.congthanh.project.model.response.Response;
 import com.congthanh.project.service.AddressService;
 import io.swagger.v3.oas.annotations.tags.Tag;

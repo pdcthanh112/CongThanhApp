@@ -1,6 +1,6 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.AddressDTO;
+import com.congthanh.project.model.dto.AddressDTO;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
 package com.congthanh.project.service.serviceImpl;
 
 import com.congthanh.project.constant.enums.PromotionType;
-import com.congthanh.project.dto.CheckoutDTO;
-import com.congthanh.project.dto.OrderDTO;
-import com.congthanh.project.entity.Checkout;
-import com.congthanh.project.entity.Order;
+import com.congthanh.project.model.dto.CheckoutDTO;
+import com.congthanh.project.model.dto.OrderDTO;
+import com.congthanh.project.model.entity.Checkout;
+import com.congthanh.project.model.entity.Order;
 import com.congthanh.project.constant.enums.OrderStatus;
 import com.congthanh.project.exception.NotFoundException;
 import com.congthanh.project.grpc.GetPromotionByCodeRequest;
@@ -12,8 +12,8 @@ import com.congthanh.project.grpc.PromotionResponse;
 import com.congthanh.project.grpc.PromotionServiceGrpc;
 import com.congthanh.project.model.ecommerce.request.CreateOrderRequest;
 import com.congthanh.project.model.mapper.OrderMapper;
-import com.congthanh.project.dto.CartItemResponse;
-import com.congthanh.project.dto.CartResponse;
+import com.congthanh.project.model.dto.CartItemResponse;
+import com.congthanh.project.model.dto.CartResponse;
 import com.congthanh.project.repository.checkout.CheckoutRepository;
 import com.congthanh.project.repository.order.OrderRepository;
 import com.congthanh.project.service.OrderService;

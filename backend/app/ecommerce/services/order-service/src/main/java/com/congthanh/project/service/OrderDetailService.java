@@ -1,6 +1,6 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.OrderDetailDTO;
+import com.congthanh.project.model.dto.OrderDetailDTO;
 import com.congthanh.project.model.response.ResponseWithPagination;
 import com.congthanh.project.model.request.CreateOrderDetailRequest;
 

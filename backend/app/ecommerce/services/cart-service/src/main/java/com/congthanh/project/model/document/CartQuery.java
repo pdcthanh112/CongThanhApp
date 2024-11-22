@@ -1,7 +1,7 @@
 package com.congthanh.project.model.document;
 
 import com.congthanh.project.constant.enums.CartStatus;
-import com.congthanh.project.dto.CartItemDTO;
+import com.congthanh.project.model.dto.CartItemDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;

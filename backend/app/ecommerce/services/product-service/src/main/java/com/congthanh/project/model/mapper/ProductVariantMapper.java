@@ -1,9 +1,9 @@
 package com.congthanh.project.model.mapper;
 
-import com.congthanh.project.dto.ProductVariantDTO;
-import com.congthanh.project.dto.ProductVariantImageDTO;
-import com.congthanh.project.entity.ProductVariant;
-import com.congthanh.project.entity.ProductVariantImage;
+import com.congthanh.project.model.dto.ProductVariantDTO;
+import com.congthanh.project.model.dto.ProductVariantImageDTO;
+import com.congthanh.project.model.entity.ProductVariant;
+import com.congthanh.project.model.entity.ProductVariantImage;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

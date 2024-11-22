@@ -1,6 +1,6 @@
 package com.congthanh.project.service;
 
-import com.congthanh.project.dto.ProductImageDTO;
+import com.congthanh.project.model.dto.ProductImageDTO;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.congthanh.project.service.serviceImpl;
 
-import com.congthanh.project.dto.PromotionDTO;
-import com.congthanh.project.entity.Promotion;
+import com.congthanh.project.model.dto.PromotionDTO;
+import com.congthanh.project.model.entity.Promotion;
 import com.congthanh.project.exception.ecommerce.NotFoundException;
 import com.congthanh.project.model.mapper.PromotionMapper;
 import com.congthanh.project.repository.PromotionRepository;
