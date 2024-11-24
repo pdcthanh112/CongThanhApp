@@ -5,7 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
@@ -16,7 +15,6 @@ import java.time.Instant;
 @MappedSuperclass
 @Data
 @EntityListeners(CustomAuditingEntityListener.class)
-@SuperBuilder
 public class AbstractAuditEntity {
 
     @CreationTimestamp

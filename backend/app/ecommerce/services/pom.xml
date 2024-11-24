@@ -34,6 +34,7 @@
         <module>product-service</module>
         <module>promotion-service</module>
         <module>review-service</module>
+        <module>search-service</module>
         <module>shipping-service</module>
         <module>supplier-service</module>
         <module>warehouse-service</module>
@@ -44,7 +45,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.3.2</version>
+                <version>3.3.5</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

@@ -5,279 +5,109 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ea49186-cb6e-44e6-a9ca-fa2c25b450eb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/constant/common/ErrorCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/event/ProductEventListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/listener/CustomAuditingEntityListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/entity/AbstractAuditEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/AbstractCircuitBreakFallbackHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/MediaService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/MediaServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/auth/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/auth/SecurityFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/AxonConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/GraphQLConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/GrpcConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/KafkaConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/ModelMapperConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/MongoDBConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/MySQLConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/PostgreSQLConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/RabbitMQConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/RedisConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/SwaggerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/common/ErrorCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/common/ResponseStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/common/StateStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/CartStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/OrderStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/PaymentMethod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/PaymentStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/ProductStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/RatingOption.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/exception/ecommerce/BadRequestException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/exception/ecommerce/InvalidParameterException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/exception/ecommerce/NotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/exception/ecommerce/PermissionException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/exception/handler/ExceptionHandlers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/kafka/consumer/ProductConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/kafka/producer/ProductProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/sercurity/ApplicationSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/utils/Helper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config-service/src/main/resources/configurations/congthanhapp-ecommerce-search-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/auth/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/auth/SecurityFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/config/AxonConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/config/GraphQLConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/config/KafkaConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/config/ModelMapperConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/config/MongoDBConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/config/MySQLConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/config/PostgreSQLConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/config/RabbitMQConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/config/RedisConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/config/SwaggerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/constant/common/ErrorCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/constant/common/ProductField.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/constant/common/RabbitMQConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/constant/common/ResponseStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/constant/common/StateStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/constant/enums/SortType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/exception/ecommerce/BadRequestException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/exception/ecommerce/InvalidParameterException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/exception/ecommerce/NotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/exception/ecommerce/PermissionException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/exception/handler/ExceptionHandlers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/model/document/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/model/mapper/BrandMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/model/request/QueryCriteria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/model/response/ErrorDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/model/response/PaginationInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/model/response/ProductGetVm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/model/response/ProductListGetVm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/model/response/ProductNameGetVm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/model/response/ProductNameListVm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/model/response/Response.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/model/response/ResponseHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/model/response/ResponseWithPagination.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/repository/ProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/sercurity/ApplicationSecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/service/SearchProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/service/serviceImpl/SearchProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/utils/Helper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/project/utils/SnowflakeIdGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/resources/application-dev.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/resources/application-prod.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/resources/application-staging.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/resources/application-test.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/resources/bootstrap.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/resources/esconfig/elastic-analyzer.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/resources/messages/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/resources/messages/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/resources/messages/messages_vi.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/src/main/resources/messages/messages_zh.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/common/RabbitMQConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/CategoryStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/TagStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/controller/CartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/controller/CartItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/controller/CartItemController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/cqrs/command/aggregate/CartAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/cqrs/command/aggregate/CartAggregate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/dto/CartDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/dto/CartDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/dto/CartItemDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/dto/CartItemDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/dto/ProductAttributeValueResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/dto/ProductAttributeValueResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/dto/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/dto/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/dto/ProductImageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/dto/ProductImageResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/dto/ProductVariantAttributeValueResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/dto/ProductVariantAttributeValueResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/dto/ProductVariantImageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/dto/ProductVariantImageResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/dto/ProductVariantResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/dto/ProductVariantResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/entity/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/entity/Cart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/entity/CartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/entity/CartItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/document/CartQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/document/CartQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/mapper/CartItemMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/mapper/CartItemMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/mapper/CartMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/model/mapper/CartMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/repository/cart/CartCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/repository/cart/CartCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/repository/cart/CartCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/repository/cart/CartCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/repository/cart/CartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/repository/cart/CartRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/repository/cartItem/CartItemCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/repository/cartItem/CartItemCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/repository/cartItem/CartItemCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/repository/cartItem/CartItemCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/repository/cartItem/CartItemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/repository/cartItem/CartItemRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/service/CartItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/service/CartItemService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/service/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/service/CartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/service/serviceImpl/CartItemServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/service/serviceImpl/CartItemServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/service/serviceImpl/CartServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/src/main/java/com/congthanh/project/service/serviceImpl/CartServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/controller/CategoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/controller/TagController.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/controller/TagController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/cqrs/command/event/category/CategoryEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/cqrs/command/event/category/CategoryEventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/cqrs/command/event/tag/TagEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/cqrs/command/event/tag/TagEventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/dto/BrandDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/dto/BrandDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/dto/CategoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/dto/CategoryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/dto/TagDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/dto/TagDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/entity/AbstractAuditEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/entity/AbstractAuditEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/entity/Brand.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/entity/Brand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/entity/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/entity/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/entity/Tag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/listener/CustomAuditingEntityListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/listener/CustomAuditingEntityListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/mapper/CategoryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/mapper/CategoryMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/mapper/TagMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/mapper/TagMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/repository/brand/BrandRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/repository/brand/BrandRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/repository/category/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/repository/category/CategoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/repository/tag/TagCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/repository/tag/TagCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/repository/tag/TagCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/repository/tag/TagCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/repository/tag/TagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/repository/tag/TagRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/service/CategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/service/TagService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/service/serviceImpl/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/service/serviceImpl/CategoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/service/serviceImpl/TagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/service/serviceImpl/TagServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/controller/AddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/controller/AddressController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/controller/WishlistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/controller/WishlistController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/dto/AddressDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/model/dto/AddressDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/dto/SearchHistoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/model/dto/SearchHistoryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/dto/WishlistDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/model/dto/WishlistDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/entity/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/model/entity/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/entity/SearchHisory.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/model/entity/SearchHisory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/entity/Wishlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/model/entity/Wishlist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/model/mapper/AddressMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/model/mapper/AddressMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/model/mapper/WishlistMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/model/mapper/WishlistMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/repository/address/AddressCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/repository/address/AddressCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/repository/address/AddressCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/repository/address/AddressCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/repository/address/AddressRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/repository/address/AddressRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/repository/wishlist/WishlistCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/repository/wishlist/WishlistCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/repository/wishlist/WishlistRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/repository/wishlist/WishlistRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/service/AddressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/service/AddressService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/service/WishlistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/service/WishlistService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/serviceImpl/AddressServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/service/serviceImpl/AddressServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/serviceImpl/WishlistServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/src/main/java/com/congthanh/project/service/serviceImpl/WishlistServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/controller/InventoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/controller/InventoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/dto/InventoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/model/dto/InventoryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/entity/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/model/entity/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/model/mapper/InventoryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/model/mapper/InventoryMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/repository/InventoryCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/repository/InventoryCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/repository/InventoryCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/repository/InventoryCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/repository/InventoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/repository/InventoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/service/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/service/InventoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/service/serviceImpl/InventoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/src/main/java/com/congthanh/project/service/serviceImpl/InventoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/controller/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/controller/NotificationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/dto/NotificationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/model/dto/NotificationDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/entity/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/model/entity/Notification.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/kafka/NotificationsConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/kafka/NotificationsConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/model/mapper/NotificationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/model/mapper/NotificationMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/repository/NotificationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/repository/NotificationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/service/NotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/service/serviceImpl/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/project/service/serviceImpl/NotificationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/dto/CartItemResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/dto/CartItemResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/dto/CartResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/dto/CartResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/dto/CheckoutDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/dto/CheckoutDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/dto/OrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/dto/OrderDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/dto/OrderDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/dto/OrderDetailDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/dto/ProductResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/dto/ProductResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/dto/PromotionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/dto/PromotionDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/entity/Checkout.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/entity/Checkout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/entity/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/entity/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/entity/OrderDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/entity/OrderDetail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/mapper/CheckoutMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/mapper/CheckoutMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/mapper/OrderDetailMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/mapper/OrderDetailMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/mapper/OrderMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/model/mapper/OrderMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/repository/checkout/CheckoutRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/repository/checkout/CheckoutRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/repository/order/OrderCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/repository/order/OrderCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/repository/order/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/repository/order/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/repository/orderDetail/OrderDetailCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/repository/orderDetail/OrderDetailCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/repository/orderDetail/OrderDetailCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/repository/orderDetail/OrderDetailCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/repository/orderDetail/OrderDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/repository/orderDetail/OrderDetailRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/service/OrderDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/service/OrderDetailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/service/serviceImpl/OrderDetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/service/serviceImpl/OrderDetailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/service/serviceImpl/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/project/service/serviceImpl/OrderServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/dto/OrderResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/dto/OrderResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/dto/PaymentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/dto/PaymentDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/entity/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/entity/Payment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/entity/PaymentTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/entity/PaymentTransaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/mapper/PaymentMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/model/mapper/PaymentMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/payment/PaymentCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/payment/PaymentCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/payment/PaymentCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/payment/PaymentCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/payment/PaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/payment/PaymentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/paymentTransaction/PaymentTransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/repository/paymentTransaction/PaymentTransactionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentTransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/PaymentTransactionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/serviceImpl/PaymentTransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/serviceImpl/PaymentTransactionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CodPaymentStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/congthanh/project/service/strategy/CodPaymentStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/controller/ProductAttributeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/controller/ProductAttributeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/controller/ProductAttributeValueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/controller/ProductAttributeValueController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/controller/ProductImageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/controller/ProductImageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/controller/ProductVariantController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/controller/ProductVariantController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/controller/ProductViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/controller/ProductViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/aggregate/ProductAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/aggregate/ProductAggregate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/command/CreateProductCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/command/CreateProductCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/command/UpdateProductCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/command/UpdateProductCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/event/ProductCreatedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/event/ProductCreatedEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/event/ProductEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/event/ProductEventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/event/ProductUpdatedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/command/event/ProductUpdatedEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/query/projection/ProductProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/cqrs/query/projection/ProductProjection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/BrandResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/CategoryResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/ProductAttributeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/dto/ProductAttributeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/ProductAttributeValueDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/dto/ProductAttributeValueDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/dto/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/ProductImageDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/dto/ProductImageDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/ProductVariantAttributeValueDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/dto/ProductVariantAttributeValueDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/ProductVariantDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/dto/ProductVariantDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/ProductVariantImageDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/dto/ProductVariantImageDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/ProductViewDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/dto/ProductViewDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/SubcategoryResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/SupplierResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/VariantAttributeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/dto/VariantAttributeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/dto/VariantAttributeValueDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/dto/VariantAttributeValueDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/entity/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/entity/ProductAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/entity/ProductAttribute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/entity/ProductAttributeValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/entity/ProductAttributeValue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/entity/ProductImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/entity/ProductImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/entity/ProductVariant.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/entity/ProductVariant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/entity/ProductVariantImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/entity/ProductVariantImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/entity/ProductView.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/entity/ProductView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/entity/VariantAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/entity/VariantAttribute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/entity/VariantAttributeValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/entity/VariantAttributeValue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/grpc/ProductGrpcService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/grpc/ProductGrpcService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/kafka/consumer/ProductConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/kafka/consumer/ProductConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/kafka/producer/ProductProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/kafka/producer/ProductProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/document/ProductDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/document/ProductDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductAttributeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductAttributeMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductAttributeValueMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductAttributeValueMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductImageMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductImageMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductVariantImageMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductVariantImageMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductVariantMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductVariantMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductViewMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/mapper/ProductViewMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/request/CreateProductRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/model/request/CreateProductRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/attributeValue/AttributeValueCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/attributeValue/AttributeValueCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/attributeValue/AttributeValueCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/attributeValue/AttributeValueCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/attributeValue/AttributeValueRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/attributeValue/AttributeValueRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/product/ProductCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/product/ProductCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/product/ProductCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/product/ProductCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/product/ProductQueryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/product/ProductDocumentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/product/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/product/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productAtrributeValue/ProductAttributeValueCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productAtrributeValue/ProductAttributeValueCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productAtrributeValue/ProductAttributeValueCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productAtrributeValue/ProductAttributeValueCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productAtrributeValue/ProductAttributeValueRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productAtrributeValue/ProductAttributeValueRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productAttribute/ProductAttributeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productAttribute/ProductAttributeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productImage/ProductImageCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productImage/ProductImageCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productImage/ProductImageCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productImage/ProductImageCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productImage/ProductImageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productImage/ProductImageRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productVariant/ProductVariantRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productVariant/ProductVariantRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productView/ProductViewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/repository/productView/ProductViewRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/ProductAttributeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/ProductAttributeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/ProductAttributeValueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/ProductAttributeValueService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/ProductImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/ProductImageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/ProductVariantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/ProductVariantService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/ProductViewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/ProductViewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/ProductAttributeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/ProductAttributeServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/ProductAttributeValueServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/ProductAttributeValueServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/ProductImageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/ProductImageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/entity/AbstractAuditEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/entity/AbstractAuditEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/entity/Brand.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/entity/Brand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/entity/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/entity/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/project/model/entity/Tag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/ProductVariantServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/ProductVariantServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/ProductViewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/service/serviceImpl/ProductViewServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/utils/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/project/utils/Helper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/controller/PromotionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/controller/PromotionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/dto/PromotionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/model/dto/PromotionDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/entity/CustomerPromotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/model/entity/CustomerPromotion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/entity/ProductPromotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/model/entity/ProductPromotion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/entity/Promotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/model/entity/Promotion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/model/mapper/PromotionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/model/mapper/PromotionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/repository/PromotionCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/repository/PromotionCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/repository/PromotionCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/repository/PromotionCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/repository/PromotionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/repository/PromotionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/service/PromotionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/service/PromotionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/service/serviceImpl/PromotionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/promotion-service/src/main/java/com/congthanh/project/service/serviceImpl/PromotionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/controller/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/controller/ReviewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/dto/ReviewDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/model/dto/ReviewDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/dto/ReviewMediaDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/model/dto/ReviewMediaDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/entity/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/model/entity/Review.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/entity/ReviewMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/model/entity/ReviewMedia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/model/mapper/ReviewMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/model/mapper/ReviewMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/repository/review/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/repository/review/ReviewRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/service/ReviewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/service/serviceImpl/ReviewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/review-service/src/main/java/com/congthanh/project/service/serviceImpl/ReviewServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shipping-service/src/main/java/com/congthanh/project/dto/ShippingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/com/congthanh/project/model/dto/ShippingDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shipping-service/src/main/java/com/congthanh/project/dto/ShippingLabelDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/com/congthanh/project/model/dto/ShippingLabelDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shipping-service/src/main/java/com/congthanh/project/dto/ShippingTrackingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/com/congthanh/project/model/dto/ShippingTrackingDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shipping-service/src/main/java/com/congthanh/project/entity/Shipping.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/com/congthanh/project/model/entity/Shipping.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shipping-service/src/main/java/com/congthanh/project/model/mapper/ShippingMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/com/congthanh/project/model/mapper/ShippingMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shipping-service/src/main/java/com/congthanh/project/repository/ShippingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/src/main/java/com/congthanh/project/repository/ShippingRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/controller/SupplierController.java" beforeDir="false" afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/controller/SupplierController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/dto/SupplierDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/model/dto/SupplierDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/entity/Supplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/model/entity/Supplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/model/mapper/SupplierMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/model/mapper/SupplierMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/repository/SupplierCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/repository/SupplierCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/repository/SupplierCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/repository/SupplierCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/repository/SupplierRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/repository/SupplierRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/service/SupplierService.java" beforeDir="false" afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/service/SupplierService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/service/serviceImpl/SupplierServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/supplier-service/src/main/java/com/congthanh/project/service/serviceImpl/SupplierServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/compose.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/WarehouseServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/WarehouseServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/auth/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/auth/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/auth/SecurityFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/auth/SecurityFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/AxonConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/AxonConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/GrpcConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/KafkaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/KafkaConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/MongoDBConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/MongoDBConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/PostgreSQLConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/PostgreSQLConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/config/RabbitMQConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/common/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/common/ErrorCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/CartStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/OrderStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/PaymentMethod.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/PaymentStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/ProductStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/RatingOption.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/constant/enums/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/exception/ecommerce/BadRequestException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/exception/ecommerce/InvalidParameterException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/exception/ecommerce/NotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/exception/ecommerce/PermissionException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/exception/handler/ExceptionHandlers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/kafka/consumer/ProductConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/kafka/producer/ProductProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/sercurity/ApplicationSecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/java/com/congthanh/project/utils/Helper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/resources/application-dev.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/resources/application-prod.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/resources/application-prod.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/resources/application-staging.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/resources/application-staging.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/resources/application-test.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/resources/application-test.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/main/resources/bootstrap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/main/resources/bootstrap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse-service/src/test/java/com/congthanh/project/WarehouseServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/src/test/java/com/congthanh/project/WarehouseServiceApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -289,6 +119,7 @@
       <list>
         <option value="Exception" />
         <option value="Interface" />
+        <option value="Record" />
         <option value="Class" />
       </list>
     </option>
@@ -321,48 +152,60 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ApiGatewayApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ConfigServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.PaymentServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ServiceDiscoveryApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.WarehouseServiceApplication (1).executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.WarehouseServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;22&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/pdcth/OneDrive/Desktop/CongThanhApp/backend/app/ecommerce/services/warehouse-service/src/main/java/com/congthanh/project&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.ApiGatewayApplication.executor": "Run",
+    "Spring Boot.CartServiceApplication.executor": "Run",
+    "Spring Boot.CatalogServiceApplication.executor": "Run",
+    "Spring Boot.ConfigServiceApplication.executor": "Run",
+    "Spring Boot.CustomerServiceApplication.executor": "Run",
+    "Spring Boot.InventoryServiceApplication.executor": "Run",
+    "Spring Boot.NotificationServiceApplication.executor": "Run",
+    "Spring Boot.OrderServiceApplication.executor": "Run",
+    "Spring Boot.PaymentServiceApplication.executor": "Run",
+    "Spring Boot.ProductServiceApplication.executor": "Run",
+    "Spring Boot.PromotionServiceApplication.executor": "Run",
+    "Spring Boot.ReviewServiceApplication.executor": "Run",
+    "Spring Boot.SearchServiceApplication.executor": "Run",
+    "Spring Boot.ServiceDiscoveryApplication.executor": "Run",
+    "Spring Boot.ShippingServiceApplication.executor": "Run",
+    "Spring Boot.SupplierServiceApplication.executor": "Run",
+    "Spring Boot.WarehouseServiceApplication (1).executor": "Run",
+    "Spring Boot.WarehouseServiceApplication.executor": "Run",
+    "git-widget-placeholder": "dev",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "22",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/pdcth/OneDrive/Desktop/CongThanhApp/backend/app/ecommerce/services/search-service/src/main/java/com/congthanh/project",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\search-service\src\main\java\com\congthanh\project" />
       <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\warehouse-service\src\main\java\com\congthanh\project" />
       <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\warehouse-service\src\main\resources" />
+      <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\search-service\src\main\resources" />
       <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\supplier-service\src\main\resources" />
-      <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\shipping-service\src\main\resources" />
-      <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\review-service\src\main\resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.congthanh.project.model.entity" />
@@ -378,7 +221,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.ApiGatewayApplication">
+  <component name="RunManager" selected="Spring Boot.WarehouseServiceApplication">
     <configuration name="ApiGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="api-gateway" />
@@ -482,6 +325,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SearchServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="search-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.SearchServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ServiceDiscoveryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="service-discovery" />
@@ -506,7 +357,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WarehouseServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <configuration name="WarehouseServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="warehouse-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.project.WarehouseServiceApplication" />
@@ -528,6 +379,7 @@
       <item itemvalue="Spring Boot.ProductServiceApplication" />
       <item itemvalue="Spring Boot.PromotionServiceApplication" />
       <item itemvalue="Spring Boot.ReviewServiceApplication" />
+      <item itemvalue="Spring Boot.SearchServiceApplication" />
       <item itemvalue="Spring Boot.ShippingServiceApplication" />
       <item itemvalue="Spring Boot.SupplierServiceApplication" />
       <item itemvalue="Spring Boot.WarehouseServiceApplication" />
@@ -556,7 +408,15 @@
       <workItem from="1731985376230" duration="13182000" />
       <workItem from="1732164388672" duration="9233000" />
       <workItem from="1732206688009" duration="1805000" />
-      <workItem from="1732244923328" duration="8466000" />
+      <workItem from="1732244923328" duration="9670000" />
+      <workItem from="1732331829785" duration="1110000" />
+      <workItem from="1732333013555" duration="1306000" />
+      <workItem from="1732334385331" duration="649000" />
+      <workItem from="1732437951660" duration="214000" />
+      <workItem from="1732438194119" duration="785000" />
+      <workItem from="1732439005506" duration="67000" />
+      <workItem from="1732439085383" duration="3589000" />
+      <workItem from="1732466963827" duration="2218000" />
     </task>
     <servers />
   </component>

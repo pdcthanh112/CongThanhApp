@@ -2,15 +2,15 @@ spring:
   application:
     name: congthanhapp-ecommerce-catalog-service
 
-  datasource:
-    url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
-    username: postgres
-    password: 123456
-    driver-class-name: org.postgresql.Driver
   config:
     import:
       - optional:file:./.env
       - configserver:http://localhost:8888/
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
 
   profiles:
     active: dev

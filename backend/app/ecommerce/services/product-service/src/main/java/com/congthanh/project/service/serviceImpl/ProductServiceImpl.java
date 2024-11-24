@@ -122,7 +122,7 @@ public class ProductServiceImpl implements ProductService {
         String productSlug = Helper.generateSlug(request.getName());
 
 //        assert category != null && subcategory != null && supplier != null && brand != null;
-        CreateProductCommand product = CreateProductCommand.builder()
+        CreateProductCommand mainProduct = CreateProductCommand.builder()
                 .name(request.getName())
                 .category(category.getId())
                 .description(request.getDescription())
@@ -131,7 +131,7 @@ public class ProductServiceImpl implements ProductService {
                 .slug(productSlug)
 //                .supplier(supplier.getId())
                 .build();
-        ProductDTO result = commandGateway.sendAndWait(product);
+        ProductDTO result = commandGateway.sendAndWait(mainProduct);
         kafkaTemplate.send("create-product-topic", result);
         return result;
 

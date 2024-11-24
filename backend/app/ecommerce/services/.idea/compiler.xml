@@ -19,16 +19,11 @@
         <module name="notification-service" />
         <module name="inventory-service" />
         <module name="payment-service" />
+        <module name="search-service" />
         <module name="api-gateway" />
         <module name="order-service" />
         <module name="service-discovery" />
         <module name="shipping-service" />
-      </profile>
-      <profile name="Annotation profile for warehouse-service" enabled="true">
-        <sourceOutputDir name="warehouse-service/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="warehouse-service/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="services" />
       </profile>
     </annotationProcessing>
   </component>
@@ -46,8 +41,9 @@
       <module name="product-service" options="-parameters" />
       <module name="promotion-service" options="-parameters" />
       <module name="review-service" options="-parameters" />
+      <module name="search-service" options="-parameters" />
       <module name="service-discovery" options="-parameters" />
-      <module name="services" options="-parameters" />
+      <module name="services" options="" />
       <module name="shipping-service" options="-parameters" />
       <module name="supplier-service" options="-parameters" />
       <module name="warehouse-service" options="-parameters" />

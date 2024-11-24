@@ -1,10 +1,10 @@
 package com.congthanh.project.constant.common;
 
 public final class ErrorCode {
+    public static final String CATEGORY_NOT_FOUND = "Category {} is not found";
 
-    public static final String PRODUCT_NOT_FOUND = "PRODUCT_NOT_FOUND";
-    public static final String PRODUCT_OPTION_NOT_FOUND = "Product option %s is not found";
-    public static final String PRODUCT_ATTRIBUTE_NOT_FOUND = "Product attribute %s is not found";
-    public static final String PRODUCT_ATTRIBUTE_GROUP_NOT_FOUND = "Product attribute group %s is not found";
+    public static final String TAG_NOT_FOUND = "Tag {} is not found";
+
+    public static final String BRAND_NOT_FOUND = "Brand {} is not found";
 
 }
