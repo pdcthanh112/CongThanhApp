@@ -9,8 +9,8 @@ import java.time.Instant;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @Table(name = "category")
@@ -36,8 +36,8 @@ public class Category  extends AbstractAuditEntity{
     @Enumerated(EnumType.STRING)
     private CategoryStatus status;
 
-    private Instant createdAt;
-
-    private Instant updatedAt;
+//    private Instant createdAt;
+//
+//    private Instant updatedAt;
 
 }
