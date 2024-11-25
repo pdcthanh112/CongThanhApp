@@ -1,0 +1,38 @@
+package com.congthanh.catalogservice.cqrs.command.event.category;
+
+import com.congthanh.catalogservice.constant.enums.CategoryStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.Instant;
+
+@Data
+@AllArgsConstructor
+@Builder
+public class CategoryCreatedEvent implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private final String id;
+
+    private final String name;
+
+    private final String slug;
+
+    private final String description;
+
+    private final String image;
+
+    private final String parentId;
+
+    private final CategoryStatus status;
+
+    private final Instant createdAt;
+
+    private final Instant updatedAt;
+
+}
