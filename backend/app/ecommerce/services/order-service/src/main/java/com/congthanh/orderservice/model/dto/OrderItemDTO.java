@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderDetailDTO implements Serializable {
+public class OrderItemDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

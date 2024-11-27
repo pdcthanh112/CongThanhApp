@@ -12,15 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-@Table(name = "order_detail")
-public class OrderDetail {
+@Table(name = "order_item")
+public class OrderItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "product", nullable = false)
     private String productVariant;
 
     private int quantity;

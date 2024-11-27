@@ -3,14 +3,13 @@ package com.congthanh.catalogservice.model.entity;
 import com.congthanh.catalogservice.constant.enums.CategoryStatus;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
-//@NoArgsConstructor
-//@AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@SuperBuilder
+@Builder
 @Table(name = "category")
 public class Category  extends AbstractAuditEntity{
 

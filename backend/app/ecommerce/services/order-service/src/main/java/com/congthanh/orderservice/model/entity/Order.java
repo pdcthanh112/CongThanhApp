@@ -1,31 +1,28 @@
 package com.congthanh.orderservice.model.entity;
 
 import com.congthanh.orderservice.constant.enums.OrderStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Table(name = "Orders")
-public class Order {
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
+@Table(name = "`Order`")
+public class Order extends AbstractAuditEntity{
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+//  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String customer;
@@ -49,16 +46,6 @@ public class Order {
 
   @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonIgnore
-  private List<OrderDetail> orderDetail;
-
-  @CreatedDate
-  @JsonFormat(shape = JsonFormat.Shape.STRING)
-  @Column(name = "created_at")
-  private Instant createdAt;
-
-  @LastModifiedDate
-  @JsonFormat(shape = JsonFormat.Shape.STRING)
-  @Column(name = "updated_at")
-  private Instant updatedAt;
+  private List<OrderItem> orderItem;
 
 }

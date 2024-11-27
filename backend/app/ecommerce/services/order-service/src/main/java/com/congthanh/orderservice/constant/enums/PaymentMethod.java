@@ -1,16 +1,15 @@
 package com.congthanh.orderservice.constant.enums;
 
 public enum PaymentMethod {
-    CASH_ON_DELIVERY("COD"),
-    CREDIT_DEBIT_CARD("Credit/Debit Card"),
-    E_WALLET("E-Wallet"),
-    BANK_TRANSFER("Bank transfer"),
-    PAYPAL("PayPal");
-
-    public final String label;
-
-    private PaymentMethod(String label) {
-        this.label = label;
-    }
+    CASH_ON_DELIVERY,
+    CREDIT_CARD,
+    E_WALLET,
+    GOOGLE_PAY,
+    SAMSUNG_PAY,
+    APPLE_PAY,
+    BANK_TRANSFER,
+    PAYPAL,
+    STRIPE,
+    BITCOIN,
 }
 

@@ -29,8 +29,8 @@ public class TagEventHandler {
         Tag tag = Tag.builder()
                 .id(event.getId())
                 .name(event.getName())
-                .createdAt(event.getCreateAt())
-                .updatedAt(event.getUpdateAt())
+//                .createdAt(event.getCreateAt())
+//                .updatedAt(event.getUpdateAt())
                 .status(event.getStatus())
                 .build();
         var result = tagRepository.save(tag);
@@ -48,8 +48,8 @@ public class TagEventHandler {
         Tag tag = Tag.builder()
                 .id(event.getId())
                 .name(event.getName())
-                .createdAt(event.getCreateAt())
-                .updatedAt(event.getUpdateAt())
+//                .createdAt(event.getCreateAt())
+//                .updatedAt(event.getUpdateAt())
                 .status(event.getStatus())
                 .build();
         var result = tagRepository.save(tag);

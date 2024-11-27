@@ -112,15 +112,15 @@ public class OrderServiceImpl implements OrderService {
         return response;
     }
 
-    @KafkaListener(topics = "shipment-completed-topic")
-    public void handleShipmentCompleted(ShippingEvent shippingEvent) {
-        // Cập nhật trạng thái đơn hàng thành "Shipped"
-        Order order = orderRepository.findById(shippingEvent.eventType);
-        order.setStatus(OrderStatus.SHIPPED);
-        Order result = orderRepository.save(order);
-
-        // Đẩy sự kiện OrderStatusUpdated lên Kafka
-        OrderEvent orderEvent = new OrderEvent("UPDATE", OrderMapper.mapOrderEntityToDTO(result));
-        kafkaTemplate.send("order-topic", orderEvent);
-    }
+//    @KafkaListener(topics = "shipment-completed-topic")
+//    public void handleShipmentCompleted(ShippingEvent shippingEvent) {
+//        // Cập nhật trạng thái đơn hàng thành "Shipped"
+//        Order order = orderRepository.findById(shippingEvent.eventType);
+//        order.setStatus(OrderStatus.SHIPPED);
+//        Order result = orderRepository.save(order);
+//
+//        // Đẩy sự kiện OrderStatusUpdated lên Kafka
+//        OrderEvent orderEvent = new OrderEvent("UPDATE", OrderMapper.mapOrderEntityToDTO(result));
+//        kafkaTemplate.send("order-topic", orderEvent);
+//    }
 }

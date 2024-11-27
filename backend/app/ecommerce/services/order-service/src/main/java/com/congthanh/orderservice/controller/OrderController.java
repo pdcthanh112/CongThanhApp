@@ -2,18 +2,15 @@ package com.congthanh.orderservice.controller;
 
 import com.congthanh.orderservice.constant.common.ResponseStatus;
 import com.congthanh.orderservice.model.dto.CheckoutDTO;
-import com.congthanh.orderservice.model.dto.OrderDetailDTO;
+import com.congthanh.orderservice.model.dto.OrderItemDTO;
 import com.congthanh.orderservice.model.response.Response;
 import com.congthanh.orderservice.model.response.ResponseWithPagination;
-import com.congthanh.orderservice.service.OrderDetailService;
+import com.congthanh.orderservice.service.OrderItemService;
 import com.congthanh.orderservice.service.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,12 +22,12 @@ public class OrderController {
 
   private final OrderService orderService;
 
-  private final OrderDetailService orderDetailService;
+  private final OrderItemService orderItemService;
 
   @GetMapping("/getByStatus")
-  public ResponseEntity<Response<ResponseWithPagination<OrderDetailDTO>>> getOrderByStatus(@RequestParam("status") String status, @RequestParam("page") int page, @RequestParam("limit") int limit) {
-    ResponseWithPagination<OrderDetailDTO> data = orderDetailService.getOrderDetailByStatus(status, page, limit);
-    Response<ResponseWithPagination<OrderDetailDTO>> response = new Response<>();
+  public ResponseEntity<Response<ResponseWithPagination<OrderItemDTO>>> getOrderByStatus(@RequestParam("status") String status, @RequestParam("page") int page, @RequestParam("limit") int limit) {
+    ResponseWithPagination<OrderItemDTO> data = orderItemService.getOrderDetailByStatus(status, page, limit);
+    Response<ResponseWithPagination<OrderItemDTO>> response = new Response<>();
     response.setData(data);
     response.setStatus(ResponseStatus.STATUS_SUCCESS);
     response.setMessage("Get all successfully");
