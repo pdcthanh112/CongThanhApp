@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -85,6 +86,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(cacheNames = "products", key = "#id")
     public ProductDTO getProductById(String id) {
         ProductDocument data = queryGateway.query(new GetProductByIdQuery(id), ResponseTypes.instanceOf(ProductDocument.class)).join();
         return ProductDTO.builder()

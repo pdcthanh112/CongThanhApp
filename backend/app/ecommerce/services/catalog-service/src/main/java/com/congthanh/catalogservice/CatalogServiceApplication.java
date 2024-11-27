@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-@EnableMongoRepositories(basePackages = "com.congthanh.project.repository")
+@EnableMongoRepositories(basePackages = "com.congthanh.catalogservice.repository")
 public class CatalogServiceApplication {
 
 	public static void main(String[] args) {

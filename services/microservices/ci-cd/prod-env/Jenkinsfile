@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+    
+    environment {
+        PROD_CLUSTER = 'production-cluster-credentials'
+    }
+    
+    stages {
+        stage('Approval') {
+            steps {
+                // Yêu cầu phê duyệt từ quản lý
+                input message: 'Deploy to Production?', 
+                      parameters: [
+                          choice(name: 'DEPLOY', 
+                                 choices: ['APPROVE', 'ABORT'], 
+                                 description: 'Choose to proceed or abort')
+                      ]
+            }
+        }
+        
+        stage('Deploy to Production') {
+            when {
+                expression { params.DEPLOY == 'APPROVE' }
+            }
+            steps {
+                withCredentials([kubeconfigFile(credentialsId: env.PROD_CLUSTER, variable: 'KUBECONFIG')]) {
+                    sh '''
+                        kubectl apply -f k8s/production/
+                        kubectl rollout restart deployment api-gateway -n production
+                    '''
+                }
+            }
+        }
+        
+        stage('Production Verification') {
+            steps {
+                script {
+                    sh 'kubectl rollout status deployment api-gateway -n production'
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Production deployment successful!'
+        }
+        failure {
+            echo 'Production deployment failed'
+            // Gửi cảnh báo khẩn cấp
+        }
+    }
+}

@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+    
+    environment {
+        STAGING_CLUSTER = 'staging-cluster-credentials'
+    }
+    
+    stages {
+        stage('Prepare') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Build Images') {
+            steps {
+                script {
+                    docker.build('staging-api-gateway', './api-gateway')
+                    docker.build('staging-auth-service', './auth-service')
+                }
+            }
+        }
+        
+        stage('Deploy to Staging') {
+            steps {
+                withCredentials([kubeconfigFile(credentialsId: env.STAGING_CLUSTER, variable: 'KUBECONFIG')]) {
+                    sh '''
+                        kubectl apply -f k8s/staging/
+                        kubectl rollout restart deployment api-gateway -n staging
+                    '''
+                }
+            }
+        }
+        
+        stage('Staging Verification') {
+            steps {
+                script {
+                    // Kiểm tra trạng thái deployment
+                    sh 'kubectl rollout status deployment api-gateway -n staging'
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Deployment to staging successful!'
+        }
+        failure {
+            echo 'Staging deployment failed'
+            // Gửi thông báo lỗi
+        }
+    }
+}

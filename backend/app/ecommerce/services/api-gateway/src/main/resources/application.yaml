@@ -1,14 +1,27 @@
 server:
   port: 5000
-
 spring:
   application:
     name: congthanhapp-ecommerce-api-gateway
+  profiles:
+    active: dev
   main:
     web-application-type: reactive
-
+  threads:
+    virtual:
+      enabled: true
   security:
-    enable: false
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://identity/realms/Yas
+        registration:
+          api-client:
+            provider: keycloak
+            client-id: backoffice-bff
+            client-secret: TVacLC0cQ8tiiEKiTVerTb2YvwQ1TRJF #gitleaks:allow
+            scope: openid, profile, email, roles
 
   cloud:
     gateway:
@@ -24,22 +37,27 @@ spring:
         - id: catalog-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-CATALOG-SERVICE
           predicates:
-            - Path=/api/ecommerce/catalog/**
+              - Path=/api/ecommerce/category/**, /api/ecommerce/brand/**, /api/ecommerce/tag/**
+
+        - id: customer-service
+          uri: lb://CONGTHANHAPP-ECOMMERCE-CUSTOMER-SERVICE
+          predicates:
+            - Path=/api/ecommerce/customer/**
 
         - id: inventory-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-INVENTORY-SERVICE
           predicates:
-            - Path=/inventory/**
+            - Path=/api/ecommerce/inventory/**
 
         - id: notification-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-NOTIFICATION-SERVICE
           predicates:
-            - Path=/notification/**
+            - Path=/api/ecommerce/notification/**
 
         - id: order-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-ORDER-SERVICE
           predicates:
-            - Path=/order/**
+            - Path=/api/ecommerce/order/**, /api/ecommerce/checkout/**
 
         - id: payment-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-PAYMENT-SERVICE
@@ -59,9 +77,14 @@ spring:
         - id: review-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-REVIEW-SERVICE
           predicates:
-            - Path=/review/**
+            - Path=/api/ecommerce/review/**
 
-        - id: supplier-service
+        - id: search-service
+          uri: lb://CONGTHANHAPP-ECOMMERCE-SEARCH-SERVICE
+          predicates:
+            - Path=/search/**
+
+        - id: shipping-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-SHIPPING-SERVICE
           predicates:
             - Path=/shipping/**
@@ -71,6 +94,10 @@ spring:
           predicates:
             - Path=/supplier/**
 
+        - id: warehouse-service
+          uri: lb://CONGTHANHAPP-ECOMMERCE-WAREHOUSE-SERVICE
+          predicates:
+            - Path=/warehouse/**
 eureka:
   client:
     service-url:

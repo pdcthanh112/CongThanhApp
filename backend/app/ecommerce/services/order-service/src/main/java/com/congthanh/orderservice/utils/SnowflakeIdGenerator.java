@@ -1,4 +1,4 @@
-package com.congthanh.catalogservice.utils;
+package com.congthanh.orderservice.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -28,8 +28,8 @@ public class SnowflakeIdGenerator {
 //    @Value("${snowflake.datacenter-id}")
 //    private final long datacenterId;
 
-    private final long workerId;
-    private final long datacenterId;
+    private long workerId;
+    private long datacenterId;
 
     //    public SnowflakeIdGenerator(long workerId, long datacenterId) {
     public SnowflakeIdGenerator(

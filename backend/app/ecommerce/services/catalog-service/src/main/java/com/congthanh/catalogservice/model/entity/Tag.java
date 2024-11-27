@@ -2,10 +2,7 @@ package com.congthanh.catalogservice.model.entity;
 
 import com.congthanh.catalogservice.constant.enums.TagStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -13,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@SuperBuilder
+@Builder
 @Table(name = "tag")
 public class Tag extends AbstractAuditEntity {
 

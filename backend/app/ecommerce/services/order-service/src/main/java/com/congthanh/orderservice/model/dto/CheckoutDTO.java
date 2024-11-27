@@ -1,5 +1,6 @@
 package com.congthanh.orderservice.model.dto;
 
+import com.congthanh.orderservice.constant.enums.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,7 +30,7 @@ public class CheckoutDTO implements Serializable {
 
   private String phone;
 
-  private String paymentMethod;
+  private PaymentMethod paymentMethod;
 
   private Instant checkoutDate;
 

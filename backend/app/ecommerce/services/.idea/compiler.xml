@@ -43,7 +43,6 @@
       <module name="review-service" options="-parameters" />
       <module name="search-service" options="-parameters" />
       <module name="service-discovery" options="-parameters" />
-      <module name="services" options="" />
       <module name="shipping-service" options="-parameters" />
       <module name="supplier-service" options="-parameters" />
       <module name="warehouse-service" options="-parameters" />
