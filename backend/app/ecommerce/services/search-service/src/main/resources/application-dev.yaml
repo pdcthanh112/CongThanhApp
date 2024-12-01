@@ -6,11 +6,6 @@ server:
 #    enabled: true
 #    min-response-size: 1024
 
-elasticsearch:
-  url: elasticsearch
-  username:
-  password:
-
 spring:
   application:
     name: congthanhapp-ecommerce-search-service
@@ -51,6 +46,13 @@ spring:
           max-idle: 8
           min-idle: 0
           max-wait: -1ms
+
+    elasticsearch:
+      repositories:
+        enabled: true
+
+  elasticsearch:
+    uris: http://localhost:9200
 
   rabbitmq:
     host: localhost

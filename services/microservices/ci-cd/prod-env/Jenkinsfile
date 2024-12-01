@@ -47,7 +47,6 @@ pipeline {
         }
         failure {
             echo 'Production deployment failed'
-            // Gửi cảnh báo khẩn cấp
         }
     }
 }
