@@ -6,12 +6,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-//@Data
-@Getter
-@Setter
+@Data
+//@Getter
+//@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,7 +25,7 @@ import java.util.Set;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+//    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Column(nullable = false)
@@ -32,11 +33,11 @@ public class Product {
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "category", nullable = false)
-    private Long category;
+    private String category;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "subcategory", nullable = false)
-    private Long subcategory;
+//    private Long subcategory;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "supplier")
@@ -49,7 +50,7 @@ public class Product {
     @Column(columnDefinition = "text")
     private String description;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
     @Column(nullable = false, unique = true)
@@ -59,19 +60,22 @@ public class Product {
     @JsonIgnore
     @JsonBackReference
     @ToString.Exclude
-    private Set<ProductImage> image;
+    @Builder.Default
+    private Set<ProductImage> image = new HashSet<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     @JsonBackReference
     @ToString.Exclude
-    private Set<ProductAttributeValue> attribute;
+    @Builder.Default
+    private Set<ProductAttributeValue> attribute = new HashSet<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     @JsonBackReference
     @ToString.Exclude
-    private Set<ProductVariant> variant;
+    @Builder.Default
+    private Set<ProductVariant> variant = new HashSet<>();
 
 //    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JsonIgnore
