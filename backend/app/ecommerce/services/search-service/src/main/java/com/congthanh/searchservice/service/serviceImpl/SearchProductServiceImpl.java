@@ -13,10 +13,12 @@ import com.congthanh.searchservice.model.response.ProductGetVm;
 import com.congthanh.searchservice.model.response.ProductListGetVm;
 import com.congthanh.searchservice.model.response.ProductNameGetVm;
 import com.congthanh.searchservice.model.response.ProductNameListVm;
+import com.congthanh.searchservice.repository.ProductRepository;
 import com.congthanh.searchservice.service.SearchProductService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.common.unit.Fuzziness;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.client.elc.ElasticsearchAggregation;
@@ -24,8 +26,10 @@ import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
 import org.springframework.data.elasticsearch.core.*;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +39,35 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SearchProductServiceImpl implements SearchProductService {
 
+    private final ProductRepository productRepository;
     private final ElasticsearchOperations elasticsearchOperations;
+    private final RedisTemplate<String, Object> redisTemplate;
+
+    private static final String CACHE_PREFIX = "product_search:";
+
+    @Cacheable(value = "productSearchCache", key = "#query")
+    public List<Product> searchProducts(String query) {
+        String cacheKey = CACHE_PREFIX + query;
+
+        // Kiểm tra cache Redis
+        List<Product> cachedResults = (List<Product>) redisTemplate.opsForValue().get(cacheKey);
+
+        if (cachedResults != null) {
+            return cachedResults;
+        }
+
+        // Tìm kiếm trên Elasticsearch
+        List<Product> results = productRepository.searchAcrossFields(query);
+
+        // Lưu vào cache Redis
+        redisTemplate.opsForValue().set(
+                cacheKey,
+                results,
+                Duration.ofHours(1)
+        );
+
+        return results;
+    }
 
     @Override
     public ProductListGetVm findProductAdvance(QueryCriteria productCriteria) {

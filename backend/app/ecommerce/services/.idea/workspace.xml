@@ -5,23 +5,44 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c9221e2-ce0a-4058-9f88-458dc175fe67" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/search-service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/search-service/docker-compose.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/searchservice/logstash/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/searchservice/logstash/config/datasync.conf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/constant/enums/NotificationAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/model/request/NotificationRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/model/response/NotificationResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/service/orchestrator/NotificationOrchestrator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/service/strategy/EmailNotificationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/service/strategy/FCMNotificationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/service/strategy/NotificationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/service/strategy/SMSNotificationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/service/validator/EmailValidatorUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/service/validator/SMSValidatorUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/productservice/model/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/productservice/model/entity/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search-service/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/search-service/src/main/resources/application-dev.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-discovery/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service-discovery/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../../services/microservices/ci-cd/prod-env/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../services/microservices/ci-cd/prod-env/Jenkinsfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/constant/enums/NotificationType.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/constant/enums/NotificationType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/kafka/NotificationsConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/kafka/NotificationsConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/model/request/AddProductViewRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/model/request/CreateCheckoutRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/model/request/CreateOrderDetailRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/model/request/CreateOrderRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/model/request/ProductAttributeValueRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/model/response/ProductVariantAttributeValueResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/model/response/StatisticReviewResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/service/email/EmailTemplates.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/congthanh/notificationservice/service/email/EmailTemplates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/resources/application-dev.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/resources/templates/payment-confirmation.html" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/resources/templates/payment-confirmation.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
@@ -263,6 +284,7 @@
       <workItem from="1732691906998" duration="9134000" />
       <workItem from="1732767949831" duration="4852000" />
       <workItem from="1732865945745" duration="1203000" />
+      <workItem from="1733048520230" duration="8595000" />
     </task>
     <servers />
   </component>

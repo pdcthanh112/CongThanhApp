@@ -17,10 +17,10 @@ public class SearchProductController {
 
     private final SearchProductService productService;
 
-    @GetMapping("/storefront/catalog-search")
+    @GetMapping("/catalog-search")
     public ResponseEntity<ProductListGetVm> findProductAdvance(@RequestParam(defaultValue = "") String keyword,
                                                                @RequestParam(defaultValue = "0") Integer page,
-                                                               @RequestParam(defaultValue = "12") Integer size,
+                                                               @RequestParam(defaultValue = "12") Integer limit,
                                                                @RequestParam(required = false) String brand,
                                                                @RequestParam(required = false) String category,
                                                                @RequestParam(required = false) String attribute,
@@ -29,11 +29,11 @@ public class SearchProductController {
                                                                @RequestParam(defaultValue = "DEFAULT")
                                                                SortType sortType) {
         return ResponseEntity.ok(productService.findProductAdvance(
-                new QueryCriteria(keyword, page, size, brand, category, attribute, minPrice, maxPrice, sortType)
+                new QueryCriteria(keyword, page, limit, brand, category, attribute, minPrice, maxPrice, sortType)
         ));
     }
 
-    @GetMapping("/storefront/search_suggest")
+    @GetMapping("/search_suggest")
     public ResponseEntity<ProductNameListVm> productSearchAutoComplete(@RequestParam String keyword) {
         return ResponseEntity.ok(productService.autoCompleteProductName(keyword));
     }
