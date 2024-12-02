@@ -8,22 +8,22 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123456}
       PGDATA: /data/postgres
     volumes:
-       - postgres:/data/postgres
+      - postgres:/data/postgres
     ports:
       - "5432:5432"
     networks:
       - postgres
     restart: unless-stopped
-  
+
   pgadmin:
     container_name: pgadmin_container
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_SERVER_MODE: "False"
     volumes:
-       - pgadmin:/var/lib/pgadmin
+      - pgadmin:/var/lib/pgadmin
 
     ports:
       - "${PGADMIN_PORT:-5050}:80"
@@ -39,7 +39,7 @@ services:
   #     ZOOKEEPER_TICK_TIME: 2000
   #   ports:
   #     - 2181:2181
-  
+
   # kafka:
   #   image: apache/kafka:latest
   #   depends_on:
@@ -77,17 +77,17 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    
+
   rabbitmq:
     image: rabbitmq:3.12-management
     container_name: rabbitmq
     hostname: rabbitmq
     ports:
-      - "5672:5672"    # AMQP protocol port
-      - "15672:15672"  # Management UI port
+      - "5672:5672" # AMQP protocol port
+      - "15672:15672" # Management UI port
     environment:
-      - RABBITMQ_DEFAULT_USER=congthanh    
-      - RABBITMQ_DEFAULT_PASS=123456    
+      - RABBITMQ_DEFAULT_USER=congthanh
+      - RABBITMQ_DEFAULT_PASS=123456
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit disk_free_limit 2147483648 # 2GB
     # volumes:
     #   - rabbitmq_data:/var/lib/rabbitmq
@@ -139,7 +139,11 @@ services:
       - "9200:9200"
       - "9300:9300"
     healthcheck:
-      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+      test:
+        [
+          "CMD-SHELL",
+          "curl --silent --fail localhost:9200/_cluster/health || exit 1",
+        ]
       interval: 10s
       timeout: 10s
       retries: 3
@@ -182,11 +186,21 @@ services:
       - axonserver-events:/eventdata
       - axonserver-config:/config:ro
     ports:
-      - '8024:8024'
-      - '8124:8124'
-      - '8224:8224'
+      - "8024:8024"
+      - "8124:8124"
+      - "8224:8224"
     networks:
       - app-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - "8080:8080"
+    command:
+      - start-dev
 
   # product-service:
   #   build: ./product-service

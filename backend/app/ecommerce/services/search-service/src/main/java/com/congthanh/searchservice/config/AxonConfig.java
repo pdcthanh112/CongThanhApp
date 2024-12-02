@@ -48,7 +48,7 @@ package com.congthanh.searchservice.config;//package com.congthanh.project.confi
 //                "org.axonframework.eventsourcing.eventstore.jpa"
 //        }
 //)
-//public class AxonConfig {
+public class AxonConfig {
 //
 ////    @Bean(name = "axonDataSource")
 ////    @ConfigurationProperties(prefix = "axon.datasource")
@@ -183,4 +183,4 @@ package com.congthanh.searchservice.config;//package com.congthanh.project.confi
 //        return new ContainerManagedEntityManagerProvider();
 //    }
 //
-//}
+}

@@ -37,6 +37,11 @@ public class SecurityConfig {
                         .requestMatchers("/**", "/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt
+                                .jwtAuthenticationConverter(jwtAuthConverter())
+                        )
+                )
                 .authenticationManager(authenticationManager)
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((request, response, authException) ->

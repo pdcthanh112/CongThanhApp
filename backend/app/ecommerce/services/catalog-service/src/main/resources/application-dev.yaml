@@ -127,6 +127,15 @@ spring:
       enabled: true
       path: /h2-console
 
+keycloak:
+  realm: ecommerce-realm
+  auth-server-url: http://keycloak:8080/auth
+  resource: product-service
+  bearer-only: true
+  ssl-required: external
+  credentials:
+    secret: your-client-secret
+
 ai:
   ollama:
     embedding:

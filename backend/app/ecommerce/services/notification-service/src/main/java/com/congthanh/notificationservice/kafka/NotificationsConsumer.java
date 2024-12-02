@@ -1,6 +1,6 @@
 package com.congthanh.notificationservice.kafka;
 
-import com.congthanh.notificationservice.constant.enums.NotificationType;
+import com.congthanh.notificationservice.constant.enums.NotificationAction;
 import com.congthanh.notificationservice.model.entity.Notification;
 import com.congthanh.notificationservice.kafka.payment.PaymentConfirmation;
 import com.congthanh.notificationservice.repository.NotificationRepository;
@@ -45,7 +45,7 @@ public class NotificationsConsumer {
         log.info(format("Consuming the message from order-topic Topic:: %s", orderConfirmation));
         repository.save(
                 Notification.builder()
-                        .type(NotificationType.ORDER_CONFIRMATION)
+                        .type(NotificationAction.ORDER_CONFIRMATION)
                         .notificationDate(LocalDateTime.now())
                         .orderConfirmation(orderConfirmation)
                         .build()

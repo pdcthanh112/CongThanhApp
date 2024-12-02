@@ -160,7 +160,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health, metrics, prometheus
 
 eureka:
   client:
@@ -172,3 +172,19 @@ eureka:
   instance:
     hostname: localhost
 #    prefer-ip-address: true
+
+notification:
+  email:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+
+  sms:
+    twilio:
+      account-sid: ${TWILIO_ACCOUNT_SID}
+      auth-token: ${TWILIO_AUTH_TOKEN}
+      from-number: +1234567890
+
+  fcm:
+    credentials-path: classpath:firebase-credentials.json
