@@ -5,41 +5,87 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c9221e2-ce0a-4058-9f88-458dc175fe67" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/controller/CheckoutController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/listener/CustomAuditingEntityListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/model/entity/AbstractAuditEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/service/AbstractCircuitBreakFallbackHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/utils/SnowflakeIdGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/auth/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/auth/SecurityFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/config/AxonConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/config/GraphQLConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/config/KafkaConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/config/ModelMapperConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/config/MongoDBConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/config/MySQLConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/config/PostgreSQLConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/config/RabbitMQConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/config/RedisConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/config/SwaggerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/config/WebSocketConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/constant/common/ErrorCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/constant/common/RabbitMQConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/constant/common/ResponseStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/constant/common/StateStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/constant/enums/DeliveryStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/exception/ecommerce/BadRequestException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/exception/ecommerce/InvalidParameterException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/exception/ecommerce/NotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/exception/ecommerce/PermissionException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/exception/handler/ExceptionHandlers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/filter/WebSocketTokenFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/listener/CustomAuditingEntityListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/listener/WebSocketEventListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/document/BrandDocument.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/document/CategoryDocument.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/document/SubcategoryDocument.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/document/TagDocument.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/dto/BrandDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/dto/CategoryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/dto/TagDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/entity/AbstractAuditEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/entity/ChatMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/entity/Conversation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/mapper/BrandMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/mapper/CategoryMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/mapper/TagMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/request/AddSubcategoryRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/request/CreateCategoryRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/request/CreateTagRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/request/UpdateCategoryRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/request/UpdateTagRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/response/ErrorDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/response/PaginationInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/response/Response.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/response/ResponseHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/model/response/ResponseWithPagination.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/sercurity/ApplicationSecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/service/OnlineOfflineService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/service/serviceImpl/OnlineOfflineServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/utils/Helper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat-service/src/main/java/com/congthanh/chatservice/utils/SnowflakeIdGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/search-service/logstash/logstash.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../k8s/infrastructure/discovery-server/discovery-server-deployment.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/CatalogServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/CatalogServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/cqrs/command/event/tag/TagEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/cqrs/command/event/tag/TagEventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/model/entity/AbstractAuditEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/model/entity/AbstractAuditEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/model/entity/Brand.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/model/entity/Brand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/model/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/model/entity/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/model/entity/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/model/entity/Tag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/utils/SnowflakeIdGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/src/main/java/com/congthanh/catalogservice/utils/SnowflakeIdGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/constant/enums/PaymentMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/constant/enums/PaymentMethod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/constant/enums/PaymentStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/constant/enums/PaymentStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/model/dto/CheckoutDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/model/dto/CheckoutDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/model/dto/OrderDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/model/dto/OrderItemDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/model/entity/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/model/entity/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/model/entity/OrderDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/model/entity/OrderItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/model/mapper/OrderDetailMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/model/mapper/OrderDetailMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/repository/orderDetail/OrderDetailCustomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/repository/orderItem/OrderItemCustomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/repository/orderDetail/OrderDetailCustomRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/repository/orderItem/OrderItemCustomRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/repository/orderDetail/OrderDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/repository/orderItem/OrderItemRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/service/CheckoutService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/service/CheckoutService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/service/OrderDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/service/OrderItemService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/service/serviceImpl/CheckoutServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/service/serviceImpl/CheckoutServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/service/serviceImpl/OrderDetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/service/serviceImpl/OrderItemServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/service/serviceImpl/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/congthanh/orderservice/service/serviceImpl/OrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cart-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catalog-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/catalog-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/inventory-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/payment-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/product-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/productservice/service/serviceImpl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/congthanh/productservice/service/serviceImpl/ProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/promotion-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/promotion-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/review-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/review-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/search-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/search-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search-service/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/search-service/src/main/resources/application-dev.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/searchservice/logstash/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/searchservice/logstash/bin/postgresql-42.7.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/search-service/src/main/java/com/congthanh/searchservice/logstash/config/datasync.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-discovery/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service-discovery/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shipping-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shipping-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/supplier-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/supplier-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/warehouse-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse-service/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,8 +96,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -98,6 +144,7 @@
     &quot;Spring Boot.ServiceDiscoveryApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/pdcth/OneDrive/Desktop/CongThanhApp/backend/app/ecommerce/services/chat-service/src/main/java/com/congthanh/chatservice&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -108,6 +155,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pdcth\OneDrive\Desktop\CongThanhApp\backend\app\ecommerce\services\chat-service\src\main\java\com\congthanh\chatservice" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -119,6 +171,17 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.CatalogServiceApplication">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="search-service" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="search-service" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
     <configuration name="ApiGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="api-gateway" />
@@ -139,6 +202,14 @@
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="catalog-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.catalogservice.CatalogServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChatServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="chat-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.congthanh.chatservice.ChatServiceApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -256,6 +327,7 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Spring Boot.ChatServiceApplication" />
       <item itemvalue="Spring Boot.ApiGatewayApplication" />
       <item itemvalue="Spring Boot.ServiceDiscoveryApplication" />
       <item itemvalue="Spring Boot.ConfigServiceApplication" />
@@ -293,6 +365,8 @@
       <updated>1732550282653</updated>
       <workItem from="1732550285373" duration="3399000" />
       <workItem from="1732604944414" duration="13724000" />
+      <workItem from="1733282925992" duration="3281000" />
+      <workItem from="1733295764563" duration="3439000" />
     </task>
     <servers />
   </component>

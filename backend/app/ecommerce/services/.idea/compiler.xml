@@ -25,6 +25,16 @@
         <module name="service-discovery" />
         <module name="shipping-service" />
       </profile>
+      <profile name="Annotation profile for CongThanhApp - Ecommerce" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/unknown/spring-boot-configuration-processor-unknown.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="chat-service" />
+      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
@@ -32,6 +42,7 @@
       <module name="api-gateway" options="-parameters" />
       <module name="cart-service" options="-parameters" />
       <module name="catalog-service" options="-parameters" />
+      <module name="chat-service" options="-parameters" />
       <module name="config-service" options="-parameters" />
       <module name="customer-service" options="-parameters" />
       <module name="inventory-service" options="-parameters" />
