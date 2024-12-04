@@ -48,6 +48,7 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryGrpcService categoryGrpcService;
 
     @Override
+    @Cacheable("products")
     public Object getAllProduct(Integer page, Integer limit) {
         if (page != null & limit != null) {
             Pageable pageable = PageRequest.of(page, limit);

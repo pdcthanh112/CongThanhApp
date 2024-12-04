@@ -1,5 +1,33 @@
 # version: '3'
 services:
+  nginx:
+    image: nginx:1.27.2
+    restart: unless-stopped
+    volumes:
+      - ./nginx/templates:/etc/nginx/templates
+      - ./nginx/configuration/custom_proxy_settings.conf:/etc/nginx/conf.d/custom_proxy_settings.conf
+    ports:
+      - "80:80"
+    networks:
+      - congthanhapp-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.2
+    command: "start-dev --import-realm"
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: admin
+      KC_DB_PASSWORD: admin
+      KC_HTTP_PORT: 80
+    volumes:
+      - ./identity/realm-export.json:/opt/keycloak/data/import/realm-export.json
+      - ./identity/themes/yas/theme:/opt/keycloak/themes
+    networks:
+      - congthanhapp-network
+
   postgres:
     container_name: postgres_container
     image: postgres:latest
@@ -12,8 +40,9 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - postgres
+      - congthanhapp-network
     restart: unless-stopped
+
 
   pgadmin:
     container_name: pgadmin_container
@@ -28,31 +57,8 @@ services:
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
-      - postgres
+      - congthanhapp-network
     restart: unless-stopped
-
-  # zookeeper:
-  #   image: zookeeper:latest
-  #   environment:
-  #     ZOOKEEPER_CLIENT_PORT: 2181
-  #     ZOOKEEPER_SECURE_CLIENT_PORT: 2182
-  #     ZOOKEEPER_TICK_TIME: 2000
-  #   ports:
-  #     - 2181:2181
-
-  # kafka:
-  #   image: apache/kafka:latest
-  #   depends_on:
-  #     - zookeeper
-  #   ports:
-  #     - 9092:9092
-  #   environment:
-  #     KAFKA_BROKER_ID: 1
-  #     KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-  #     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
-  #     KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-  #     KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-  #     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -78,6 +84,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
+
   rabbitmq:
     image: rabbitmq:3.12-management
     container_name: rabbitmq
@@ -89,45 +96,45 @@ services:
       - RABBITMQ_DEFAULT_USER=congthanh
       - RABBITMQ_DEFAULT_PASS=123456
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit disk_free_limit 2147483648 # 2GB
-    # volumes:
-    #   - rabbitmq_data:/var/lib/rabbitmq
-    #   - rabbitmq_log:/var/log/rabbitmq
-    # networks:
-    #   - rabbitmq_network
-    # healthcheck:
-    #   test: ["CMD", "rabbitmqctl", "status"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 5
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_log:/var/log/rabbitmq
+    networks:
+      - congthanhapp-network
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     restart: unless-stopped
 
-  # prometheus:
-  #   container_name: prometheus
-  #   image: prom/prometheus:latest
-  #   restart: always
-  #   ports:
-  #     - "9090:9090"
-  #   volumes:
-  #     - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-  #   depends_on:
-  #     - product-service
-  #     - order-service
-  #     - inventory-service
-  #     - notification-service
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    # depends_on:
+      # - product-service
+      # - order-service
+      # - inventory-service
+      # - notification-service
 
-  # grafana:
-  #   container_name: grafana
-  #   image: grafana/grafana-oss:latest
-  #   restart: always
-  #   ports:
-  #     - "3000:3000"
-  #   links:
-  #     - prometheus:prometheus
-  #   volumes:
-  #     - ./grafana_data:/var/lib/grafana
-  #   environment:
-  #     - GF_SECURITY_ADMIN_USER=admin
-  #     - GF_SECURITY_ADMIN_PASSWORD=password
+  grafana:
+    container_name: grafana
+    image: grafana/grafana-oss:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    links:
+      - prometheus:prometheus
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password
 
   elasticsearch:
     image: elasticsearch:8.16.1
@@ -138,6 +145,8 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
     healthcheck:
       test:
         [
@@ -148,26 +157,27 @@ services:
       timeout: 10s
       retries: 3
     networks:
+      - congthanhapp-network
+  logstash:
+    image: logstash:8.16.1
+    container_name: logstash
+    environment:
+      discovery.seed_hosts: logstash
+      LS_JAVA_OPTS: "-Xms512m -Xmx512m"
+    volumes:
+      - ./logstash/pipeline/logstash-nginx.config:/usr/share/logstash/pipeline/logstash-nginx.config
+      - ./logstash/nginx.log:/home/nginx.log
+    ports:
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "5044:5044"
+      - "9600:9600"
+    depends_on:
+      - elasticsearch
+    networks:
       - elastic
-  # logstash:
-  #   image: logstash:8.16.1
-  #   container_name: logstash
-  #   environment:
-  #     discovery.seed_hosts: logstash
-  #     LS_JAVA_OPTS: "-Xms512m -Xmx512m"
-  #   volumes:
-  #     - ./logstash/pipeline/logstash-nginx.config:/usr/share/logstash/pipeline/logstash-nginx.config
-  #     - ./logstash/nginx.log:/home/nginx.log
-  #   ports:
-  #     - "5000:5000/tcp"
-  #     - "5000:5000/udp"
-  #     - "5044:5044"
-  #     - "9600:9600"
-  #   depends_on:
-  #     - elasticsearch
-  #   networks:
-  #     - elastic
-  #   command: logstash -f /usr/share/logstash/pipeline/logstash-nginx.config
+    command: logstash -f /usr/share/logstash/pipeline/logstash-nginx.config
+  
   kibana:
     image: kibana:8.16.1
     container_name: kibana
@@ -190,17 +200,20 @@ services:
       - "8124:8124"
       - "8224:8224"
     networks:
-      - app-network
+      - congthanhapp-network
 
-  keycloak:
-    image: quay.io/keycloak/keycloak:latest
-    environment:
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
+  redis:
+    image: redis:7.4.1-alpine
+    restart: always
     ports:
-      - "8080:8080"
-    command:
-      - start-dev
+      - "6379:6379"
+    environment:
+      - SPRING_DATA_REDIS_HOST
+      - SPRING_DATA_REDIS_PORT
+    volumes:
+      - redis:/data
+    networks:
+      - congthanhapp-network
 
   # product-service:
   #   build: ./product-service
@@ -223,12 +236,13 @@ volumes:
   axonserver-config:
   rabbitmq_data:
   rabbitmq_log:
+  esdata:
+  redis:
 
 networks:
-  postgres:
-  app-network:
+  congthanhapp-network:
     driver: bridge
-  # rabbitmq_network:
-  #   driver: bridge
+    name: app-network
   elastic:
     driver: bridge
+
