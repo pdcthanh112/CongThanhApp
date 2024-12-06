@@ -6,7 +6,7 @@ export class AccountModel extends Model<Account> implements Account{
   public accountId: string;
   public email: string;
   public password: string;
-  public role: string[];
+  public role: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -21,8 +21,8 @@ export default function (sequelize: Sequelize): typeof AccountModel {
         primaryKey: true,
       },
       accountId: {
-        type: DataTypes.UUIDV4,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
+        // defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         unique: true
       },

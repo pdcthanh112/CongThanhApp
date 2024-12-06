@@ -4,7 +4,7 @@ import { CustomerController } from '@controllers/ecommerce/customer.controller';
 // import { CreateUserDto } from '@dtos/account.dto';
 import { Routes } from '@interfaces/routes.interface';
 import { AuthMiddleware } from '@middlewares/auth.middleware';
-import { ValidationMiddleware } from '@middlewares/validation.middleware';
+// import { ValidationMiddleware } from '@middlewares/validation.middleware';
 
 export class CustomerRoute implements Routes {
   public path = '/ecommerce';

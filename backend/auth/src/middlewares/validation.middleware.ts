@@ -21,7 +21,7 @@ export const ValidationMiddleware = (type: any, skipMissingProperties = false, w
       })
       .catch((errors: ValidationError[]) => {
         const message = errors.map((error: ValidationError) => Object.values(error.constraints)).join(', ');
-        next(new HttpException(400, message));
+        next(new HttpException(400, message, 1234));
       });
   };
 };
