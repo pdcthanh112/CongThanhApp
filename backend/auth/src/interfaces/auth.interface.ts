@@ -9,7 +9,6 @@ export interface DataStoredInToken {
 export interface TokenData {
   accessToken: string;
   refreshToken: string;
-  expiresIn: string | number
 }
 
 export interface LoginError {

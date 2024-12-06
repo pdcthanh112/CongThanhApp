@@ -28,12 +28,12 @@ export const AuthMiddleware = async (req: RequestWithUser, res: Response, next: 
         req.user = findUser;
         next();
       } else {
-        next(new HttpException(401, 'Wrong authentication token', 1234));
+        next(new HttpException(401, 'Unauthorized', 1234));
       }
     } else {
       next(new HttpException(404, 'Authentication token missing', 1234));
     }
   } catch (error) {
-    next(new HttpException(401, 'Wrong authentication tokenn', 1234));
+    next(new HttpException(401, 'Wrong authentication token', error?.code));
   }
 };

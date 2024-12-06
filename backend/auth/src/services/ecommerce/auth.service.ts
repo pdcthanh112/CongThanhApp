@@ -14,12 +14,13 @@ import { generateOTP } from '@utils/helper';
 import { OTP } from '@interfaces/otp.interface';
 
 const createCookie = (tokenData: TokenData): string => {
-  return `Authorization=Bearer ${tokenData.accessToken}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
+  // return `Authorization=Bearer ${tokenData.accessToken}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
+  return `Authorization=Bearer ${tokenData.accessToken}; HttpOnly;`;
 };
 
 function generateAccessToken(data: DataStoredInToken): string {
-  const convertRole = data.role.split(",").map(item => item.trim())
-  return sign({ accountId: data.accountId, role: convertRole }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED }) ;
+  const convertRole = data.role.split(',').map(item => item.trim());
+  return sign({ accountId: data.accountId, role: convertRole }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED });
 }
 
 function generateRefreshToken(accountId: string) {
@@ -54,19 +55,21 @@ export class AuthService {
 
       if (isPasswordMatching) {
         await MYSQL_DB.LoginError.destroy({ where: { accountId: checkLogin.accountId } });
-        const customerInfo = await MYSQL_DB.Customer.findOne({where: {accountId: checkLogin.accountId}})
-        //cofn thieeus supplier nuawx 
-        checkLogin.customerInfo = customerInfo
+        const customerInfo = await MYSQL_DB.Customer.findOne({ where: { accountId: checkLogin.accountId } });
+        //cofn thieeus supplier nuawx
+        checkLogin.customerInfo = customerInfo;
         checkLogin.supplierInfo = null;
         const { password, ...customerWithoutPassword } = checkLogin;
 
         const tokenData: TokenData = {
-          accessToken: generateAccessToken({ accountId: checkLogin.accountId, role: checkLogin.role }), 
+          accessToken: generateAccessToken({ accountId: checkLogin.accountId, role: checkLogin.role }),
           refreshToken: generateRefreshToken(checkLogin.accountId),
-          expiresIn: process.env.REFRESH_TOKEN_EXPIRED
+          // expiresIn: process.env.REFRESH_TOKEN_EXPIRED
         };
         const cookie = createCookie(tokenData);
-
+        const now = new Date()
+        const expiredRefreshToken = now.setMonth(now.getMonth() + 1)
+        await MYSQL_DB.RefreshToken.create({ accountId: checkLogin.accountId, token: tokenData.refreshToken, expiresAt: expiredRefreshToken });
         return { cookie, customerWithoutPassword, tokenData };
       } else {
         await MYSQL_DB.LoginError.upsert({
@@ -110,7 +113,8 @@ export class AuthService {
     customerData.accountId = uuidv4();
     customerData.password = hashedPassword;
     const createCustomerData: Customer = await MYSQL_DB.Customer.create({ ...customerData });
-
+    //sync data to table account 
+    await MYSQL_DB.Account.create({ accountId: customerData.accountId, email: customerData.email, password: hashedPassword, role: 'CUSTOMER' });
     return createCustomerData;
   }
 
@@ -118,7 +122,7 @@ export class AuthService {
     const findCustomer: Customer = await MYSQL_DB.Customer.findOne({ where: { email: customerData.email } });
 
     if (!findCustomer) throw new HttpException(409, `This email ${customerData.email} does not exists`, 101001);
-
+    await MYSQL_DB.RefreshToken.destroy({where: {$accountId$: customerData.accountId}})
     return findCustomer;
   }
 
@@ -268,11 +272,9 @@ export class AuthService {
       const user = verify(refreshToken, REFRESH_TOKEN_SECRET);
 
       const accessToken = sign({ userId: user }, ACCESS_TOKEN_SECRET, { expiresIn: '5m' });
-
       return accessToken;
     } else {
       throw new HttpException(404, 'Refresh token invalid', 101007);
     }
-    // res.locals.token = authHeader.split('Bearer ')[1]; // Lưu token vào res.locals
   }
 }
