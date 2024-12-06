@@ -1,6 +1,7 @@
 package com.congthanh.catalogservice.grpc;
 
 import com.congthanh.catalogservice.service.TagService;
+import com.congthanh.project.grpc.TagServiceGrpc;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 

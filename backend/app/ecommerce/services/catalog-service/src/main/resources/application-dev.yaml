@@ -127,6 +127,12 @@ spring:
       enabled: true
       path: /h2-console
 
+grpc:
+  server:
+    port: 9090
+    in-process-name: congthanhapp-ecommerce-catalog-service
+    reflection-service-enabled: true
+
 keycloak:
   realm: ecommerce-realm
   auth-server-url: http://keycloak:8080/auth
@@ -145,12 +151,6 @@ ai:
       index-type: hnsw
       distance-type: cosine_distance
       dimensions: 384
-
-grpc:
-  server:
-    port: 9090
-    in-process-name: congthanhapp-ecommerce-cart-service
-    reflection-service-enabled: true
 
 congthanhapp:
   openapi:

@@ -3,9 +3,9 @@ services:
   nginx:
     image: nginx:1.27.2
     restart: unless-stopped
-    volumes:
-      - ./nginx/templates:/etc/nginx/templates
-      - ./nginx/configuration/custom_proxy_settings.conf:/etc/nginx/conf.d/custom_proxy_settings.conf
+    # volumes:
+    #   - ./nginx/templates:/etc/nginx/templates
+    #   - ./nginx/configuration/custom_proxy_settings.conf:/etc/nginx/conf.d/custom_proxy_settings.conf
     ports:
       - "80:80"
     networks:
@@ -22,9 +22,9 @@ services:
       KC_DB_USERNAME: admin
       KC_DB_PASSWORD: admin
       KC_HTTP_PORT: 80
-    volumes:
-      - ./identity/realm-export.json:/opt/keycloak/data/import/realm-export.json
-      - ./identity/themes/yas/theme:/opt/keycloak/themes
+    # volumes:
+    #   - ./identity/realm-export.json:/opt/keycloak/data/import/realm-export.json
+    #   - ./identity/themes/yas/theme:/opt/keycloak/themes
     networks:
       - congthanhapp-network
 
@@ -35,8 +35,8 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123456}
       PGDATA: /data/postgres
-    volumes:
-      - postgres:/data/postgres
+    # volumes:
+    #   - postgres:/data/postgres
     ports:
       - "5432:5432"
     networks:
@@ -51,9 +51,8 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
       PGADMIN_CONFIG_SERVER_MODE: "False"
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-
+    # volumes:
+    #   - pgadmin:/var/lib/pgadmin
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
@@ -114,8 +113,8 @@ services:
     restart: always
     ports:
       - "9090:9090"
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    # volumes:
+    #   - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     # depends_on:
       # - product-service
       # - order-service
@@ -130,8 +129,8 @@ services:
       - "3000:3000"
     links:
       - prometheus:prometheus
-    volumes:
-      - ./grafana_data:/var/lib/grafana
+    # volumes:
+    #   - ./grafana_data:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=password
@@ -145,8 +144,8 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
+    # volumes:
+    #   - esdata:/usr/share/elasticsearch/data
     healthcheck:
       test:
         [
@@ -164,9 +163,9 @@ services:
     environment:
       discovery.seed_hosts: logstash
       LS_JAVA_OPTS: "-Xms512m -Xmx512m"
-    volumes:
-      - ./logstash/pipeline/logstash-nginx.config:/usr/share/logstash/pipeline/logstash-nginx.config
-      - ./logstash/nginx.log:/home/nginx.log
+    # volumes:
+    #   - ./logstash/pipeline/logstash-nginx.config:/usr/share/logstash/pipeline/logstash-nginx.config
+    #   - ./logstash/nginx.log:/home/nginx.log
     ports:
       - "5000:5000/tcp"
       - "5000:5000/udp"
@@ -191,10 +190,10 @@ services:
   axonserver:
     image: axoniq/axonserver
     hostname: axonserver
-    volumes:
-      - axonserver-data:/data
-      - axonserver-events:/eventdata
-      - axonserver-config:/config:ro
+    # volumes:
+    #   - axonserver-data:/data
+    #   - axonserver-events:/eventdata
+    #   - axonserver-config:/config:ro
     ports:
       - "8024:8024"
       - "8124:8124"
@@ -210,8 +209,8 @@ services:
     environment:
       - SPRING_DATA_REDIS_HOST
       - SPRING_DATA_REDIS_PORT
-    volumes:
-      - redis:/data
+    # volumes:
+    #   - redis:/data
     networks:
       - congthanhapp-network
 

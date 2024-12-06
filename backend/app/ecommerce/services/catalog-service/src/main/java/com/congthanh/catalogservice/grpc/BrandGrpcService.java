@@ -1,6 +1,7 @@
 package com.congthanh.catalogservice.grpc;
 
 import com.congthanh.catalogservice.service.BrandService;
+import com.congthanh.project.grpc.BrandServiceGrpc;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 

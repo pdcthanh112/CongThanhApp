@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version>
+        <version>3.4.0</version>
         <relativePath />
     </parent>
 
@@ -22,6 +22,7 @@
 
     <modules>
         <module>api-gateway</module>
+        <module>backoffice-bff</module>
         <module>service-discovery</module>
         <module>cart-service</module>
         <module>catalog-service</module>
@@ -37,6 +38,7 @@
         <module>review-service</module>
         <module>search-service</module>
         <module>shipping-service</module>
+        <module>storefront-bff</module>
         <module>supplier-service</module>
         <module>warehouse-service</module>
     </modules>
@@ -46,15 +48,11 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.3.5</version>
+                <version>3.4.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>io.github.cdimascio</groupId>
-                <artifactId>dotenv-java</artifactId>
-                <version>3.0.2</version>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
