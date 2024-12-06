@@ -1,4 +1,4 @@
-package com.congthanh.cartservice.grpc;
+package com.congthanh.cartservice.grpc.service;
 
 import com.congthanh.cartservice.service.CartItemService;
 import io.grpc.stub.StreamObserver;

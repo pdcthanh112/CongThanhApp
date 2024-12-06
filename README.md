@@ -1,6 +1,6 @@
 # Welcome to CongThanhApp
 
-## Tentative technologies and frameworks
+## Technologies and frameworks
 - Python 3.12, Jupiter Notebook
 - Java 21, Spring boot 3.4.0
 - Go 1.23.4
@@ -30,12 +30,12 @@ congthanhapp/
 │
 ├── backend/
 │   ├── app/   
-│   │    ├── ecommerce/  
-│   │    │      ├── k8s/ 
-│   │    │      ├── service/ 
-│   │    │      └── terraform/
-│   │    │
-│   │    └── management/
+│   │   ├── ecommerce/  
+│   │   │   ├── k8s/ 
+│   │   │   ├── service/ 
+│   │   │   └── terraform/
+│   │   │
+│   │   └── management/
 │   │
 │   └── auth/
 │

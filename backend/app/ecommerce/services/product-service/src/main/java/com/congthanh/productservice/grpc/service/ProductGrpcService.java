@@ -1,5 +1,8 @@
-package com.congthanh.productservice.grpc;
+package com.congthanh.productservice.grpc.service;
 
+import com.congthanh.productservice.grpc.ProductRequest;
+import com.congthanh.productservice.grpc.ProductResponse;
+import com.congthanh.productservice.grpc.ProductServiceGrpc;
 import com.congthanh.productservice.model.dto.ProductDTO;
 import com.congthanh.catalogservice.exception.ecommerce.NotFoundException;
 import com.congthanh.productservice.service.ProductService;
