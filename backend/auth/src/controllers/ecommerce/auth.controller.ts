@@ -88,9 +88,10 @@ export class AuthController {
 
   public refreshAccessToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const refreshToken = req.headers['authorization'].split('Bearer ')[1]
+      // const refreshToken = req.headers['authorization'].split('Bearer ')[1]
+      const { refreshToken, provider } = req.body;
       if (refreshToken) {
-        const token = await this.service.refreshAccessToken(refreshToken as string)
+        const token = await this.service.refreshAccessToken(refreshToken, provider)
         res.status(200).json({ data: token, message: 'Refresh token successfully', status: 'SUCCESS' });
       } else {
         res.status(401).json({ error: 'Authorization header is missing or invalid' });

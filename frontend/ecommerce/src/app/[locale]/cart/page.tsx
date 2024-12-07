@@ -1,16 +1,10 @@
-
-
 import { Cart, Customer } from '@/models/types';
 import { useTranslations } from 'next-intl';
 import ShowListCart from '@/components/Cart/ShowListCart';
 
 const CartPage = () => {
 
-
   const t = useTranslations();
-
-
-
 
   return (
     <div className="w-full">

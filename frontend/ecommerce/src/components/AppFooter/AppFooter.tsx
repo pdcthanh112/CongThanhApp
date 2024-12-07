@@ -76,7 +76,7 @@ const AppFooter = (): React.ReactElement => {
       <div className="w-[30%]">
         <div className="flex items-center py-2">
           <Image src={LocationIcon} alt="Location icon" style={{ width: '1.2rem', height: '1.2rem' }} />
-          <span className="ml-2">285 CMT8 Street, Ward 12, District 10, Ho Chi Minh City</span>
+          <span className="ml-2">285 CMT8 St, Ward 12, District 10, Ho Chi Minh City</span>
         </div>
         <div className="flex items-center py-2">
           <Image src={PhoneIcon} alt="Phone icon" style={{ width: '1.2rem', height: '1.2rem' }} />

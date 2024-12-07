@@ -141,6 +141,8 @@ keycloak:
   ssl-required: external
   credentials:
     secret: your-client-secret
+  autodetect-bearer-only: true
+  cors: true
 
 ai:
   ollama:
