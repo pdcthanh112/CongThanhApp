@@ -16,9 +16,13 @@ import { OTP } from '@interfaces/otp.interface';
 const createCookie = (tokenData: TokenData): string => {
   // return `Authorization=Bearer ${tokenData.accessToken}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
   return `Authorization=Bearer ${tokenData.accessToken}; HttpOnly;`;
+  // return `Authorization=Bearer ${tokenData.accessToken}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
+  return `Authorization=Bearer ${tokenData.accessToken}; HttpOnly;`;
 };
 
 function generateAccessToken(data: DataStoredInToken): string {
+  const convertRole = data.role.split(',').map(item => item.trim());
+  return sign({ accountId: data.accountId, role: convertRole }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED });
   const convertRole = data.role.split(',').map(item => item.trim());
   return sign({ accountId: data.accountId, role: convertRole }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED });
 }
@@ -58,12 +62,17 @@ export class AuthService {
         const customerInfo = await MYSQL_DB.Customer.findOne({ where: { accountId: checkLogin.accountId } });
         //cofn thieeus supplier nuawx
         checkLogin.customerInfo = customerInfo;
+        const customerInfo = await MYSQL_DB.Customer.findOne({ where: { accountId: checkLogin.accountId } });
+        //cofn thieeus supplier nuawx
+        checkLogin.customerInfo = customerInfo;
         checkLogin.supplierInfo = null;
         const { ...customerWithoutPassword } = checkLogin;
 
         const tokenData: TokenData = {
           accessToken: generateAccessToken({ accountId: checkLogin.accountId, role: checkLogin.role }),
+          accessToken: generateAccessToken({ accountId: checkLogin.accountId, role: checkLogin.role }),
           refreshToken: generateRefreshToken(checkLogin.accountId),
+          // expiresIn: process.env.REFRESH_TOKEN_EXPIRED
           // expiresIn: process.env.REFRESH_TOKEN_EXPIRED
         };
         const cookie = createCookie(tokenData);
