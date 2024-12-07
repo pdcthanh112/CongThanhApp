@@ -32,7 +32,8 @@ const AppHeader = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const t = useTranslations();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  console.log('first', session, status)
 
   const { data: listNotification, isLoading } = useQuery({
     queryKey: [NOTIFICATION_KEY],
@@ -98,17 +99,17 @@ const AppHeader = () => {
 
         <div className="relative inline-block group">
           <div className="hover:cursor-pointer">
-            {session || currentUser ? (
+            {status === "authenticated" && session && currentUser ? (
               <div>
-                <div>{/* {t('common.hello')}, {currentUser.userInfo.name.split(' ').pop()} */}</div>
-                {/* <div className="font-semibold md:text-sm">{t('header.account_and_info')}</div> */}
+                {/* <div>{t('common.hello')}, {currentUser.userInfo.name.split(' ').pop()}</div> */}
+                <div className="font-semibold md:text-sm">{t('header.account_and_info')}</div>
               </div>
             ) : (
               <div>
-                {/* <div>{t('common.welcome')}</div>
+                <div>{t('common.welcome')}</div>
                 <div className="font-semibold md:text-sm" onClick={() => router.push(PATH.AUTH_PATH_URL.LOGIN)}>
                   {t('common.login')} or {t('common.signup')}
-                </div> */}
+                </div>
               </div>
             )}
           </div>
@@ -124,7 +125,7 @@ const AppHeader = () => {
                     href={PATH.MANAGE_PATH_URL.PROFILE}
                     className="flex items-center hover:cursor-pointer hover:underline hover:text-yellow-600"
                   >
-                    {/* {t('common.manage_profile')} */}
+                    {t('common.manage_profile')}
                     <Icon component={NavigateNext} />
                   </Link>
                 </div>

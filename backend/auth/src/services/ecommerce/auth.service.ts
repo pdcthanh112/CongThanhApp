@@ -59,7 +59,7 @@ export class AuthService {
         //cofn thieeus supplier nuawx
         checkLogin.customerInfo = customerInfo;
         checkLogin.supplierInfo = null;
-        const { password, ...customerWithoutPassword } = checkLogin;
+        const { ...customerWithoutPassword } = checkLogin;
 
         const tokenData: TokenData = {
           accessToken: generateAccessToken({ accountId: checkLogin.accountId, role: checkLogin.role }),
@@ -67,8 +67,8 @@ export class AuthService {
           // expiresIn: process.env.REFRESH_TOKEN_EXPIRED
         };
         const cookie = createCookie(tokenData);
-        const now = new Date()
-        const expiredRefreshToken = now.setMonth(now.getMonth() + 1)
+        const now = new Date();
+        const expiredRefreshToken = now.setMonth(now.getMonth() + 1);
         await MYSQL_DB.RefreshToken.create({ accountId: checkLogin.accountId, token: tokenData.refreshToken, expiresAt: expiredRefreshToken });
         return { cookie, customerWithoutPassword, tokenData };
       } else {
@@ -113,7 +113,7 @@ export class AuthService {
     customerData.accountId = uuidv4();
     customerData.password = hashedPassword;
     const createCustomerData: Customer = await MYSQL_DB.Customer.create({ ...customerData });
-    //sync data to table account 
+    //sync data to table account
     await MYSQL_DB.Account.create({ accountId: customerData.accountId, email: customerData.email, password: hashedPassword, role: 'CUSTOMER' });
     return createCustomerData;
   }
@@ -122,11 +122,11 @@ export class AuthService {
     const findCustomer: Customer = await MYSQL_DB.Customer.findOne({ where: { email: customerData.email } });
 
     if (!findCustomer) throw new HttpException(409, `This email ${customerData.email} does not exists`, 101001);
-    await MYSQL_DB.RefreshToken.destroy({where: {$accountId$: customerData.accountId}})
+    await MYSQL_DB.RefreshToken.destroy({ where: { $accountId$: customerData.accountId } });
     return findCustomer;
   }
 
-  public async changePassword(data: ChangePasswordDTO): Promise<any> {
+  public async changePassword(data: ChangePasswordDTO): Promise<unknown> {
     const findCustomer: Customer = await MYSQL_DB.Customer.findOne({ where: { accountId: data.customerId } });
 
     if (!findCustomer) throw new HttpException(409, `This account does not exists`, 101001);
@@ -138,13 +138,13 @@ export class AuthService {
     return await MYSQL_DB.Customer.update({ password: hashNewPassword }, { where: { accountId: data.customerId } });
   }
 
-  public async forgetPassword(data: { email: string }): Promise<any> {
+  public async forgetPassword(data: { email: string }): Promise<unknown> {
     const findCustomer: Customer = await MYSQL_DB.Customer.findOne({ where: { email: data.email } });
 
     if (!findCustomer) throw new HttpException(409, `This email does not exists`, 101001);
 
     const resetPassworrdUrl = 'http://localhost:3000/auth/reset-password';
-    const resetPassworrdToken = '';
+    // const resetPassworrdToken = '';
 
     const mailOptions = {
       email: findCustomer.email,
@@ -249,7 +249,7 @@ export class AuthService {
     return result;
   }
 
-  public async verifyOTP(data: { code: string }): Promise<any> {
+  public async verifyOTP(data: { code: string }): Promise<unknown> {
     const otp = await MYSQL_DB.OTP.findOne({ where: { code: data.code } });
 
     if (!otp || otp.expiredAt < new Date()) {
@@ -265,16 +265,55 @@ export class AuthService {
     return { message: 'OTP verified successfully' };
   }
 
-  public async refreshAccessToken(refreshToken: string): Promise<any> {
+  public async refreshAccessToken(refreshToken: string, provider: string): Promise<unknown> {
     const checkToken = await MYSQL_DB.RefreshToken.findOne({ where: { token: refreshToken } });
     if (checkToken) {
       if (checkToken.expiresAt < new Date()) throw new HttpException(404, 'Refresh token expires', 101007);
-      const user = verify(refreshToken, REFRESH_TOKEN_SECRET);
-
-      const accessToken = sign({ userId: user }, ACCESS_TOKEN_SECRET, { expiresIn: '5m' });
-      return accessToken;
+      let newTokens = '';
+      switch (provider) {
+        case 'google':
+          newTokens = await this.refreshGoogleAccessToken(refreshToken);
+          break;
+        case 'facebook':
+          newTokens = await this.refreshFacebookAccessToken(refreshToken);
+          break;
+        case 'cred':
+          // eslint-disable-next-line no-case-declarations
+          const user = verify(refreshToken, REFRESH_TOKEN_SECRET);
+          newTokens = sign({ userId: user }, ACCESS_TOKEN_SECRET, { expiresIn: '5m' });
+          break;
+      }
+      return newTokens;
     } else {
       throw new HttpException(404, 'Refresh token invalid', 101007);
     }
+  }
+
+  private async refreshGoogleAccessToken(refreshToken: string) {
+    const response = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        refresh_token: refreshToken,
+        grant_type: 'refresh_token',
+      }),
+    });
+    return response.json();
+  }
+
+  private async refreshFacebookAccessToken(refreshToken: string) {
+    const response = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        refresh_token: refreshToken,
+        grant_type: 'refresh_token',
+      }),
+    });
+    return response.json();
   }
 }

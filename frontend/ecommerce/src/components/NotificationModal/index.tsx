@@ -15,6 +15,8 @@ export default function NotificationModal({ listNotification, loading = true }: 
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const t = useTranslations();
 
+  if(!currentUser) return <div>Needed signin</div> 
+
   return (
     <div>
       <h3 className="font-semibold text-lg pl-3">{t('common.notification')}</h3>
