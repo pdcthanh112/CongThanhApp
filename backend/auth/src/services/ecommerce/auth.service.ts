@@ -268,22 +268,26 @@ export class AuthService {
   public async refreshAccessToken(refreshToken: string, provider: string): Promise<unknown> {
     const checkToken = await MYSQL_DB.RefreshToken.findOne({ where: { token: refreshToken } });
     if (checkToken) {
-      if (checkToken.expiresAt < new Date()) throw new HttpException(404, 'Refresh token expires', 101007);
-      let newTokens = '';
-      switch (provider) {
-        case 'google':
-          newTokens = await this.refreshGoogleAccessToken(refreshToken);
-          break;
-        case 'facebook':
-          newTokens = await this.refreshFacebookAccessToken(refreshToken);
-          break;
-        case 'cred':
-          // eslint-disable-next-line no-case-declarations
-          const user = verify(refreshToken, REFRESH_TOKEN_SECRET);
-          newTokens = sign({ userId: user }, ACCESS_TOKEN_SECRET, { expiresIn: '5m' });
-          break;
+      try {
+        if (Number(checkToken.expiresAt) < Date.now()) throw new HttpException(404, 'Refresh token expires', 101007);
+        let newTokens = '';
+        switch (provider) {
+          case 'google':
+            newTokens = await this.refreshGoogleAccessToken(refreshToken);
+            console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNNN', newTokens);
+            break;
+          case 'facebook':
+            newTokens = await this.refreshFacebookAccessToken(refreshToken);
+            break;
+          case 'credentials':
+            const user = verify(refreshToken, REFRESH_TOKEN_SECRET);
+            newTokens = sign({ userId: user }, ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED });
+            break;
+        }
+        return newTokens;
+      } catch (error) {
+        throw new HttpException(404, 'Error get refresh access token', error);
       }
-      return newTokens;
     } else {
       throw new HttpException(404, 'Refresh token invalid', 101007);
     }
@@ -300,6 +304,7 @@ export class AuthService {
         grant_type: 'refresh_token',
       }),
     });
+    console.log('RRRRRRRRRRRRRRRRRRRR', response);
     return response.json();
   }
 

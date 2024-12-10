@@ -88,7 +88,6 @@ export class AuthController {
 
   public refreshAccessToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // const refreshToken = req.headers['authorization'].split('Bearer ')[1]
       const { refreshToken, provider } = req.body;
       if (refreshToken) {
         const token = await this.service.refreshAccessToken(refreshToken, provider)
