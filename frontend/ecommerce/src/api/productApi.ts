@@ -1,7 +1,10 @@
 import axiosConfig from '@/config/axiosConfig';
 import { ProductVariantAttribute, Product, ProductImage, Response, ResponseWithPagination } from '@/models/types';
+import { cacheLife } from 'next/dist/server/use-cache/cache-life';
 
 export const getAllProduct = async (page?: number, limit?: number): Promise<ResponseWithPagination<Product>> => {
+  // 'use cache'
+  // cacheLife('getAllProduct')
   const params = new URLSearchParams();
   page && params.append('page', String(page));
   limit && params.append('limit', String(limit));
