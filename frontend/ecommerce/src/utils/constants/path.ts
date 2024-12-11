@@ -10,10 +10,10 @@ const SUPPLIER_BASE_URL = 'supplier';
 export const PATH = {
   HOME: '/',
   AUTH_PATH_URL: {
-    LOGIN: '/login',
-    REGISTER: '/register',
-    FORGET_PASSWORD: '/forget-password',
-    RESET_PASSWORD: '/reset-password',
+    LOGIN: '/auth//login',
+    REGISTER: '/auth//register',
+    FORGET_PASSWORD: 'auth//forget-password',
+    RESET_PASSWORD: 'auth//reset-password',
     LOG_OUT: '/logout',
   },
   MANAGE_PATH_URL: {

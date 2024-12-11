@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { ClientSafeProvider, LiteralUnion, useSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers/index';
-import {AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon} from '@/assets/icons/socialLoginIcon'
+import { AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '@/assets/icons/socialLoginIcon';
 
 type PropsType = {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
@@ -113,12 +113,16 @@ const SocialLoginComponent = ({
   bgColor: string;
   icon: any;
 }) => (
-    <div
-      className={`${bgColor} flex px-3 py-3 mb-3 hover:cursor-pointer rounded-lg`}
-      title={`Login with ${name}`}
-      onClick={() => signIn(id)}
-    >
-      <Icon component={icon} className='h-2'/>
-      <span className="ml-3 text-white font-medium">Login with {name}</span>
-    </div>
+  <div
+    className={`${bgColor} flex px-3 py-3 mb-3 hover:cursor-pointer rounded-lg`}
+    title={`Login with ${name}`}
+    onClick={() =>
+      signIn(id)
+        .then(() => console.log(`${id} login initiated`))
+        .catch((err) => console.error('Sign in error:', err))
+    }
+  >
+    <Icon component={icon} className="h-2" />
+    <span className="ml-3 text-white font-medium">Login with {name}</span>
+  </div>
 );

@@ -6,7 +6,7 @@ import { Card, Avatar, Icon } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { Button } from '@/components/ui/button';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import AppLogo from '@/assets/images/app-logo-removebg.png';
 import DefaultImage from '@/assets/images/default-image.jpg';
 import { Search as SearchIcon, ArrowDropDownOutlined, NavigateNext } from '@mui/icons-material';
@@ -24,6 +24,8 @@ import { useQuery } from '@tanstack/react-query';
 import { NOTIFICATION_KEY } from '@/utils/constants/queryKey';
 import { getNotificationByCustomer } from '@/api/notificationApi';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useAuthenticated } from '@/hooks/auth/useAuthenticated';
+import DefaultUser from '@/assets/images/default-user.jpg'
 
 const AppHeader = () => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
@@ -32,8 +34,9 @@ const AppHeader = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const t = useTranslations();
-  const { data: session, status } = useSession();
-  console.log('first', session, status)
+
+  const {user, isAuthenticated} = useAuthenticated()
+
 
   const { data: listNotification, isLoading } = useQuery({
     queryKey: [NOTIFICATION_KEY],
@@ -99,8 +102,11 @@ const AppHeader = () => {
 
         <div className="relative inline-block group">
           <div className="hover:cursor-pointer">
-            {status === "authenticated" && session && currentUser ? (
+            {isAuthenticated && user ? (
               <div>
+                <div className='w-5 h-5 rounded-lg'>
+                <Image src={user.image || DefaultUser} alt='User avatar' fill objectFit='contain'/>
+                </div>
                 {/* <div>{t('common.hello')}, {currentUser.userInfo.name.split(' ').pop()}</div> */}
                 <div className="font-semibold md:text-sm">{t('header.account_and_info')}</div>
               </div>
@@ -148,7 +154,7 @@ const AppHeader = () => {
                       <MenuItem name={t('header.watchlist')} url={'#'} /> */}
                     </menu>
                     <Button className="bg-yellow-400 w-52 rounded-xl" onClick={() => handleLogout()}>
-                      {/* {t('common.logout')} */}
+                      {t('common.logout')}
                     </Button>
                   </div>
                 </div>

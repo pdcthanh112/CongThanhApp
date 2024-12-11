@@ -7,7 +7,7 @@ export const login = async (email: string, password: string) => {
     .post('http://localhost:8000/ecommerce/auth/login', { email: email, password: password })
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw new Error(error);
     });
 };
 
@@ -16,7 +16,7 @@ export const logout = async (email: string) => {
     .post('http://localhost:8000/ecommerce/auth/logout', { email: email })
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw new Error(error);
     });
 };
 
@@ -32,7 +32,7 @@ export const signup = async (data: SignupForm) => {
     })
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw new Error(error);
     });
 };
 
@@ -45,7 +45,7 @@ export const changePassword = async (data: ChangePasswordForm) => {
     })
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw new Error(error);
     });
 };
 

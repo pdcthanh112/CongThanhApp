@@ -1,66 +1,66 @@
-export interface LoginRequestedPayload {
+export type LoginRequestedPayload = {
   email: string;
   password: string;
-}
-export interface LoginStartPayload {
+};
+export type LoginStartPayload = {
   params: { email: string; password: string };
-}
+};
 
-export interface LoginSucceededPayload {
+export type LoginSucceededPayload = {
   userInfo: {};
   tokenData: {};
-}
+};
 
-export interface LoginFailedPayload {
+export type LoginFailedPayload = {
   error: string;
-}
-export interface LogoutRequestedPayload {
-email: string; 
-}
-export interface LogoutStartPayload {
+};
+export type LogoutRequestedPayload = {
+  email: string;
+};
+export type LogoutStartPayload = {
   params: { email: string; password: string };
-}
+};
 
-export interface LogoutSucceededPayload {
+export type LogoutSucceededPayload = {
   data: {};
-}
+};
 
-export interface LogoutFailedPayload {
+export type LogoutFailedPayload = {
   error: string;
-}
+};
 
-export interface SignupRequestedPayload {
+export type SignupRequestedPayload = {
   params: { email: string; password: string };
-}
+};
 
-export interface SignupStartPayload {
+export type SignupStartPayload = {
   params: { email: string; password: string };
-}
+};
 
-export interface SignupSucceededPayload {
+export type SignupSucceededPayload = {
   data: {};
-}
+};
 
-export interface SignupFailedPayload {
+export type SignupFailedPayload = {
   error: string;
-}
+};
 
-export interface EditProfileRequestedPayload {
+export type EditProfileRequestedPayload = {
   params: { email: string; password: string };
-}
+};
 
-export interface EditProfileStartPayload {
+export type EditProfileStartPayload = {
   params: { email: string; password: string };
-}
+};
 
-export interface EditProfileSucceededPayload {
+export type EditProfileSucceededPayload = {
   data: {};
-}
+};
 
-export interface EditProfileFailedPayload {
+export type EditProfileFailedPayload = {
   error: string;
-}
+};
 
-export interface AuthCleanPayload {
+export type AuthCleanPayload = {
   token: string;
-}
+};

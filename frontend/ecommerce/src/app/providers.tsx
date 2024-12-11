@@ -1,9 +1,9 @@
-"use client";
-import React from "react";
-import { LayoutProps } from "./[locale]/page";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { SessionProvider } from "next-auth/react";
-import { ReactQueryProvider, ReduxStoreProvider, ThemeProvider } from "@/config/providers";
+'use client';
+import React from 'react';
+import { LayoutProps } from './[locale]/page';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { SessionProvider } from 'next-auth/react';
+import { ReactQueryProvider, ReduxStoreProvider, ThemeProvider } from '@/config/providers';
 
 const Providers = ({ children }: Readonly<LayoutProps>) => {
   const graphClient = new ApolloClient({
@@ -13,7 +13,7 @@ const Providers = ({ children }: Readonly<LayoutProps>) => {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-      <SessionProvider session={null}>
+      <SessionProvider>
         <ApolloProvider client={graphClient}>
           <ReduxStoreProvider>
             <ReactQueryProvider>{children}</ReactQueryProvider>
