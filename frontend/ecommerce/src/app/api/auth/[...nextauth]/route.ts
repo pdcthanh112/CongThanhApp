@@ -1,4 +1,5 @@
 import NextAuth, { AuthOptions } from 'next-auth';
+import { jwtDecode } from 'jwt-decode';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
@@ -34,7 +35,7 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        email: { label: 'email', type: 'text', placeholder: 'abc@gmail.com' },
+        email: { label: 'email', type: 'text', placeholder: 'example@domain.com' },
         password: { label: 'Password', type: 'password', placeholder: '**************' },
       },
       async authorize(credentials, req) {
@@ -73,79 +74,100 @@ export const authOptions: AuthOptions = {
   },
 
   callbacks: {
-    async jwt({ token, user, account }) {
-      // if (Date.now() > account?.expires_at!!) {
-      //   return refreshAccessToken(token);
-      // }
-      if (account) {
+    async jwt({ token, user, account, profile, trigger }) {
+      console.log('JWTTTTTTTTTTTTTTTTTTTTTTTT');
+      console.log('tokennnnnnn:', token);
+      console.log('userrrrrrrrrr:', user);
+      console.log('profile:', profile);
+      console.log('userrrrrrrrrr:', user);
+      if (trigger === 'signUp') {
+        const res = await fetch('http://localhost:8000/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: profile?.email,
+            name: profile?.name,
+          }),
+        });
+      }
+      if (token.accessToken) {
+        const decodedToken = jwtDecode(token.accessToken as string);
+        console.log('DECODE TOKEN:', decodedToken);
+        token.accessTokenExpires = Number(decodedToken.exp) * 1000;
+      }
+      if (account && user) {
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
         token.accessTokenExpires = account.expires_at;
-        if (user) {
-          token.user = user;
-        }
+        return {
+          ...token,
+          accessToken: user.accessToken,
+          refreshToken: user.refreshToken,
+          user,
+        };
+      }
+      if (Date.now() > Number(token.accessTokenExpires) * 1000) {
+        console.log("RRRRRRRRRRRRRRRRRRR", )
+        console.log("DATE: ", Date.now())
+        console.log("TOKENNN: ", Number(token.accessTokenExpires) * 1000)
+        console.log("CHECKKKK: ", Date.now() > Number(token.accessTokenExpires) * 1000)
+        return refreshAccessToken(token);
       }
       return token;
     },
+
     async session({ session, token, user }) {
-      session.user = token.user; // Truyền thông tin người dùng
-      session.accessToken = token.accessToken; // Thêm accessToken vào session
-      session.refreshToken = token.refreshToken; // Thêm refreshToken (nếu cần)
-      session.expires = token.accessTokenExpires; // Truyền thời gian hết hạn
+      console.log('SESSIONNNNNNNNNNNNNNNNNNN');
+      console.log('session:', session);
+      console.log('tokennnnnnn:', token);
+      console.log('userrrrrrrrrr:', user);
+      // session.user = token.user;
+      session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken;
+      session.expires = token.accessTokenExpires;
       return session;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-export default NextAuth(authOptions);
+// export default NextAuth(authOptions);
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
-
 // export const { GET, POST } = handler;
 
-// async function refreshAccessToken(token: any) {
-//   console.log('Refreshing access token', token);
-//   try {
-//     console.log('Beaarer token', `Bearer ${token.refreshToken}`);
+async function refreshAccessToken(token: any) {
+  console.log('Refreshing access token', token);
+  try {
+    // const response = await fetch(`${process.env.API_SERVER_BASE_URL}/api/auth/refresh`, {
+    const response = await fetch(`http://localhost:8000/ecommerce/auth/refresh-token`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token.refreshToken}`,
+      },
+      body: JSON.stringify({
+        provider: token.provider || 'google',
+      }),
+    });
 
-//     // const response = await fetch(`${process.env.API_SERVER_BASE_URL}/api/auth/refresh`, {
-//     const response = await fetch(`http://localhost:8000/ecommerce/auth/refresh-token`, {
-//       method: 'POST',
-//       headers: {
-//         Authorization: `Bearer ${token.refreshToken}`,
-//       },
-//     });
-
-//     console.log(response);
-
-//     const tokens = await response.json();
-
-//     console.log(tokens);
-
-//     if (!response.ok) {
-//       throw tokens;
-//     }
-
-//     /*const refreshedTokens = {
-//       "access_token": "acess-token",
-//       "expires_in": 2,
-//       "refresh_token": "refresh-token"
-//     }*/
-
-//     //return token;
-
-//     return {
-//       ...token,
-//       accessToken: tokens.accessToken,
-//       refreshToken: tokens.refreshToken ?? token.refreshToken, // Fall back to old refresh token
-//     };
-//   } catch (error) {
-//     console.log(error);
-
-//     return {
-//       ...token,
-//       error: 'RefreshAccessTokenError',
-//     };
-//   }
-// }
+    console.log("Refresh Token Responseeeee: ",response);
+    const tokens = await response.json();
+    console.log(tokens);
+    if (!response.ok) {
+      throw tokens;
+    }
+    return {
+      ...token,
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken ?? token.refreshToken, // Fall back to old refresh token
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      ...token,
+      error: 'RefreshAccessTokenError',
+    };
+  }
+}

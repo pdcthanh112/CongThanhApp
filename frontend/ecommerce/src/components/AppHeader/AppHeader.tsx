@@ -6,7 +6,6 @@ import { Card, Avatar, Icon } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { Button } from '@/components/ui/button';
-import { signOut } from 'next-auth/react';
 import AppLogo from '@/assets/images/app-logo-removebg.png';
 import DefaultImage from '@/assets/images/default-image.jpg';
 import { Search as SearchIcon, ArrowDropDownOutlined, NavigateNext } from '@mui/icons-material';
@@ -17,7 +16,7 @@ import { PATH } from '@/utils/constants/path';
 import { NotificationIcon } from '@/assets/icons';
 import { logoutRequested } from '@/redux/actions/auth';
 import Link from 'next/link';
-import { Category, Customer, Notification } from '@/models/types';
+import { Category, Notification } from '@/models/types';
 import { ThemeToggle } from '../Theme/ThemeToggle';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
@@ -25,17 +24,15 @@ import { NOTIFICATION_KEY } from '@/utils/constants/queryKey';
 import { getNotificationByCustomer } from '@/api/notificationApi';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useAuthenticated } from '@/hooks/auth/useAuthenticated';
-import DefaultUser from '@/assets/images/default-user.jpg'
 
 const AppHeader = () => {
-  const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const appCategory: Category[] = useAppSelector((state) => state.category.data);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
   const t = useTranslations();
 
-  const {user, isAuthenticated} = useAuthenticated()
+  const {user, isAuthenticated, logout} = useAuthenticated()
 
 
   const { data: listNotification, isLoading } = useQuery({
@@ -46,7 +43,7 @@ const AppHeader = () => {
   });
 
   const handleLogout = () => {
-    signOut();
+    logout();
     dispatch(logoutRequested({ email: 'fjasljflashfiahsd' }));
   };
 
@@ -104,9 +101,6 @@ const AppHeader = () => {
           <div className="hover:cursor-pointer">
             {isAuthenticated && user ? (
               <div>
-                <div className='w-5 h-5 rounded-lg'>
-                <Image src={user.image || DefaultUser} alt='User avatar' fill objectFit='contain'/>
-                </div>
                 {/* <div>{t('common.hello')}, {currentUser.userInfo.name.split(' ').pop()}</div> */}
                 <div className="font-semibold md:text-sm">{t('header.account_and_info')}</div>
               </div>
@@ -120,12 +114,12 @@ const AppHeader = () => {
             )}
           </div>
           <Card className="text-[#a4a4a4] text-sm hidden absolute transform -translate-x-3/4 p-4 w-[30rem] group-hover:block group-hover:z-50">
-            {currentUser ? (
+            {user ? (
               <>
                 <div className="flex justify-between bg-sky-100 px-5 py-3 rounded-md">
                   <span className="flex items-center">
-                    <Avatar src={currentUser.userInfo.image || String(DefaultImage)} />
-                    <span className="font-medium text-lg ml-3">{currentUser.userInfo.name}</span>
+                    <Avatar src={user.image || String(DefaultImage)} />
+                    <span className="font-medium text-lg ml-3">{user.name}</span>
                   </span>
                   <Link
                     href={PATH.MANAGE_PATH_URL.PROFILE}
