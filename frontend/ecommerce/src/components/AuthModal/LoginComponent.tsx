@@ -12,7 +12,6 @@ import { LoginSchema, LoginSchemaType } from '@/models/schema/authSchema';
 import { PATH } from '@/utils/constants/path';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
-import { getAuthLogo } from '@/utils/helper';
 
 const LoginComponent = () => {
   const t = useTranslations();

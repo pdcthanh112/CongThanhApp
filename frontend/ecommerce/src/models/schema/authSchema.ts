@@ -6,6 +6,7 @@ export const LoginSchema = z
     password: z.string().trim().min(1, "Password is required"),
     remember: z.boolean(),
     fcmToken: z.string().optional(),
+    provider: z.string()
   })
   .strict();
 
