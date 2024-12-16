@@ -1,1 +1,10 @@
-spring.application.name=translate-service
+spring:
+  application:
+    name: congthanhapp-ecommerce-translate-service
+  ai:
+    chat:
+      client:
+        enabled: true
+    ollama:
+      base-url: http://localhost:11434
+

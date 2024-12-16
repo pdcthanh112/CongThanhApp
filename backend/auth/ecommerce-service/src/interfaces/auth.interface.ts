@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { Customer } from "./account.interface";
 
-export interface DataStoredInToken {
+export interface TokenPayload {
   accountId: string;
   role: string
 }

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
-import { CustomerSignupDTO, UpdateCustomerDTO } from '@dtos/customer.dto';
-import { Customer } from '@interfaces/account.interface';
+import { CustomerSignupDTO, UpdateCustomerDTO } from '@/dtos/customer.dto';
+import { Customer } from '@/interfaces/account.interface';
 import { CustomerService } from '@/services/customer.service';
 
 export class CustomerController {
