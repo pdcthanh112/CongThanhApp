@@ -1,11 +1,10 @@
 import { compare, hash } from 'bcrypt';
 import { sign, verify } from 'jsonwebtoken';
-import { Service } from 'typedi';
 import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from '@/config/index';
 import { MYSQL_DB } from '@/databases/mysql';
 import { ChangePasswordDTO, CustomerLoginDTO, CustomerSignupDTO } from '@/dtos/customer.dto';
-import { HttpException } from '@/exceptions/httpException';
-import { DataStoredInToken, LoginError, TokenData } from '@/interfaces/auth.interface';
+import { HttpException } from '@/exceptions/http.exception';
+import { TokenPayload, LoginError, TokenData } from '@/interfaces/auth.interface';
 import { Account, Customer } from '@/interfaces/account.interface';
 import { v4 as uuidv4 } from 'uuid';
 import sendEmail from '@/utils/sendEmail';
@@ -15,12 +14,7 @@ import { OTP } from '@/interfaces/otp.interface';
 import { ActivityType, LoginType } from '@/utils/enum';
 import { sendActivityLogMessage } from '@/queue/producer/activity-log.producer';
 
-const createCookie = (tokenData: TokenData): string => {
-  // return `Authorization=Bearer ${tokenData.accessToken}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
-  return `Authorization=Bearer ${tokenData.accessToken}; HttpOnly;`;
-};
-
-function generateAccessToken(data: DataStoredInToken): string {
+function generateAccessToken(data: TokenPayload): string {
   const convertRole = data.role.split(',').map(item => item.trim());
   return sign({ accountId: data.accountId, role: convertRole }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED });
 }
@@ -30,19 +24,8 @@ function generateRefreshToken(accountId: string) {
   return refreshToken;
 }
 
-// function extractToken(req: Request, res: Response, next: NextFunction) {
-//   const authHeader = req.headers['authorization'];
-//   if (authHeader && authHeader.startsWith('Bearer ')) {
-//     res.locals.token = authHeader.split('Bearer ')[1];
-//     next();
-//   } else {
-//     res.status(401).json({ error: 'Authorization header is missing or invalid' });
-//   }
-// }
-
-@Service()
 export class AuthService {
-  public async login(loginData: CustomerLoginDTO): Promise<{ cookie: string; customerWithoutPassword: Omit<Account, 'password'>; tokenData: TokenData }> {
+  public async login(loginData: CustomerLoginDTO): Promise<{ customerWithoutPassword: Omit<Account, 'password'>; tokenData: TokenData }> {
     switch (loginData.provider) {
       case LoginType.CREDENTIALS:
         {
@@ -69,11 +52,11 @@ export class AuthService {
                 refreshToken: generateRefreshToken(checkLogin.accountId),
                 // expiresIn: process.env.REFRESH_TOKEN_EXPIRED
               };
-              const cookie = createCookie(tokenData);
+
               const now = new Date();
               const expiredRefreshToken = now.setMonth(now.getMonth() + 1);
               await MYSQL_DB.RefreshToken.create({ accountId: checkLogin.accountId, token: tokenData.refreshToken, expiresAt: expiredRefreshToken });
-              return { cookie, customerWithoutPassword, tokenData };
+              return { customerWithoutPassword, tokenData };
             } else {
               await MYSQL_DB.LoginError.upsert({
                 accountId: checkLogin.accountId,
@@ -156,7 +139,6 @@ export class AuthService {
       createAt: new Date().getUTCDate().toLocaleString,
       ipAddress: '127.0.0.1', // Replace with real IP address
     });
-
   }
 
   public async signup(customerData: CustomerSignupDTO): Promise<Customer> {

@@ -2,7 +2,7 @@ import { IsString, IsEmail, IsNotEmpty, MinLength, MaxLength, IsPhoneNumber, IsN
 import { LoginType } from '@/utils/enum';
 
 export type CustomerLoginDTO = LoginCredentials | LoginGoogle | LoginFacebook | LoginTwitter | LoginApple;
-class LoginCredentials {
+export class LoginCredentials {
   @IsEmail()
   email: string;
 

@@ -8,7 +8,7 @@ export function generateAccountAlias(name: string): string {
   for (let i = 0; i < nameParts.length - 1; i++) {
     const name = nameParts[i];
     if (name.length > 0) {
-      let letter = name.charAt(0).toUpperCase();
+      const letter = name.charAt(0).toUpperCase();
       result += removeAccents(letter);
     }
   }
