@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import { Customer } from '@interfaces/account.interface';
-import { LoginType } from '@utils/enum';
+import { Customer } from '@/interfaces/account.interface';
+import { LoginType } from '@/constants/enum';
 
 export class CustomerModel extends Model<Customer> implements Customer {
   accountId: string;

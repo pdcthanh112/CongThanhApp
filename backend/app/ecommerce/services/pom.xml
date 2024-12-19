@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.congthanh</groupId>
-    <artifactId>project</artifactId>
+    <artifactId>services</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>CongThanhApp - Ecommerce</name>

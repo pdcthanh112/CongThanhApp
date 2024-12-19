@@ -1,5 +1,5 @@
 import { IsString, IsEmail, IsNotEmpty, MinLength, MaxLength, IsPhoneNumber, IsNumber, IsIn } from 'class-validator';
-import { LoginType } from '@/utils/enum';
+import { LoginType } from '@/constants/enum';
 
 export type CustomerLoginDTO = LoginCredentials | LoginGoogle | LoginFacebook | LoginTwitter | LoginApple;
 export class LoginCredentials {

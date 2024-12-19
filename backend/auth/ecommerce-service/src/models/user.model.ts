@@ -1,12 +1,13 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
+import { User } from '@/interfaces/user.interface';
 import { RoleModel } from './role.model';
 
-export class UserModel extends Model {
+export class UserModel extends Model<User> implements User {
   public id!: string;
   public email!: string;
   public password!: string;
   public name!: string;
-  public roleId!: string; // Foreign key
+  public roleId!: string;
 }
 
 export default function (sequelize: Sequelize): typeof UserModel {
@@ -17,13 +18,13 @@ export default function (sequelize: Sequelize): typeof UserModel {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      email: { type: DataTypes.STRING, unique: true, allowNull: false },
-      password: { type: DataTypes.STRING, allowNull: false },
-      name: { type: DataTypes.STRING },
     },
-    { sequelize, modelName: 'User' },
+    {
+      tableName: 'User',
+      sequelize: sequelize,
+    },
   );
   return UserModel;
 }
 
-UserModel.belongsTo(RoleModel, { foreignKey: 'roleId', as: 'role' });
+// UserModel.belongsTo(RoleModel, { foreignKey: 'roleId', as: 'role' });

@@ -1,11 +1,9 @@
 import { hash } from 'bcrypt';
-import { Service } from 'typedi';
 import { MYSQL_DB } from '@/databases/mysql';
 import { CreateCustomerDTO, UpdateCustomerDTO } from '@/dtos/customer.dto';
 import { HttpException } from '@/exceptions/http.exception';
 import { Customer } from '@/interfaces/account.interface';
 
-@Service()
 export class CustomerService {
   public async findAllCustomer(): Promise<Customer[]> {
     const allCustomer: Customer[] = await MYSQL_DB.Customer.findAll();

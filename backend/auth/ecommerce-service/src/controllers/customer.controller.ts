@@ -1,11 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
-import { Container } from 'typedi';
 import { CustomerSignupDTO, UpdateCustomerDTO } from '@/dtos/customer.dto';
 import { Customer } from '@/interfaces/account.interface';
 import { CustomerService } from '@/services/customer.service';
 
 export class CustomerController {
-  public service = Container.get(CustomerService);
+  private service = new CustomerService();
 
   public getAllCustomer = async (req: Request, res: Response, next: NextFunction) => {
     try {
