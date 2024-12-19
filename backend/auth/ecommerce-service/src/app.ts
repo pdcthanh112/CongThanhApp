@@ -12,13 +12,16 @@ import swaggerUi from 'swagger-ui-express';
 import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS } from '@/config/index';
 import { mysqlConnection } from '@/databases/mysql';
 import { mongodbConnection } from '@/databases/mongodb';
-// import { Routes } from '@interfaces/routes.interface';
+import { Routes } from '@/interfaces/routes.interface';
 import { ErrorMiddleware } from '@/middlewares/error.middleware';
 import { logger, stream } from '@/utils/logger';
-import { EmployeeRoute } from '@/routes/employee.route';
+import { AdminRoute } from '@/routes/admin.route';
 import { CustomerRoute } from '@/routes/customer.route';
 import { startActivityLogConsumer } from './queue/consumer/activity-log.consumer';
-
+import { rateLimitConfig, corsOptions, helmetOptions } from '@/config/security.config';
+import { xssMiddleware } from '@/middlewares/security/xss.middleware';
+import { sqlInjectionMiddleware } from '@/middlewares/security/sql-injection.middleware';
+// import { csrfProtection, csrfErrorHandler } from '@/middlewares/security/csrf.middleware';
 
 const app = express();
 const env = NODE_ENV || 'development';
@@ -27,12 +30,18 @@ const port = PORT || 8000;
 app.use(morgan(LOG_FORMAT, { stream }));
 app.use(cors({ origin: ORIGIN, credentials: CREDENTIALS }));
 app.use(hpp());
-app.use(helmet());
+app.use(helmet(helmetOptions));
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(ErrorMiddleware);
+app.use(rateLimitConfig);
+app.use(cors(corsOptions));
+app.use(xssMiddleware);
+app.use(sqlInjectionMiddleware);
+// app.use(csrfProtection);
+// app.use(csrfErrorHandler);
 
 // Connect to MySQL Database
 mysqlConnection
@@ -57,7 +66,7 @@ mongoose
   });
 
 //Define app router
-const routes: any = [new EmployeeRoute(), new CustomerRoute()];
+const routes: Routes[] = [new AdminRoute(), new CustomerRoute()];
 routes.forEach(route => {
   app.use('/', route.router);
 });
@@ -76,7 +85,7 @@ const options = {
 const specs = swaggerJSDoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-startActivityLogConsumer();
+// startActivityLogConsumer();
 
 app.listen(port, () => {
   logger.info(`=================================`);

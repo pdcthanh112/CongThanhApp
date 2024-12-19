@@ -1,4 +1,4 @@
-import { ActivityType } from '@/utils/enum';
+import { ActivityType } from '@/constants/enum';
 
 export interface ActivityLog {
   id: number;

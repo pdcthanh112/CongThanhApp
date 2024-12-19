@@ -40,7 +40,8 @@ export default function (sequelize: Sequelize): typeof AccountModel {
     },
     {
       tableName: 'Account',
-      sequelize,
+      sequelize: sequelize,
+      timestamps: true,
     },
   );
 

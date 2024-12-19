@@ -1,6 +1,6 @@
 import { Sequelize, Model, DataTypes } from 'sequelize';
 import { ActivityLog } from '@/interfaces/activityLog.interface';
-import { ActivityType } from '@/utils/enum';
+import { ActivityType } from '@/constants/enum';
 
 export class ActivityLogModel extends Model<ActivityLog> implements ActivityLog {
   id: number;
@@ -16,6 +16,7 @@ export default function (sequelize: Sequelize): typeof ActivityLogModel {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
       },
       accountId: {
         type: DataTypes.STRING,
@@ -23,7 +24,7 @@ export default function (sequelize: Sequelize): typeof ActivityLogModel {
         unique: true,
       },
       activityType: {
-        type: DataTypes.ENUM,
+        type: DataTypes.ENUM(typeof ActivityType),
         allowNull: false,
       },
       ipAddress: {

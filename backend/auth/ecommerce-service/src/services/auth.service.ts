@@ -3,7 +3,7 @@ import { sign, verify } from 'jsonwebtoken';
 import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from '@/config/index';
 import { MYSQL_DB } from '@/databases/mysql';
 import { ChangePasswordDTO, CustomerLoginDTO, CustomerSignupDTO } from '@/dtos/customer.dto';
-import { HttpException } from '@/exceptions/http.exception';
+import { HttpException } from '@/exceptions/';
 import { TokenPayload, LoginError, TokenData } from '@/interfaces/auth.interface';
 import { Account, Customer } from '@/interfaces/account.interface';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,7 +11,7 @@ import sendEmail from '@/utils/sendEmail';
 import sendSMS from '@/utils/sendSMS';
 import { generateOTP } from '@/utils/helper';
 import { OTP } from '@/interfaces/otp.interface';
-import { ActivityType, LoginType } from '@/utils/enum';
+import { ActivityType, LoginType } from '@/constants/enum';
 import { sendActivityLogMessage } from '@/queue/producer/activity-log.producer';
 
 function generateAccessToken(data: TokenPayload): string {
@@ -136,8 +136,9 @@ export class AuthService {
     sendActivityLogMessage({
       accountId: loginData.email,
       activityType: ActivityType.LOGIN,
-      createAt: new Date().getUTCDate().toLocaleString,
-      ipAddress: '127.0.0.1', // Replace with real IP address
+      createAt: new Date(),
+      ipAddress: '127.0.0.1',
+      id: 0
     });
   }
 
