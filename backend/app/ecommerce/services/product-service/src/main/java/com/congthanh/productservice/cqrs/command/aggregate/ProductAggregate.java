@@ -58,7 +58,7 @@ public class ProductAggregate {
 
     @CommandHandler
     public void handleUpdateProduct(UpdateProductCommand command) {
-        apply(new ProductUpdatedEvent(command.getId()));
+        apply(new ProductUpdatedEvent(command.getId(), command.getName(), command.getCategory(), command.getSlug(), command.getDescription(), command.getSupplier(), command.getBrand(),command.getImage(), command.getAttribute(), command.getVariant(), command.getStatus()));
     }
 
     @EventSourcingHandler

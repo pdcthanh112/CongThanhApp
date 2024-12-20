@@ -48,7 +48,9 @@ public class TagController {
 
     @PostMapping("/create")
     public ResponseEntity<Response<TagDTO>> createTag(@RequestBody CreateTagRequest request) {
+        System.out.println("Vô Controller, trước service");
         TagDTO data = tagService.createTag(request);
+        System.out.println("Vô Controller, sau service");
         Response<TagDTO> response = new Response<>();
         response.setData(data);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);

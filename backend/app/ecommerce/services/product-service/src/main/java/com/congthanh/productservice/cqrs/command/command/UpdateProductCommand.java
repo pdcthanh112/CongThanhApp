@@ -23,19 +23,17 @@ public class UpdateProductCommand {
 
     private final String category;
 
-    private final String subcategory;
-
     private final String slug;
 
     private final String description;
 
-    private final List<ProductImageDTO> image;
-
-    private final List<ProductAttributeValueDTO> attribute;
-
     private final String supplier;
 
     private final String brand;
+
+    private final List<ProductImageDTO> image;
+
+    private final List<ProductAttributeValueDTO> attribute;
 
     private final List<ProductVariantDTO> variant;
 

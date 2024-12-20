@@ -26,6 +26,7 @@ public class TagEventHandler {
 
     @EventHandler
     public void on(TagCreatedEvent event) {
+        System.out.println("tag event handler");
         Tag tag = Tag.builder()
                 .id(event.getId())
                 .name(event.getName())
@@ -34,6 +35,7 @@ public class TagEventHandler {
                 .status(event.getStatus())
                 .build();
         var result = tagRepository.save(tag);
+
         log.info("Save Tag {} into Postgres successfully, ID: {}", result.getName(), result.getId());
         TagQueueEvent<TagCreatedEvent> queueEvent = TagQueueEvent.<TagCreatedEvent>builder()
                 .eventType(TagEventType.CREATE)

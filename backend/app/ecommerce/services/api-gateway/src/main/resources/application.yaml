@@ -62,17 +62,17 @@ spring:
         - id: payment-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-PAYMENT-SERVICE
           predicates:
-            - Path=/payment/**
+            - Path=/api/ecommerce/payment/**
 
         - id: product-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-PRODUCT-SERVICE
           predicates:
-            - Path=/product/**
+            - Path=/api/ecommerce/product/**
 
         - id: promotion-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-PROMOTION-SERVICE
           predicates:
-            - Path=/promotion/**
+            - Path=/api/ecommerce/promotion/**
 
         - id: review-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-REVIEW-SERVICE
@@ -82,22 +82,22 @@ spring:
         - id: search-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-SEARCH-SERVICE
           predicates:
-            - Path=/search/**
+            - Path=/api/ecommerce/search/**
 
         - id: shipping-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-SHIPPING-SERVICE
           predicates:
-            - Path=/shipping/**
+            - Path=/api/ecommerce/shipping/**
 
         - id: supplier-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-SUPPLIER-SERVICE
           predicates:
-            - Path=/supplier/**
+            - Path=/api/ecommerce/supplier/**
 
         - id: warehouse-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-WAREHOUSE-SERVICE
           predicates:
-            - Path=/warehouse/**
+            - Path=/api/ecommerce/warehouse/**
 eureka:
   client:
     service-url:

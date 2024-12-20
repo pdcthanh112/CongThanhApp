@@ -20,7 +20,11 @@ public class CreateTagCommand {
 
     private Instant createdAt;
 
+    private String createdBy;
+
     private Instant updatedAt;
+
+    private String updatedBy;
 
     private TagStatus status;
 

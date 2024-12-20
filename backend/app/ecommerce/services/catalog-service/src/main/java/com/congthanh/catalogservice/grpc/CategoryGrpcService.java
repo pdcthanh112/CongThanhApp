@@ -2,9 +2,9 @@ package com.congthanh.catalogservice.grpc;
 
 import com.congthanh.catalogservice.model.dto.CategoryDTO;
 import com.congthanh.catalogservice.service.CategoryService;
-import com.congthanh.project.grpc.CategoryRequest;
-import com.congthanh.project.grpc.CategoryResponse;
-import com.congthanh.project.grpc.CategoryServiceGrpc;
+import com.congthanh.catalogservice.grpc.CategoryRequest;
+import com.congthanh.catalogservice.grpc.CategoryResponse;
+import com.congthanh.catalogservice.grpc.CategoryServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;

@@ -33,8 +33,4 @@ public class Category  extends AbstractAuditEntity{
     @Enumerated(EnumType.STRING)
     private CategoryStatus status;
 
-//    private Instant createdAt;
-//
-//    private Instant updatedAt;
-
 }

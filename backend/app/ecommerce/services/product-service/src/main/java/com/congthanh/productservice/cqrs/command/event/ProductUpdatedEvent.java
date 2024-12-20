@@ -21,9 +21,11 @@ public class ProductUpdatedEvent {
 
     private final String category;
 
-    private final String subcategory;
-
     private final String slug;
+
+    private final String supplier;
+
+    private final String brand;
 
     private final String description;
 
@@ -31,13 +33,8 @@ public class ProductUpdatedEvent {
 
     private final List<ProductAttributeValueDTO> attribute;
 
-    private final String supplier;
-
-    private final String brand;
-
     private final List<ProductVariantDTO> variant;
 
     private final ProductStatus status;
-
 
 }
