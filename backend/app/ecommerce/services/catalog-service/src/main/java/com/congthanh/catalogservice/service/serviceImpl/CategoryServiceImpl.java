@@ -3,6 +3,7 @@ package com.congthanh.catalogservice.service.serviceImpl;
 import com.congthanh.catalogservice.constant.common.ErrorCode;
 import com.congthanh.catalogservice.constant.enums.CategoryStatus;
 import com.congthanh.catalogservice.cqrs.command.command.category.*;
+import com.congthanh.catalogservice.cqrs.command.event.category.CategoryCreatedEvent;
 import com.congthanh.catalogservice.cqrs.query.query.category.GetCategoryByIdQuery;
 import com.congthanh.catalogservice.model.dto.CategoryDTO;
 import com.congthanh.catalogservice.model.entity.Category;
@@ -18,6 +19,7 @@ import com.congthanh.catalogservice.service.CategoryService;
 import com.congthanh.catalogservice.utils.Helper;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.eventhandling.gateway.EventGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.modelmapper.ModelMapper;
@@ -37,8 +39,13 @@ import java.util.UUID;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+
     private final CommandGateway commandGateway;
+
     private final QueryGateway queryGateway;
+
+    private final EventGateway eventGateway;
+
     private final ModelMapper modelMapper;
 
     @Override
@@ -108,9 +115,17 @@ public class CategoryServiceImpl implements CategoryService {
                 .image(request.getImage())
                 .parentId(null)
                 .createdAt(Instant.now())
+                .createdBy("aaa")
                 .updatedAt(Instant.now())
+                .updatedBy("bbb")
                 .build();
+        System.out.println("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK: " + category);
         var response = commandGateway.sendAndWait(category);
+        System.out.println("AWAITTTTTTTTTTTTTTTTTTTTTTTTTT: " + response);
+//        if (response != null) {
+//            CategoryCreatedEvent event = new CategoryCreatedEvent(category.getId(), category.getName(), category.getSlug(), category.getDescription(), category.getImage(), category.getParentId(), category.getStatus(), category.getCreatedAt(), category.getCreatedBy(), category.getUpdatedAt(), category.getUpdatedBy());
+//            eventGateway.publish(event);
+//        }
 //        return (CategoryDTO) response;
         return null;
     }

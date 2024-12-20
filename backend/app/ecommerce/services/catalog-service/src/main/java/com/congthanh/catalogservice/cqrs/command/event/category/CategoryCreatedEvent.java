@@ -33,6 +33,10 @@ public class CategoryCreatedEvent implements Serializable {
 
     private final Instant createdAt;
 
+    private final String createdBy;
+
     private final Instant updatedAt;
+
+    private final String updatedBy;
 
 }

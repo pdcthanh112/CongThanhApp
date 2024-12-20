@@ -80,22 +80,22 @@ spring:
 #    allow-circular-references: true
 #    allow-bean-definition-overriding: true
 
-  mail:
-    host: smtp.example.com
-    port: 587
-    username: myemail@example.com
-    password: emailpassword
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-
-  cache:
-    type: caffeine
-    caffeine:
-      spec: maximumSize=500,expireAfterAccess=600s
+#  mail:
+#    host: smtp.example.com
+#    port: 587
+#    username: myemail@example.com
+#    password: emailpassword
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#
+#  cache:
+#    type: caffeine
+#    caffeine:
+#      spec: maximumSize=500,expireAfterAccess=600s
 
 #    Cấu hình upload file
   servlet:
@@ -119,7 +119,6 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
-#  Cấu hình quốc tế hoá i18n
   messages:
     basename: messages
   h2:
@@ -162,6 +161,7 @@ congthanhapp:
 springdoc:
   swagger-ui:
     tagsSorter: alpha
+    path: /swagger-ui
   enable-spring-security: true
 
 #logging:
@@ -194,7 +194,6 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      #      default-zone: http://eureka:123456@localhost:8761/eureka
       default-zone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
@@ -211,11 +210,10 @@ axon:
         thread-count: 4
         initial-segment-count: 1
         batch-size: 100
-  datasource:
-    jdbc-url: jdbc:h2:mem:axondb;DB_CLOSE_DELAY=-1
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+      tag:
+        mode: tracking
+        source: eventStore
+
 #axoniq:
 #  console:
 #    enabled: true

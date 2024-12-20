@@ -40,6 +40,10 @@ public class CategoryDocument {
 
     private Instant createdAt;
 
+    private String createdBy;
+
     private Instant updatedAt;
+
+    private String updatedBy;
 
 }

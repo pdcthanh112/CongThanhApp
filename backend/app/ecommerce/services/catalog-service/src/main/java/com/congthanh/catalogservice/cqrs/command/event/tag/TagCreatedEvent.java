@@ -23,7 +23,11 @@ public class TagCreatedEvent implements Serializable {
 
     private Instant createAt;
 
+    private String createdBy;
+
     private Instant updateAt;
+
+    private String updatedBy;
 
     private TagStatus status;
 

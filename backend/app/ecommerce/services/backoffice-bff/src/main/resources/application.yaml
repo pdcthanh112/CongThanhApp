@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: backoffice-bff
+    name: congthanhapp-ecommerce-backoffice-bff
 
   threads:
     virtual:
@@ -11,18 +11,18 @@ spring:
     profiles:
       active: dev
 
-    security:
-      oauth2:
-        client:
-          provider:
-            keycloak:
-              issuer-uri: http://identity/realms/Yas
-          registration:
-            api-client:
-              provider: keycloak
-              client-id: backoffice-bff
-              client-secret: TVacLC0cQ8tiiEKiTVerTb2YvwQ1TRJF #gitleaks:allow
-              scope: openid, profile, email, roles
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://identity/realms/Yas
+        registration:
+          api-client:
+            provider: keycloak
+            client-id: backoffice-bff
+            client-secret: TVacLC0cQ8tiiEKiTVerTb2YvwQ1TRJF #gitleaks:allow
+            scope: openid, profile, email, roles
   data:
     redis:
       host: redis
@@ -42,6 +42,6 @@ management:
             requests: true
     tags:
       application: ${spring.application.name}
-logging:
-  pattern:
-    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+#logging:
+#  pattern:
+#    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

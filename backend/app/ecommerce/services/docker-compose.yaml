@@ -2,6 +2,7 @@
 services:
   nginx:
     image: nginx:1.27.2
+    container_name: nginx
     restart: unless-stopped
     # volumes:
     #   - ./nginx/templates:/etc/nginx/templates
@@ -13,6 +14,7 @@ services:
 
   keycloak:
     image: quay.io/keycloak/keycloak:26.0.2
+    container_name: keycloak
     command: "start-dev --import-realm"
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
@@ -189,6 +191,7 @@ services:
 
   axonserver:
     image: axoniq/axonserver
+    container_name: axonserver
     hostname: axonserver
     # volumes:
     #   - axonserver-data:/data
@@ -203,6 +206,7 @@ services:
 
   redis:
     image: redis:7.4.1-alpine
+    container_name: redis
     restart: always
     ports:
       - "6379:6379"

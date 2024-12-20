@@ -8,6 +8,7 @@ import com.congthanh.catalogservice.cqrs.command.event.tag.TagUpdatedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
+import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import java.time.Instant;
@@ -21,7 +22,9 @@ public class TagAggregate {
     private Long id;
     private String name;
     private Instant createdAt;
+    private String createdBy;
     private Instant updatedAt;
+    private String updatedBy;
     private TagStatus status;
 
     public TagAggregate() {
@@ -29,15 +32,18 @@ public class TagAggregate {
 
     @CommandHandler
     public TagAggregate(CreateTagCommand command) {
-        apply(new TagCreatedEvent(command.getId(), command.getName(), command.getCreatedAt(), command.getUpdatedAt(), command.getStatus()));
+        AggregateLifecycle.apply(new TagCreatedEvent(command.getId(), command.getName(), command.getCreatedAt(), command.getCreatedBy(), command.getUpdatedAt(), command.getUpdatedBy(), command.getStatus()));
     }
 
     @EventSourcingHandler
     public void onTagCreated(TagCreatedEvent event) {
+        System.out.println("EVENT SOURCING HANDLER");
         this.id = event.getId();
         this.name = event.getName();
         this.createdAt = event.getCreateAt();
+        this.createdBy = event.getCreatedBy();
         this.updatedAt = event.getUpdateAt();
+        this.updatedBy = event.getUpdatedBy();
         this.status = event.getStatus();
     }
 

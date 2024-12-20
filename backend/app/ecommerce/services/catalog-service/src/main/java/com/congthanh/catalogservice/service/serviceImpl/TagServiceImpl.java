@@ -35,6 +35,7 @@ public class TagServiceImpl implements TagService {
     private final TagRepository tagRepository;
 
     private final CommandGateway commandGateway;
+
     private final QueryGateway queryGateway;
 
     private final SnowflakeIdGenerator snowflakeIdGenerator;
@@ -78,6 +79,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public TagDTO createTag(CreateTagRequest request) {
+        System.out.println("Vô Service, trước commandGateway.sendAndWait(event);");
         Optional<Tag> check = tagRepository.findByName(request.getName());
         if (check.isPresent()) {
             throw new RuntimeException("Tag name already exist");
@@ -86,12 +88,14 @@ public class TagServiceImpl implements TagService {
                 .id(snowflakeIdGenerator.nextId())
                 .name(request.getName())
                 .createdAt(Instant.now())
+                .createdBy("aaa")
                 .updatedAt(Instant.now())
+                .updatedBy("bbb")
                 .status(TagStatus.ACTIVE)
                 .build();
-
+        System.out.println("Service, build Event:"+event);
         var response = commandGateway.sendAndWait(event);
-
+        System.out.println("Service, Sau command, response:"+response);
         return null;
     }
 
