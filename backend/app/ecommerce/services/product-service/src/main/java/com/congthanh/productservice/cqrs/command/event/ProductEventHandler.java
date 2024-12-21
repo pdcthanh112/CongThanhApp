@@ -20,7 +20,7 @@ public class ProductEventHandler {
         Product product = Product.builder()
                 .id(event.getId())
                 .name(event.getName())
-                .category(event.getCategory()
+                .category(event.getCategory())
                 .slug(event.getSlug())
                 .description(event.getDescription())
 //                .brand(event.getBrand())

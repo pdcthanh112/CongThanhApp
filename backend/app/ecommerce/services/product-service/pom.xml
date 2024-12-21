@@ -241,12 +241,12 @@
             <artifactId>axon-spring-boot-starter</artifactId>
             <version>4.9.3</version>
         </dependency>
-        <dependency>
-            <groupId>com.congthanh</groupId>
-            <artifactId>catalog-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.congthanh</groupId>-->
+<!--            <artifactId>catalog-service</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>

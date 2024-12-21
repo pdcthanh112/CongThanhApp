@@ -1,6 +1,5 @@
 package com.congthanh.productservice.auth;
 
-import com.congthanh.catalogservice.auth.SecurityFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -37,11 +36,11 @@ public class SecurityConfig {
                         .requestMatchers("/**", "/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt
-                                .jwtAuthenticationConverter(jwtAuthConverter())
-                        )
-                )
+//                .oauth2ResourceServer(oauth2 -> oauth2
+//                        .jwt(jwt -> jwt
+//                                .jwtAuthenticationConverter(jwtAuthConverter())
+//                        )
+//                )
                 .authenticationManager(authenticationManager)
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((request, response, authException) ->
