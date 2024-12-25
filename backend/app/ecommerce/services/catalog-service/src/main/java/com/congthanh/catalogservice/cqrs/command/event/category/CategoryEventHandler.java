@@ -27,7 +27,6 @@ public class CategoryEventHandler {
 
     @EventHandler
     public void on(CategoryCreatedEvent event) {
-        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCc");
         Category category = Category.builder()
                 .id(event.getId())
                 .name(event.getName())
@@ -38,7 +37,6 @@ public class CategoryEventHandler {
                 .status(CategoryStatus.ACTIVE)
                 .build();
         var result = categoryRepository.save(category);
-        System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHH"+result);
         log.info("Save Category {} into Postgres successfully, ID: {}", result.getName(), result.getId());
         CategoryQueueEvent<CategoryCreatedEvent> queueEvent = CategoryQueueEvent.<CategoryCreatedEvent>builder()
                 .eventType(CategoryEventType.CREATE)

@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ecommerce/category")
+@RequestMapping("/ecommerce/categories")
 @Tag(name = "Category API", description = "Category API in CongThanhApp - Ecommerce")
 @RequiredArgsConstructor
 public class CategoryController {
@@ -34,11 +34,12 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @GetMapping("/getAll")
+    @GetMapping("/")
     //@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     @PermitAll
     public ResponseEntity<Response<Object>> getAllCategory(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer limit) {
-        Object data = categoryService.getAllCategory(page, limit);
+//        Object data = categoryService.getAllCategory(page, limit);
+        Object data = categoryService.getAllCategoryJson();
         Response<Object> response = new Response<>();
         response.setData(data);
         response.setMessage("Get all successfully");
@@ -56,13 +57,12 @@ public class CategoryController {
         return ResponseEntity.ok().body(response);
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created",
                     content = @Content(schema = @Schema(implementation = CategoryDTO.class))),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(schema = @Schema(implementation = Error.class)))})
-    @PermitAll
     public ResponseEntity<Response<CategoryDTO>> createCategory(@RequestBody @Valid CreateCategoryRequest request) {
         CategoryDTO data = categoryService.createCategory(request);
         Response<CategoryDTO> response = new Response<>();
@@ -72,7 +72,7 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "No content"),
             @ApiResponse(responseCode = "404", description = "Not found",
@@ -88,7 +88,7 @@ public class CategoryController {
         return ResponseEntity.ok().body(response);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "No content"),
             @ApiResponse(responseCode = "404", description = "Not found",

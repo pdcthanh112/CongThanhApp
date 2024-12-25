@@ -5,7 +5,7 @@ import { getToken } from 'next-auth/jwt';
 import { PUBLIC_ROUTES, LOGIN, ROOT, PROTECTED_SUB_ROUTES } from '@/lib/routes';
 
 export default async function middleware(request: NextRequest): Promise<NextResponse> {
-  const response = nextIntlMiddleware(request);
+  const response = i18nMiddleware(request);
 
   const token = await getToken({ req: request });
   const isAuthenticated = !!token;
@@ -18,19 +18,21 @@ export default async function middleware(request: NextRequest): Promise<NextResp
 
   if (!isAuthenticated && !isPublicRoute) {
     return NextResponse.redirect(new URL(LOGIN, request.url));
+    // const url = new URL(LOGIN, request.url);
+    // const locale = request.nextUrl.locale || 'en';
+    // url.pathname = `/${locale}${url.pathname}`;
+    // return NextResponse.redirect(url);
   }
 
   return response;
 }
 
-const nextIntlMiddleware = createMiddleware({
+const i18nMiddleware = createMiddleware({
   locales,
   defaultLocale: 'en' satisfies Locale,
-  localePrefix: "never",
+  localePrefix: 'always',
 });
 
 export const config = {
-  matcher: [
-    '/((?!api|_next|_vercel|.*\\..*).*)',
-  ],
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
 };

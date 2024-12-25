@@ -3,7 +3,7 @@ package com.congthanh.catalogservice.service.serviceImpl;
 import com.congthanh.catalogservice.constant.common.ErrorCode;
 import com.congthanh.catalogservice.constant.enums.CategoryStatus;
 import com.congthanh.catalogservice.cqrs.command.command.category.*;
-import com.congthanh.catalogservice.cqrs.command.event.category.CategoryCreatedEvent;
+import com.congthanh.catalogservice.cqrs.query.query.category.GetAllCategoryQuery;
 import com.congthanh.catalogservice.cqrs.query.query.category.GetCategoryByIdQuery;
 import com.congthanh.catalogservice.model.dto.CategoryDTO;
 import com.congthanh.catalogservice.model.entity.Category;
@@ -19,7 +19,6 @@ import com.congthanh.catalogservice.service.CategoryService;
 import com.congthanh.catalogservice.utils.Helper;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.eventhandling.gateway.EventGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.modelmapper.ModelMapper;
@@ -29,10 +28,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,8 +41,6 @@ public class CategoryServiceImpl implements CategoryService {
     private final CommandGateway commandGateway;
 
     private final QueryGateway queryGateway;
-
-    private final EventGateway eventGateway;
 
     private final ModelMapper modelMapper;
 
@@ -84,10 +80,26 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<CategoryDTO> getAllCategoryJson() {
+        GetAllCategoryQuery query = new GetAllCategoryQuery();
+//        CompletableFuture<List<CategoryDocument>> futureResult = queryGateway.query(query, ResponseTypes.multipleInstancesOf(CategoryDocument.class));
+//        System.out.println("FUUUUUUUUUUUUUUUUUUUU"+futureResult);
+//        try {
+            List<CategoryDocument> result = queryGateway.query(query, ResponseTypes.multipleInstancesOf(CategoryDocument.class)).join();
+            System.out.println("Result: " + result);
+            return result.stream()
+                    .map(item -> modelMapper.map(item, CategoryDTO.class))
+                    .collect(Collectors.toList());
+//        } catch (Exception e) {
+//            return Collections.emptyList();
+//        }
+    }
+
+    @Override
     public CategoryDTO getCategoryById(String id) {
         GetCategoryByIdQuery query = new GetCategoryByIdQuery(id);
         CategoryDocument result = queryGateway.query(query, ResponseTypes.instanceOf(CategoryDocument.class)).join();
-
+        System.out.println("result: " + result);
         return CategoryDTO.builder()
                 .id(result.getId())
                 .name(result.getName())
@@ -95,7 +107,9 @@ public class CategoryServiceImpl implements CategoryService {
                 .description(result.getDescription())
                 .image(result.getImage())
                 .createdAt(result.getCreatedAt())
+                .createdBy(result.getCreatedBy())
                 .updatedAt(result.getUpdatedAt())
+                .updatedBy(result.getUpdatedBy())
                 .status(result.getStatus())
                 .build();
     }

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -30,8 +31,14 @@ public class CategoryDTO {
 
   private Instant createdAt;
 
+  private String createdBy;
+
   private Instant updatedAt;
 
+  private String updatedBy;
+
   private CategoryStatus status;
+
+  private Set<CategoryDTO> children;
 
 }

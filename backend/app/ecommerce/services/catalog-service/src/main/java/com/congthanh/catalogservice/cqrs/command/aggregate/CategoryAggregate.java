@@ -31,7 +31,6 @@ public class CategoryAggregate {
 
     @CommandHandler
     public CategoryAggregate(CreateCategoryCommand command) {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         apply(CategoryCreatedEvent.builder()
                 .id(command.getId())
                 .name(command.getName())
@@ -44,8 +43,6 @@ public class CategoryAggregate {
                 .updatedAt(command.getUpdatedAt())
                 .updatedBy(command.getUpdatedBy())
                 .build());
-        System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-//        apply(new CategoryCreatedEvent(command.getId(), command.getName(), command.getSlug(), command.getDescription(), command.getImage(), command.getParentId(), command.getStatus(), command.getCreatedAt(), command.getCreatedBy(), command.getUpdatedAt(), command.getUpdatedBy()));
     }
 
     @EventSourcingHandler

@@ -1,7 +1,6 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin();
-// const withNextIntl = createNextIntlPlugin('./src/app/i18n.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -35,7 +34,6 @@ const nextConfig = {
       },
     ];
   },
-
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -52,6 +50,11 @@ const nextConfig = {
       },
     ],
   },
+  // i18n: {
+  //   locales: ['en', 'es', 'vi'],
+  //   defaultLocale: 'en',
+  //   localeDetection: true
+  // },
 };
 
 export default withNextIntl(nextConfig);

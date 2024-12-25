@@ -16,7 +16,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://identity/realms/Yas
+            issuer-uri: http://identity/realms/CongThanhApp
         registration:
           api-client:
             provider: keycloak

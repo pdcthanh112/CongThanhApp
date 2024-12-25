@@ -37,7 +37,7 @@ spring:
         - id: catalog-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-CATALOG-SERVICE
           predicates:
-              - Path=/api/ecommerce/category/**, /api/ecommerce/brand/**, /api/ecommerce/tag/**
+              - Path=/api/ecommerce/categories/**, /api/ecommerce/brands/**, /api/ecommerce/tags/**
 
         - id: customer-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-CUSTOMER-SERVICE
@@ -52,12 +52,12 @@ spring:
         - id: notification-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-NOTIFICATION-SERVICE
           predicates:
-            - Path=/api/ecommerce/notification/**
+            - Path=/api/ecommerce/notifications/**
 
         - id: order-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-ORDER-SERVICE
           predicates:
-            - Path=/api/ecommerce/order/**, /api/ecommerce/checkout/**
+            - Path=/api/ecommerce/orders/**, /api/ecommerce/checkout/**
 
         - id: payment-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-PAYMENT-SERVICE
@@ -67,17 +67,17 @@ spring:
         - id: product-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-PRODUCT-SERVICE
           predicates:
-            - Path=/api/ecommerce/product/**
+            - Path=/api/ecommerce/products/**
 
         - id: promotion-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-PROMOTION-SERVICE
           predicates:
-            - Path=/api/ecommerce/promotion/**
+            - Path=/api/ecommerce/promotions/**
 
         - id: review-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-REVIEW-SERVICE
           predicates:
-            - Path=/api/ecommerce/review/**
+            - Path=/api/ecommerce/reviews/**
 
         - id: search-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-SEARCH-SERVICE
@@ -92,7 +92,7 @@ spring:
         - id: supplier-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-SUPPLIER-SERVICE
           predicates:
-            - Path=/api/ecommerce/supplier/**
+            - Path=/api/ecommerce/suppliers/**
 
         - id: warehouse-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-WAREHOUSE-SERVICE

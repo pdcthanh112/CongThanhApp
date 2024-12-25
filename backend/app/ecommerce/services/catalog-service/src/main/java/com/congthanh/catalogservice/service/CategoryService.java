@@ -5,9 +5,12 @@ import com.congthanh.catalogservice.model.request.AddSubcategoryRequest;
 import com.congthanh.catalogservice.model.request.CreateCategoryRequest;
 import com.congthanh.catalogservice.model.request.UpdateCategoryRequest;
 
+import java.util.List;
+
 public interface CategoryService {
 
   Object getAllCategory(Integer pageNo, Integer pageSize);
+  List<CategoryDTO> getAllCategoryJson();
 
   CategoryDTO getCategoryById(String id);
 

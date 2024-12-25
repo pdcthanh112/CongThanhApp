@@ -58,7 +58,9 @@ public class CategoryEventListener {
                 .image(event.getImage())
                 .status(event.getStatus())
                 .createdAt(event.getCreatedAt())
+                .createdBy(event.getCreatedBy())
                 .updatedAt(event.getUpdatedAt())
+                .updatedBy(event.getUpdatedBy())
                 .build();
         var result = categoryDocumentRepository.save(document);
         log.info("Save Category {} into Mongo successfully, ID: {}", result.getName(), result.getId());
@@ -103,8 +105,8 @@ public class CategoryEventListener {
                 .orElseThrow(() -> new NotFoundException("Category not found with id: " + event.getId()));
 
         // Kiểm tra subcategory có tồn tại trong category
-        boolean subcategoryExists = category.getSubcategories() != null &&
-                category.getSubcategories().stream()
+        boolean subcategoryExists = category.getChildren() != null &&
+                category.getChildren().stream()
                         .anyMatch(sub -> sub.getId().equals(event.getId()));
 
         if (!subcategoryExists) {

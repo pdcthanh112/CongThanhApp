@@ -36,7 +36,7 @@ public class CategoryDocument {
     @Enumerated
     private CategoryStatus status;
 
-    private Set<SubcategoryDocument> subcategories;
+    private Set<SubcategoryDocument> children;
 
     private Instant createdAt;
 
