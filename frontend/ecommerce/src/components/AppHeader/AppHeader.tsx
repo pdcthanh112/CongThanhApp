@@ -2,13 +2,18 @@
 import React from 'react';
 import './AppHeader.scss';
 import Image from 'next/image';
-import { Card, Avatar, Icon } from '@mui/material';
+import { Card, Avatar, Icon, Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { Button } from '@/components/ui/button';
 import AppLogo from '@/assets/images/app-logo-removebg.png';
 import DefaultImage from '@/assets/images/default-image.jpg';
-import { Search as SearchIcon, ArrowDropDownOutlined, NavigateNext } from '@mui/icons-material';
+import {
+  Search as SearchIcon,
+  ArrowDropDownOutlined,
+  NavigateNext,
+  Category as CategoryIcon,
+} from '@mui/icons-material';
 import CartModal from '@/components/Cart/CartModal';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import NotificationModal from '@/components/NotificationModal';
@@ -24,6 +29,7 @@ import { NOTIFICATION_KEY } from '@/utils/constants/queryKey';
 import { getNotificationByCustomer } from '@/api/notificationApi';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useAuthenticated } from '@/hooks/auth/useAuthenticated';
+import CategoryComponent from '../Category/CategoryComponent';
 
 const AppHeader = () => {
   const appCategory: Category[] = useAppSelector((state) => state.category.data);
@@ -32,8 +38,7 @@ const AppHeader = () => {
   const router = useRouter();
   const t = useTranslations();
 
-  const {user, isAuthenticated, logout} = useAuthenticated()
-
+  const { user, isAuthenticated, logout } = useAuthenticated();
 
   const { data: listNotification, isLoading } = useQuery({
     queryKey: [NOTIFICATION_KEY],
@@ -54,6 +59,17 @@ const AppHeader = () => {
       <Link href={PATH.HOME}>
         <Image src={AppLogo} alt="App Logo" width={100} className="cursor-pointer mx-12" />
       </Link>
+
+      <div className="hidden sm:flex items-center">
+        <Popover>
+          <PopoverTrigger asChild>
+              <CategoryIcon className="hover:cursor-pointer"/>
+          </PopoverTrigger>
+          <PopoverContent className='w-[80rem]' align='center' side='bottom'>
+            <CategoryComponent />
+          </PopoverContent>
+        </Popover>
+      </div>
 
       <div className="hidden sm:flex items-center h-10 rounded-md flex-grow cursor-pointer">
         <span className="bg-gray-300 h-[2.5rem] w-20 rounded-l-md flex justify-center items-center relative group">

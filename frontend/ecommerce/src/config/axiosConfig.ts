@@ -10,10 +10,10 @@ const axiosConfig = axios.create({
 
 axiosConfig.interceptors.request.use(
   (config) => {
-    const { data: session } = useSession();
+    // const { data: session } = useSession();
     if (config.headers) {
       if (!config.headers.Authorization) {
-        config.headers['Authorization'] = `Bearer ${session?.user?.accessToken}`;
+        // config.headers['Authorization'] = `Bearer ${session?.user?.accessToken}`;
       }
     }
     return config;
