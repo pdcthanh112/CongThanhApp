@@ -1,6 +1,5 @@
 package com.congthanh.productservice.model.response;
 
-import com.congthanh.catalogservice.model.response.PaginationInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -21,7 +21,7 @@ public class CreateProductRequest {
     private String name;
 
     @NotNull
-    private Integer category;
+    private String category;
 
     @NotNull
     private String slug;

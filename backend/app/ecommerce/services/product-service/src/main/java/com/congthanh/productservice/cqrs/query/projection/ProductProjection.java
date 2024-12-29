@@ -3,7 +3,7 @@ package com.congthanh.productservice.cqrs.query.projection;
 import com.congthanh.productservice.cqrs.query.query.GetAllProductQuery;
 import com.congthanh.productservice.cqrs.query.query.GetProductByIdQuery;
 import com.congthanh.productservice.cqrs.query.query.GetProductBySlugQuery;
-import com.congthanh.catalogservice.exception.ecommerce.NotFoundException;
+import com.congthanh.productservice.exception.ecommerce.NotFoundException;
 import com.congthanh.productservice.model.document.ProductDocument;
 import com.congthanh.productservice.repository.product.ProductDocumentRepository;
 import lombok.RequiredArgsConstructor;

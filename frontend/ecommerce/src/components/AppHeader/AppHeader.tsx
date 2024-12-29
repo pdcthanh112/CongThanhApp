@@ -65,7 +65,7 @@ const AppHeader = () => {
           <PopoverTrigger asChild>
               <CategoryIcon className="hover:cursor-pointer"/>
           </PopoverTrigger>
-          <PopoverContent className='w-[80rem]' align='center' side='bottom'>
+          <PopoverContent className='w-[80rem] overflow-y-scroll' align='center' side='bottom'>
             <CategoryComponent />
           </PopoverContent>
         </Popover>

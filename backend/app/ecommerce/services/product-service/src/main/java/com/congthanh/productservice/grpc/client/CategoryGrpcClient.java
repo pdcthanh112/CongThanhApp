@@ -1,8 +1,8 @@
 package com.congthanh.productservice.grpc.client;
 
-import com.congthanh.project.grpc.CategoryRequest;
-import com.congthanh.project.grpc.CategoryResponse;
-import com.congthanh.project.grpc.CategoryServiceGrpc;
+import com.congthanh.catalogservice.grpc.CategoryRequest;
+import com.congthanh.catalogservice.grpc.CategoryResponse;
+import com.congthanh.catalogservice.grpc.CategoryServiceGrpc;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;

@@ -45,7 +45,7 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         String sql = "SELECT SUM(quantity) FROM OrderDetail WHERE product.id = :productId AND status = :status";
         TypedQuery<Long> query = entityManager.createQuery(sql, Long.class);
         query.setParameter("productId", productId);
-        query.setParameter("status", OrderStatus.COMPLETED.name());
+        query.setParameter("status", "COMPLETED");
         return query.getSingleResult();
     }
 

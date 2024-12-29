@@ -1,8 +1,9 @@
 package com.congthanh.productservice.controller;
 
-import com.congthanh.catalogservice.constant.common.ResponseStatus;
+import com.congthanh.productservice.constant.common.ResponseStatus;
 import com.congthanh.productservice.model.dto.ProductViewDTO;
-import com.congthanh.catalogservice.model.response.Response;
+import com.congthanh.productservice.model.request.AddProductViewRequest;
+import com.congthanh.productservice.model.response.Response;
 import com.congthanh.productservice.service.ProductViewService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;

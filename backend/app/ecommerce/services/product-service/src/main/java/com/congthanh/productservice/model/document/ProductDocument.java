@@ -1,6 +1,5 @@
 package com.congthanh.productservice.model.document;
 
-import com.congthanh.catalogservice.model.document.CategoryDocument;
 import com.congthanh.productservice.constant.enums.ProductStatus;
 import com.congthanh.productservice.model.dto.ProductAttributeValueDTO;
 import com.congthanh.productservice.model.dto.ProductImageDTO;

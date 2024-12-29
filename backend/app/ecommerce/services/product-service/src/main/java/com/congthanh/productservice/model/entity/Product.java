@@ -11,8 +11,6 @@ import java.util.Set;
 
 @Entity
 @Data
-//@Getter
-//@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -25,7 +23,6 @@ import java.util.Set;
 public class Product {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Column(nullable = false)

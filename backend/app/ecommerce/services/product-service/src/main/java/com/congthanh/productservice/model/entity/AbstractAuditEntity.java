@@ -1,6 +1,6 @@
 package com.congthanh.productservice.model.entity;
 
-import com.congthanh.catalogservice.listener.CustomAuditingEntityListener;
+import com.congthanh.productservice.listener.CustomAuditingEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

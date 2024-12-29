@@ -1,9 +1,8 @@
 package com.congthanh.productservice.service.serviceImpl;
 
-import com.congthanh.catalogservice.grpc.BrandResponse;
-import com.congthanh.catalogservice.grpc.CategoryGrpcService;
-import com.congthanh.catalogservice.grpc.CategoryResponse;
-import com.congthanh.catalogservice.model.response.ResponseWithPagination;
+import com.congthanh.productservice.grpc.client.CategoryGrpcClient;
+import com.congthanh.productservice.model.response.PaginationInfo;
+import com.congthanh.productservice.model.response.ResponseWithPagination;
 import com.congthanh.productservice.constant.enums.ProductStatus;
 import com.congthanh.productservice.cqrs.command.command.CreateProductCommand;
 import com.congthanh.productservice.cqrs.query.query.GetProductByIdQuery;
@@ -12,13 +11,13 @@ import com.congthanh.productservice.model.dto.ProductVariantAttributeValueDTO;
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.document.ProductDocument;
 import com.congthanh.productservice.model.request.CreateProductRequest;
-import com.congthanh.catalogservice.exception.ecommerce.NotFoundException;
+import com.congthanh.productservice.exception.ecommerce.NotFoundException;
 import com.congthanh.productservice.model.mapper.ProductMapper;
 import com.congthanh.productservice.repository.product.ProductRepository;
 import com.congthanh.productservice.service.ProductAttributeService;
 import com.congthanh.productservice.service.ProductService;
 import com.congthanh.productservice.service.ProductVariantService;
-import com.congthanh.catalogservice.utils.Helper;
+import com.congthanh.productservice.utils.Helper;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,12 +39,18 @@ import java.util.*;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+
     private final ProductVariantService productVariantService;
+
     private final ProductAttributeService productAttributeService;
+
     private final CommandGateway commandGateway;
+
     private final QueryGateway queryGateway;
+
     private final KafkaTemplate<String, ProductDTO> kafkaTemplate;
-    private final CategoryGrpcService categoryGrpcService;
+
+    private final CategoryGrpcClient categoryGrpcClient;
 
     @Override
     @Cacheable("products")
@@ -55,14 +60,14 @@ public class ProductServiceImpl implements ProductService {
             Page<Product> result = productRepository.findAll(pageable);
 
             if (result.hasContent()) {
-                com.congthanh.catalogservice.model.response.ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
+                ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
                 List<ProductDTO> list = new ArrayList<>();
                 for (Product product : result.getContent()) {
                     ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
                     list.add(productDTO);
                 }
 
-                com.congthanh.catalogservice.model.response.PaginationInfo paginationInfo = com.congthanh.catalogservice.model.response.PaginationInfo.builder()
+                PaginationInfo paginationInfo = PaginationInfo.builder()
                         .page(page)
                         .limit(limit)
                         .totalPage(result.getTotalPages())
@@ -120,9 +125,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO createProduct(CreateProductRequest request) {
-        CategoryResponse category = categoryGrpcService.getCategoryById(request.getCategory());
+        var category = categoryGrpcClient.getCategoryById(request.getCategory());
 //        SupplierResponse supplier = null;
-        BrandResponse brand = null;
+//        var brand = null;
 
         String productSlug = Helper.generateSlug(request.getName());
 
@@ -131,7 +136,7 @@ public class ProductServiceImpl implements ProductService {
                 .name(request.getName())
                 .category(category.getId())
                 .description(request.getDescription())
-                .brand(String.valueOf(brand.getId()))
+//                .brand((null)
                 .status(ProductStatus.ACTIVE)
                 .slug(productSlug)
 //                .supplier(supplier.getId())
@@ -166,56 +171,31 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-//    @Override
-//    public ResponseWithPagination<ProductDTO> getProductByCategory(int categoryId, int page, int limit) {
-//        Pageable pageable = PageRequest.of(page, limit);
-//        Page<Product> result = productRepository.findByCategoryId(categoryId, pageable);
-//        ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
-//        if (result.hasContent()) {
-//            List<ProductDTO> list = new ArrayList<>();
-//            for (Product product : result.getContent()) {
-//                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
-//                list.add(productDTO);
-//            }
-//
-//            PaginationInfo paginationInfo = PaginationInfo.builder()
-//                    .page(page)
-//                    .limit(limit)
-//                    .totalPage(result.getTotalPages())
-//                    .totalElement(result.getTotalElements())
-//                    .build();
-//            response.setResponseList(list);
-//            response.setPaginationInfo(paginationInfo);
-//        } else {
-//            throw new RuntimeException("List empty exception");
-//        }
-//        return response;
-//    }
-//
-//    @Override
-//    public ResponseWithPagination<ProductDTO> getProductBySubcategory(int subcategoryId, int page, int limit) {
-//        Pageable pageable = PageRequest.of(page, limit);
-//        Page<Product> result = productRepository.findBySubcategoryId(subcategoryId, pageable);
-//        ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
-//        if (result.hasContent()) {
-//            List<ProductDTO> list = new ArrayList<>();
-//            for (Product product : result.getContent()) {
-//                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
-//                list.add(productDTO);
-//            }
-//            PaginationInfo paginationInfo = PaginationInfo.builder()
-//                    .page(page)
-//                    .limit(limit)
-//                    .totalPage(result.getTotalPages())
-//                    .totalElement(result.getTotalElements())
-//                    .build();
-//            response.setResponseList(list);
-//            response.setPaginationInfo(paginationInfo);
-//        } else {
-//            throw new RuntimeException("List empty exception");
-//        }
-//        return response;
-//    }
+    @Override
+    public ResponseWithPagination<ProductDTO> getProductByCategory(String categoryId, int page, int limit) {
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<Product> result = productRepository.findByCategoryId(categoryId, pageable);
+        ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
+        if (result.hasContent()) {
+            List<ProductDTO> list = new ArrayList<>();
+            for (Product product : result.getContent()) {
+                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
+                list.add(productDTO);
+            }
+
+            PaginationInfo paginationInfo = PaginationInfo.builder()
+                    .page(page)
+                    .limit(limit)
+                    .totalPage(result.getTotalPages())
+                    .totalElement(result.getTotalElements())
+                    .build();
+            response.setResponseList(list);
+            response.setPaginationInfo(paginationInfo);
+        } else {
+            throw new RuntimeException("List empty exception");
+        }
+        return response;
+    }
 
     @Override
     public List<ProductDTO> searchProduct(String keyword) {

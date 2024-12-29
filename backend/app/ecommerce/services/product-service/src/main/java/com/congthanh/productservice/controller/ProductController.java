@@ -1,11 +1,11 @@
 package com.congthanh.productservice.controller;
 
-import com.congthanh.catalogservice.constant.common.ResponseStatus;
+import com.congthanh.productservice.constant.common.ResponseStatus;
 import com.congthanh.productservice.model.dto.ProductDTO;
 import com.congthanh.productservice.model.request.CreateProductRequest;
 import com.congthanh.productservice.model.dto.ProductVariantAttributeValueDTO;
-import com.congthanh.catalogservice.model.response.Response;
-import com.congthanh.catalogservice.model.response.ResponseWithPagination;
+import com.congthanh.productservice.model.response.Response;
+import com.congthanh.productservice.model.response.ResponseWithPagination;
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.repository.product.ProductRepository;
 import com.congthanh.productservice.service.ProductService;
@@ -113,18 +113,8 @@ public class ProductController {
     }
 
     @GetMapping("/getByCategory")
-    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductByCategory(@RequestParam int categoryId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
+    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductByCategory(@RequestParam String categoryId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
         ResponseWithPagination<ProductDTO> data = productService.getProductByCategory(categoryId, page, limit);
-        Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
-        response.setData(data);
-        response.setStatus(ResponseStatus.STATUS_SUCCESS);
-        response.setMessage("Get successfully");
-        return ResponseEntity.ok().body(response);
-    }
-
-    @GetMapping("/getBySubcategory")
-    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductBySubcategory(@RequestParam int subcategory, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
-        ResponseWithPagination<ProductDTO> data = productService.getProductBySubcategory(subcategory, page, limit);
         Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
         response.setData(data);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);

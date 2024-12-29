@@ -43,6 +43,7 @@
         <module>supplier-service</module>
         <module>translate-service</module>
         <module>warehouse-service</module>
+        <module>webhook</module>
     </modules>
 
     <dependencyManagement>

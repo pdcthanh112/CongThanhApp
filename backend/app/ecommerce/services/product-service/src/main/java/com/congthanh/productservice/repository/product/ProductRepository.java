@@ -2,6 +2,8 @@ package com.congthanh.productservice.repository.product;
 
 import com.congthanh.productservice.model.entity.Product;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,7 +23,7 @@ public interface ProductRepository extends JpaRepository<Product, String>, Produ
 
   Optional<Product> findByName(String name);
 
-//  Page<Product> findByCategoryId(Long categoryId, Pageable pageable);
+  Page<Product> findByCategoryId(String categoryId, Pageable pageable);
 //
 //  Page<Product> findBySubcategoryId(Long subcategoryId, Pageable pageable);
 

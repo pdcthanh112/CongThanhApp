@@ -3,7 +3,7 @@ package com.congthanh.catalogservice.listener;
 import com.congthanh.catalogservice.model.entity.AbstractAuditEntity;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.data.auditing.AuditingHandler;

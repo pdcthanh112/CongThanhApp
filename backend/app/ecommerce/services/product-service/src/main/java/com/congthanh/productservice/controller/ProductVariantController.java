@@ -1,8 +1,8 @@
 package com.congthanh.productservice.controller;
 
-import com.congthanh.catalogservice.constant.common.ResponseStatus;
+import com.congthanh.productservice.constant.common.ResponseStatus;
 import com.congthanh.productservice.model.dto.ProductVariantDTO;
-import com.congthanh.catalogservice.model.response.Response;
+import com.congthanh.productservice.model.response.Response;
 import com.congthanh.productservice.service.ProductVariantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

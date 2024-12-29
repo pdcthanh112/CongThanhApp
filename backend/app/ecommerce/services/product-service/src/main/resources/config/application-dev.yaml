@@ -157,6 +157,10 @@ grpc:
     port: 9090
     in-process-name: congthanhapp-ecommerce-product-service
     reflection-service-enabled: true
+  client:
+    catalog-service:
+      address: "static://localhost:9090"
+      negotiationType: "PLAINTEXT"
 
 congthanhapp:
   openapi:

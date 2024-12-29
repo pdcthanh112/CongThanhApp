@@ -1,8 +1,8 @@
 package com.congthanh.productservice.controller;
 
-import com.congthanh.catalogservice.constant.common.ResponseStatus;
+import com.congthanh.productservice.constant.common.ResponseStatus;
 import com.congthanh.productservice.model.dto.ProductAttributeDTO;
-import com.congthanh.catalogservice.model.response.Response;
+import com.congthanh.productservice.model.response.Response;
 import com.congthanh.productservice.service.ProductAttributeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

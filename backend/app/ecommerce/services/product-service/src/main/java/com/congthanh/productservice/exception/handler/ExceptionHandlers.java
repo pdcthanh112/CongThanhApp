@@ -1,10 +1,10 @@
 package com.congthanh.productservice.exception.handler;
 
-import com.congthanh.catalogservice.constant.common.ResponseStatus;
-import com.congthanh.catalogservice.exception.ecommerce.BadRequestException;
-import com.congthanh.catalogservice.model.response.Response;
-import com.congthanh.catalogservice.exception.ecommerce.NotFoundException;
-import com.congthanh.catalogservice.exception.ecommerce.PermissionException;
+import com.congthanh.productservice.constant.common.ResponseStatus;
+import com.congthanh.productservice.exception.ecommerce.BadRequestException;
+import com.congthanh.productservice.model.response.Response;
+import com.congthanh.productservice.exception.ecommerce.NotFoundException;
+import com.congthanh.productservice.exception.ecommerce.PermissionException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

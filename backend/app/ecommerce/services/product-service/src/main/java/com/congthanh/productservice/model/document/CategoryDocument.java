@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,6 +17,6 @@ public class CategoryDocument {
 
     private String name;
 
-    private com.congthanh.catalogservice.model.document.CategoryDocument subcategory;
+    private List<CategoryDocument> children;
 
 }

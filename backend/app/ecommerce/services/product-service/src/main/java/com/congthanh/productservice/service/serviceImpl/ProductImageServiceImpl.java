@@ -3,7 +3,7 @@ package com.congthanh.productservice.service.serviceImpl;
 import com.congthanh.productservice.model.dto.ProductImageDTO;
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.entity.ProductImage;
-import com.congthanh.catalogservice.exception.ecommerce.NotFoundException;
+import com.congthanh.productservice.exception.ecommerce.NotFoundException;
 import com.congthanh.productservice.model.mapper.ProductImageMapper;
 import com.congthanh.productservice.repository.product.ProductRepository;
 import com.congthanh.productservice.repository.productImage.ProductImageRepository;

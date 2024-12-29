@@ -41,7 +41,6 @@ public class ProductMapper {
         modelMapper.typeMap(ProductDTO.class, Product.class)
                 .addMappings(mapper -> {
                     mapper.skip(Product::setCategory);
-                    mapper.skip(Product::setSubcategory);
                     mapper.skip(Product::setSupplier);
                 });
 //                .addMapping(dest -> dest.getCategory().setName(dest.getCategory()), Product::setCategory)
