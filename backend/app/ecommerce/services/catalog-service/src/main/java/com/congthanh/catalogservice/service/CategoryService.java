@@ -3,6 +3,7 @@ package com.congthanh.catalogservice.service;
 import com.congthanh.catalogservice.model.dto.CategoryDTO;
 import com.congthanh.catalogservice.model.request.AddSubcategoryRequest;
 import com.congthanh.catalogservice.model.request.CreateCategoryRequest;
+import com.congthanh.catalogservice.model.request.RequestFilter;
 import com.congthanh.catalogservice.model.request.UpdateCategoryRequest;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public interface CategoryService {
 
   Object getAllCategory(Integer pageNo, Integer pageSize);
-  List<CategoryDTO> getAllCategoryJson();
+  List<CategoryDTO> getAllCategoryJson(RequestFilter filter);
 
   CategoryDTO getCategoryById(String id);
 

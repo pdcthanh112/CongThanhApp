@@ -22,10 +22,10 @@ public class ProductAttributeValueMapper {
     @PostConstruct
     private void configureModelMapper() {
         modelMapper.typeMap(ProductAttributeValue.class, ProductAttributeValueDTO.class)
-                .addMapping(src -> src.getAttribute().getName(), ProductAttributeValueDTO::setAttribute)
+                .addMapping(src -> src.getProductAttribute().getName(), ProductAttributeValueDTO::setAttribute)
                 .addMapping(src -> src.getProduct().getId(), ProductAttributeValueDTO::setProduct);
         modelMapper.typeMap(ProductAttributeValueDTO.class, ProductAttributeValue.class).addMappings(mapper -> {
-            mapper.skip(ProductAttributeValue::setAttribute);
+            mapper.skip(ProductAttributeValue::setProductAttribute);
         });
     }
 

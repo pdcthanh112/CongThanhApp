@@ -10,6 +10,7 @@ import com.congthanh.catalogservice.model.entity.Category;
 import com.congthanh.catalogservice.model.document.CategoryDocument;
 import com.congthanh.catalogservice.model.request.AddSubcategoryRequest;
 import com.congthanh.catalogservice.model.request.CreateCategoryRequest;
+import com.congthanh.catalogservice.model.request.RequestFilter;
 import com.congthanh.catalogservice.model.request.UpdateCategoryRequest;
 import com.congthanh.catalogservice.model.response.PaginationInfo;
 import com.congthanh.catalogservice.model.response.ResponseWithPagination;
@@ -80,19 +81,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDTO> getAllCategoryJson() {
+    public List<CategoryDTO> getAllCategoryJson(RequestFilter filter) {
         GetAllCategoryQuery query = new GetAllCategoryQuery();
-//        CompletableFuture<List<CategoryDocument>> futureResult = queryGateway.query(query, ResponseTypes.multipleInstancesOf(CategoryDocument.class));
-//        System.out.println("FUUUUUUUUUUUUUUUUUUUU"+futureResult);
-//        try {
+        try {
             List<CategoryDocument> result = queryGateway.query(query, ResponseTypes.multipleInstancesOf(CategoryDocument.class)).join();
-            System.out.println("Result: " + result);
             return result.stream()
                     .map(item -> modelMapper.map(item, CategoryDTO.class))
                     .collect(Collectors.toList());
-//        } catch (Exception e) {
-//            return Collections.emptyList();
-//        }
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
     }
 
     @Override

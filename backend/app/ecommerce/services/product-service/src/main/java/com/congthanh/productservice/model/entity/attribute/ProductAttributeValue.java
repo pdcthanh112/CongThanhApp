@@ -20,14 +20,13 @@ public class ProductAttributeValue {
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "attribute", nullable = false)
-    private ProductAttribute attribute;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product", nullable = false)
-    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "product_attribute_id", nullable = false)
+    private ProductAttribute productAttribute;
 
     private String value;
 

@@ -5,6 +5,7 @@ import com.congthanh.catalogservice.model.dto.CategoryDTO;
 import com.congthanh.catalogservice.model.entity.Category;
 import com.congthanh.catalogservice.model.request.AddSubcategoryRequest;
 import com.congthanh.catalogservice.model.request.CreateCategoryRequest;
+import com.congthanh.catalogservice.model.request.RequestFilter;
 import com.congthanh.catalogservice.model.request.UpdateCategoryRequest;
 import com.congthanh.catalogservice.model.response.Response;
 import com.congthanh.catalogservice.repository.category.CategoryRepository;
@@ -39,7 +40,8 @@ public class CategoryController {
     @PermitAll
     public ResponseEntity<Response<Object>> getAllCategory(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer limit) {
 //        Object data = categoryService.getAllCategory(page, limit);
-        Object data = categoryService.getAllCategoryJson();
+        RequestFilter filter = null;
+        Object data = categoryService.getAllCategoryJson(filter);
         Response<Object> response = new Response<>();
         response.setData(data);
         response.setMessage("Get all successfully");

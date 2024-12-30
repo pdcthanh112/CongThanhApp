@@ -55,7 +55,7 @@ public class ProductAttributeValueServiceImpl implements ProductAttributeValueSe
         ProductAttribute attribute = productAttributeRepository.findById(request.getAttribute()).orElseThrow(() -> new NotFoundException("attribute not found"));
         Product product = productRepository.findById(request.getProduct()).orElseThrow(() -> new NotFoundException("product not found"));
         ProductAttributeValue productAttributeValue = ProductAttributeValue.builder()
-                .attribute(attribute)
+                .productAttribute(attribute)
                 .product(product)
                 .value(request.getValue())
                 .build();
