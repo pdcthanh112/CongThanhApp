@@ -1,5 +1,4 @@
 'use client';
-
 import { AppStore, store } from '@/redux/store';
 import { useRef } from 'react';
 import { Provider } from 'react-redux';
