@@ -1,5 +1,7 @@
-package com.congthanh.productservice.model.entity;
+package com.congthanh.productservice.model.entity.variant;
 
+import com.congthanh.productservice.model.entity.Product;
+import com.congthanh.productservice.model.entity.ProductVariantImage;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;

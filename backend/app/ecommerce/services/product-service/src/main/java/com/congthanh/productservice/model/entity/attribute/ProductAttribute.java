@@ -1,4 +1,4 @@
-package com.congthanh.productservice.model.entity;
+package com.congthanh.productservice.model.entity.attribute;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

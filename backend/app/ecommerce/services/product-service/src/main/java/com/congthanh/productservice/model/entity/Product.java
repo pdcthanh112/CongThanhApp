@@ -1,6 +1,8 @@
 package com.congthanh.productservice.model.entity;
 
 import com.congthanh.productservice.constant.enums.ProductStatus;
+import com.congthanh.productservice.model.entity.attribute.ProductAttributeValue;
+import com.congthanh.productservice.model.entity.variant.ProductVariant;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

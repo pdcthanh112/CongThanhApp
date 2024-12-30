@@ -16,7 +16,6 @@ import java.time.Instant;
 @MappedSuperclass
 @Data
 @EntityListeners(CustomAuditingEntityListener.class)
-@SuperBuilder
 public class AbstractAuditEntity {
 
     @CreationTimestamp

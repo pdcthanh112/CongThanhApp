@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -21,10 +23,10 @@ public class ProductView {
     @Column(name = "product_id", nullable = false)
     private String productId;
 
-    @Column(name = "customer_id", nullable = false)
-    private String customerId;
+    @Column(name = "view_by", nullable = false)
+    private String viewBy;
 
     @Column(name = "viewed_at", nullable = false)
-    private Long viewedAt;
+    private Instant viewedAt;
 
 }

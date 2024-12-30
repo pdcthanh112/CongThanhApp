@@ -25,8 +25,8 @@ public class ProductViewServiceImpl implements ProductViewService {
     public ProductViewDTO addProductView(String productId, String customerId) {
         ProductView productView  = ProductView.builder()
                 .productId(productId)
-                .customerId(customerId)
-                .viewedAt(Instant.now().toEpochMilli())
+                .viewBy(customerId)
+                .viewedAt(Instant.now())
                 .build();
         ProductView result = productViewRepository.save(productView);
         return ProductViewMapper.mapProductViewEntityToDTO(result);
