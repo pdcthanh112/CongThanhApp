@@ -1,4 +1,4 @@
-# pip install psycopg2 pymongo
+# pip install psycopg2-binary pymongo
 
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -45,3 +45,12 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+#python -m venv myenv
+#.\myenv\Scripts\activate
+#pip install psycopg2-binary pymongo
+#python sync.py
+
+#deactivate
+#rmdir /s /q myenv

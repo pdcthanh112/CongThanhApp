@@ -146,7 +146,7 @@ INSERT INTO category(id, "name", slug, description, image, parent_id, status, cr
 INSERT INTO category(id, "name", slug, description, image, parent_id, status, created_at, created_by, updated_at, updated_by) VALUES ('a241b72c-be4d-40fa-8b2a-160ec9e79c69', 'Hiking backpacks', 'hiking-backpacks', 'description', 'image', 'ef8a51e1-ffea-4cc3-8bbc-45be476523f1', 'ACTIVE', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh');
 
 ----------------------------------------------------------------Food & Beverages
-INSERT INTO category(id, "name", slug, description, image, parent_id, status, created_at, created_by, updated_at, updated_by) VALUES ('041a2934-9075-4dfc-ae21-2662ee60bfcc', 'Industrial and Scientific', 'industrial-scientific', 'description', 'image', null, 'ACTIVE', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh');
+INSERT INTO category(id, "name", slug, description, image, parent_id, status, created_at, created_by, updated_at, updated_by) VALUES ('041a2934-9075-4dfc-ae21-2662ee60bfcc', 'Foods and Beverages', 'food-beverage', 'description', 'image', null, 'ACTIVE', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh');
 
 ---------------------------------------------------Health & Beauty
 INSERT INTO category(id, "name", slug, description, image, parent_id, status, created_at, created_by, updated_at, updated_by) VALUES ('cab72be6-2c48-45b0-83ea-8a37703203d8', 'Health & Beauty', 'health-beauty', 'description', 'image', null, 'ACTIVE', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh');

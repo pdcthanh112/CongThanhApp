@@ -8,12 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { Button } from '@/components/ui/button';
 import AppLogo from '@/assets/images/app-logo-removebg.png';
 import DefaultImage from '@/assets/images/default-image.jpg';
-import {
-  Search as SearchIcon,
-  ArrowDropDownOutlined,
-  NavigateNext,
-  Category as CategoryIcon,
-} from '@mui/icons-material';
+import { NavigateNext, Category as CategoryIcon } from '@mui/icons-material';
 import CartModal from '@/components/Cart/CartModal';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import NotificationModal from '@/components/NotificationModal';
@@ -21,7 +16,7 @@ import { PATH } from '@/utils/constants/path';
 import { NotificationIcon } from '@/assets/icons';
 import { logoutRequested } from '@/redux/actions/auth';
 import Link from 'next/link';
-import { Category, Notification } from '@/models/types';
+import { Notification } from '@/models/types';
 import { ThemeToggle } from '../Theme/ThemeToggle';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
@@ -30,10 +25,9 @@ import { getNotificationByCustomer } from '@/api/notificationApi';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useAuthenticated } from '@/hooks/auth/useAuthenticated';
 import CategoryComponent from '../Category/CategoryComponent';
+import SearchComponent from '../Search/SearchComponent';
 
 const AppHeader = () => {
-  const appCategory: Category[] = useAppSelector((state) => state.category.data);
-
   const dispatch = useAppDispatch();
   const router = useRouter();
   const t = useTranslations();
@@ -60,35 +54,18 @@ const AppHeader = () => {
         <Image src={AppLogo} alt="App Logo" width={100} className="cursor-pointer mx-12" />
       </Link>
 
-      <div className="hidden sm:flex items-center">
+      <div className="hidden sm:flex items-center mr-5">
         <Popover>
           <PopoverTrigger asChild>
-              <CategoryIcon className="hover:cursor-pointer"/>
+            <CategoryIcon className="hover:cursor-pointer" />
           </PopoverTrigger>
-          <PopoverContent className='w-[80rem] overflow-y-scroll' align='center' side='bottom'>
+          <PopoverContent className="w-[80rem] overflow-y-scroll" align="center" side="bottom">
             <CategoryComponent />
           </PopoverContent>
         </Popover>
       </div>
 
-      <div className="hidden sm:flex items-center h-10 rounded-md flex-grow cursor-pointer">
-        <span className="bg-gray-300 h-[2.5rem] w-20 rounded-l-md flex justify-center items-center relative group">
-          <span className="">
-            {t('common.all')}
-            <ArrowDropDownOutlined />
-          </span>
-
-          <Card className="text-[#a4a4a4] text-sm hidden absolute transform translate-x-[36%] translate-y-[56%] py-2 w-[15rem] group-hover:block group-hover:z-50 max-h-96 group-hover:overflow-y-scroll">
-            {appCategory?.map((item: Category) => (
-              <div key={item.id} className="leading-6 px-2 hover:bg-gray-100">
-                {item.name}
-              </div>
-            ))}
-          </Card>
-        </span>
-        <input className="p-2 h-full w-6 flex-grow flex-shrink focus:outline-none px-4" />
-        <SearchIcon className="!w-14 !h-10 p-1 bg-yellow-400 hover:bg-yellow-500 rounded-r-md" />
-      </div>
+      <SearchComponent />
 
       <div className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap">
         <LanguageSwitcher />

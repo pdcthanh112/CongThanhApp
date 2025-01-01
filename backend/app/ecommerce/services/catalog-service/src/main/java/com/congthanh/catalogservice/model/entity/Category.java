@@ -14,7 +14,6 @@ import lombok.*;
 public class Category  extends AbstractAuditEntity{
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Column(nullable = false)
