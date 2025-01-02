@@ -75,11 +75,6 @@ export const authOptions: AuthOptions = {
 
   callbacks: {
     async jwt({ token, user, account, profile, trigger }) {
-      console.log('JWTTTTTTTTTTTTTTTTTTTTTTTT');
-      console.log('tokennnnnnn:', token);
-      console.log('userrrrrrrrrr:', user);
-      console.log('profile:', profile);
-      console.log('userrrrrrrrrr:', user);
       if (trigger === 'signUp') {
         const res = await fetch('http://localhost:8000/auth/signup', {
           method: 'POST',
@@ -94,7 +89,6 @@ export const authOptions: AuthOptions = {
       }
       if (token.accessToken) {
         const decodedToken = jwtDecode(token.accessToken as string);
-        console.log('DECODE TOKEN:', decodedToken);
         token.accessTokenExpires = Number(decodedToken.exp) * 1000;
       }
       if (account && user) {
@@ -109,21 +103,12 @@ export const authOptions: AuthOptions = {
         };
       }
       if (Date.now() > Number(token.accessTokenExpires) * 1000) {
-        console.log("RRRRRRRRRRRRRRRRRRR", )
-        console.log("DATE: ", Date.now())
-        console.log("TOKENNN: ", Number(token.accessTokenExpires) * 1000)
-        console.log("CHECKKKK: ", Date.now() > Number(token.accessTokenExpires) * 1000)
         return refreshAccessToken(token);
       }
       return token;
     },
 
     async session({ session, token, user }) {
-      console.log('SESSIONNNNNNNNNNNNNNNNNNN');
-      console.log('session:', session);
-      console.log('tokennnnnnn:', token);
-      console.log('userrrrrrrrrr:', user);
-      // session.user = token.user;
       session.accessToken = token.accessToken;
       session.refreshToken = token.refreshToken;
       session.expires = token.accessTokenExpires;

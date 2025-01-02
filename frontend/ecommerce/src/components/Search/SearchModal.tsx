@@ -1,8 +1,8 @@
-import { getSearchHistory, removeSearchHistoryItem, getSearchTrending } from '@/api/searchApi';
-import { Card } from '@/components/ui';
-import { Clear } from '@mui/icons-material';
+import React from 'react';
+import { getSearchHistory, removeSearchHistoryItem, getSearchTrending, getSearchRecommend } from '@/api/searchApi';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Tag } from 'antd';
+import { Clock, TrendingUp, X } from 'lucide-react';
 
 const searchHistory = [
   { id: 1, value: 'abchasf ạldfs adsjlj' },
@@ -19,7 +19,12 @@ const searchTrending = [
   'ljlkjajldsjfjdslj',
 ];
 
-export default function SearchModal() {
+type PropsType = {
+  searchTerm: string;
+  handleSearch: (term: string) => void;
+};
+
+export default function SearchModal({ searchTerm, handleSearch }: PropsType) {
   // const {data: searchHistory} = useQuery({queryKey: ['search-history'], queryFn: async () => await getSearchHistory()})
   // const {data: searchTrending} = useQuery({queryKey: ['search-trending'], queryFn: async () => await getSearchTrending()})
 
@@ -28,21 +33,54 @@ export default function SearchModal() {
     mutationFn: async (id: number) => await removeSearchHistoryItem(id),
   });
 
+  const {} = useQuery({
+    queryKey: ['search-recommend', searchTerm],
+    queryFn: async () => await getSearchRecommend(searchTerm).then(response => response.data)
+  })
+
   return (
-    <Card className="absolute top-12 w-[54rem] h-80 px-3 py-2">
-      <div>
-        {searchTrending.map((item) => (
-          <Tag icon="#" className="px-2 py-1">
-            {item}
-          </Tag>
-        ))}
-      </div>
-      {searchHistory.map((item) => (
-        <div className="flex justify-between hover:bg-gray-200 py-2">
-          <span className="hover:cursor-pointer">{item.value}</span>
-          <Clear fontSize="small" className="opacity-70" onClick={() => removeSearchItem(item.id)} />
-        </div>
-      ))}
-    </Card>
+    <div className="absolute top-full left-0 w-full mt-2 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+      {searchTerm ? (
+        <div>alsd;f;a</div>
+      ) : (
+        <React.Fragment>
+          <div className="p-4 border-t border-gray-100">
+            <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+              <TrendingUp className="w-4 h-4" />
+              <span>Trending Searches</span>
+            </div>
+            {searchTrending.length > 0 &&
+              searchTrending.map((term, id) => (
+                <Tag
+                  key={id}
+                  icon="#"
+                  className="py-1 px-2 hover:bg-gray-100 cursor-pointer rounded"
+                  onClick={() => handleSearch(term)}
+                >
+                  {term}
+                </Tag>
+              ))}
+          </div>
+
+          <div className="p-4">
+            <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+              <Clock className="w-4 h-4" />
+              <span>Recent Searches</span>
+            </div>
+            {searchHistory.length > 0 &&
+              searchHistory.map((term) => (
+                <div
+                  key={term.id}
+                  className="flex items-center justify-between py-2 px-2 hover:bg-gray-100 cursor-pointer rounded"
+                  onClick={() => handleSearch(term.value)}
+                >
+                  <span>{term.value}</span>
+                  <X className="w-4 h-4 text-gray-400 hover:text-gray-600" onClick={(e) => removeSearchItem(term.id)} />
+                </div>
+              ))}
+          </div>
+        </React.Fragment>
+      )}
+    </div>
   );
 }
