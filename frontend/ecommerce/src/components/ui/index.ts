@@ -1,10 +1,10 @@
-import Pagination from './Pagination';
-import { Button } from './button';
-
-export { Button, Pagination };
-export * from './input'
+export * from './button';
 export * from './card'
 export * from './checkbox'
+export * from './dialog'
+export * from './form'
+export * from './input'
+export * from './input-otp'
 export * from './skeleton'
-export * from './tabs'
 export * from './popover'
+export * from './tabs'

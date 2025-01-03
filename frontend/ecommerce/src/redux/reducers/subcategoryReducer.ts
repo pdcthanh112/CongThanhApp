@@ -1,5 +1,5 @@
-import { FetchSubcategoryFailedPayload, FetchSubcategoryStartPayload, FetchSubcategorySucceededPayload } from '@redux/actions/payload/subcategory';
-import { SubcategoryState } from '@redux/actions/type/subcategory';
+import { FetchSubcategoryFailedPayload, FetchSubcategoryStartPayload, FetchSubcategorySucceededPayload } from '@/redux/actions/payload/subcategory';
+import { SubcategoryState } from '@/redux/actions/type/subcategory';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const initialState: SubcategoryState = {

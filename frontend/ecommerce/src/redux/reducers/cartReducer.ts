@@ -1,4 +1,4 @@
-import { CartState } from '@redux/actions/type/cart';
+import { CartState } from '@/redux/actions/type/cart';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {
   AddItemToCartFailedPayload,
@@ -16,7 +16,7 @@ import {
   RemoveItemFromCartFailedPayload,
   RemoveItemFromCartStartPayload,
   RemoveItemFromCartSucceededPayload,
-} from '@redux/actions/payload/cart';
+} from '@/redux/actions/payload/cart';
 
 const initialState: CartState = {
   status: 'idle',

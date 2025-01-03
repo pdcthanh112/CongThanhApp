@@ -1,6 +1,6 @@
-import { NotificationState } from '@redux/actions/type/notification';
+import { NotificationState } from '@/redux/actions/type/notification';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { FetchNotificationFailedPayload, FetchNotificationStartPayload, FetchNotificationSucceededPayload } from '@redux/actions/payload/notification';
+import { FetchNotificationFailedPayload, FetchNotificationStartPayload, FetchNotificationSucceededPayload } from '@/redux/actions/payload/notification';
 
 const initialState: NotificationState = {
   status: 'idle',

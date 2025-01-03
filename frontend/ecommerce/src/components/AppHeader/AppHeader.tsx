@@ -147,7 +147,10 @@ const AppHeader = () => {
                 </div>
               </>
             ) : (
-              <>Chua loginnn</>
+              <div className='flex justify-around'>
+                <Button className='px-10'>Login</Button>
+                <Button className='px-10'>Signup</Button>
+                </div>
             )}
           </Card>
         </div>

@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import LoginComponent from './LoginComponent';
 import RegisterComponent from './RegisterComponent';
 import { IMAGE, PATH } from '@/utils/constants/path';
+import { X } from 'lucide-react';
 
 const AuthModal = () => {
   const dispatch = useAppDispatch();
@@ -36,12 +37,14 @@ const AuthModal = () => {
           width: 500,
           bgcolor: '#fff',
           boxShadow: 24,
+          borderRadius: 1
         }}
       >
-        <Tabs defaultValue="login" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
+        <Tabs defaultValue="login" className="w-full relative">
+          <TabsList className="grid w-3/5 grid-cols-2">
             <TabsTrigger value="login">Login</TabsTrigger>
             <TabsTrigger value="register">Register</TabsTrigger>
+            <X className='absolute top-3 right-3 hover:cursor-pointer' onClick={() => setOpenAuthModal(false)}/>
           </TabsList>
           <TabsContent value="login">
             <Card>

@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import ManagementLayout from '@/layout/ManagementLayout';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { ChangePasswordForm } from '@/models/form';
 import { Icon } from '@mui/material';
 import { DoneAll, Lock, Password, Visibility, VisibilityOff } from '@mui/icons-material';
@@ -113,11 +112,3 @@ ChangePassword.getLayout = function getLayout(page: React.ReactNode) {
 };
 
 export default ChangePassword;
-
-export async function getServerSideProps(context: any) {
-  return {
-    props: {
-      ...(await serverSideTranslations(context.locale, ['common'])),
-    },
-  };
-}

@@ -1,4 +1,4 @@
-import { Customer } from '@models/type';
+import { Customer } from '@/models/type';
 
 export const LocalStorageEventTarget = new EventTarget();
 

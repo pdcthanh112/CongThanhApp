@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Icon } from '@mui/material';
+import { Divider, Icon } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { LoginSchema, LoginSchemaType } from '@/models/schema/authSchema';
 import Link from 'next/link';
@@ -13,6 +13,7 @@ import { ClientSafeProvider, LiteralUnion, useSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers/index';
 import { AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '@/assets/icons/socialLoginIcon';
+import { useTranslations } from 'next-intl';
 
 type PropsType = {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
@@ -23,13 +24,15 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
   // const [session, loading] = useSession();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
+  const t = useTranslations();
+
   const formLogin = useForm<LoginSchemaType>({
-    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: '',
       password: '',
       fcmToken: '',
     },
+    resolver: zodResolver(LoginSchema),
   });
 
   const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
@@ -64,6 +67,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
                   <div className="relative">
                     <Input placeholder="********" type={showPassword ? 'password' : 'text'} {...field} />
                     <Icon
+                      fontSize="small"
                       component={showPassword ? VisibilityOff : Visibility}
                       cursor={'pointer'}
                       className="absolute right-3 top-2"
@@ -87,6 +91,8 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
           </Button>
         </form>
       </Form>
+
+      <Divider>or</Divider>
 
       <div className="grid grid-cols-12 gap-3 mt-3">
         <div className="col-span-6">

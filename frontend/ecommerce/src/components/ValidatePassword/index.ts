@@ -1,3 +1,1 @@
-import ValidatePassword from './ValidatePassword';
-
-export default ValidatePassword;
+export * from './ValidatePassword';

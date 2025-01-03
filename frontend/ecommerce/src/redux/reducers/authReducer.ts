@@ -1,4 +1,4 @@
-import { AuthState } from '@redux/actions/type/auth';
+import { AuthState } from '@/redux/actions/type/auth';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {
   EditProfileFailedPayload,
@@ -13,7 +13,7 @@ import {
   SignupFailedPayload,
   SignupStartPayload,
   SignupSucceededPayload,
-} from '@redux/actions/payload/auth';
+} from '@/redux/actions/payload/auth';
 
 const initialState: AuthState = {
   status: 'idle',

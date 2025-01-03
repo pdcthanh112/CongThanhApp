@@ -1,4 +1,4 @@
-import { WishlistState } from '@redux/actions/type/wishlist';
+import { WishlistState } from '@/redux/actions/type/wishlist';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {
   AddItemToWishlistFailedPayload,
@@ -10,7 +10,7 @@ import {
   RemoveItemFromWishlistFailedPayload,
   RemoveItemFromWishlistStartPayload,
   RemoveItemFromWishlistSucceededPayload,
-} from '@redux/actions/payload/wishlist';
+} from '@/redux/actions/payload/wishlist';
 
 const initialState: WishlistState = {
   status: 'idle',
