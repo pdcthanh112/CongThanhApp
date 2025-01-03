@@ -2,7 +2,7 @@
 import React from 'react';
 import './AppHeader.scss';
 import Image from 'next/image';
-import { Card, Avatar, Icon, Box } from '@mui/material';
+import { Card, Icon } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,7 @@ import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
 import { NOTIFICATION_KEY } from '@/utils/constants/queryKey';
 import { getNotificationByCustomer } from '@/api/notificationApi';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger, Avatar, AvatarFallback, AvatarImage } from '@/components/ui';
 import { useAuthenticated } from '@/hooks/auth/useAuthenticated';
 import CategoryComponent from '../Category/CategoryComponent';
 import SearchComponent from '../Search/SearchComponent';
@@ -46,10 +46,8 @@ const AppHeader = () => {
     dispatch(logoutRequested({ email: 'fjasljflashfiahsd' }));
   };
 
-  const handleSearch = () => {};
-
   return (
-    <div className="flex items-center bg-slate-400 p-1 flex-grow py-2">
+    <div className="flex items-center bg-slate-400 p-1 flex-grow py-2 h-24">
       <Link href={PATH.HOME}>
         <Image src={AppLogo} alt="App Logo" width={100} className="cursor-pointer mx-12" />
       </Link>
@@ -93,10 +91,10 @@ const AppHeader = () => {
         <div className="relative inline-block group">
           <div className="hover:cursor-pointer">
             {isAuthenticated && user ? (
-              <div>
-                {/* <div>{t('common.hello')}, {currentUser.userInfo.name.split(' ').pop()}</div> */}
-                <div className="font-semibold md:text-sm">{t('header.account_and_info')}</div>
-              </div>
+              <Avatar>
+                <AvatarImage src={user?.image!!} alt="" />
+                <AvatarFallback>{user.name?.split(' ').pop()}</AvatarFallback>
+              </Avatar>
             ) : (
               <div>
                 <div>{t('common.welcome')}</div>
@@ -111,7 +109,10 @@ const AppHeader = () => {
               <>
                 <div className="flex justify-between bg-sky-100 px-5 py-3 rounded-md">
                   <span className="flex items-center">
-                    <Avatar src={user.image || String(DefaultImage)} />
+                    <Avatar>
+                      <AvatarImage src={user?.image!!} alt="" />
+                      <AvatarFallback>{user.name?.split(' ').pop()}</AvatarFallback>
+                    </Avatar>
                     <span className="font-medium text-lg ml-3">{user.name}</span>
                   </span>
                   <Link
@@ -147,10 +148,10 @@ const AppHeader = () => {
                 </div>
               </>
             ) : (
-              <div className='flex justify-around'>
-                <Button className='px-10'>Login</Button>
-                <Button className='px-10'>Signup</Button>
-                </div>
+              <div className="flex justify-around">
+                <Button className="px-10">Login</Button>
+                <Button className="px-10">Signup</Button>
+              </div>
             )}
           </Card>
         </div>

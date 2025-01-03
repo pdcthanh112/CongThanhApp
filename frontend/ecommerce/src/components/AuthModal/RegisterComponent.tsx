@@ -8,10 +8,10 @@ import { Input, Button, FormField, Form, FormItem, FormMessage, FormLabel, FormC
 import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function RegisterComponent() {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   const t = useTranslations();
   const RegisterSchema = createRegisterSchema(t);
-
-  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const form = useForm<RegisterSchemaType>({
     defaultValues: {

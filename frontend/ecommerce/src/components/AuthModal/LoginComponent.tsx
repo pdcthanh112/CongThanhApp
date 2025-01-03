@@ -15,6 +15,7 @@ import { Form, FormField, Button, FormItem, FormLabel, FormMessage, FormControl 
 
 export default function LoginComponent() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  
   const t = useTranslations();
   const LoginSchema = createLoginSchema(t);
 
