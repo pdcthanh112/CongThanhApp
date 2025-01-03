@@ -1,21 +1,24 @@
 'use client';
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { RegisterSchema, RegisterSchemaType } from '@/models/schema/authSchema';
+import { createRegisterSchema, RegisterSchemaType } from '@/models/schema/authSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Button, Input } from '@/components/ui';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Button, Input } from '@/components/ui';
 import { Icon } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { DatePicker, Divider, Result, Spin, Tooltip } from 'antd';
+import { DatePicker, Divider, Spin, Tooltip } from 'antd';
 import { signIn } from 'next-auth/react';
 import { AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '@/assets/icons/socialLoginIcon';
 import ValidatePassword from '@/components/ValidatePassword/ValidatePassword';
-import { CalendarDays, CheckCheck, LockKeyhole, Mail, Phone, User } from 'lucide-react';
+import { CheckCheck, LockKeyhole, Mail, Phone, User } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showModalValidatePassword, setShowModalValidatePassword] = useState<boolean>(false);
+
+  const t = useTranslations();
+  const RegisterSchema = createRegisterSchema(t);
 
   const formRegister = useForm<RegisterSchemaType>({
     resolver: zodResolver(RegisterSchema),
@@ -40,14 +43,20 @@ export default function RegisterForm() {
             control={formRegister.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="h-24 col-span-12">
-                <FormLabel>
-                  Email<span className="text-red-500">*</span>
+              <FormItem className="h-24 col-span-12 space-y-0">
+                <FormLabel style={{ color: 'inherit' }}>
+                  {t('auth.email')}
+                  <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
                   <div className="flex items-center border-2 px-3 rounded">
                     <Mail />
-                    <Input placeholder="example@email.com" type="email" {...field} className="border-none" />
+                    <Input
+                      placeholder={t('placeholder.input_field', { field: t('auth.email') })}
+                      type="email"
+                      {...field}
+                      className="border-none"
+                    />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -58,14 +67,20 @@ export default function RegisterForm() {
             control={formRegister.control}
             name="name"
             render={({ field }) => (
-              <FormItem className="h-24 col-span-12">
-                <FormLabel>
-                  Name<span className="text-red-500">*</span>
+              <FormItem className="h-24 col-span-12 space-y-0">
+                <FormLabel style={{ color: 'inherit' }}>
+                  {t('auth.name')}
+                  <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
                   <div className="flex items-center border-2 px-3 rounded">
                     <User />
-                    <Input placeholder="" type="text" {...field} className="border-none" />
+                    <Input
+                      type="text"
+                      placeholder={t('placeholder.input_field', { field: t('auth.name') })}
+                      {...field}
+                      className="border-none"
+                    />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -77,9 +92,10 @@ export default function RegisterForm() {
               control={formRegister.control}
               name="password"
               render={({ field }) => (
-                <FormItem className="h-24 w-full col-span-6">
-                  <FormLabel>
-                    Password<span className="text-red-500">*</span>
+                <FormItem className="h-24 w-full col-span-6 space-y-0">
+                  <FormLabel style={{ color: 'inherit' }}>
+                    {t('auth.password')}
+                    <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
                     <Tooltip
@@ -93,8 +109,8 @@ export default function RegisterForm() {
                       <div className="relative flex items-center border-2 px-3 rounded">
                         <LockKeyhole />
                         <Input
-                          placeholder="********"
                           type={showPassword ? 'password' : 'text'}
+                          placeholder={t('placeholder.input_field', { field: t('auth.password') })}
                           className="border-none"
                           {...field}
                           onFocus={() => setShowModalValidatePassword(true)}
@@ -118,16 +134,17 @@ export default function RegisterForm() {
               control={formRegister.control}
               name="confirm"
               render={({ field }) => (
-                <FormItem className="h-24 w-full col-span-6">
-                  <FormLabel>
-                    Confirm<span className="text-red-500">*</span>
+                <FormItem className="h-24 w-full col-span-6 space-y-0">
+                  <FormLabel style={{ color: 'inherit' }}>
+                    {t('auth.confirm')}
+                    <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
                     <div className="flex relative items-center border-2 px-3 rounded">
                       <LockKeyhole />
                       <Input
-                        placeholder="**********"
                         type={showPassword ? 'text' : 'password'}
+                        placeholder={t('placeholder.input_field', { field: t('auth.confirm') })}
                         {...field}
                         className="border-none"
                       />
@@ -149,8 +166,8 @@ export default function RegisterForm() {
               control={formRegister.control}
               name="password"
               render={({ field }) => (
-                <FormItem className="h-24 w-full col-span-6">
-                  <FormLabel style={{ color: 'inherit' }}>Phone</FormLabel>
+                <FormItem className="h-24 w-full col-span-6 space-y-0">
+                  <FormLabel style={{ color: 'inherit' }}>{t('auth.phone')}</FormLabel>
                   <FormControl>
                     <div className="relative flex items-center border-2 px-3 rounded">
                       <Phone />
@@ -165,13 +182,17 @@ export default function RegisterForm() {
               control={formRegister.control}
               name="confirm"
               render={({ field }) => (
-                <FormItem className="h-24 w-full col-span-6">
-                  <FormLabel>Dob</FormLabel>
+                <FormItem className="h-24 w-full col-span-6 space-y-0">
+                  <FormLabel style={{ color: 'inherit' }}>{t('auth.date_of_birth')}</FormLabel>
                   <FormControl>
                     {/* <div className="flex relative items-center border-2 px-3 rounded">
                       <CalendarDays /> */}
-                      {/* <Input type="text" {...field} className="border-none" /> */}
-                    <DatePicker size='large' className='focus:outline-none w-full border-2 border-gray-200' />
+                    {/* <Input type="text" {...field} className="border-none" /> */}
+                    <DatePicker
+                      size="large"
+                      className="focus:outline-none w-full border-2 border-gray-200"
+                      {...field}
+                    />
                     {/* </div> */}
                   </FormControl>
                   <FormMessage />
@@ -180,21 +201,21 @@ export default function RegisterForm() {
             />
           </div>
           <Button type="submit" className="col-span-12 mt-3">
-            Đăng ký
+            {t('auth.register')}
           </Button>
         </form>
       </Form>
 
-      <Divider>or</Divider>
+      <Divider>{t('common.or')}</Divider>
 
       <div className="grid grid-cols-12 gap-3 mt-3">
         <div className="col-span-6">
-          <SocialLoginComponent id={'google'} name={'Google'} bgColor={'bg-red-400'} icon={GoogleIcon} />
-          <SocialLoginComponent id={'twitter'} name={'Twitter'} bgColor={'bg-blue-300'} icon={TwitterIcon} />
+          <SocialLoginComponent id={'google'} name={'Google'} bgColor={'bg-red-400'} icon={GoogleIcon} t={t} />
+          <SocialLoginComponent id={'twitter'} name={'Twitter'} bgColor={'bg-blue-300'} icon={TwitterIcon} t={t} />
         </div>
         <div className="col-span-6">
-          <SocialLoginComponent id={'facebook'} name={'Facebook'} bgColor={'bg-blue-400'} icon={FacebookIcon} />
-          <SocialLoginComponent id={'apple'} name={'Apple'} bgColor={'bg-gray-400'} icon={AppleIcon} />
+          <SocialLoginComponent id={'facebook'} name={'Facebook'} bgColor={'bg-blue-400'} icon={FacebookIcon} t={t} />
+          <SocialLoginComponent id={'apple'} name={'Apple'} bgColor={'bg-gray-400'} icon={AppleIcon} t={t} />
         </div>
       </div>
     </React.Fragment>
@@ -206,11 +227,13 @@ const SocialLoginComponent = ({
   name,
   bgColor,
   icon,
+  t,
 }: {
   id: 'google' | 'facebook' | 'twitter' | 'apple';
   name: 'Google' | 'Facebook' | 'Twitter' | 'Apple';
   bgColor: string;
   icon: any;
+  t: any;
 }) => (
   <div
     className={`${bgColor} flex px-3 py-3 mb-3 hover:cursor-pointer rounded-lg`}
@@ -222,6 +245,6 @@ const SocialLoginComponent = ({
     }
   >
     <Icon component={icon} className="h-2" />
-    <span className="ml-3 text-white font-medium">Login with {name}</span>
+    <span className="ml-3 text-white font-medium">{t('auth.login_with_social', { social: name })}</span>
   </div>
 );

@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 export default function RegisterPage() {
-
   const t = useTranslations();
 
   return (
@@ -22,11 +21,11 @@ export default function RegisterPage() {
         }}
       >
         <div className="w-4/5 mx-auto my-10">
-          <h3 className="mt-5 mb-5 font-medium text-xl">Welcome to CongThanhApp - Ecommerce</h3>
+          <h3 className="mt-5 mb-5 font-medium text-xl">{t('common.welcome')} CongThanhApp - Ecommerce</h3>
           <div className="flex justify-end">
-            You have an account?&nbsp;
+            {t('auth.you_already_have_an_account')}&nbsp;
             <Link href={'/auth/login'} className="text-green-400 hover:underline">
-              Login
+              {t('auth.login')}
             </Link>
           </div>
           <RegisterForm />

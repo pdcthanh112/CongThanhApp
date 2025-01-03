@@ -101,7 +101,7 @@ const AppHeader = () => {
               <div>
                 <div>{t('common.welcome')}</div>
                 <div className="font-semibold md:text-sm" onClick={() => router.push(PATH.AUTH_PATH_URL.LOGIN)}>
-                  {t('common.login')} or {t('common.signup')}
+                  {t('auth.login')} or {t('auth.register')}
                 </div>
               </div>
             )}
@@ -141,7 +141,7 @@ const AppHeader = () => {
                       <MenuItem name={t('header.watchlist')} url={'#'} /> */}
                     </menu>
                     <Button className="bg-yellow-400 w-52 rounded-xl" onClick={() => handleLogout()}>
-                      {t('common.logout')}
+                      {t('auth.logout')}
                     </Button>
                   </div>
                 </div>

@@ -8,7 +8,10 @@ import { RootLayout } from '@/layout';
 import { type Locale } from '@/lib/locales';
 import { getTranslations } from 'next-intl/server';
 import { Metadata } from 'next';
-import { I18nConfigProvider } from '@/config/providers/I18nConfigProvider';
+import { routing } from '@/i18n/routing';
+import { notFound } from 'next/navigation';
+import { getMessages } from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +21,8 @@ export const baseOpenGraph = {
   siteName: 'CongThanhApp - Ecommerce',
 };
 
-export async function generateMetadata({ params: { locale } }: { params: { locale: Locale } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { locale: Locale } }): Promise<Metadata> {
+  const { locale } = await params;
   const t = await getTranslations({ locale });
 
   return {
@@ -49,18 +53,24 @@ type LayoutPropsType = {
 };
 
 export default async function Layout({ children, params: { locale } }: Readonly<LayoutPropsType>) {
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
+
+  const messages = await getMessages();
+
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={inter.className}>
         <Providers>
-          <I18nConfigProvider>
+          <NextIntlClientProvider messages={messages}>
             <AppHeader />
             <AppNavbar />
             <RootLayout>
               <main className="min-h-[calc(100vh-270px)]">{children}</main>
             </RootLayout>
             <AppFooter />
-          </I18nConfigProvider>
+          </NextIntlClientProvider>
         </Providers>
       </body>
     </html>

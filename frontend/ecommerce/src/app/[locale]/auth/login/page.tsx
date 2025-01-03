@@ -27,7 +27,7 @@ export default async function LoginPage() {
           <div className="flex justify-end">
           {t('login.you_dont_have_an_account')}&nbsp;
             <Link href={'/auth/register'} className="text-green-400 hover:underline">
-            {t('signup.register')}
+            {t('auth.register')}
             </Link>
           </div>
           <LoginForm providers={providers} csrfToken={csrfToken!!} />

@@ -7,7 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Divider, Icon } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { LoginSchema, LoginSchemaType } from '@/models/schema/authSchema';
+import { createLoginSchema, LoginSchemaType } from '@/models/schema/authSchema';
 import Link from 'next/link';
 import { ClientSafeProvider, LiteralUnion, useSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
@@ -25,6 +25,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const t = useTranslations();
+  const LoginSchema = createLoginSchema(t)
 
   const formLogin = useForm<LoginSchemaType>({
     defaultValues: {
@@ -62,7 +63,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
             name="password"
             render={({ field }) => (
               <FormItem className="h-24">
-                <FormLabel style={{ color: 'inherit' }}>Password</FormLabel>
+                <FormLabel style={{ color: 'inherit' }}>{t('auth.password')}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input placeholder="********" type={showPassword ? 'password' : 'text'} {...field} />
@@ -78,7 +79,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
                       className="absolute right-0 hover:underline"
                       title="Forget password"
                     >
-                      Forget password
+                      {t('auth.forgot_password')}
                     </Link>
                   </div>
                 </FormControl>
@@ -87,12 +88,12 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
             )}
           />
           <Button type="submit" className="!mt-8 w-full">
-            Đăng nhập
+            {t('auth.login')}
           </Button>
         </form>
       </Form>
 
-      <Divider>or</Divider>
+      <Divider>{t('common.or')}</Divider>
 
       <div className="grid grid-cols-12 gap-3 mt-3">
         <div className="col-span-6">

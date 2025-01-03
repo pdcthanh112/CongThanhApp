@@ -1,26 +1,22 @@
 import React, { useState } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import { RegisterSchema, RegisterSchemaType } from '@/models/schema/authSchema';
-import { FormHelperText, Icon } from '@mui/material';
+import { createRegisterSchema, RegisterSchemaType } from '@/models/schema/authSchema';
+import { Icon } from '@mui/material';
 import { AccountCircle, Email, Password, Visibility, VisibilityOff } from '@mui/icons-material';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Input, Button, FormField, Form, FormItem, FormMessage, FormLabel, FormControl } from '@/components/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const RegisterComponent = () => {
+export default function RegisterComponent() {
   const t = useTranslations();
+  const RegisterSchema = createRegisterSchema(t);
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<RegisterSchemaType>({
+  const form = useForm<RegisterSchemaType>({
     defaultValues: {
       email: '',
+      name: '',
       password: '',
       phone: '',
     },
@@ -31,83 +27,126 @@ const RegisterComponent = () => {
 
   return (
     <React.Fragment>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name="email"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <div className="h-[4.5rem]">
-              <div className="flex items-center border border-gray-500 rounded">
-                <Icon component={Email} className="ml-2" />
-                <Input type="email" {...field} placeholder='Enter your email' className="border-none" />
-              </div>
-              <FormHelperText error>{errors.email?.message}</FormHelperText>
-            </div>
-          )}
-        />
-        <Controller
-          name="name"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <div className="h-[4.5rem]">
-              <div className="flex items-center border border-gray-500 rounded">
-                <Icon component={AccountCircle} className="ml-2" />
-                <Input {...field} placeholder='Enter your fullname' className="border-none" />
-              </div>
-              <FormHelperText error>{errors.name?.message}</FormHelperText>
-            </div>
-          )}
-        />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <FormField
+            name="email"
+            control={form.control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <FormItem className="h-24 space-y-0">
+                <FormLabel style={{ color: 'inherit' }}>
+                  {t('auth.email')}
+                  <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <div className="flex items-center border border-gray-500 rounded">
+                    <Icon component={Email} className="ml-2" />
+                    <Input
+                      type="email"
+                      {...field}
+                      placeholder={t('placeholder.input_field', { field: t('auth.email') })}
+                      className="border-none"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="name"
+            control={form.control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <FormItem className="h-24 space-y-0">
+                <FormLabel style={{ color: 'inherit' }}>
+                  {t('auth.name')}
+                  <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <div className="flex items-center border border-gray-500 rounded">
+                    <Icon component={AccountCircle} className="ml-2" />
+                    <Input
+                      {...field}
+                      placeholder={t('placeholder.input_field', { field: t('auth.name') })}
+                      className="border-none"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Controller
-          name="password"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <div className="h-[4.5rem]">
-              <div className="flex items-center border border-gray-500 rounded">
-                <Icon component={Password} className="ml-2" />
-                <Input {...field} type={showPassword ? 'text' : 'password'} placeholder='Enter your password' className="border-none" />
-                <Icon
-                  component={showPassword ? Visibility : VisibilityOff}
-                  fontSize="small"
-                  className="mr-3"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              </div>
-              <FormHelperText error>{errors.password?.message}</FormHelperText>
-            </div>
-          )}
-        />
+          <FormField
+            name="password"
+            control={form.control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <FormItem className="h-24 space-y-0">
+                <FormLabel style={{ color: 'inherit' }}>
+                  {t('auth.email')}
+                  <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <div className="flex items-center border border-gray-500 rounded">
+                    <Icon component={Password} className="ml-2" />
+                    <Input
+                      {...field}
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder={t('placeholder.input_field', { field: t('auth.password') })}
+                      className="border-none"
+                    />
+                    <Icon
+                      component={showPassword ? Visibility : VisibilityOff}
+                      fontSize="small"
+                      className="mr-3"
+                      onClick={() => setShowPassword(!showPassword)}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Controller
-          name="confirm"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <div className="h-[4.5rem]">
-              <div className="flex items-center border border-gray-500 rounded">
-                <Icon component={Password} className="ml-2" />
-                <Input {...field} type={showPassword ? 'text' : 'password'} placeholder='Confirm your password' className="border-none" />
-                <Icon
-                  component={showPassword ? Visibility : VisibilityOff}
-                  fontSize="small"
-                  className="mr-3"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              </div>
-              <FormHelperText error>{errors.confirm?.message}</FormHelperText>
-            </div>
-          )}
-        />
+          <FormField
+            name="confirm"
+            control={form.control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <FormItem className="h-24 space-y-0">
+                <FormLabel style={{ color: 'inherit' }}>
+                  {t('auth.email')}
+                  <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <div className="flex items-center border border-gray-500 rounded">
+                    <Icon component={Password} className="ml-2" />
+                    <Input
+                      {...field}
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder={t('placeholder.input_field', { field: t('auth.confirm') })}
+                      className="border-none"
+                    />
+                    <Icon
+                      component={showPassword ? Visibility : VisibilityOff}
+                      fontSize="small"
+                      className="mr-3"
+                      onClick={() => setShowPassword(!showPassword)}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Button className="bg-yellow-400 w-full text-white text-lg font-medium">Signup</Button>
-        {/* {isLoadingAuth && <ReactLoading className="ml-2" type="spin" color="#FF4444" width={37} />} */}
-      </form>
+          <Button className="bg-yellow-400 w-full text-white text-lg font-medium">{t('auth.register')}</Button>
+          {/* {isLoadingAuth && <ReactLoading className="ml-2" type="spin" color="#FF4444" width={37} />} */}
+        </form>
+      </Form>
     </React.Fragment>
   );
-};
-
-export default RegisterComponent;
+}

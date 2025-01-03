@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
-import { FormHelperText, Icon } from '@mui/material';
+import { Icon } from '@mui/material';
 import { Email, Password, Visibility, VisibilityOff } from '@mui/icons-material';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
-import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
-import { LoginSchema, LoginSchemaType } from '@/models/schema/authSchema';
+import { createLoginSchema, LoginSchemaType } from '@/models/schema/authSchema';
 import { PATH } from '@/utils/constants/path';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Divider } from 'antd';
 import { AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '@/assets/icons/socialLoginIcon';
-import { Form } from '../ui';
+import { Form, FormField, Button, FormItem, FormLabel, FormMessage, FormControl } from '@/components/ui';
 
 export default function LoginComponent() {
-  const t = useTranslations();
-
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const t = useTranslations();
+  const LoginSchema = createLoginSchema(t);
 
   const formLogin = useForm<LoginSchemaType>({
     defaultValues: {
@@ -35,53 +34,65 @@ export default function LoginComponent() {
     <React.Fragment>
       <Form {...formLogin}>
         <form onSubmit={formLogin.handleSubmit(onSubmit)}>
-          <Controller
+          <FormField
             name="email"
             control={formLogin.control}
             rules={{ required: true }}
             render={({ field }) => (
-              <div className="h-20">
-                <div className="flex items-center border border-gray-500 rounded">
-                  <Icon component={Email} className="ml-2" />
-                  <Input type="email" placeholder="Enter your email" {...field} className="border-none" />
-                </div>
-                <FormHelperText error>{formLogin.formState.errors.email?.message}</FormHelperText>
-              </div>
+              <FormItem className="h-24 space-y-0">
+                <FormLabel style={{ color: 'inherit' }}>
+                  {t('auth.email')}
+                  <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <div className="flex items-center border border-gray-500 rounded">
+                    <Icon component={Email} className="ml-2" />
+                    <Input type="email" placeholder={t('placeholder.input_field', { field: t('auth.email') })} {...field} className="border-none" />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             )}
           />
 
-          <Controller
+          <FormField
             name="password"
             control={formLogin.control}
             rules={{ required: true }}
             render={({ field }) => (
-              <div className="h-20">
-                <div className="flex items-center border border-gray-500 rounded">
-                  <Icon component={Password} className="ml-2" />
-                  <Input
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Enter your password"
-                    {...field}
-                    className="border-none"
-                  />
-                  <Icon
-                    component={showPassword ? Visibility : VisibilityOff}
-                    fontSize="small"
-                    className="mr-3"
-                    onClick={() => setShowPassword(!showPassword)}
-                  />
-                </div>
+              <FormItem className="h-24 space-y-0">
+                <FormLabel style={{ color: 'inherit' }}>
+                  {t('auth.password')}
+                  <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <div className="flex items-center border border-gray-500 rounded">
+                    <Icon component={Password} className="ml-2" />
+                    <Input
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder={t('placeholder.input_field', { field: t('auth.password') })}
+                      {...field}
+                      className="border-none"
+                    />
+                    <Icon
+                      component={showPassword ? Visibility : VisibilityOff}
+                      fontSize="small"
+                      className="mr-3"
+                      onClick={() => setShowPassword(!showPassword)}
+                    />
+                  </div>
+                </FormControl>
                 <div className="flex justify-between">
-                  <FormHelperText error>{formLogin.formState.errors.password?.message}</FormHelperText>
+                  <FormMessage />
                   <Link
                     href={PATH.AUTH_PATH_URL.FORGET_PASSWORD}
                     className="hover:underline text-sm"
                     title="Forgot password"
                   >
-                    {t('login.forgot_password')}
+                    {t('auth.forgot_password')}
                   </Link>
                 </div>
-              </div>
+              </FormItem>
             )}
           />
 
@@ -89,28 +100,13 @@ export default function LoginComponent() {
 
           <div className="mt-3">
             <Button className="bg-yellow-400 w-full text-white text-lg font-medium" type="submit">
-              Login
+              {t('auth.login')}
             </Button>
             {/* {isLoadingAuth && <ReactLoading className="ml-2" type="spin" color="#FF4444" width={37} />} */}
           </div>
         </form>
       </Form>
-      {/* <div className="flex justify-between mt-5">
-        {providers.map((item: any) => {
-          const data = getAuthLogo(item.id);
-          return (
-            <div
-              key={item.id}
-              title={`Login with ${item.name}`}
-              className={`flex items-center px-3 py-2 rounded-sm text-white font-medium hover:cursor-pointer bg-[${data.bgColor}]`}
-              onClick={() => signIn(item.id)}
-            >
-              <Image src={data.img} alt={''} width={20} />
-              <span className="ml-1 text-sm">{item.name}</span>
-            </div>
-          );
-        })}
-      </div> */}
+
       <Divider>or</Divider>
 
       <div className="grid grid-cols-12 gap-3 mt-3">
