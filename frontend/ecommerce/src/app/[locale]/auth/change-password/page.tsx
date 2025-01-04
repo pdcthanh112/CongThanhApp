@@ -1,17 +1,16 @@
 'use client'
 import React, { useState } from 'react';
-import ManagementLayout from '@/layout/ManagementLayout';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ChangePasswordForm } from '@/models/form';
+import { ManagementLayout } from '@/layout';
 import { Icon } from '@mui/material';
 import { DoneAll, Lock, Password, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslations } from 'next-intl';
-import ValidatePassword from '@/components/ValidatePassword';
+import ValidatePassword from '@/components/ValidatePassword/ValidatePassword';
 import { Spin, Tooltip } from 'antd';
 import { changePassword } from '@/api/customerApi';
 
-
-const ChangePassword = (): React.ReactElement => {
+export default function ChangePassword () {
   const [showCurrentPassword, setShowCurrentPassword] = useState<boolean>(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
   const [showModalNewPassword, setShowModalNewPassword] = useState<boolean>(false);
@@ -110,5 +109,3 @@ const ChangePassword = (): React.ReactElement => {
 ChangePassword.getLayout = function getLayout(page: React.ReactNode) {
   return <ManagementLayout>{page}</ManagementLayout>;
 };
-
-export default ChangePassword;

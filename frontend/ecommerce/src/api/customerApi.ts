@@ -78,3 +78,12 @@ export const verifyOTP = async (data: any) => {
       throw error;
     });
 };
+
+export const getCustomerInfo = async (email: string) => {
+  return await axiosConfig
+    .get(`http://localhost:8000/ecommerce/customer/${email}/info`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};

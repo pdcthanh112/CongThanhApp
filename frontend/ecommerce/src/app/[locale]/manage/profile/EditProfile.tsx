@@ -1,54 +1,22 @@
+'use client';
 import React, { useState } from 'react';
-import { Modal, Radio } from 'antd';
-import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
+import { DatePicker, Modal, Radio } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { EditProfileForm } from '@models/form';
-import { Customer } from '@models/type';
-import { useAppSelector } from '@redux/store';
+import { EditProfileForm } from '@/models/form';
 import Image from 'next/image';
-import { Button } from '@components/UI';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from '@/components/ui';
+import { Autocomplete, Icon, TextField } from '@mui/material';
+import { Edit, Email } from '@mui/icons-material';
+import { useTranslations } from 'next-intl';
 
-type PropsType = {
-  isOpen: boolean;
-  handleOpen: (value: boolean) => void;
-};
-
-type InputComponentProps = {
-  title: string;
-  children: React.ReactNode;
-  error?: any;
-  className?: string;
-};
-
-const InputComponent: React.FC<InputComponentProps> = (element) => {
-  return (
-    <div className={`mb-3 h-20 ${element.className}`}>
-      <h5 className="font-medium">
-        {element.title}
-        <span className="text-red-400 font-bold ml-0.5">*</span>
-      </h5>
-      <div className={`${element.error && 'bg-red-100'}`}>{element.children}</div>
-      <span className="text-red-500">{element.error}</span>
-    </div>
-  );
-};
-
-const InputField = styled.div`
-  border: 1px solid #b6b6b6;
-  padding: 0.45rem 1.8rem 0.45rem 0.6rem;
-  border-radius: 4px;
-  position: relative;
-`;
-
-const EditProfile = ({ isOpen, handleOpen }: PropsType) => {
-  const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
+export default function EditProfile({ userInfo }: { userInfo: any }) {
+  const [isOpenModalEdit, setIsOpenModalEdit] = useState<boolean>(false);
   const [isChangePhone, setIsChangePhone] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const t = useTranslations('common');
+  const t = useTranslations();
 
-  const { register, setValue, watch, handleSubmit, formState, getValues } = useForm<EditProfileForm>();
+  const form = useForm<EditProfileForm>();
   const onSubmit: SubmitHandler<EditProfileForm> = (data) => {
     // dispatch(login(data)).then((res) => {
     //   if (res.payload.status === 'SUCCESS') {
@@ -58,86 +26,206 @@ const EditProfile = ({ isOpen, handleOpen }: PropsType) => {
     console.log('RRRRRRRRRRRRRRRRRRRR', data);
   };
 
+  const countryData = [
+    { label: 'The Shawshank Redemption', year: 1994 },
+    { label: 'The Godfather', year: 1972 },
+    { label: 'The Godfather: Part II', year: 1974 },
+    { label: 'The Dark Knight', year: 2008 },
+    { label: '12 Angry Men', year: 1957 },
+  ];
+
   return (
-    <Modal title="Edit profile" open={isOpen} onOk={() => handleOpen(false)} okText="Save" onCancel={() => handleOpen(false)} width={800}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-8 gap-2">
-          <div className="col-span-5">
-            <InputComponent title={t('name')} className="col-span-4" error={formState.errors.name?.message}>
-              <InputField>
-                <input
-                  type="text"
-                  {...register('name', {
-                    required: 'Name is require',
-                  })}
-                  defaultValue={currentUser.userInfo.name}
-                  placeholder="Enter your name"
-                  className={`focus:outline-none ml-3 w-[100%] ${formState.errors.name && 'bg-red-100'}`}
+    <React.Fragment>
+      <Icon
+        titleAccess="Edit"
+        component={Edit}
+        onClick={() => setIsOpenModalEdit(true)}
+        className="opacity-80 hover:opacity-100 hover:cursor-pointer"
+      />
+
+      <Modal
+        title="Edit profile"
+        open={true}
+        // open={isOpen}
+        onOk={() => setIsOpenModalEdit(false)}
+        okText="Save"
+        onCancel={() => setIsOpenModalEdit(false)}
+        width={800}
+      >
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="grid grid-cols-12 gap-2">
+              <div className="col-span-8">
+                <FormField
+                  name="name"
+                  control={form.control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormItem className="h-24 space-y-0">
+                      <FormLabel style={{ color: 'inherit' }}>
+                        {t('auth.email')}
+                        <span className="text-red-500">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <div className="flex items-center border border-gray-500 rounded">
+                          <Icon component={Email} className="ml-2" />
+                          <Input
+                            type="email"
+                            defaultValue={userInfo.email}
+                            disabled
+                            {...field}
+                            className="border-none"
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </InputField>
-            </InputComponent>
-            <div className="flex justify-between">
-              <InputComponent title={t('gender')} className="col-span-4 pt-2" error={formState.errors.phone?.message}>
-                {/* <InputField> */}
-                {/* <input
-                    type="text"
-                    {...register('phone', {
-                      required: 'Phone is require',
-                    })}
-                    placeholder="Enter your phone number"
-                    className={`focus:outline-none ml-3 w-[100%] ${formState.errors.phone && 'bg-red-100'}`}
-                  /> */}
-                <Radio.Group value={currentUser.userInfo.gender}>
-                  <Radio value={'MALE'}>Male</Radio>
-                  <Radio value={'FEMALE'}>Female</Radio>
-                  <Radio value={'OTHER'}>Other</Radio>
-                </Radio.Group>
-                {/* </InputField> */}
-              </InputComponent>
 
-              <InputComponent title={t('dob')} className="col-span-4" error={formState.errors.dob?.message}>
-                <InputField>
-                  <input
-                    type="date"
-                    defaultValue={Date()}
-                    placeholder="Enter your phone number"
-                    className={`focus:outline-none ml-3 w-[100%] ${formState.errors.dob && 'bg-red-100'}`}
+                <FormField
+                  name="name"
+                  control={form.control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormItem className="h-24 space-y-0">
+                      <FormLabel style={{ color: 'inherit' }}>
+                        {t('auth.email')}
+                        <span className="text-red-500">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <div className="flex items-center border border-gray-500 rounded">
+                          <Icon component={Email} className="ml-2" />
+                          <Input
+                            type="email"
+                            placeholder={t('placeholder.input_field', { field: t('auth.email') })}
+                            {...field}
+                            className="border-none"
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="flex justify-between">
+                  <FormField
+                    name="phone"
+                    control={form.control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <FormItem className="h-24 space-y-0">
+                        <FormLabel style={{ color: 'inherit' }}>
+                          {t('auth.phone')}
+                          <span className="text-red-500">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <div className="flex items-center border border-gray-500 rounded">
+                            <Icon component={Email} className="ml-2" />
+                            <Input
+                              type="tel"
+                              placeholder={t('placeholder.input_field', { field: t('auth.phone') })}
+                              {...field}
+                              className="border-none"
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </InputField>
-                <></>
-              </InputComponent>
-            </div>
-            <InputComponent title={t('signup.phone')} className="col-span-4" error={formState.errors.phone?.message}>
-              <div className="flex">
-                <InputField className='w-80'>
-                  <input
-                    type="tel"
-                    {...register('phone', {
-                      required: 'Phone is require',
-                    })}
-                    disabled={!isChangePhone}
-                    defaultValue={currentUser.userInfo.phone}
-                    placeholder="Enter your phone number"
-                    className={`focus:outline-none ml-3 w-[100%] ${formState.errors.phone && 'bg-red-100'}`}
+                  <FormField
+                    name="gender"
+                    control={form.control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <FormItem className="h-24 space-y-0">
+                        <FormLabel style={{ color: 'inherit' }}>
+                          {t('auth.gender')}
+                          <span className="text-red-500">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <div className="flex items-center border border-gray-500 rounded">
+                            <Icon component={Email} className="ml-2" />
+                            <Input
+                              type="email"
+                              placeholder={t('placeholder.input_field', { field: t('auth.email') })}
+                              {...field}
+                              className="border-none"
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </InputField>
-                <Button className='ml-5' onClick={() => setIsChangePhone(true)}>Change</Button>
-                <Modal title="Basic Modal" open={isModalOpen} onOk={() => setIsModalOpen(false)} onCancel={() => setIsModalOpen(false)}>
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
-                </Modal>
+                </div>
+
+                <div className="flex justify-between">
+                  <FormField
+                    name="dob"
+                    control={form.control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <FormItem className="h-24 space-y-0">
+                        <FormLabel style={{ color: 'inherit' }}>
+                          {t('auth.phone')}
+                          <span className="text-red-500">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <div className="flex items-center border border-gray-500 rounded">
+                            <Icon component={Email} className="ml-2" />
+                            <DatePicker
+                              size="large"
+                              className="border-none outline-none focus:outline-none"
+                              {...field}
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    name="country"
+                    control={form.control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <FormItem className="h-24 space-y-0">
+                        <FormLabel style={{ color: 'inherit' }}>
+                          {t('auth.gender')}
+                          <span className="text-red-500">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <div className="flex items-center border border-gray-500 rounded">
+                            <Icon component={Email} className="ml-2" />
+                            <Autocomplete
+                              size="small"
+                              disablePortal
+                              className=""
+                              options={countryData}
+                              sx={{ width: '100%' }}
+                              renderInput={(params) => <TextField {...params} className="" />}
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
-            </InputComponent>
-          </div>
-          <div className="col-span-3 flex justify-center items-center">
-            <Image src={currentUser.userInfo.image} alt={'User image'} width={100} height={100} />
-          </div>
-        </div>
-        <div className='italic'>(<span className="text-red-400 font-bold">*</span>) field is require</div>
-      </form>
-    </Modal>
+              <div className="col-span-4 flex justify-center items-center">
+                <Image src={userInfo.image} alt={'User image'} width={100} height={100} />
+              </div>
+            </div>
+            <div className="italic">
+              (<span className="text-red-400 font-bold">*</span>) field is required
+            </div>
+          </form>
+        </Form>
+      </Modal>
+    </React.Fragment>
   );
-};
-
-export default EditProfile;
+}

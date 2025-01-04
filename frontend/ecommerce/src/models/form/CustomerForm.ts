@@ -5,6 +5,7 @@ export type EditProfileForm = {
   dob: Date;
   gender: string;
   image: string;
+  country: string
 };
 
 export type ChangePasswordForm = {

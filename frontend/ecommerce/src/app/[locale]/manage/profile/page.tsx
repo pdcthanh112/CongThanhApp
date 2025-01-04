@@ -1,14 +1,8 @@
-import React, { useState } from 'react';
-import ManagementLayout from '@layout/ManagementLayout';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslations } from 'next-intl';
-import { Customer } from '@models/type';
-import { useAppSelector } from '@redux/store';
+import React from 'react';
 import Image from 'next/image';
-import DefaultImage from '@assets/images/default-image.jpg';
-import { Icon } from '@mui/material';
-import { Edit } from '@mui/icons-material';
+import DefaultImage from '@/assets/images/default-image.jpg';
 import EditProfile from './EditProfile';
+import { getServerSession } from 'next-auth';
 
 type InformationFieldProps = {
   title: string;
@@ -25,12 +19,28 @@ const InformationField: React.FC<InformationFieldProps> = (element) => {
   );
 };
 
-const Profile = (): React.ReactElement => {
-  const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
+async function getUserInfo(email: string) {
+  return await getUserInfo(email);
+}
 
-  const [isOpenModalEdit, setIsOpenModalEdit] = useState<boolean>(false);
+const userInfo = {
+  email: 'pdcthanh112.dev@gmail.com',
+  name: 'nameeeeeeeeeeeee',
+  image: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Leucanthemum_vulgare_%27Filigran%27_Flower_2200px.jpg',
+  phone: '0123456789',
+  dob: '01/12/2000',
+  address: 'hjha ljjlasjf jasljf jlasjf ạlfjfjf',
+  gender: "MALE"
+};
 
-  const t = useTranslations('common');
+export default async function ProfilePage() {
+  const session = await getServerSession();
+  console.log('SSSSSSSSSSSSSSSSSSSSSS', session);
+  const user  = session?.user;
+
+  if (!user) return <div>Login</div>;
+  // const userInfo = await getUserInfo(user.email as string);
+
   return (
     <React.Fragment>
       <div className="px-3 py-2">
@@ -39,53 +49,38 @@ const Profile = (): React.ReactElement => {
             <h3 className="font-medium text-lg">Manage your profile</h3>
             <span className="opacity-90">Quản lý thông tin hồ sơ để bảo mật tài khoản</span>
           </div>
-          <Icon titleAccess='Edit' component={Edit} onClick={() => setIsOpenModalEdit(true)} className="opacity-80 hover:opacity-100 hover:cursor-pointer" />
         </div>
         <div className="w-4/5 mx-auto my-4 flex justify-between bg-red">
           <div>
             <div className="flex justify-between">
               <InformationField title={'Name'} className="w-96">
-                <div>{currentUser.userInfo.name}</div>
+                <div>{userInfo.name}</div>
               </InformationField>
               <InformationField title={''}>
-                <Image src={currentUser.userInfo.image || DefaultImage} alt={'User image'} width={150} height={150} />
+                <Image src={userInfo.image || DefaultImage} alt={'User image'} width={150} height={150} />
               </InformationField>
             </div>
 
             <InformationField title={'Email'} className="w-80">
-              <div>{currentUser.userInfo.email}</div>
+              <div>{userInfo.email}</div>
             </InformationField>
 
             <div className="flex">
               <InformationField title={'Phone'} className="w-56">
-                <div>{currentUser.userInfo.phone}</div>
+                <div>{userInfo.phone}</div>
               </InformationField>
               <InformationField title={'Date of birth'} className="w-48 ml-10">
-                <input type="date" defaultValue={currentUser.userInfo.dob.toString()} disabled />
+                <input type="date" defaultValue={userInfo.dob.toString()} disabled />
               </InformationField>
             </div>
 
             <InformationField title={'Address'} className="">
-              <div>{currentUser.userInfo.address}</div>
+              <div>{userInfo.address}</div>
             </InformationField>
           </div>
         </div>
       </div>
-      <EditProfile isOpen={isOpenModalEdit} handleOpen={setIsOpenModalEdit} />
+      <EditProfile userInfo={user}/>
     </React.Fragment>
   );
-};
-
-Profile.getLayout = function getLayout(page: React.ReactNode) {
-  return <ManagementLayout>{page}</ManagementLayout>;
-};
-
-export default Profile;
-
-export async function getServerSideProps(context: any) {
-  return {
-    props: {
-      ...(await serverSideTranslations(context.locale, ['common'])),
-    },
-  };
 }

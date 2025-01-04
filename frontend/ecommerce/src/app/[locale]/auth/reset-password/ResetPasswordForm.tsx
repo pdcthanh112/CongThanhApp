@@ -1,12 +1,10 @@
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import React from 'react';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Button, Input } from '@/components/ui';
 import { resetPasswordSchema, resetPasswordType } from '@/models/schema/authSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-const ResetPasswordForm = () => {
+export default function ResetPasswordForm () {
   const resetPasswordForm = useForm<resetPasswordType>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
@@ -57,5 +55,3 @@ const ResetPasswordForm = () => {
     </Form>
   );
 };
-
-export default ResetPasswordForm;
