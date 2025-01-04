@@ -42,7 +42,9 @@
     "back_to_home": "Back to Home",
     "contact": "Contact",
     "follow": "Follow",
-    "country": "Country"
+    "country": "Country",
+    "dob": "Date of birth",
+    "edit": "Edit"
   },
   "manage": {
     "profile": "Profile"

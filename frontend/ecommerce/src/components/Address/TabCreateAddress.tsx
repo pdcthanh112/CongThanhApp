@@ -1,12 +1,13 @@
+'use client'
 import React from 'react';
 import { Autocomplete, TextField } from '@mui/material';
 import { Button, Checkbox } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import styled from 'styled-components';
-import { useAppSelector } from '@redux/store';
-import countryData from '../../../public/data/country.json';
-import provinceData from '../../../public/data/province.json';
-import { CreateAddressForm } from '@models/form';
+import { useAppSelector } from '@/redux/store';
+// import countryData from '../../../public/data/country.json';
+// import provinceData from '../../../public/data/province.json';
+import { CreateAddressForm } from '@/models/form';
+import { Form, FormField, FormItem, Input } from '@/components/ui';
 
 type InputComponentProps = {
   title: string;
@@ -25,22 +26,15 @@ const InputComponent: React.FC<InputComponentProps> = (element) => {
   );
 };
 
-const InputField = styled.div`
-  border: 1px solid #b6b6b6;
-  padding: 0.45rem 1.8rem 0.45rem 0.6rem;
-  border-radius: 4px;
-  position: relative;
-`;
-
 type PropsType = {
-  handleCreate: (data: CreateAddressForm) => void
+  handleCreate: (data: CreateAddressForm) => void;
   onBack: () => void;
 };
 
 const TabCreateAddress = ({ handleCreate, onBack }: PropsType) => {
   const currentUser = useAppSelector((state) => state.auth.currentUser);
 
-  const { register, handleSubmit, formState, setValue } = useForm<CreateAddressForm>();
+  const form = useForm<CreateAddressForm>();
 
   // const onSubmit: SubmitHandler<CreateAddressForm> = (data) => {
   //   createAddress(data, {
@@ -57,106 +51,114 @@ const TabCreateAddress = ({ handleCreate, onBack }: PropsType) => {
     <React.Fragment>
       <h3>create address</h3>
       <div>
-        <form onSubmit={handleSubmit(handleCreate)}>
-          <input type="hidden" {...register('customer', {})} defaultValue={currentUser.userInfo.accountId} />
-          <div className="grid grid-cols-12 gap-4">
-            <InputComponent title="Phone" className="col-span-7" error={formState.errors.phone?.message}>
-              <InputField>
-                <input
-                  type="text"
-                  {...register('phone', {
-                    required: 'Phone is require',
-                  })}
-                  placeholder="Enter your phone number"
-                  className={`focus:outline-none ml-3 w-[100%] ${formState.errors.phone && 'bg-red-100'}`}
-                />
-              </InputField>
-            </InputComponent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleCreate)}>
+            <input type="hidden" defaultValue={currentUser.userInfo.accountId} />
+            <div className="grid grid-cols-12 gap-4">
+              <FormField
+                name="phone"
+                control={form.control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <FormItem>
+                    <Input
+                      type="text"
+                      placeholder="Enter your phone number"
+                      {...field}
+                      className={`focus:outline-none ml-3 w-[100%] ${form.formState.errors.phone && 'bg-red-100'}`}
+                    />
+                  </FormItem>
+                )}
+              />
 
-            <InputComponent title="Zip Code/Postal" error={formState.errors.postalCode?.message} className="col-span-5">
-              <InputField>
-                <input
-                  type="text"
-                  {...register('postalCode', {
-                    required: 'Address is require',
-                  })}
-                  placeholder="Enter zip code"
-                  className={`focus:outline-none ml-3 w-[100%] ${formState.errors.postalCode && 'bg-red-100'}`}
-                />
-              </InputField>
-            </InputComponent>
-          </div>
-
-          <InputComponent title="Country/Region" className="col-span-3" error={formState.errors.country?.message}>
-            <Autocomplete
-              options={countryData}
-              getOptionLabel={(option) => option.name}
-              size={'small'}
-              renderInput={(params) => <TextField {...params} label="" />}
-              onInputChange={(event, value) => {
-                setValue('country', value);
-              }}
-            />
-          </InputComponent>
-          <div className="grid grid-cols-12 gap-2">
-            <InputComponent title="City/State" className="col-span-4" error={formState.errors.addressLine1?.message}>
+              <FormField
+                name="addressLine1"
+                control={form.control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <FormItem>
+                    <Input
+                      type="text"
+                      {...field}
+                      placeholder="Enter zip code"
+                      className={`focus:outline-none ml-3 w-[100%] ${form.formState.errors.postalCode && 'bg-red-100'}`}
+                    />
+                  </FormItem>
+                )}
+              />
+            </div>
+{/* 
+            <InputComponent title="Country/Region" className="col-span-3" error={formState.errors.country?.message}>
               <Autocomplete
-                options={provinceData}
+                options={countryData}
                 getOptionLabel={(option) => option.name}
                 size={'small'}
                 renderInput={(params) => <TextField {...params} label="" />}
                 onInputChange={(event, value) => {
-                  setValue('addressLine1', value);
+                  setValue('country', value);
                 }}
               />
             </InputComponent>
+            <div className="grid grid-cols-12 gap-2">
+              <InputComponent title="City/State" className="col-span-4" error={formState.errors.addressLine1?.message}>
+                <Autocomplete
+                  options={provinceData}
+                  getOptionLabel={(option) => option.name}
+                  size={'small'}
+                  renderInput={(params) => <TextField {...params} label="" />}
+                  onInputChange={(event, value) => {
+                    setValue('addressLine1', value);
+                  }}
+                />
+              </InputComponent>
 
-            <InputComponent title="District" className="col-span-4" error={formState.errors.addressLine2?.message}>
-              <Autocomplete
-                options={['Ho Chi Minh']}
-                size={'small'}
-                renderInput={(params) => <TextField {...params} label="" />}
-                onInputChange={(event, value) => {
-                  setValue('addressLine2', value);
-                }}
-              />
-            </InputComponent>
-            <InputComponent title="Ward" className="col-span-4" error={formState.errors.addressLine3?.message}>
-              <Autocomplete
-                options={['Ho Chi Minh']}
-                size={'small'}
-                renderInput={(params) => <TextField {...params} label="" />}
-                onInputChange={(event, value) => {
-                  setValue('addressLine3', value);
-                }}
-              />
-            </InputComponent>
-          </div>
+              <InputComponent title="District" className="col-span-4" error={formState.errors.addressLine2?.message}>
+                <Autocomplete
+                  options={['Ho Chi Minh']}
+                  size={'small'}
+                  renderInput={(params) => <TextField {...params} label="" />}
+                  onInputChange={(event, value) => {
+                    setValue('addressLine2', value);
+                  }}
+                />
+              </InputComponent>
+              <InputComponent title="Ward" className="col-span-4" error={formState.errors.addressLine3?.message}>
+                <Autocomplete
+                  options={['Ho Chi Minh']}
+                  size={'small'}
+                  renderInput={(params) => <TextField {...params} label="" />}
+                  onInputChange={(event, value) => {
+                    setValue('addressLine3', value);
+                  }}
+                />
+              </InputComponent>
+            </div>
 
-          <InputComponent title="Address" error={formState.errors.street?.message}>
-            <InputField>
-              <input
-                type="text"
-                {...register('street', {
-                  required: 'Address is require',
-                })}
-                placeholder="Enter your address"
-                className={`focus:outline-none ml-3 w-[100%] ${formState.errors.street && 'bg-red-100'}`}
-              />
-            </InputField>
-          </InputComponent>
+            <InputComponent title="Address" error={formState.errors.street?.message}>
+              <InputField>
+                <input
+                  type="text"
+                  {...register('street', {
+                    required: 'Address is require',
+                  })}
+                  placeholder="Enter your address"
+                  className={`focus:outline-none ml-3 w-[100%] ${formState.errors.street && 'bg-red-100'}`}
+                />
+              </InputField>
+            </InputComponent> */}
 
-          <Checkbox onChange={(event) => setValue('isDefault', event.target.checked)}>Set as default</Checkbox>
+            <Checkbox onChange={(event) => form.setValue('isDefault', event.target.checked)}>Set as default</Checkbox>
 
-          <div className="flex justify-end">
-            <Button type="default" style={{ marginRight: '8px' }} danger onClick={() => onBack()}>
-              Back
-            </Button>
-            <Button type="primary" danger htmlType="submit">
-              Save
-            </Button>
-          </div>
-        </form>
+            <div className="flex justify-end">
+              <Button type="default" style={{ marginRight: '8px' }} danger onClick={() => onBack()}>
+                Back
+              </Button>
+              <Button type="primary" danger htmlType="submit">
+                Save
+              </Button>
+            </div>
+          </form>
+        </Form>
       </div>
     </React.Fragment>
   );

@@ -30,19 +30,19 @@ const userInfo = {
   phone: '0123456789',
   dob: '01/12/2000',
   address: 'hjha ljjlasjf jasljf jlasjf ạlfjfjf',
-  gender: "MALE"
+  gender: 'MALE',
 };
 
 export default async function ProfilePage() {
   const session = await getServerSession();
   console.log('SSSSSSSSSSSSSSSSSSSSSS', session);
-  const user  = session?.user;
+  const user = session?.user;
 
   if (!user) return <div>Login</div>;
   // const userInfo = await getUserInfo(user.email as string);
 
   return (
-    <React.Fragment>
+    <div className="relative">
       <div className="px-3 py-2">
         <div className="border-b-2 border-gray-200 pb-2 flex justify-between">
           <div>
@@ -50,7 +50,7 @@ export default async function ProfilePage() {
             <span className="opacity-90">Quản lý thông tin hồ sơ để bảo mật tài khoản</span>
           </div>
         </div>
-        <div className="w-4/5 mx-auto my-4 flex justify-between bg-red">
+        <div className="w-5/6 mx-auto my-4 flex justify-between bg-red">
           <div>
             <div className="flex justify-between">
               <InformationField title={'Name'} className="w-96">
@@ -80,7 +80,9 @@ export default async function ProfilePage() {
           </div>
         </div>
       </div>
-      <EditProfile userInfo={user}/>
-    </React.Fragment>
+      <div className="absolute top-2 right-2">
+        <EditProfile userInfo={user} />
+      </div>
+    </div>
   );
 }

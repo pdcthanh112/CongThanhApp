@@ -1,24 +1,24 @@
+'use client'
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getAddressByCustomer } from '@api/addressApi';
-import { useAppSelector } from '@redux/store';
-import ManagementLayout from '@layout/ManagementLayout';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { Address, Customer } from '@models/type';
-import { Button } from '@components/UI';
-import { PlusIcon } from '@assets/icons';
+import { getAddressByCustomer } from '@/api/addressApi';
+import { useAppSelector } from '@/redux/store';
+import { Address, Customer } from '@/models/types';
+import { Button } from '@/components/ui';
+import { PlusIcon } from '@/assets/icons';
 import { Icon } from '@mui/material';
-import TabCreateAddress from '@components/Address/TabCreateAddress';
+import TabCreateAddress from '@/components/Address/TabCreateAddress';
 import { Modal, Popconfirm } from 'antd';
-import { useCreateAddress, useDeleteAddress, useUpdateAddress } from '@hooks/address/addressHook';
+import { useCreateAddress, useDeleteAddress, useUpdateAddress } from '@/hooks/address/addressHook';
 import { toast } from 'react-toastify';
 import AddressSkeleton from './AddressSkeleton';
-import TabEditAddress from '@components/Address/TabEditAddress';
-import { CreateAddressForm, UpdateAddressForm } from '@models/form';
+import TabEditAddress from '@/components/Address/TabEditAddress';
+import { CreateAddressForm, UpdateAddressForm } from '@/models/form';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
+import { ADDRESS_KEY } from '@/utils/constants/queryKey';
 
-const AddressPage = (): React.ReactElement => {
+export default function AddressPage () {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const [isCreate, setIsCreate] = useState<boolean>(false);
   const [isUpdate, setIsUpdate] = useState<Address | null>();
@@ -30,7 +30,7 @@ const AddressPage = (): React.ReactElement => {
   const t = useTranslations('common');
 
   const { data: listAddress, isLoading } = useQuery({
-    queryKey: ['address'],
+    queryKey: [ADDRESS_KEY],
     queryFn: async () => await getAddressByCustomer(currentUser.userInfo.accountId).then((response) => response.data),
   });
 
@@ -140,17 +140,3 @@ const AddressPage = (): React.ReactElement => {
     </div>
   );
 };
-
-AddressPage.getLayout = function getLayout(page: React.ReactNode) {
-  return <ManagementLayout>{page}</ManagementLayout>;
-};
-
-export default AddressPage;
-
-export async function getServerSideProps(context: any) {
-  return {
-    props: {
-      ...(await serverSideTranslations(context.locale, ['common'])),
-    },
-  };
-}

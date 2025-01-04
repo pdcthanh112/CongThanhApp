@@ -1,12 +1,12 @@
+'use client'
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Checkbox } from 'antd';
-import { Address } from '@models/type';
-import styled from 'styled-components';
+import { Address } from '@/models/types';
 import { Autocomplete, TextField } from '@mui/material';
 import countryData from '../../../public/data/country.json';
 import { useTranslations } from 'next-intl';
-import { UpdateAddressForm } from '@models/form';
+import { UpdateAddressForm } from '@/models/form';
 
 type InputComponentProps = {
   title: string;
@@ -24,13 +24,6 @@ const InputComponent: React.FC<InputComponentProps> = (element) => {
     </div>
   );
 };
-
-const InputField = styled.div`
-  border: 1px solid #b6b6b6;
-  padding: 0.45rem 1.8rem 0.45rem 0.6rem;
-  border-radius: 4px;
-  position: relative;
-`;
 
 type PropsType = {
   address: Address;
