@@ -1,4 +1,4 @@
-package com.congthanh.customerservice.repository.address;
+package com.congthanh.customerservice.repository.shippingAddress;
 
 import com.congthanh.customerservice.model.entity.ShippingAddress;
 import jakarta.persistence.EntityManager;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
-public class AddressCustomRepositoryImpl implements AddressCustomRepository{
+public class ShippingAddressCustomRepositoryImpl implements ShippingAddressCustomRepository {
 
     @PersistenceContext
     @Qualifier("ecommerceEntityManagerFactory")

@@ -1,0 +1,4 @@
+package com.congthanh.customerservice.repository.shippingAddress;
+
+public class ShippingAddressDocumentCustomRepositoryImpl implements ShippingAddressDocumentCustomRepository {
+}

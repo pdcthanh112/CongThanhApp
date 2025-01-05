@@ -1,4 +1,4 @@
-package com.congthanh.customerservice.repository.address;
+package com.congthanh.customerservice.repository.shippingAddress;
 
 import com.congthanh.customerservice.model.entity.ShippingAddress;
 import jakarta.transaction.Transactional;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface AddressCustomRepository {
+public interface ShippingAddressCustomRepository {
 
     List<ShippingAddress> getAddressByCustomerId(String customerId);
 

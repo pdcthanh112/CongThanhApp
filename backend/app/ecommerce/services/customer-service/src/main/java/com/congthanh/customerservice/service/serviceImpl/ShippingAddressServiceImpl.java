@@ -5,7 +5,7 @@ import com.congthanh.customerservice.model.entity.ShippingAddress;
 import com.congthanh.customerservice.exception.ecommerce.NotFoundException;
 import com.congthanh.customerservice.model.mapper.AddressMapper;
 import com.congthanh.customerservice.model.request.CreateShippingAddressRequest;
-import com.congthanh.customerservice.repository.address.AddressRepository;
+import com.congthanh.customerservice.repository.shippingAddress.ShippingAddressRepository;
 import com.congthanh.customerservice.service.ShippingAddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShippingAddressServiceImpl implements ShippingAddressService {
 
-    private final AddressRepository addressRepository;
+    private final ShippingAddressRepository addressRepository;
 
     @Override
     public ShippingAddressDTO getAddressById(Long addressId) {
@@ -29,13 +29,17 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
     public ShippingAddressDTO createAddress(CreateShippingAddressRequest request) {
         ShippingAddress shippingAddress = ShippingAddress.builder()
                 .customer(request.getCustomer())
+                .fullName(request.getFullName())
                 .phone(request.getPhone())
+                .label(request.getLabel())
                 .country(request.getCountry())
                 .addressLine1(request.getAddressLine1())
                 .addressLine2(request.getAddressLine2())
                 .addressLine3(request.getAddressLine3())
                 .street(request.getStreet())
                 .postalCode(request.getPostalCode())
+                .latitude(request.getLatitude())
+                .longitude(request.getLongitude())
                 .isDefault(request.isDefault())
                 .build();
         ShippingAddress result = addressRepository.save(shippingAddress);

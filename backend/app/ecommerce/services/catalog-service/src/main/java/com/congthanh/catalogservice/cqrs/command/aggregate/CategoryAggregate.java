@@ -76,7 +76,6 @@ public class CategoryAggregate {
         apply(CategoryDeletedEvent.builder()
                 .id(command.getCategoryId())
                 .build());
-//        apply(new CategoryDeletedEvent(command.getCategoryId()));
     }
 
     @EventSourcingHandler

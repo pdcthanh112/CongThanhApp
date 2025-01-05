@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 import java.time.Instant;
 import java.util.Set;
 
-//@Document
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
