@@ -1,9 +1,14 @@
 package com.congthanh.customerservice.controller;
 
 import com.congthanh.customerservice.constant.common.ResponseStatus;
-import com.congthanh.customerservice.model.dto.AddressDTO;
+import com.congthanh.customerservice.model.dto.ShippingAddressDTO;
+import com.congthanh.customerservice.model.request.CreateShippingAddressRequest;
 import com.congthanh.customerservice.model.response.Response;
-import com.congthanh.customerservice.service.AddressService;
+import com.congthanh.customerservice.service.ShippingAddressService;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,64 +23,69 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AddressController {
 
-  private final AddressService addressService;
+    private final ShippingAddressService shippingAddressService;
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Response<AddressDTO>> getAddressById(@PathVariable("id") Long addressId) {
-    AddressDTO data = addressService.getAddressById(addressId);
-    Response<AddressDTO> response = new Response<>();
-    response.setData(data);
-    response.setMessage("get successfully");
-    response.setStatus(ResponseStatus.STATUS_SUCCESS);
-    return ResponseEntity.ok().body(response);
-  }
+    @GetMapping("/{id}")
+    public ResponseEntity<Response<ShippingAddressDTO>> getAddressById(@PathVariable("id") Long addressId) {
+        ShippingAddressDTO data = shippingAddressService.getAddressById(addressId);
+        Response<ShippingAddressDTO> response = new Response<>();
+        response.setData(data);
+        response.setMessage("get successfully");
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        return ResponseEntity.ok().body(response);
+    }
 
-  @PostMapping("/create")
-  public ResponseEntity<Response<AddressDTO>> createAddress(@RequestBody AddressDTO addressDTO) {
-    AddressDTO data = addressService.createAddress(addressDTO);
-    Response<AddressDTO> response = new Response<>();
-    response.setData(data);
-    response.setMessage("Create successfully");
-    response.setStatus(ResponseStatus.STATUS_SUCCESS);
-    return ResponseEntity.status(HttpStatus.CREATED).body(response);
-  }
+    @PostMapping("/")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created",
+                    content = @Content(schema = @Schema(implementation = ShippingAddressDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = Error.class)))})
+    public ResponseEntity<Response<ShippingAddressDTO>> createAddress(@RequestBody CreateShippingAddressRequest shippingAddressDTO) {
+        ShippingAddressDTO data = shippingAddressService.createAddress(shippingAddressDTO);
+        Response<ShippingAddressDTO> response = new Response<>();
+        response.setData(data);
+        response.setMessage("Create successfully");
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
 
-  @PutMapping("/update/{id}")
-  public ResponseEntity<Response<AddressDTO>> updateAddress(@PathVariable("id") Long addressId, @RequestBody AddressDTO addressDTO) {
-    AddressDTO data = addressService.updateAddress(addressId, addressDTO);
-    Response<AddressDTO> response = new Response<>();
-    response.setData(data);
-    response.setMessage("update successfully");
-    response.setStatus(ResponseStatus.STATUS_SUCCESS);
-    return ResponseEntity.ok().body(response);
-  }
+    @PutMapping("/{id}")
+    public ResponseEntity<Response<ShippingAddressDTO>> updateAddress(@PathVariable("id") Long addressId, @RequestBody ShippingAddressDTO shippingAddressDTO) {
+        ShippingAddressDTO data = shippingAddressService.updateAddress(addressId, shippingAddressDTO);
+        Response<ShippingAddressDTO> response = new Response<>();
+        response.setData(data);
+        response.setMessage("update successfully");
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        return ResponseEntity.ok().body(response);
+    }
 
-  @DeleteMapping("/delete/{id}")
-  public ResponseEntity<Response<String>> deleteAddress(@PathVariable("id") Long addressId) {
-    addressService.deleteAddress(addressId);
-    Response<String> response = new Response<>();
-    response.setMessage("delete successfully");
-    response.setStatus(ResponseStatus.STATUS_SUCCESS);
-    return ResponseEntity.ok().body(response);
-  }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response<String>> deleteAddress(@PathVariable("id") Long addressId) {
+        shippingAddressService.deleteAddress(addressId);
+        Response<String> response = new Response<>();
+        response.setMessage("delete successfully");
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        return ResponseEntity.ok().body(response);
+    }
 
-  @GetMapping("/getByCustomer")
-  public ResponseEntity<Response<List<AddressDTO>>> getAddressByCustomer(@RequestParam("customer") String customerId) {
-    List<AddressDTO> data = addressService.getAddressByCustomer(customerId);
-    Response<List<AddressDTO>> response = new Response<>();
-    response.setData(data);
-    response.setMessage("get successfully");
-    response.setStatus(ResponseStatus.STATUS_SUCCESS);
-    return ResponseEntity.ok().body(response);
-  }
+    @GetMapping("/getByCustomer")
+    public ResponseEntity<Response<List<ShippingAddressDTO>>> getAddressByCustomer(@RequestParam("customer") String customerId) {
+        List<ShippingAddressDTO> data = shippingAddressService.getAddressByCustomer(customerId);
+        Response<List<ShippingAddressDTO>> response = new Response<>();
+        response.setData(data);
+        response.setMessage("get successfully");
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        return ResponseEntity.ok().body(response);
+    }
 
-  @GetMapping("/getDefaultAddress")
-  public ResponseEntity<Response<AddressDTO>> getDefaultAddressOfCustomer(@RequestParam("customer") String customerId) {
-    AddressDTO data = addressService.getDefaultAddressOfCustomer(customerId);
-    Response<AddressDTO> response = new Response<>();
-    response.setData(data);
-    response.setMessage("get successfully");
-    response.setStatus(ResponseStatus.STATUS_SUCCESS);
-    return ResponseEntity.ok().body(response);
-  }
+    @GetMapping("/getDefaultAddress")
+    public ResponseEntity<Response<ShippingAddressDTO>> getDefaultAddressOfCustomer(@RequestParam("customer") String customerId) {
+        ShippingAddressDTO data = shippingAddressService.getDefaultAddressOfCustomer(customerId);
+        Response<ShippingAddressDTO> response = new Response<>();
+        response.setData(data);
+        response.setMessage("get successfully");
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        return ResponseEntity.ok().body(response);
+    }
 }

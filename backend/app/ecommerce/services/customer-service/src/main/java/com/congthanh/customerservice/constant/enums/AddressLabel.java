@@ -1,7 +1,6 @@
 package com.congthanh.customerservice.constant.enums;
 
-public enum PaymentStatus {
-    NEW,
-    DONE
-
+public enum AddressLabel {
+    HOME,
+    OFFICE;
 }

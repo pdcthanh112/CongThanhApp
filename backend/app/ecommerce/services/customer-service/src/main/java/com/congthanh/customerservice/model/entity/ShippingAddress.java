@@ -1,27 +1,35 @@
 package com.congthanh.customerservice.model.entity;
 
+import com.congthanh.customerservice.constant.enums.AddressLabel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.math.BigDecimal;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Builder
-@Table(name = "address")
-public class Address {
+@Table(name = "shipping_address")
+public class ShippingAddress extends AbstractAuditEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String customer;
 
+    @Column(name = "full_name")
+    private String fullName;
+
+    @Column(nullable = false)
     private String phone;
+
+    @Enumerated(EnumType.STRING)
+    private AddressLabel label = AddressLabel.HOME;
 
     private String country;
 
@@ -36,9 +44,17 @@ public class Address {
 
     private String street;
 
+    @Column(name = "postal_code")
     private String postalCode;
+
+    @Column(name = "longitude", precision = 10, scale = 8)
+    private BigDecimal longitude;
+
+    @Column(name = "latitude", precision = 10, scale = 8)
+    private BigDecimal latitude;
 
     @Column(name = "is_default")
     @JsonProperty("isDefault")
     private boolean isDefault;
+
 }

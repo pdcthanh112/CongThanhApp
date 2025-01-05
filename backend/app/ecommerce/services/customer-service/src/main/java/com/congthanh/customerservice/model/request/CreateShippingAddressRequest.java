@@ -1,25 +1,27 @@
-package com.congthanh.customerservice.model.dto;
+package com.congthanh.customerservice.model.request;
 
+import com.congthanh.customerservice.constant.enums.AddressLabel;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddressDTO {
+public class CreateShippingAddressRequest {
 
-    private Long id;
-
-    @NotNull
     private String customer;
 
-    @NotNull
+    private String fullName;
+
     private String phone;
+
+    private AddressLabel label;
 
     private String country;
 
@@ -32,6 +34,10 @@ public class AddressDTO {
     private String street;
 
     private String postalCode;
+
+    private BigDecimal latitude;
+
+    private BigDecimal longitude;
 
     @JsonProperty("isDefault")
     private boolean isDefault;

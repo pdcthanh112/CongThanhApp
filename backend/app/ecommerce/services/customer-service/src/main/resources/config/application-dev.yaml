@@ -2,9 +2,9 @@ server:
   port: 5003 # ${SERVER_PORT}
   servlet:
     context-path: /api
-  compression:
-    enabled: true
-    min-response-size: 1024
+#  compression:
+#    enabled: true
+#    min-response-size: 1024
 
 spring:
   application:
@@ -28,9 +28,22 @@ spring:
         use_sql_comments: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-  mongodb:
-    uri: mongodb://localhost:27017/MyDream
-    database: CongThanhApp
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/MyDream
+      database: CongThanhApp-Ecommerce
+
+    redis:
+      port: 6379
+      password: your_password_if_any
+      database: 0
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
 
   graphql:
     graphiql:
@@ -83,19 +96,6 @@ spring:
     cors:
       allowed-origins: "http://localhost:3000"
       allowed-methods: GET,POST,PUT,PATCH,DELETE
-
-  data:
-    redis:
-      port: 6379
-      password: your_password_if_any
-      database: 0
-      timeout: 2000ms
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          min-idle: 0
-          max-wait: -1ms
 
   rabbitmq:
     host: localhost

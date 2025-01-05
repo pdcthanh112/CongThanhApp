@@ -1,7 +1,7 @@
 package com.congthanh.customerservice.model.mapper;
 
-import com.congthanh.customerservice.model.dto.AddressDTO;
-import com.congthanh.customerservice.model.entity.Address;
+import com.congthanh.customerservice.model.dto.ShippingAddressDTO;
+import com.congthanh.customerservice.model.entity.ShippingAddress;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -16,11 +16,11 @@ public class AddressMapper {
 
     }
 
-    public static Address mapAddressDTOToEntity(AddressDTO addressDTO) {
-        return modelMapper.map(addressDTO, Address.class);
+    public static ShippingAddress mapAddressDTOToEntity(ShippingAddressDTO shippingAddressDTO) {
+        return modelMapper.map(shippingAddressDTO, ShippingAddress.class);
     }
 
-    public static AddressDTO mapAddressEntityToDTO(Address address) {
-        return modelMapper.map(address, AddressDTO.class);
+    public static ShippingAddressDTO mapAddressEntityToDTO(ShippingAddress shippingAddress) {
+        return modelMapper.map(shippingAddress, ShippingAddressDTO.class);
     }
 }

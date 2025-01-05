@@ -23,11 +23,11 @@ public class Wishlist {
 
   private String customer;
 
-  @ManyToMany
-  @JoinTable(name = "wishlist_item",
-          joinColumns = @JoinColumn(name = "wishlist_id"),
-          inverseJoinColumns = @JoinColumn(name = "product_id"))
-  @JsonIgnore
-  private Set<Product> product;
+//  @ManyToMany
+//  @JoinTable(name = "wishlist_item",
+//          joinColumns = @JoinColumn(name = "wishlist_id"),
+//          inverseJoinColumns = @JoinColumn(name = "product_id"))
+//  @JsonIgnore
+//  private Set<Product> product;
 
 }

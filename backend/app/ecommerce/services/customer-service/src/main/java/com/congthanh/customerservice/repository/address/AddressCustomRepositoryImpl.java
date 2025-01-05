@@ -1,6 +1,6 @@
 package com.congthanh.customerservice.repository.address;
 
-import com.congthanh.customerservice.model.entity.Address;
+import com.congthanh.customerservice.model.entity.ShippingAddress;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -16,17 +16,17 @@ public class AddressCustomRepositoryImpl implements AddressCustomRepository{
     private EntityManager entityManager;
 
     @Override
-    public List<Address> getAddressByCustomerId(String customerId) {
-        String sql = "SELECT a FROM Address a WHERE a.customer = :customerId ORDER BY isDefault DESC NULLS LAST";
-        TypedQuery<Address> query = entityManager.createQuery(sql, Address.class);
+    public List<ShippingAddress> getAddressByCustomerId(String customerId) {
+        String sql = "SELECT a FROM ShippingAddress a WHERE a.customer = :customerId ORDER BY isDefault DESC NULLS LAST";
+        TypedQuery<ShippingAddress> query = entityManager.createQuery(sql, ShippingAddress.class);
         query.setParameter("customerId", customerId);
         return query.getResultList();
     }
 
     @Override
-    public Address getDefaultAddressOfCustomer(String customerId) {
-        String sql = "SELECT a FROM Address a WHERE a.customer = :customerId AND a.isDefault = true";
-        TypedQuery<Address> query = entityManager.createQuery(sql, Address.class);
+    public ShippingAddress getDefaultAddressOfCustomer(String customerId) {
+        String sql = "SELECT a FROM ShippingAddress a WHERE a.customer = :customerId AND a.isDefault = true";
+        TypedQuery<ShippingAddress> query = entityManager.createQuery(sql, ShippingAddress.class);
         query.setParameter("customerId", customerId);
         return query.getSingleResult();
     }

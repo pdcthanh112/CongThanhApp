@@ -1,6 +1,6 @@
 package com.congthanh.customerservice.repository.address;
 
-import com.congthanh.customerservice.model.entity.Address;
+import com.congthanh.customerservice.model.entity.ShippingAddress;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
@@ -11,9 +11,9 @@ import java.util.List;
 @Transactional
 public interface AddressCustomRepository {
 
-    List<Address> getAddressByCustomerId(String customerId);
+    List<ShippingAddress> getAddressByCustomerId(String customerId);
 
-    Address getDefaultAddressOfCustomer(String customerId);
+    ShippingAddress getDefaultAddressOfCustomer(String customerId);
 
     @Modifying
     boolean setDefaultAddressForCustomer(String customerId, Long addressId);
