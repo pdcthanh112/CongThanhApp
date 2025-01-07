@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ecommerce/address")
+@RequestMapping("/ecommerce/shipping-address")
 @Tag(name = "Address API", description = "Address API in CongThanhApp - Ecommerce")
 @RequiredArgsConstructor
-public class AddressController {
+public class ShippingAddressController {
 
     private final ShippingAddressService shippingAddressService;
 
@@ -41,8 +41,8 @@ public class AddressController {
                     content = @Content(schema = @Schema(implementation = ShippingAddressDTO.class))),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(schema = @Schema(implementation = Error.class)))})
-    public ResponseEntity<Response<ShippingAddressDTO>> createAddress(@RequestBody CreateShippingAddressRequest shippingAddressDTO) {
-        ShippingAddressDTO data = shippingAddressService.createAddress(shippingAddressDTO);
+    public ResponseEntity<Response<ShippingAddressDTO>> createAddress(@RequestBody CreateShippingAddressRequest request) {
+        ShippingAddressDTO data = shippingAddressService.createAddress(request);
         Response<ShippingAddressDTO> response = new Response<>();
         response.setData(data);
         response.setMessage("Create successfully");

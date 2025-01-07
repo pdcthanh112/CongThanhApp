@@ -1,5 +1,5 @@
 server:
-  port: 5003 # ${SERVER_PORT}
+  port: 5004 # ${SERVER_PORT}
   servlet:
     context-path: /api
 #  compression:
@@ -9,8 +9,10 @@ server:
 spring:
   application:
     name: congthanhapp-ecommerce-customer-service
-#  config:
-#    import: optional:file:.env[.properties]
+  config:
+    import: optional:file:.env[.properties]
+    activate:
+      on-profile: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
     username: postgres
@@ -21,7 +23,7 @@ spring:
     database: default
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -44,6 +46,15 @@ spring:
           max-idle: 8
           min-idle: 0
           max-wait: -1ms
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: congthanh
+    password: 123456
+  activemq:
+    packages:
+      trust-all: true
 
   graphql:
     graphiql:
@@ -96,12 +107,6 @@ spring:
     cors:
       allowed-origins: "http://localhost:3000"
       allowed-methods: GET,POST,PUT,PATCH,DELETE
-
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
 
   kafka:
     bootstrap-servers: localhost:9092

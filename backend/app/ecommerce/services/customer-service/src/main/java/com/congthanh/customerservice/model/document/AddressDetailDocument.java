@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 @Builder
 public class AddressDetailDocument {
 
+    private Long id;
+
     private String fullName;
 
     private String phone;

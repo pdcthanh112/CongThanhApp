@@ -21,10 +21,11 @@ const searchTrending = [
 
 type PropsType = {
   searchTerm: string;
+  debouncedSearchTerm: string;
   handleSearch: (term: string) => void;
 };
 
-export default function SearchModal({ searchTerm, handleSearch }: PropsType) {
+export default function SearchModal({ searchTerm, debouncedSearchTerm, handleSearch }: PropsType) {
   // const {data: searchHistory} = useQuery({queryKey: ['search-history'], queryFn: async () => await getSearchHistory()})
   // const {data: searchTrending} = useQuery({queryKey: ['search-trending'], queryFn: async () => await getSearchTrending()})
 
@@ -34,14 +35,18 @@ export default function SearchModal({ searchTerm, handleSearch }: PropsType) {
   });
 
   const {} = useQuery({
-    queryKey: ['search-recommend', searchTerm],
-    queryFn: async () => await getSearchRecommend(searchTerm).then(response => response.data)
-  })
+    queryKey: ['search-recommend', debouncedSearchTerm],
+    queryFn: async () => {
+      if (!debouncedSearchTerm) return null;
+      await getSearchRecommend(debouncedSearchTerm).then((response) => response.data);
+    },
+    enabled: !!debouncedSearchTerm,
+  });
 
   return (
-    <div className="absolute top-full left-0 w-full mt-2 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+    <div className="absolute top-full left-0 w-full min-h-64 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
       {searchTerm ? (
-        <div>alsd;f;a</div>
+        <div className="p-4">alsd;f;a</div>
       ) : (
         <React.Fragment>
           <div className="p-4 border-t border-gray-100">

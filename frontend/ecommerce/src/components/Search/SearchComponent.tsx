@@ -11,6 +11,7 @@ import { Input } from '@/components/ui';
 import SearchModal from './SearchModal';
 import { useAuthenticated } from '@/hooks/auth/useAuthenticated';
 import { addSearchHistoryItem } from '@/api/searchApi';
+import useDebounce from '@/hooks/useDebounce';
 
 export default function SearchComponent() {
   const [showModal, setShowModal] = useState(false);
@@ -19,6 +20,8 @@ export default function SearchComponent() {
 
   const { user } = useAuthenticated();
   const t = useTranslations();
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   const { data: categoryData, isLoading } = useQuery({
     queryKey: [CATEGORY_KEY],
@@ -78,7 +81,7 @@ export default function SearchComponent() {
         onKeyDown={(event) => event.key === 'Enter' && handleSearch(searchTerm)}
       />
 
-      {showModal && <SearchModal searchTerm={searchTerm} handleSearch={handleSearch} />}
+      {showModal && <SearchModal searchTerm={searchTerm} debouncedSearchTerm={debouncedSearchTerm} handleSearch={handleSearch} />}
 
       <SearchIcon
         className="!w-14 !h-10 p-1 bg-yellow-400 hover:bg-yellow-500 rounded-r-md hover:cursor-pointer"

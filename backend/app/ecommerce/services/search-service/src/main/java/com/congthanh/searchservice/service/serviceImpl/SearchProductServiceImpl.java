@@ -40,7 +40,9 @@ import java.util.Map;
 public class SearchProductServiceImpl implements SearchProductService {
 
     private final ProductRepository productRepository;
+
     private final ElasticsearchOperations elasticsearchOperations;
+
     private final RedisTemplate<String, Object> redisTemplate;
 
     private static final String CACHE_PREFIX = "product_search:";

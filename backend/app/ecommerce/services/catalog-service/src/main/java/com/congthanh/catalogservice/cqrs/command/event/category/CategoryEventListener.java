@@ -104,7 +104,6 @@ public class CategoryEventListener {
         CategoryDocument category = categoryDocumentRepository.findById(event.getParentId())
                 .orElseThrow(() -> new NotFoundException("Category not found with id: " + event.getId()));
 
-        // Kiểm tra subcategory có tồn tại trong category
         boolean subcategoryExists = category.getChildren() != null &&
                 category.getChildren().stream()
                         .anyMatch(sub -> sub.getId().equals(event.getId()));

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getAddressByCustomer } from '@/api/addressApi';
@@ -18,7 +18,74 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 import { ADDRESS_KEY } from '@/utils/constants/queryKey';
 
-export default function AddressPage () {
+const listAddress = [
+  {
+    id: 2345355343,
+    customer: '024330e7-c807-4958-8529-9608e2719d68',
+    fullName: 'CongThanh',
+    phone: '0123456789',
+    label: 'HOME',
+    country: 'Viet Nam',
+    addressLine1: 'Ward 10',
+    addressLine2: 'Distric 3',
+    addressLine3: 'Ho Chi Minh City',
+    street: '285 Cach Mang Thang 8',
+    postalCode: 54264,
+    longitude: 123456,
+    latitude: 456789,
+    isDefault: true,
+  },
+  {
+    id: 2345355344,
+    customer: '024330e7-c807-4958-8529-9608e2719d68',
+    fullName: 'CongThanh',
+    phone: '0123456789',
+    label: 'HOME',
+    country: 'Viet Nam',
+    addressLine1: 'Ward 10',
+    addressLine2: 'Distric 3',
+    addressLine3: 'Ho Chi Minh City',
+    street: '285 Cach Mang Thang 8',
+    postalCode: 54264,
+    longitude: 123456,
+    latitude: 456789,
+    isDefault: false,
+  },
+  {
+    id: 2345355345,
+    customer: '024330e7-c807-4958-8529-9608e2719d68',
+    fullName: 'CongThanh',
+    phone: '0123456789',
+    label: 'HOME',
+    country: 'Viet Nam',
+    addressLine1: 'Ward 10',
+    addressLine2: 'Distric 3',
+    addressLine3: 'Ho Chi Minh City',
+    street: '285 Cach Mang Thang 8',
+    postalCode: 54264,
+    longitude: 123456,
+    latitude: 456789,
+    isDefault: false,
+  },
+  {
+    id: 2345355346,
+    customer: '024330e7-c807-4958-8529-9608e2719d68',
+    fullName: 'CongThanh',
+    phone: '0123456789',
+    label: 'HOME',
+    country: 'Viet Nam',
+    addressLine1: 'Ward 10',
+    addressLine2: 'Distric 3',
+    addressLine3: 'Ho Chi Minh City',
+    street: '285 Cach Mang Thang 8',
+    postalCode: 54264,
+    longitude: 123456,
+    latitude: 456789,
+    isDefault: false,
+  },
+];
+
+export default function AddressPage() {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const [isCreate, setIsCreate] = useState<boolean>(false);
   const [isUpdate, setIsUpdate] = useState<Address | null>();
@@ -29,10 +96,10 @@ export default function AddressPage () {
 
   const t = useTranslations('common');
 
-  const { data: listAddress, isLoading } = useQuery({
-    queryKey: [ADDRESS_KEY],
-    queryFn: async () => await getAddressByCustomer(currentUser.userInfo.accountId).then((response) => response.data),
-  });
+  // const { data: listAddress, isLoading } = useQuery({
+  //   queryKey: [ADDRESS_KEY],
+  //   queryFn: async () => await getAddressByCustomer(currentUser.userInfo.accountId).then((response) => response.data),
+  // });
 
   // const { register, handleSubmit, formState } = useForm<UpdateAddressForm>();
   const onCreate: SubmitHandler<CreateAddressForm> = (data) => {
@@ -92,7 +159,7 @@ export default function AddressPage () {
           </Modal>
         )}
       </div>
-      {isLoading ? (
+      {false ? (
         <>
           {Array(4).map((_, id) => (
             <AddressSkeleton key={id} />
@@ -103,7 +170,8 @@ export default function AddressPage () {
           {listAddress.map((item: Address) => (
             <div key={item.id} className="my-2 px-5 py-2 border-t-2 grid grid-cols-12">
               <div className="col-span-10">
-                <span className="mr-1 text-lg">{currentUser.userInfo.name}</span>|<span className="ml-2">{item.phone}</span>
+                <span className="mr-1 text-lg">{item.fullName}</span>|
+                <span className="ml-2">{item.phone}</span>
                 <div className="flex justify-between">
                   <p className="">
                     {item.street}, {item.addressLine3}, {item.addressLine2}, {item.addressLine1}, {item.country}
@@ -114,10 +182,20 @@ export default function AddressPage () {
               <div className="col-span-2 text-end">
                 <Button className={`text-sm ${item.isDefault && 'invisible'}`}>Mark as default</Button>
                 <div>
-                  <span title="Edit" className="text-blue-400 hover:cursor-pointer hover:underline mr-2" onClick={() => setIsUpdate(item)}>
+                  <span
+                    title="Edit"
+                    className="text-blue-400 hover:cursor-pointer hover:underline mr-2"
+                    onClick={() => setIsUpdate(item)}
+                  >
                     Edit
                   </span>
-                  <Popconfirm title="Delete address" description="Are you sure to delete this address?" onConfirm={() => handleDeleteAddress(item.id)} okText="Yes" cancelText="No">
+                  <Popconfirm
+                    title="Delete address"
+                    description="Are you sure to delete this address?"
+                    onConfirm={() => handleDeleteAddress(item.id)}
+                    okText="Yes"
+                    cancelText="No"
+                  >
                     <span title="Delete" className="text-blue-400 hover:cursor-pointer hover:underline">
                       Delete
                     </span>
@@ -128,15 +206,11 @@ export default function AddressPage () {
           ))}
           {isUpdate && (
             <Modal open={!!isUpdate} footer={false}>
-              <TabEditAddress
-                address={isUpdate}
-                handleUpdate={onUpdate}
-                onBack={() => setIsUpdate(null)}
-              />
+              <TabEditAddress address={isUpdate} handleUpdate={onUpdate} onBack={() => setIsUpdate(null)} />
             </Modal>
           )}
         </React.Fragment>
       )}
     </div>
   );
-};
+}

@@ -1,26 +1,32 @@
 package com.congthanh.customerservice.config;
 
+import com.congthanh.customerservice.constant.common.RabbitMQConstants;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableRabbit
 public class RabbitMQConfig {
+
+    public static final String EXCHANGE_NAME = "customer-exchange";
+
     @Bean
-    public Queue userQueue() {
-        return new Queue("user.queue", false);
+    public Queue shippingAddressQueue() {
+        return new Queue(RabbitMQConstants.ShippingAddress.QUEUE_NAME, false);
     }
 
     @Bean
-    public TopicExchange userExchange() {
-        return new TopicExchange("user.exchange");
+    public TopicExchange exchange() {
+        return new TopicExchange(EXCHANGE_NAME);
     }
 
     @Bean
-    public Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("user.routingkey");
+    public Binding shippingAddressBinding() {
+        return BindingBuilder.bind(shippingAddressQueue()).to(exchange()).with(RabbitMQConstants.ShippingAddress.ROUTING_KEY);
     }
 }
