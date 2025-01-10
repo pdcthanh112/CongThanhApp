@@ -171,3 +171,27 @@ eureka:
   instance:
     hostname: localhost
 #    prefer-ip-address: true
+
+axon:
+  axonserver:
+    servers: localhost:8124
+    enabled: true
+  eventhandling:
+    processors:
+      catalog-service:
+        mode: tracking
+        thread-count: 4
+        initial-segment-count: 1
+        batch-size: 100
+      tag:
+        mode: tracking
+        source: eventStore
+
+#axoniq:
+#  console:
+#    enabled: true
+#    url: https://console.axoniq.io
+
+snowflake:
+  worker-id: 1
+  datacenter-id: 1

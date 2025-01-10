@@ -121,6 +121,7 @@ spring:
 
   messages:
     basename: messages
+
   h2:
     console:
       enabled: true
@@ -179,11 +180,11 @@ springdoc:
 management:
   endpoint:
     prometheus:
-      enabled: true
+      access: unrestricted
     refresh:
-      enabled: true
+      access: unrestricted
     restart:
-      enabled: true
+      access: unrestricted
   endpoints:
     web:
       exposure:

@@ -2,7 +2,11 @@
   "name": "post-service",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": {
+    "email": "pdcthanh112.dev@gmail.com",
+    "name": "Cong Thanh",
+    "url": "http://pdcthanh.dev"
+  },
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

@@ -131,9 +131,9 @@ public class CategoryServiceImpl implements CategoryService {
                 .updatedAt(Instant.now())
                 .updatedBy("bbb")
                 .build();
-        System.out.println("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK: " + category);
+
         var response = commandGateway.sendAndWait(category);
-        System.out.println("AWAITTTTTTTTTTTTTTTTTTTTTTTTTT: " + response);
+
 //        if (response != null) {
 //            CategoryCreatedEvent event = new CategoryCreatedEvent(category.getId(), category.getName(), category.getSlug(), category.getDescription(), category.getImage(), category.getParentId(), category.getStatus(), category.getCreatedAt(), category.getCreatedBy(), category.getUpdatedAt(), category.getUpdatedBy());
 //            eventGateway.publish(event);

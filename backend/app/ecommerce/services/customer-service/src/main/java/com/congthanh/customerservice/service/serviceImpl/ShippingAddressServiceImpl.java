@@ -1,5 +1,6 @@
 package com.congthanh.customerservice.service.serviceImpl;
 
+import com.congthanh.customerservice.cqrs.command.command.shippingAddress.CreateShippingAddressCommand;
 import com.congthanh.customerservice.model.dto.ShippingAddressDTO;
 import com.congthanh.customerservice.model.entity.ShippingAddress;
 import com.congthanh.customerservice.exception.ecommerce.NotFoundException;
@@ -7,7 +8,10 @@ import com.congthanh.customerservice.model.mapper.AddressMapper;
 import com.congthanh.customerservice.model.request.CreateShippingAddressRequest;
 import com.congthanh.customerservice.repository.shippingAddress.ShippingAddressRepository;
 import com.congthanh.customerservice.service.ShippingAddressService;
+import com.congthanh.customerservice.utils.SnowflakeIdGenerator;
 import lombok.RequiredArgsConstructor;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +23,13 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
 
     private final ShippingAddressRepository addressRepository;
 
+    private final CommandGateway commandGateway;
+
+    private final QueryGateway queryGateway;
+
+    private final SnowflakeIdGenerator snowflakeIdGenerator;
+
+
     @Override
     public ShippingAddressDTO getAddressById(Long addressId) {
         ShippingAddress result = addressRepository.findById(addressId).orElseThrow(() -> new NotFoundException("address not found"));
@@ -27,7 +38,8 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
 
     @Override
     public ShippingAddressDTO createAddress(CreateShippingAddressRequest request) {
-        ShippingAddress shippingAddress = ShippingAddress.builder()
+        CreateShippingAddressCommand shippingAddress = CreateShippingAddressCommand.builder()
+                .id(snowflakeIdGenerator.nextId())
                 .customer(request.getCustomer())
                 .fullName(request.getFullName())
                 .phone(request.getPhone())
@@ -42,11 +54,9 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
                 .longitude(request.getLongitude())
                 .isDefault(request.isDefault())
                 .build();
-        ShippingAddress result = addressRepository.save(shippingAddress);
-        if (request.isDefault()) {
-            this.setDefaultAddressForCustomer(request.getCustomer(), result.getId());
-        }
-        return AddressMapper.mapAddressEntityToDTO(result);
+        var response = commandGateway.sendAndWait(shippingAddress);
+
+        return null;
     }
 
     @Override

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ecommerce/shipping-address")
+@RequestMapping("/ecommerce/customer/address")
 @Tag(name = "Address API", description = "Address API in CongThanhApp - Ecommerce")
 @RequiredArgsConstructor
 public class ShippingAddressController {
