@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Table(name = "search_history")
-public class SearchHisory {
+public class SearchHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "numeric")
+//    @Column(columnDefinition = "numeric")
     private Long id;
 
     private String userId;

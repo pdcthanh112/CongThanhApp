@@ -1,7 +1,5 @@
 package com.congthanh.customerservice.model.document;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -20,7 +18,7 @@ import java.util.List;
 public class ShippingAddressDocument {
 
     @Id
-    private Long id;
+    private String id;
 
     @NotNull
     private String customer;

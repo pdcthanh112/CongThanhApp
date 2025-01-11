@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "com.congthanh.project.model.document")
+@EnableMongoRepositories(basePackages = "com.congthanh.catalogservice.repository")
 public class MongoDBConfig extends AbstractMongoClientConfiguration {
 
   @Override

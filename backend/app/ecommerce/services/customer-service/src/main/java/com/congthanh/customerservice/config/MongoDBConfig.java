@@ -7,12 +7,12 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "com.example.repository.mongodb")
+@EnableMongoRepositories(basePackages = "com.congthanh.customerservice.repository")
 public class MongoDBConfig extends AbstractMongoClientConfiguration {
 
   @Override
   protected String getDatabaseName() {
-    return "CongThanhApp";
+    return "CongThanhApp-Ecommerce";
   }
 
   @Override
