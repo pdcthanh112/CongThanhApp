@@ -3,6 +3,7 @@ package com.congthanh.customerservice.controller;
 import com.congthanh.customerservice.constant.common.ResponseStatus;
 import com.congthanh.customerservice.model.dto.ShippingAddressDTO;
 import com.congthanh.customerservice.model.request.CreateShippingAddressRequest;
+import com.congthanh.customerservice.model.request.UpdateShippingAddressRequest;
 import com.congthanh.customerservice.model.response.Response;
 import com.congthanh.customerservice.service.ShippingAddressService;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -51,8 +52,8 @@ public class ShippingAddressController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response<ShippingAddressDTO>> updateAddress(@PathVariable("id") Long addressId, @RequestBody ShippingAddressDTO shippingAddressDTO) {
-        ShippingAddressDTO data = shippingAddressService.updateAddress(addressId, shippingAddressDTO);
+    public ResponseEntity<Response<ShippingAddressDTO>> updateAddress(@PathVariable("id") Long addressId, @RequestBody UpdateShippingAddressRequest request) {
+        ShippingAddressDTO data = shippingAddressService.updateAddress(addressId, request);
         Response<ShippingAddressDTO> response = new Response<>();
         response.setData(data);
         response.setMessage("update successfully");

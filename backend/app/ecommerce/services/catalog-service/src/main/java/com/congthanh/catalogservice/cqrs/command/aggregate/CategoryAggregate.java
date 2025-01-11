@@ -24,7 +24,9 @@ public class CategoryAggregate {
     private String parentId;
     private CategoryStatus status;
     private Instant createdAt;
+    private String createdBy;
     private Instant updatedAt;
+    private String updatedBy;
 
     public CategoryAggregate() {
     }

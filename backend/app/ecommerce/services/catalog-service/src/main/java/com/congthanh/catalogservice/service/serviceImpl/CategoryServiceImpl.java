@@ -97,7 +97,6 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDTO getCategoryById(String id) {
         GetCategoryByIdQuery query = new GetCategoryByIdQuery(id);
         CategoryDocument result = queryGateway.query(query, ResponseTypes.instanceOf(CategoryDocument.class)).join();
-        System.out.println("result: " + result);
         return CategoryDTO.builder()
                 .id(result.getId())
                 .name(result.getName())

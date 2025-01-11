@@ -1,5 +1,6 @@
 package com.congthanh.customerservice.cqrs.command.event.shippingAddress;
 
+import com.congthanh.customerservice.constant.common.ErrorCode;
 import com.congthanh.customerservice.constant.common.RabbitMQConstants;
 import com.congthanh.customerservice.exception.ecommerce.NotFoundException;
 import com.congthanh.customerservice.model.document.AddressDetailDocument;
@@ -82,7 +83,7 @@ public class ShippingAddressEventListener {
     private void handleShippingAddressUpdated(ShippingAddressUpdatedEvent event) {
         ShippingAddressDocument shippingAddress = shippingAddressDocumentRepository
                 .findByCustomer(event.getCustomer())
-                .orElseThrow(() -> new NotFoundException("Customer address not found"));
+                .orElseThrow(() -> new NotFoundException(String.format(ErrorCode.SHIPPING_ADDRESS_NOT_FOUND, event.getCustomer())));
 
         AddressDetailDocument existingAddress = shippingAddress.getAddress().stream()
                 .filter(addr -> addr.getId().equals(event.getId()))
@@ -130,7 +131,7 @@ public class ShippingAddressEventListener {
     private void handleShippingAddressDeleted(ShippingAddressDeletedEvent event) {
         ShippingAddressDocument shippingAddress = shippingAddressDocumentRepository
                 .findByCustomer(event.getCustomer())
-                .orElseThrow(() -> new NotFoundException("Customer address not found"));
+                .orElseThrow(() -> new NotFoundException(String.format(ErrorCode.SHIPPING_ADDRESS_NOT_FOUND, event.getId())));
 
         AddressDetailDocument existingAddress = shippingAddress.getAddress().stream()
                 .filter(addr -> addr.getId().equals(event.getId()))

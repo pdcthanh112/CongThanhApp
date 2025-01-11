@@ -50,4 +50,42 @@ public class ShippingAddressEventHandler {
         rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.ShippingAddress.ROUTING_KEY, queueEvent);
     }
 
+    @EventHandler
+    public void on(ShippingAddressUpdatedEvent event) {
+        ShippingAddress address = ShippingAddress.builder()
+                .id(event.getId())
+                .customer(event.getCustomer())
+                .fullName(event.getFullName())
+                .phone(event.getPhone())
+                .label(event.getLabel())
+                .country(event.getCountry())
+                .addressLine1(event.getAddressLine1())
+                .addressLine2(event.getAddressLine2())
+                .addressLine3(event.getAddressLine3())
+                .street(event.getStreet())
+                .postalCode(event.getPostalCode())
+                .longitude(event.getLongitude())
+                .latitude(event.getLatitude())
+                .isDefault(event.isDefault())
+                .build();
+        var result = shippingAddressRepository.save(address);
+        log.info("Update Shipping Address {} into Postgres successfully, ID: {}", result.getCustomer(), result.getId());
+        ShippingAddressQueueEvent<ShippingAddressUpdatedEvent> queueEvent = ShippingAddressQueueEvent.<ShippingAddressUpdatedEvent>builder()
+                .eventType(ShippingAddressEventType.CREATE)
+                .data(event)
+                .build();
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.ShippingAddress.ROUTING_KEY, queueEvent);
+    }
+
+    @EventHandler
+    public void on(ShippingAddressDeletedEvent event) {
+        shippingAddressRepository.deleteById(event.getId());
+        log.info("Delete Shipping Address in Postgres successfully, ID: {}", event.getId());
+        ShippingAddressQueueEvent<ShippingAddressDeletedEvent> queueEvent = ShippingAddressQueueEvent.<ShippingAddressDeletedEvent>builder()
+                .eventType(ShippingAddressEventType.CREATE)
+                .data(event)
+                .build();
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.ShippingAddress.ROUTING_KEY, queueEvent);
+    }
+
 }

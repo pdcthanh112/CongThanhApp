@@ -22,15 +22,15 @@ public abstract class AbstractAuditEntity {
     private Instant createdAt;
 
     @CreatedBy
-    @Column(name = "created_by")
+    @Column(name = "created_by", updatable = false, nullable = false)
     private String createdBy;
 
     @UpdateTimestamp
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
     @LastModifiedBy
-    @Column(name = "updated_by")
+    @Column(name = "updated_by", nullable = false)
     private String updatedBy;
 
 }

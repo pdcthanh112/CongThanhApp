@@ -91,7 +91,7 @@ public class ShippingAddressAggregate {
 
     @CommandHandler
     public void handleUpdateShippingAddress(UpdateShippingAddressCommand command) {
-        apply(ShippingAddressCreatedEvent.builder()
+        apply(ShippingAddressUpdatedEvent.builder()
                 .id(command.getId())
                 .customer(command.getCustomer())
                 .fullName(command.getFullName())
