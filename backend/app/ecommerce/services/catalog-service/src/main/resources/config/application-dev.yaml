@@ -173,12 +173,17 @@ springdoc:
 ##    org.springframework.data.redis.core.RedisTemplate: DEBUG
 #  file:
 #    name: /var/log/myapp.log
+#    name: logs/${spring.application.name}.log
 #  pattern:
 #    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 #    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 
 management:
   endpoint:
+    health:
+      show-details: always
+    metrics:
+      access: unrestricted
     prometheus:
       access: unrestricted
     refresh:
@@ -188,7 +193,11 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health,metrics,prometheus
+      base-path: /admin
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 eureka:
   client:

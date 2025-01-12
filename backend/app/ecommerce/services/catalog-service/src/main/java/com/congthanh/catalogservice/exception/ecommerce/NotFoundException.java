@@ -1,10 +1,14 @@
 package com.congthanh.catalogservice.exception.ecommerce;
 
+import com.congthanh.catalogservice.utils.MessagesUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class NotFoundException extends RuntimeException {
+
+    private String message;
+
     public NotFoundException() {
         super();
     }
@@ -21,4 +25,12 @@ public class NotFoundException extends RuntimeException {
         super(cause);
     }
 
+    public NotFoundException(String errorCode, Object... var2) {
+        this.message = MessagesUtils.getMessage(errorCode, var2);
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }

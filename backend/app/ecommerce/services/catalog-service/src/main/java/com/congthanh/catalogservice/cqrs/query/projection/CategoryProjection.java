@@ -1,5 +1,6 @@
 package com.congthanh.catalogservice.cqrs.query.projection;
 
+import com.congthanh.catalogservice.constant.common.ErrorCode;
 import com.congthanh.catalogservice.cqrs.query.query.category.GetAllCategoryQuery;
 import com.congthanh.catalogservice.cqrs.query.query.category.GetCategoryByIdQuery;
 import com.congthanh.catalogservice.exception.ecommerce.NotFoundException;
@@ -28,7 +29,7 @@ public class CategoryProjection {
 
     @QueryHandler
     public CategoryDocument getCategoryById(GetCategoryByIdQuery query) {
-        return categoryDocumentRepository.findById(query.getId()).orElseThrow(() -> new NotFoundException("Category not found"));
+        return categoryDocumentRepository.findById(query.getId()).orElseThrow(() -> new NotFoundException(ErrorCode.CATEGORY_NOT_FOUND, query.getId()));
     }
 
     private Sort createSort(String sortBy, String order) {

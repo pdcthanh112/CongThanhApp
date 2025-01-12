@@ -188,6 +188,8 @@ services:
       - elasticsearch
     networks:
       - elastic
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
 
   axonserver:
     image: axoniq/axonserver
