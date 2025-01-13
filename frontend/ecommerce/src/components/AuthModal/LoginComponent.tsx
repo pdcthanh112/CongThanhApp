@@ -15,7 +15,7 @@ import { Form, FormField, Button, FormItem, FormLabel, FormMessage, FormControl 
 
 export default function LoginComponent() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  
+
   const t = useTranslations();
   const LoginSchema = createLoginSchema(t);
 
@@ -31,6 +31,26 @@ export default function LoginComponent() {
     console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', data);
   };
 
+  const SocialLoginComponent = ({id, name, bgColor, icon}: {
+    id: 'google' | 'facebook' | 'twitter' | 'apple';
+    name: 'Google' | 'Facebook' | 'Twitter' | 'Apple';
+    bgColor: string;
+    icon: any;
+  }) => (
+    <div
+      className={`${bgColor} flex px-3 py-2 mb-3 hover:cursor-pointer rounded-lg`}
+      title={`Login with ${name}`}
+      onClick={() =>
+        signIn(id)
+          .then(() => console.log(`${id} login initiated`))
+          .catch((err) => console.error('Sign in error:', err))
+      }
+    >
+      <Icon component={icon} className="h-2" />
+      <span className="ml-3 text-white font-medium">{t('auth.login_with_social', {social: name})}</span>
+    </div>
+  );
+
   return (
     <React.Fragment>
       <Form {...formLogin}>
@@ -40,7 +60,7 @@ export default function LoginComponent() {
             control={formLogin.control}
             rules={{ required: true }}
             render={({ field }) => (
-              <FormItem className="h-24 space-y-0">
+              <FormItem className="h-[5.5rem] space-y-0">
                 <FormLabel style={{ color: 'inherit' }}>
                   {t('auth.email')}
                   <span className="text-red-500">*</span>
@@ -48,7 +68,12 @@ export default function LoginComponent() {
                 <FormControl>
                   <div className="flex items-center border border-gray-500 rounded">
                     <Icon component={Email} className="ml-2" />
-                    <Input type="email" placeholder={t('placeholder.input_field', { field: t('auth.email') })} {...field} className="border-none" />
+                    <Input
+                      type="email"
+                      placeholder={t('placeholder.input_field', { field: t('auth.email') })}
+                      {...field}
+                      className="border-none"
+                    />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -61,7 +86,7 @@ export default function LoginComponent() {
             control={formLogin.control}
             rules={{ required: true }}
             render={({ field }) => (
-              <FormItem className="h-24 space-y-0">
+              <FormItem className="h-[5.5rem] space-y-0 relative">
                 <FormLabel style={{ color: 'inherit' }}>
                   {t('auth.password')}
                   <span className="text-red-500">*</span>
@@ -83,16 +108,16 @@ export default function LoginComponent() {
                     />
                   </div>
                 </FormControl>
-                <div className="flex justify-between">
-                  <FormMessage />
-                  <Link
-                    href={PATH.AUTH_PATH_URL.FORGET_PASSWORD}
-                    className="hover:underline text-sm"
-                    title="Forgot password"
-                  >
-                    {t('auth.forgot_password')}
-                  </Link>
-                </div>
+                <FormMessage />
+                {/* <div className="flex justify-end"> */}
+                <Link
+                  href={PATH.AUTH_PATH_URL.FORGET_PASSWORD}
+                  className="hover:underline text-sm absolute right-0 top-16"
+                  title="Forgot password"
+                >
+                  {t('auth.forgot_password')}
+                </Link>
+                {/* </div> */}
               </FormItem>
             )}
           />
@@ -123,28 +148,3 @@ export default function LoginComponent() {
     </React.Fragment>
   );
 }
-
-const SocialLoginComponent = ({
-  id,
-  name,
-  bgColor,
-  icon,
-}: {
-  id: 'google' | 'facebook' | 'twitter' | 'apple';
-  name: 'Google' | 'Facebook' | 'Twitter' | 'Apple';
-  bgColor: string;
-  icon: any;
-}) => (
-  <div
-    className={`${bgColor} flex px-3 py-3 mb-3 hover:cursor-pointer rounded-lg`}
-    title={`Login with ${name}`}
-    onClick={() =>
-      signIn(id)
-        .then(() => console.log(`${id} login initiated`))
-        .catch((err) => console.error('Sign in error:', err))
-    }
-  >
-    <Icon component={icon} className="h-2" />
-    <span className="ml-3 text-white font-medium">Login with {name}</span>
-  </div>
-);

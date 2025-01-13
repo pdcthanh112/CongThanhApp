@@ -2,9 +2,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Modal, Box, Icon } from '@mui/material';
+import { Modal, Box } from '@mui/material';
 import { useAppDispatch } from '@/redux/store';
-import { loginRequested } from '@/redux/actions/auth';
 import { closeModalAuth } from '@/redux/features/modalAuth';
 import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -38,6 +37,10 @@ const AuthModal = () => {
           bgcolor: '#fff',
           boxShadow: 24,
           borderRadius: 1,
+          height: 600,
+          overflowY: 'scroll',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
         }}
       >
         <Tabs defaultValue="login" className="w-full relative">

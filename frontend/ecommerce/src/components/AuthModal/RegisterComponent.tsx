@@ -34,7 +34,7 @@ export default function RegisterComponent() {
             control={form.control}
             rules={{ required: true }}
             render={({ field }) => (
-              <FormItem className="h-24 space-y-0">
+              <FormItem className="h-[5.5rem] space-y-0">
                 <FormLabel style={{ color: 'inherit' }}>
                   {t('auth.email')}
                   <span className="text-red-500">*</span>
@@ -59,7 +59,7 @@ export default function RegisterComponent() {
             control={form.control}
             rules={{ required: true }}
             render={({ field }) => (
-              <FormItem className="h-24 space-y-0">
+              <FormItem className="h-[5.5rem] space-y-0">
                 <FormLabel style={{ color: 'inherit' }}>
                   {t('auth.name')}
                   <span className="text-red-500">*</span>
@@ -84,9 +84,9 @@ export default function RegisterComponent() {
             control={form.control}
             rules={{ required: true }}
             render={({ field }) => (
-              <FormItem className="h-24 space-y-0">
+              <FormItem className="h-[5.5rem] space-y-0">
                 <FormLabel style={{ color: 'inherit' }}>
-                  {t('auth.email')}
+                  {t('auth.password')}
                   <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
@@ -116,9 +116,9 @@ export default function RegisterComponent() {
             control={form.control}
             rules={{ required: true }}
             render={({ field }) => (
-              <FormItem className="h-24 space-y-0">
+              <FormItem className="h-[5.5rem] space-y-0">
                 <FormLabel style={{ color: 'inherit' }}>
-                  {t('auth.email')}
+                  {t('auth.confirm')}
                   <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>

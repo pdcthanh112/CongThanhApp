@@ -118,7 +118,7 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).body("Delete successfully");
     }
 
-    @QueryMapping(value = "category")
+    @QueryMapping(value = "categories")
     List<Category> categories() {
         return categoryRepository.findAll();
     }

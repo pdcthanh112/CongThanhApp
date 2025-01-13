@@ -1,0 +1,24 @@
+type Query {
+    countries: [Country]
+    categories: [Category]
+}
+
+type Country {
+    id: ID!
+    isoCode: String
+    isoCode3: String
+    countryName: String
+    countryNameOrigin: String
+    phoneCode: String
+    currencyCode: String
+    currencySymbol: String
+    language: String
+    locale: String
+    timezone: String
+}
+
+type Category {
+    id: ID!
+    name: String!
+    slug: String!
+}

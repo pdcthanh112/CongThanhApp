@@ -233,3 +233,16 @@ snowflake:
   worker-id: 1
   datacenter-id: 1
 
+resilience4j:
+  circuitbreaker:
+    instances:
+      rest-circuit-breaker:
+        sliding-window-type: COUNT_BASED
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        permitted-number-of-calls-in-half-open-state: 3
+  retry:
+    instances:
+      rest-api:
+        max-attempts: 3

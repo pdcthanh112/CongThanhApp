@@ -1,5 +1,5 @@
 server:
-  port: 5000
+  port: 8080
 spring:
   application:
     name: congthanhapp-ecommerce-api-gateway
@@ -37,7 +37,7 @@ spring:
         - id: catalog-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-CATALOG-SERVICE
           predicates:
-              - Path=/api/ecommerce/categories/**, /api/ecommerce/brands/**, /api/ecommerce/tags/**
+              - Path=/api/ecommerce/categories/**, /api/ecommerce/brands/**, /api/ecommerce/tags/**, /api/graphql
 
         - id: customer-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-CUSTOMER-SERVICE
@@ -67,7 +67,7 @@ spring:
         - id: product-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-PRODUCT-SERVICE
           predicates:
-            - Path=/api/ecommerce/products/**
+            - Path=/api/ecommerce/products/**, /api/graphql
 
         - id: promotion-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-PROMOTION-SERVICE
