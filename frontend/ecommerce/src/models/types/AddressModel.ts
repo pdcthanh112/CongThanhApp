@@ -10,7 +10,7 @@ export type Address = {
   addressLine3: string;
   street: string;
   postalCode: number;
-  longitude: number,
-  latitude: number,
+  longitude: number;
+  latitude: number;
   isDefault: boolean;
 };

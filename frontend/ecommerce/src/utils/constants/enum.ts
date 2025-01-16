@@ -14,3 +14,9 @@ export enum StatusName {
   REJECTED = "REJECTED",
   CANCELED = "CANCELED",
 }
+
+export enum GENDER {
+    MALE, 
+    FEMALE,
+    OTHER
+}

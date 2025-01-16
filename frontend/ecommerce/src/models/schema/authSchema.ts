@@ -91,28 +91,29 @@ export const resetPasswordSchema = z
 
 export type resetPasswordType = z.TypeOf<typeof resetPasswordSchema>;
 
-export const createEditProfileSchema = (t: ReturnType<typeof useTranslations>) => {
+export const createChangePasswordSchema = (t: ReturnType<typeof useTranslations>) => {
   return z
     .object({
-      // email: z
-      //   .string()
-      //   .trim()
-      //   .min(1, t('auth.validation.field_required', { field: t('auth.email') }))
-      //   .email(t('auth.validation.field_invalid', { field: t('auth.email') })),
-      name: z
+      currentPassword: z
         .string()
         .trim()
-        .min(1, t('auth.validation.field_required', { field: t('auth.name') })),
-      phone: z
+        .min(1, t('auth.validation.field_required', { field: t('auth.password') }))
+        .min(8, 'Password at least 8 characters')
+        .max(32),
+      newPassword: z
         .string()
-        .length(10, t('auth.validation.field_required', { field: t('auth.phone') }))
-        .regex(
-          /^(\+?\d{1,3}[-.\s]?)?(\(?\d{1,4}\)?[-.\s]?)?[\d\s]{7,15}$/,
-          t('auth.validation.field_invalid', { field: t('auth.phone') })
-        ),
-      gender: z.enum(['MALE', 'FEMALE', 'OTHER']),
+        .trim()
+        .min(1, t('auth.validation.field_required', { field: t('auth.password') }))
+        .min(8, 'Password at least 8 characters')
+        .max(32),
+      confirmPassword: z
+        .string()
+        .trim()
+        .min(1, t('auth.validation.field_required', { field: t('auth.password') }))
+        .min(8, 'Password at least 8 characters')
+        .max(32),
     })
     .strict();
 };
 
-export type EditProfilechemaType = z.infer<Awaited<ReturnType<typeof createEditProfileSchema>>>;
+export type ChangePasswordSchemaType = z.infer<Awaited<ReturnType<typeof createChangePasswordSchema>>>;

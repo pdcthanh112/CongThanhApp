@@ -18,7 +18,7 @@ export const PATH = {
   },
   MANAGE_PATH_URL: {
     ACCOUNT: `/${MANAGE_BASE_URL}/account`,
-    CHANGE_PASSWORD: `/${MANAGE_BASE_URL}/account`,
+    CHANGE_PASSWORD: `/${MANAGE_BASE_URL}/change-password`,
     PROFILE: `/${MANAGE_BASE_URL}/profile`,
     BANKING: `/${MANAGE_BASE_URL}/banking`,
     ADDRESS: `/${MANAGE_BASE_URL}/address`,

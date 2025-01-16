@@ -17,7 +17,11 @@ type NavBarItemProps = {
 };
 
 export default function ManageNavbar() {
-  const currentUser = getServerSession()
+  // const user = getServerSession()
+  const user = {
+    image: null,
+    name: null
+  };
   const pathname = usePathname();
 
   const t = useTranslations();
@@ -40,17 +44,17 @@ export default function ManageNavbar() {
     <div className="flex flex-col">
       <div className="bg-blue-200 rounded flex px-3 py-2 border-b-2 border-gray-300 pb-2 mb-3">
         <Image
-          src={currentUser.image || DefaultImage}
-          alt={currentUser.name}
+          src={user.image ?? DefaultImage}
+          alt={user.name ?? ''}
           width={60}
           height={60}
           className="rounded-[100%]"
         />
         <div className="flex flex-col ml-3">
-          <div className="font-semibold flex items-center">{currentUser.name}</div>
+          <div className="font-semibold flex items-center">{user.name}</div>
           <div className="flex flex-col text-sm">
-            <span>{currentUser.email}</span>
-            <span>{currentUser.phone}</span>
+            <span>{user.email}</span>
+            <span>{user.phone}</span>
           </div>
         </div>
       </div>

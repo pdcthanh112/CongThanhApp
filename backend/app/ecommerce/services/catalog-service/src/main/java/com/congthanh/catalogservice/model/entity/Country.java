@@ -18,11 +18,14 @@ public class Country {
     @Id
     private Long id;
 
-    @Column(name = "iso_code", nullable = false, length = 2, columnDefinition = "CHAR(2)")
+    @Column(name = "iso_code", nullable = false, length = 2, columnDefinition = "CHAR(3)")
     private String isoCode;
 
-    @Column(name = "iso_code_3", length = 3, columnDefinition = "CHAR(3)")
+    @Column(name = "iso_code_3", length = 3, columnDefinition = "CHAR(4)")
     private String isoCode3;
+
+    @Column(name = "country_code", columnDefinition = "CHAR(3)")
+    private String countryCode;
 
     @Column(name = "country_name", nullable = false)
     private String countryName;

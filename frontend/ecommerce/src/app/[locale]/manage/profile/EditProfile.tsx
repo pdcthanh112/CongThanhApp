@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DatePicker, Modal, Radio } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { EditProfileForm } from '@/models/form';
@@ -10,17 +10,29 @@ import { Edit, Email } from '@mui/icons-material';
 import { useTranslations } from 'next-intl';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createEditProfileSchema } from '@/models/schema/authSchema';
+import axiosConfig from '@/config/axiosConfig';
+import { useQuery } from '@tanstack/react-query';
 
 export default function EditProfile({ userInfo }: { userInfo: any }) {
   const [isOpenModalEdit, setIsOpenModalEdit] = useState<boolean>(false);
   const [isChangePhone, setIsChangePhone] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const t = useTranslations();
-  const EditProfileSchema = createEditProfileSchema(t)
+  const EditProfileSchema = createEditProfileSchema(t);
+
+  const { data: countries } = useQuery<{ id: number; countryName: string }[]>({
+    queryKey: ['get-country'],
+    queryFn: async () =>
+      await axiosConfig
+        .post('http://localhost:5002/api/graphql', {
+          // const response = await axiosConfig.post('http://localhost:8080/api/ecommerce/catalog/graphql', {
+          query: '{ countries { id countryName countryNameOrigin } }',
+        })
+        .then((response) => response.data.data.countries),
+  });
 
   const form = useForm<EditProfileForm>({
-    resolver: zodResolver(EditProfileSchema)
+    resolver: zodResolver(EditProfileSchema),
   });
   const onSubmit: SubmitHandler<EditProfileForm> = (data) => {
     // dispatch(login(data)).then((res) => {
@@ -30,14 +42,6 @@ export default function EditProfile({ userInfo }: { userInfo: any }) {
     // });
     console.log('RRRRRRRRRRRRRRRRRRRR', data);
   };
-
-  const countryData = [
-    { label: 'The Shawshank Redemption', year: 1994 },
-    { label: 'The Godfather', year: 1972 },
-    { label: 'The Godfather: Part II', year: 1974 },
-    { label: 'The Dark Knight', year: 2008 },
-    { label: '12 Angry Men', year: 1957 },
-  ];
 
   return (
     <React.Fragment>
@@ -56,6 +60,12 @@ export default function EditProfile({ userInfo }: { userInfo: any }) {
         okText="Save"
         onCancel={() => setIsOpenModalEdit(false)}
         width={800}
+        height={600}
+        style={{
+          overflowY: 'scroll',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -208,9 +218,9 @@ export default function EditProfile({ userInfo }: { userInfo: any }) {
                           <Autocomplete
                             size="small"
                             disablePortal
-                            className="rounded-none border-none focus:border-none"
-                            options={countryData}
-                            // sx={{ width: '100%' }}
+                            className="rounded-none border-none focus:border-none h-[38px]"
+                            options={countries || []}
+                            getOptionLabel={(option) => option.countryName}
                             sx={{
                               width: '100%',
                               '& .MuiOutlinedInput-root': {
@@ -240,6 +250,182 @@ export default function EditProfile({ userInfo }: { userInfo: any }) {
                 <Image src={userInfo.image} alt={'User image'} width={100} height={100} />
               </div>
             </div>
+
+            <div className="grid grid-cols-12 gap-x-3">
+              <FormField
+                name="country"
+                control={form.control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <FormItem className="col-span-4 h-24 space-y-0">
+                    <FormLabel style={{ color: 'inherit' }}>
+                      {t('common.country')}
+                      <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <div className="flex items-center border border-gray-500 rounded">
+                        <Icon component={Email} className="ml-2" />
+                        <Autocomplete
+                          size="small"
+                          disablePortal
+                          className="rounded-none border-none focus:border-none h-[38px]"
+                          options={countries || []}
+                          getOptionLabel={(option) => option.countryName}
+                          sx={{
+                            width: '100%',
+                            '& .MuiOutlinedInput-root': {
+                              '& fieldset': {
+                                border: 'none',
+                              },
+                              '&:hover fieldset': {
+                                border: 'none',
+                              },
+                              '&.Mui-focused fieldset': {
+                                border: 'none',
+                              },
+                            },
+                          }}
+                          renderInput={(params) => (
+                            <TextField {...params} className="border-none focus:ring-0 shadow-none" {...field} />
+                          )}
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="country"
+                control={form.control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <FormItem className="col-span-4 h-24 space-y-0">
+                    <FormLabel style={{ color: 'inherit' }}>
+                      {t('common.country')}
+                      <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <div className="flex items-center border border-gray-500 rounded">
+                        <Icon component={Email} className="ml-2" />
+                        <Autocomplete
+                          size="small"
+                          disablePortal
+                          className="rounded-none border-none focus:border-none h-[38px]"
+                          options={countries || []}
+                          getOptionLabel={(option) => option.countryName}
+                          sx={{
+                            width: '100%',
+                            '& .MuiOutlinedInput-root': {
+                              '& fieldset': {
+                                border: 'none',
+                              },
+                              '&:hover fieldset': {
+                                border: 'none',
+                              },
+                              '&.Mui-focused fieldset': {
+                                border: 'none',
+                              },
+                            },
+                          }}
+                          renderInput={(params) => (
+                            <TextField {...params} className="border-none focus:ring-0 shadow-none" {...field} />
+                          )}
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="country"
+                control={form.control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <FormItem className="col-span-4 h-24 space-y-0">
+                    <FormLabel style={{ color: 'inherit' }}>
+                      {t('common.country')}
+                      <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <div className="flex items-center border border-gray-500 rounded">
+                        <Icon component={Email} className="ml-2" />
+                        <Autocomplete
+                          size="small"
+                          disablePortal
+                          className="rounded-none border-none focus:border-none h-[38px]"
+                          options={countries || []}
+                          getOptionLabel={(option) => option.countryName}
+                          sx={{
+                            width: '100%',
+                            '& .MuiOutlinedInput-root': {
+                              '& fieldset': {
+                                border: 'none',
+                              },
+                              '&:hover fieldset': {
+                                border: 'none',
+                              },
+                              '&.Mui-focused fieldset': {
+                                border: 'none',
+                              },
+                            },
+                          }}
+                          renderInput={(params) => (
+                            <TextField {...params} className="border-none focus:ring-0 shadow-none" {...field} />
+                          )}
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name=""
+                control={form.control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <FormItem className="col-span-12 h-24 space-y-0">
+                    <FormLabel style={{ color: 'inherit' }}>
+                      {t('common.country')}
+                      <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <div className="flex items-center border border-gray-500 rounded">
+                        <Icon component={Email} className="ml-2" />
+                        <Autocomplete
+                          size="small"
+                          disablePortal
+                          className="rounded-none border-none focus:border-none h-[38px]"
+                          options={countries || []}
+                          getOptionLabel={(option) => option.countryName}
+                          sx={{
+                            width: '100%',
+                            '& .MuiOutlinedInput-root': {
+                              '& fieldset': {
+                                border: 'none',
+                              },
+                              '&:hover fieldset': {
+                                border: 'none',
+                              },
+                              '&.Mui-focused fieldset': {
+                                border: 'none',
+                              },
+                            },
+                          }}
+                          renderInput={(params) => (
+                            <TextField {...params} className="border-none focus:ring-0 shadow-none" {...field} />
+                          )}
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <div className="italic">
               (<span className="text-red-400 font-bold">*</span>) field is required
             </div>
