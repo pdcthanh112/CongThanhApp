@@ -11,6 +11,8 @@ import { Icon } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Tooltip } from 'antd';
 import ValidatePassword from '@/components/ValidatePassword/ValidatePassword';
+import { LockKeyhole } from 'lucide-react';
+import { PATH } from '@/utils/constants/path';
 
 export default function ChangePasswordForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -36,15 +38,25 @@ export default function ChangePasswordForm() {
             control={form.control}
             name="currentPassword"
             render={({ field }) => (
-              <FormItem className="h-24">
-                <FormLabel>{t('auth.change_password.current_password')}</FormLabel>
+              <FormItem className="h-24 space-y-0">
+                <FormLabel style={{ color: 'inherit' }}>{t('auth.change_password.current_password')}</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Input placeholder="example@email.com" type="text" {...field} />
+                    <div className="flex items-center border-2 px-3 rounded">
+                      <LockKeyhole />
+                      <Input
+                        placeholder={t('placeholder.input_field', {
+                          field: t('auth.change_password.current_password'),
+                        })}
+                        type="password"
+                        {...field}
+                        className="border-none"
+                      />
+                    </div>
                     <Link
-                      href={'/forget-password'}
+                      href={PATH.AUTH_PATH_URL.FORGET_PASSWORD}
                       className="absolute right-0 hover:underline"
-                      title="Forget password"
+                      title={t('auth.forgot_password')}
                     >
                       {t('auth.forgot_password')}
                     </Link>
@@ -58,7 +70,7 @@ export default function ChangePasswordForm() {
             control={form.control}
             name="newPassword"
             render={({ field }) => (
-              <FormItem className="h-24">
+              <FormItem className="h-24 space-y-0">
                 <FormLabel style={{ color: 'inherit' }}>{t('auth.change_password.new_password')}</FormLabel>
                 <FormControl>
                   <Tooltip
@@ -69,14 +81,24 @@ export default function ChangePasswordForm() {
                     fresh
                     open={showModalValidatePassword}
                   >
-                    <Input placeholder="********" type={showPassword ? 'password' : 'text'} {...field} />
-                    <Icon
-                      fontSize="small"
-                      component={showPassword ? VisibilityOff : Visibility}
-                      cursor={'pointer'}
-                      className="absolute right-3 top-2"
-                      onClick={() => setShowPassword(!showPassword)}
-                    />
+                    <div className="relative flex items-center border-2 px-3 rounded">
+                      <LockKeyhole />
+                      <Input
+                        type={showPassword ? 'password' : 'text'}
+                        {...field}
+                        className="border-none"
+                        placeholder={t('placeholder.input_field', { field: t('auth.change_password.new_password') })}
+                        onFocus={() => setShowModalValidatePassword(true)}
+                        onBlur={() => setShowModalValidatePassword(false)}
+                      />
+                      <Icon
+                        fontSize="small"
+                        component={showPassword ? VisibilityOff : Visibility}
+                        cursor={'pointer'}
+                        className="absolute right-3 top-2"
+                        onClick={() => setShowPassword(!showPassword)}
+                      />
+                    </div>
                   </Tooltip>
                 </FormControl>
                 <FormMessage />
@@ -87,11 +109,17 @@ export default function ChangePasswordForm() {
             control={form.control}
             name="confirmPassword"
             render={({ field }) => (
-              <FormItem className="h-24">
+              <FormItem className="h-24 space-y-0">
                 <FormLabel style={{ color: 'inherit' }}>{t('auth.change_password.confirm_password')}</FormLabel>
                 <FormControl>
-                  <div className="relative">
-                    <Input placeholder="********" type={showPassword ? 'password' : 'text'} {...field} />
+                  <div className="relative flex items-center border-2 px-3 rounded">
+                    <LockKeyhole />
+                    <Input
+                      placeholder={t('placeholder.input_field', { field: t('auth.change_password.confirm_password') })}
+                      type={showPassword ? 'password' : 'text'}
+                      {...field}
+                      className="border-none"
+                    />
                     <Icon
                       fontSize="small"
                       component={showPassword ? VisibilityOff : Visibility}
@@ -106,7 +134,7 @@ export default function ChangePasswordForm() {
             )}
           />
           <Button type="submit" className="!mt-8 w-full">
-            {t('auth.login')}
+            {t('common.save')}
           </Button>
         </form>
       </Form>

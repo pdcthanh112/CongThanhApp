@@ -97,23 +97,29 @@ export const createChangePasswordSchema = (t: ReturnType<typeof useTranslations>
       currentPassword: z
         .string()
         .trim()
-        .min(1, t('auth.validation.field_required', { field: t('auth.password') }))
-        .min(8, 'Password at least 8 characters')
-        .max(32),
+        .min(1, t('auth.validation.field_required', { field: t('auth.change_password.current_password') })),
       newPassword: z
         .string()
         .trim()
-        .min(1, t('auth.validation.field_required', { field: t('auth.password') }))
+        .min(1, t('auth.validation.field_required', { field: t('auth.change_password.new_password') }))
         .min(8, 'Password at least 8 characters')
-        .max(32),
+        .max(32)
+        .regex(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/)),
       confirmPassword: z
         .string()
         .trim()
-        .min(1, t('auth.validation.field_required', { field: t('auth.password') }))
-        .min(8, 'Password at least 8 characters')
-        .max(32),
+        .min(1, t('auth.validation.field_required', { field: t('auth.change_password.confirm_password') })),
     })
-    .strict();
+    .strict()
+    .superRefine(({ confirmPassword, newPassword }, ctx) => {
+      if (confirmPassword !== newPassword) {
+        ctx.addIssue({
+          code: 'custom',
+          message: 'Confirm does not match',
+          path: ['confirm'],
+        });
+      }
+    });
 };
 
 export type ChangePasswordSchemaType = z.infer<Awaited<ReturnType<typeof createChangePasswordSchema>>>;

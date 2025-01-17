@@ -1,11 +1,10 @@
 "use client";
-
 import React, { useState } from "react";
 import { Card } from "@mui/material";
 import ForgetPasswordForm from "./ForgetPasswordForm";
 import InputOtpForm from "./InputOtpForm";
 
-const ForgetPasswordPage = () => {
+export default function ForgetPasswordPage () {
   const [isConfirmSuceed, setIsconfirmSuceed] = useState<boolean>(true);
 
   return (
@@ -18,5 +17,3 @@ const ForgetPasswordPage = () => {
     </React.Fragment>
   );
 };
-
-export default ForgetPasswordPage;

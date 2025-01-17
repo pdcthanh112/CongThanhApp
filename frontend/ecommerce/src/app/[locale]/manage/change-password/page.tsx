@@ -10,7 +10,7 @@ import { Spin, Tooltip } from 'antd';
 import { changePassword } from '@/api/customerApi';
 import ChangePasswordForm from './ChangePasswordForm';
 
-export default function ChangePassword () {
+export default function ChangePassword() {
   // const [showCurrentPassword, setShowCurrentPassword] = useState<boolean>(false);
   // const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
   // const [showModalNewPassword, setShowModalNewPassword] = useState<boolean>(false);
@@ -37,9 +37,8 @@ export default function ChangePassword () {
     <React.Fragment>
       <h3 className="ml-5 font-medium text-lg">Change password</h3>
       <span className="opacity-90">Quản lý thông tin hồ sơ để bảo mật tài khoản</span>
-      <div className='w-3/5 mx-auto'>
-
-      <ChangePasswordForm/>
+      <div className="w-3/5 mt-3 mx-auto">
+        <ChangePasswordForm />
       </div>
       {/* <div className="flex justify-center items-center content-center">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -109,7 +108,7 @@ export default function ChangePassword () {
       </div> */}
     </React.Fragment>
   );
-};
+}
 
 // ChangePassword.getLayout = function getLayout(page: React.ReactNode) {
 //   return <ManagementLayout>{page}</ManagementLayout>;

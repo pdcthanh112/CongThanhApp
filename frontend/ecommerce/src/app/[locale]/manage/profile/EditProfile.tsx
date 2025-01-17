@@ -9,7 +9,7 @@ import { Autocomplete, Icon, TextField } from '@mui/material';
 import { Edit, Email } from '@mui/icons-material';
 import { useTranslations } from 'next-intl';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createEditProfileSchema } from '@/models/schema/authSchema';
+import { updateProfileSchema } from '@/models/schema/userSchema';
 import axiosConfig from '@/config/axiosConfig';
 import { useQuery } from '@tanstack/react-query';
 
@@ -18,7 +18,7 @@ export default function EditProfile({ userInfo }: { userInfo: any }) {
   const [isChangePhone, setIsChangePhone] = useState(false);
 
   const t = useTranslations();
-  const EditProfileSchema = createEditProfileSchema(t);
+  const EditProfileSchema = updateProfileSchema(t);
 
   const { data: countries } = useQuery<{ id: number; countryName: string }[]>({
     queryKey: ['get-country'],
@@ -382,7 +382,7 @@ export default function EditProfile({ userInfo }: { userInfo: any }) {
                 )}
               />
               <FormField
-                name=""
+                name="address"
                 control={form.control}
                 rules={{ required: true }}
                 render={({ field }) => (

@@ -44,7 +44,8 @@
     "follow": "Follow",
     "country": "Country",
     "dob": "Date of birth",
-    "edit": "Edit"
+    "edit": "Edit",
+    "save": "Save"
   },
   "manage": {
     "profile": "Profile"

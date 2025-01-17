@@ -31,7 +31,12 @@ export default function LoginComponent() {
     console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', data);
   };
 
-  const SocialLoginComponent = ({id, name, bgColor, icon}: {
+  const SocialLoginComponent = ({
+    id,
+    name,
+    bgColor,
+    icon,
+  }: {
     id: 'google' | 'facebook' | 'twitter' | 'apple';
     name: 'Google' | 'Facebook' | 'Twitter' | 'Apple';
     bgColor: string;
@@ -47,7 +52,7 @@ export default function LoginComponent() {
       }
     >
       <Icon component={icon} className="h-2" />
-      <span className="ml-3 text-white font-medium">{t('auth.login_with_social', {social: name})}</span>
+      <span className="ml-3 text-white font-medium">{t('auth.login_with_social', { social: name })}</span>
     </div>
   );
 
@@ -92,32 +97,32 @@ export default function LoginComponent() {
                   <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <div className="flex items-center border border-gray-500 rounded">
-                    <Icon component={Password} className="ml-2" />
-                    <Input
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder={t('placeholder.input_field', { field: t('auth.password') })}
-                      {...field}
-                      className="border-none"
-                    />
-                    <Icon
-                      component={showPassword ? Visibility : VisibilityOff}
-                      fontSize="small"
-                      className="mr-3"
-                      onClick={() => setShowPassword(!showPassword)}
-                    />
+                  <div className="relative">
+                    <div className="flex items-center border border-gray-500 rounded">
+                      <Icon component={Password} className="ml-2" />
+                      <Input
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder={t('placeholder.input_field', { field: t('auth.password') })}
+                        {...field}
+                        className="border-none"
+                      />
+                      <Icon
+                        component={showPassword ? Visibility : VisibilityOff}
+                        fontSize="small"
+                        className="mr-3"
+                        onClick={() => setShowPassword(!showPassword)}
+                      />
+                    </div>
+                    <Link
+                      href={PATH.AUTH_PATH_URL.FORGET_PASSWORD}
+                      className="hover:underline text-sm absolute right-0 top-16"
+                      title={t('auth.forgot_password')}
+                    >
+                      {t('auth.forgot_password')}
+                    </Link>
                   </div>
                 </FormControl>
                 <FormMessage />
-                {/* <div className="flex justify-end"> */}
-                <Link
-                  href={PATH.AUTH_PATH_URL.FORGET_PASSWORD}
-                  className="hover:underline text-sm absolute right-0 top-16"
-                  title="Forgot password"
-                >
-                  {t('auth.forgot_password')}
-                </Link>
-                {/* </div> */}
               </FormItem>
             )}
           />
