@@ -6,18 +6,6 @@ export interface OAuthFactory {
   refreshAccessToken(refreshToken: string): Promise<any>;
 }
 
-export class CredentialsOAuthFactory implements OAuthFactory {
-  async login(loginData: CustomerLoginDTO): Promise<any> {}
-
-  async refreshAccessToken(refreshToken: string): Promise<any> {
-    throw new Error('Method not implemented.');
-  }
-  async validateToken(token: string): Promise<boolean> {
-    // Implement Google-specific validation
-  }
-  // ... other methods
-}
-
 export class GoogleOAuthFactory implements OAuthFactory {
   async login(loginData: CustomerLoginDTO): Promise<any> {}
   async refreshAccessToken(refreshToken: string): Promise<any> {
