@@ -9,3 +9,4 @@ export { default as PermissionModel } from './permission.model';
 export { default as RolePermissionModel } from './role-permission.model';
 export { default as LoginErrorModel } from './loginError.model';
 export { default as OTPModel } from './otp.model';
+export { default as ResetPasswordModel } from './resetPassword.model';

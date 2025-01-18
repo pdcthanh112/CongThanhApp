@@ -2,7 +2,8 @@ import Sequelize from 'sequelize';
 import { NODE_ENV, MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE } from '@/config/index';
 import { logger } from '@/utils/logger';
 import CustomerModel from '@/models/customer.model';
-import { AccountModel, ActivityLogModel, LoginErrorModel, OTPModel, RefreshTokenModel, UserModel } from '@/models/';
+import { AccountModel, ActivityLogModel, LoginErrorModel, OTPModel, RefreshTokenModel, UserModel, ResetPasswordModel } from '@/models/';
+import {  } from '@/models/resetPassword.model';
 
 export const mysqlConnection = new Sequelize.Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
   dialect: 'mysql',
@@ -36,6 +37,7 @@ export const MYSQL_DB = {
   LoginError: LoginErrorModel(mysqlConnection),
   RefreshToken: RefreshTokenModel(mysqlConnection),
   User: UserModel(mysqlConnection),
+  ResetPassword: ResetPasswordModel(mysqlConnection),
   mysqlConnection, // connection instance (RAW queries)
   Sequelize, // library
 };

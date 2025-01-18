@@ -67,6 +67,16 @@ export class AuthController {
     }
   };
 
+  public resetPassword = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { token, newPassword }:{ token: string, newPassword: string }  = req.body;
+      const result = await this.service.resetPassword({ token, newPassword });
+      res.status(200).json({ data: result, message: 'change password successfully', status: 'SUCCESS' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public generateOTP = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data: { phone: string } = req.body;

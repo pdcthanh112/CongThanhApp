@@ -49,7 +49,6 @@ public class PaymentController {
     public ResponseEntity<PaymentResponse> processPayment(@RequestParam("method") PaymentMethod method, @RequestBody PaymentRequest request, HttpServletRequest httpServletRequest) {
         String cancelUrl = Helper.getBaseURl(httpServletRequest) + "/payment/cancel";
         String successUrl = Helper.getBaseURl(httpServletRequest) + "/payment/success";
-        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCC" + successUrl + "//////////" + cancelUrl);
         PaymentResponse result = paymentService.processPayment(method, request);
         return ResponseEntity.ok(result);
     }

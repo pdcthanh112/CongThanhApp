@@ -1,10 +1,10 @@
-import { compare, hash } from 'bcrypt';
-import { sign, verify } from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from '@/config/index';
 import { MYSQL_DB } from '@/databases/mysql';
 import { ChangePasswordDTO, CustomerLoginDTO, CustomerSignupDTO } from '@/dtos/customer.dto';
 import { HttpException } from '@/exceptions/';
-import { TokenPayload, LoginError, TokenData } from '@/interfaces/auth.interface';
+import { LoginError, TokenData } from '@/interfaces/auth.interface';
 import { Account, Customer } from '@/interfaces/account.interface';
 import { v4 as uuidv4 } from 'uuid';
 import sendEmail from '@/utils/sendEmail';
@@ -13,16 +13,7 @@ import { generateOTP } from '@/utils/helper';
 import { OTP } from '@/interfaces/otp.interface';
 import { ActivityType, LoginType } from '@/constants/enum';
 import { sendActivityLogMessage } from '@/queue/producer/activity-log.producer';
-
-function generateAccessToken(data: TokenPayload): string {
-  const convertRole = data.role.split(',').map(item => item.trim());
-  return sign({ accountId: data.accountId, role: convertRole }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED });
-}
-
-function generateRefreshToken(accountId: string) {
-  const refreshToken = sign({ accountId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRED });
-  return refreshToken;
-}
+import { generateAccessToken, generateRefreshToken } from '@/utils/jwt.utils';
 
 export class AuthService {
   public async login(loginData: CustomerLoginDTO): Promise<{ customerWithoutPassword: Omit<Account, 'password'>; tokenData: TokenData }> {
@@ -38,7 +29,7 @@ export class AuthService {
           if (findError && findError?.lockedUntil > new Date()) {
             throw new HttpException(409, `Your account have been blocked! (until ${findError.lockedUntil})`, 101003);
           } else {
-            const isPasswordMatching: boolean = await compare(loginData.password, checkLogin.password);
+            const isPasswordMatching: boolean = await bcrypt.compare(loginData.password, checkLogin.password);
             if (isPasswordMatching) {
               await MYSQL_DB.LoginError.destroy({ where: { accountId: checkLogin.accountId } });
               const customerInfo = await MYSQL_DB.Customer.findOne({ where: { accountId: checkLogin.accountId } });
@@ -138,7 +129,7 @@ export class AuthService {
       activityType: ActivityType.LOGIN,
       createAt: new Date(),
       ipAddress: '127.0.0.1',
-      id: 0
+      id: 0,
     });
   }
 
@@ -146,7 +137,7 @@ export class AuthService {
     const findCustomer = await MYSQL_DB.Customer.findOne({ where: { email: customerData.email } });
     if (findCustomer) throw new HttpException(409, `This email ${customerData.email} already exists`, 101004);
 
-    const hashedPassword = await hash(customerData.password, 10);
+    const hashedPassword = await bcrypt.hash(customerData.password, 10);
 
     customerData.accountId = uuidv4();
     customerData.password = hashedPassword;
@@ -169,10 +160,10 @@ export class AuthService {
 
     if (!findCustomer) throw new HttpException(409, `This account does not exists`, 101001);
 
-    const hashCurrentPassword = await hash(data.currentPassword, 10);
+    const hashCurrentPassword = await bcrypt.hash(data.currentPassword, 10);
     if (findCustomer.password !== hashCurrentPassword) throw new HttpException(409, `Password does not match`, 101001);
 
-    const hashNewPassword = await hash(data.newPassword, 10);
+    const hashNewPassword = await bcrypt.hash(data.newPassword, 10);
     return await MYSQL_DB.Customer.update({ password: hashNewPassword }, { where: { accountId: data.customerId } });
   }
 
@@ -181,8 +172,8 @@ export class AuthService {
 
     if (!findCustomer) throw new HttpException(409, `This email does not exists`, 101001);
 
-    const resetPassworrdUrl = 'http://localhost:3000/auth/reset-password';
-    // const resetPassworrdToken = '';
+    const resetPassworrdToken = jwt.sign({ email: data.email, type: 'reset_password' }, process.env.JWT_SECRET, { expiresIn: '30m' });
+    const resetPassworrdUrl = `http://localhost:3000/auth/reset-password?token=${resetPassworrdToken}`;
 
     const mailOptions = {
       email: findCustomer.email,
@@ -267,11 +258,55 @@ export class AuthService {
 
     try {
       await sendEmail(mailOptions.email, mailOptions.subject, mailOptions.content);
-
       return { message: 'Email sent successfully' };
     } catch (error) {
       console.error(error);
       throw new HttpException(500, 'Failed to send email', 101005);
+    }
+  }
+
+  public async resetPassword({ token, newPassword }: { token: string; newPassword: string }): Promise<unknown> {
+    try {
+      const decoded: any = jwt.verify(token, process.env.RESET_TOKEN_SECRET);
+      const resetTokenRecord = await MYSQL_DB.ResetPassword.findOne({
+        where: {
+          email: decoded.email,
+          token,
+          isUsed: false,
+        },
+      });
+
+      if (!resetTokenRecord) {
+        throw new HttpException(400, 'Invalid or expired reset token', 101008);
+      }
+
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/;
+      if (!passwordRegex.test(newPassword)) {
+        throw new HttpException(400, 'Password does not meet requirements', 101009);
+      }
+
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      await Promise.all([
+        MYSQL_DB.Account.update({ password: hashedPassword }, { where: { email: decoded.email } }),
+        MYSQL_DB.ResetPassword.update({ isUsed: true }, { where: { id: resetTokenRecord.id } }),
+      ]);
+
+      const account = await MYSQL_DB.Account.findOne({
+        where: { email: decoded.email },
+      });
+      if (account) {
+        await MYSQL_DB.RefreshToken.destroy({
+          where: { accountId: account.accountId },
+        });
+      }
+
+      return {
+        status: 'success',
+        message: 'Password has been reset successfully',
+      };
+    } catch (error) {
+      throw new HttpException(500, `An error ${error} occurred while resetting your password`, 101010);
     }
   }
 
@@ -317,8 +352,8 @@ export class AuthService {
             newTokens = await this.refreshFacebookAccessToken(refreshToken);
             break;
           case 'credentials':
-            const user = verify(refreshToken, REFRESH_TOKEN_SECRET);
-            newTokens = sign({ userId: user }, ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED });
+            const user = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
+            newTokens = jwt.sign({ userId: user }, ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRED });
             break;
         }
         return newTokens;
