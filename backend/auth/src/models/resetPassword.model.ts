@@ -28,7 +28,7 @@ export default function (sequelize: Sequelize): typeof ResetPasswordModel {
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.DATE(),
+        defaultValue: DataTypes.NOW(),
       },
       isUsed: {
         allowNull: false,

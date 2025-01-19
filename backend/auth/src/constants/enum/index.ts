@@ -16,7 +16,7 @@ export enum LoginType {
 export enum ActivityType {
   LOGIN,
   SIGNUP,
-  LOG_OUT,
+  LOGOUT,
   CHANGE_PASSWORD,
   UPDATE_PROFILE,
 }

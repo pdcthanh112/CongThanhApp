@@ -16,7 +16,7 @@ export class LoginCredentials {
   provider: LoginType.CREDENTIALS;
 }
 
-class LoginGoogle {
+export class LoginGoogle {
   @IsEmail()
   email: string;
 
@@ -29,7 +29,7 @@ class LoginGoogle {
   @IsIn([LoginType.GOOGLE])
   provider: LoginType.GOOGLE;
 }
-class LoginFacebook {
+export class LoginFacebook {
   @IsEmail()
   email: string;
 
@@ -39,7 +39,7 @@ class LoginFacebook {
   provider: LoginType.FACEBOOK;
 }
 
-class LoginTwitter {
+export class LoginTwitter {
   @IsEmail()
   email: string;
 
@@ -47,7 +47,7 @@ class LoginTwitter {
   provider: LoginType.TWITTER;
 }
 
-class LoginApple {
+export class LoginApple {
   @IsEmail()
   email: string;
 
@@ -76,7 +76,7 @@ export class CustomerSignupDTO {
   dob?: Date;
   gender: string;
   image?: string;
-  provider: LoginType
+  provider: LoginType;
 }
 
 export class UpdateCustomerDTO {

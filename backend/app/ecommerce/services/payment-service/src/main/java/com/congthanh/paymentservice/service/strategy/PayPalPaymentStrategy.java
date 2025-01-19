@@ -54,7 +54,6 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
 
         try {
             Payment result = payment.create(apiContext);
-            System.out.println("RESULTTTTTTTTTTTTTTTTTT"+result);
             return PaymentResponse.builder()
                     .paymentId(result.getId())
                     .paymentMethod(PaymentMethod.PAYPAL)
@@ -86,7 +85,6 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
 
     @Override
     public PaymentResponse executePayment(PaymentRequest request) {
-        System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
         String paymentId = request.getAdditionalInfo().get("paymentId");
         String payerId = request.getAdditionalInfo().get("payerId");
         Payment payment = new Payment();
@@ -95,7 +93,6 @@ public class PayPalPaymentStrategy implements PaymentStrategy {
         paymentExecution.setPayerId(payerId);
         try {
             Payment result = payment.execute(apiContext, paymentExecution);
-            System.out.println("SÊRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"+result);
             return null;
         } catch (PayPalRESTException e) {
             throw new RuntimeException(e);

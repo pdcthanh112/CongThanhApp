@@ -1,9 +1,9 @@
-import { Request } from "express";
-import { Customer } from "./account.interface";
+import { Request } from 'express';
+import { Account, Customer } from './account.interface';
 
 export interface TokenPayload {
   accountId: string;
-  role: string
+  role: string;
 }
 
 export interface TokenData {
@@ -11,8 +11,13 @@ export interface TokenData {
   refreshToken: string;
 }
 
+export interface AuthResponse {
+  user: Omit<Account, 'password'>;
+  token: TokenData;
+}
+
 export interface LoginError {
-  id:number;
+  id: number;
   accountId: string;
   failedAttempts: number;
   lockedUntil: Date;
