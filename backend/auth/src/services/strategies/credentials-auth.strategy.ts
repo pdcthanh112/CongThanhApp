@@ -5,7 +5,6 @@ import { MYSQL_DB } from '@/databases/mysql';
 import { HttpException } from '@/exceptions/';
 import { AuthResponse, LoginError, TokenData } from '@/interfaces/auth.interface';
 import { generateAccessToken, generateRefreshToken } from '@/utils/jwt.utils';
-
 import { TokenService, ValidationService } from '../factories/abstract-auth.factory';
 
 export class CredentialsOAuthStrategy implements AuthStrategy {
@@ -86,7 +85,11 @@ export class CredentialsOAuthStrategy implements AuthStrategy {
     return { accessToken: newAccessToken, refreshToken };
   }
 
-  async validateToken(token: string): Promise<boolean> {
-    return this.validationService.validateToken(token);
+  async signOut(token: string): Promise<void> {
+    const validate = await this.validationService.validateToken(token);
+    if (!validate) {
+      throw Error('token invalid');
+    }
+    return this.tokenService.revokeToken(token);
   }
 }

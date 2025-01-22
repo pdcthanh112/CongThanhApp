@@ -32,7 +32,7 @@ export class AuthService {
       id: 0,
     });
 
-    return strategy.login(loginData);
+    return strategy.authenticate(loginData);
   }
 
   public async signup(customerData: CustomerSignupDTO): Promise<Customer> {

@@ -1,16 +1,17 @@
-import { CustomerLoginDTO } from '@/dtos/customer.dto';
-import { AuthResponse } from '@/interfaces/auth.interface';
+// import { CustomerLoginDTO } from '@/dtos/customer.dto';
+// import { AuthResponse } from '@/interfaces/auth.interface';
+import { AuthStrategy } from '../strategies/auth-strategy.interface';
 
 export abstract class AbstractAuthFactory {
-  abstract authService(): OAuthService;
+  abstract authService(): AuthStrategy;
   abstract tokenService(): TokenService;
   abstract validationService(): ValidationService;
 }
 
-export interface OAuthService {
-  login(credentials: CustomerLoginDTO): Promise<AuthResponse>;
-  logout(userId: string): Promise<void>;
-}
+// export interface OAuthService {
+//   login(credentials: CustomerLoginDTO): Promise<AuthResponse>;
+//   logout(userId: string): Promise<void>;
+// }
 
 export interface TokenService {
   generateAccessToken(payload: unknown): string;
@@ -21,5 +22,5 @@ export interface TokenService {
 
 export interface ValidationService {
   validateCredentials(credentials: unknown): Promise<boolean>;
-  validateToken(token: string): boolean;
+  validateToken(token: string): Promise<boolean>;
 }

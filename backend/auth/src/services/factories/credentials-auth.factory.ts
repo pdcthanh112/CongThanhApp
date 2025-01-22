@@ -1,13 +1,16 @@
-import { AbstractAuthFactory, OAuthService, TokenService, ValidationService } from './abstract-auth.factory';
+import { AbstractAuthFactory, TokenService, ValidationService } from './abstract-auth.factory';
 import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from '@/config/index';
 import { MYSQL_DB } from '@/databases/mysql';
 import { HttpException } from '@/exceptions';
 import * as jwt from 'jsonwebtoken';
+import { AuthStrategy } from '../strategies/auth-strategy.interface';
+import { CredentialsOAuthStrategy } from '../strategies';
 
 export class CredentialsAuthFactory extends AbstractAuthFactory {
-  authService(): OAuthService {
-    throw new Error('Method not implemented.');
+  authService(): AuthStrategy {
+    return new CredentialsOAuthStrategy(this.tokenService(), this.validationService());
   }
+
   tokenService(): TokenService {
     return {
       generateAccessToken: (payload: string) => {
@@ -32,12 +35,13 @@ export class CredentialsAuthFactory extends AbstractAuthFactory {
       },
     };
   }
+
   validationService(): ValidationService {
     return {
       validateCredentials: () => {
         return null;
       },
-      validateToken: (token: string) => {
+      validateToken: async (token: string) => {
         return !!token;
       },
     };

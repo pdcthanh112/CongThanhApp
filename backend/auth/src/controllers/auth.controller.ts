@@ -11,7 +11,7 @@ export class AuthController {
   public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const loginData: CustomerLoginDTO = req.body;
-      const { customerWithoutPassword, tokenData } = await this.service.login(loginData);
+      const { user: customerWithoutPassword, token: tokenData } = await this.service.login(loginData);
 
       res.setHeader('Set-Cookie', [`Authorization=Bearer ${tokenData.accessToken}; HttpOnly;`]);
       res.setHeader('Authorization', `Bearer ${tokenData.accessToken}; HttpOnly;`);
