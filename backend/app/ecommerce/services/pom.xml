@@ -41,6 +41,7 @@
         <module>shipping-service</module>
         <module>storefront-bff</module>
         <module>supplier-service</module>
+        <module>tax-service</module>
         <module>translate-service</module>
         <module>warehouse-service</module>
         <module>webhook</module>
