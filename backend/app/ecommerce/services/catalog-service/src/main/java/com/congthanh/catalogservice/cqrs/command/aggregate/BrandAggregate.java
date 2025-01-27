@@ -13,8 +13,9 @@ import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 public class BrandAggregate {
 
     @AggregateIdentifier
-    private String id;
+    private Long id;
     private String name;
+    private String slug;
     private String image;
 
     public BrandAggregate() {
@@ -22,7 +23,7 @@ public class BrandAggregate {
 
     @CommandHandler
     public BrandAggregate(CreateBrandCommand command) {
-        apply(new BrandCreatedEvent(command.getId(), command.getName(), command.getImage()));
+        apply(new BrandCreatedEvent(command.getId(), command.getName(), command.getSlug(), command.getImage()));
     }
 
     @EventSourcingHandler

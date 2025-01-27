@@ -9,12 +9,6 @@ server:
 spring:
   application:
     name: congthanhapp-ecommerce-catalog-service
-#  web:
-#    cors:
-#      allowed-origins: "http://localhost:3000"
-#      allowed-methods: "*"
-#      allowed-headers: "*"
-#      allow-credentials: true
   web:
     cors:
       allowed-origins: "http://localhost:3000"

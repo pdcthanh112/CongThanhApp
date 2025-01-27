@@ -1,0 +1,21 @@
+name: Test Environment Deployment
+
+on:
+  push:
+    branches: [ test ]
+
+jobs:
+  deploy-to-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy to Test Environment
+      env:
+        TEST_SERVER_SSH_KEY: ${{ secrets.TEST_SERVER_SSH_KEY }}
+      run: |
+        ssh -i $TEST_SERVER_SSH_KEY user@test-server \
+          "cd /app/microservices && \
+           docker-compose pull && \
+           docker-compose up -d"

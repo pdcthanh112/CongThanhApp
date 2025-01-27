@@ -23,7 +23,7 @@ public interface ProductRepository extends JpaRepository<Product, String>, Produ
 
   Optional<Product> findByName(String name);
 
-  Page<Product> findByCategoryId(String categoryId, Pageable pageable);
+  Page<Product> findByCategory(String categoryId, Pageable pageable);
 //
 //  Page<Product> findBySubcategoryId(Long subcategoryId, Pageable pageable);
 

@@ -28,6 +28,7 @@
         <module>cart-service</module>
         <module>catalog-service</module>
         <module>chat-service</module>
+        <module>common-service</module>
         <module>config-service</module>
         <module>customer-service</module>
         <module>inventory-service</module>

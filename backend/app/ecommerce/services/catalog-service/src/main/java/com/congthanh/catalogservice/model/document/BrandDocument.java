@@ -21,6 +21,9 @@ public class BrandDocument {
     @NotNull
     private String name;
 
+    @NotNull
+    private String slug;
+
     private String image;
 
 }

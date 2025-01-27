@@ -11,9 +11,11 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 public class CreateBrandCommand {
 
     @TargetAggregateIdentifier
-    private String id;
+    private Long id;
 
     private String name;
+
+    private String slug;
 
     private String image;
 

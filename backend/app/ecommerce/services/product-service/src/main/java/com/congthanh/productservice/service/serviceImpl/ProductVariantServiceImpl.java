@@ -47,13 +47,10 @@ public class ProductVariantServiceImpl implements ProductVariantService {
     @Override
     @Transactional
     public ProductVariantDTO createProductVariant(ProductVariantRequest requestDTO) {
-
         ProductVariant variant = ProductVariant.builder().build();
         ProductVariant result = productVariantRepository.save(variant);
         ProductVariantDTO response = ProductVariantMapper.mapProductVariantEntityToDTO(result);
-
         kafkaTemplate.send("create-product-variant-topic", response);
-
         return response;
     }
 

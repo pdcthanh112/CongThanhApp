@@ -1,5 +1,6 @@
 package com.congthanh.productservice.service.serviceImpl;
 
+import com.congthanh.productservice.cqrs.query.query.GetProductBySlugQuery;
 import com.congthanh.productservice.grpc.client.CategoryGrpcClient;
 import com.congthanh.productservice.model.response.PaginationInfo;
 import com.congthanh.productservice.model.response.ResponseWithPagination;
@@ -13,6 +14,7 @@ import com.congthanh.productservice.model.document.ProductDocument;
 import com.congthanh.productservice.model.request.CreateProductRequest;
 import com.congthanh.productservice.exception.ecommerce.NotFoundException;
 import com.congthanh.productservice.model.mapper.ProductMapper;
+import com.congthanh.productservice.model.viewmodel.ProductVm;
 import com.congthanh.productservice.repository.product.ProductRepository;
 import com.congthanh.productservice.service.ProductAttributeService;
 import com.congthanh.productservice.service.ProductService;
@@ -92,7 +94,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Cacheable(cacheNames = "products", key = "#id")
+    @Cacheable(cacheNames = "products", key = "product-#id")
     public ProductDTO getProductById(String id) {
         ProductDocument data = queryGateway.query(new GetProductByIdQuery(id), ResponseTypes.instanceOf(ProductDocument.class)).join();
         return ProductDTO.builder()
@@ -113,14 +115,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO getProductBySlug(String slug) {
-//        ProductQuery data = queryGateway.query(new GetProductBySlugQuery(slug), ResponseTypes.instanceOf(ProductQuery.class)).join();
-//        return ProductDTO.builder()
-//                .id(data.getId())
-//                .name(data.getName())
-//                .slug(data.getSlug())
-//                .build();
-        return null;
+    public ProductDTO getProductDTOBySlug(String slug) {
+        ProductDocument data = queryGateway.query(new GetProductBySlugQuery(slug), ResponseTypes.instanceOf(ProductDocument.class)).join();
+        return ProductDTO.builder()
+                .id(data.getId())
+                .name(data.getName())
+                .slug(data.getSlug())
+                .build();
+    }
+
+    @Override
+    public ProductVm getProductVmBySlug(String slug) {
+        ProductDocument data = queryGateway.query(new GetProductBySlugQuery(slug), ResponseTypes.instanceOf(ProductDocument.class)).join();
+        return ProductVm.builder()
+                .id(data.getId())
+                .name(data.getName())
+                .slug(data.getSlug())
+                .build();
     }
 
     @Override
@@ -174,7 +185,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseWithPagination<ProductDTO> getProductByCategory(String categoryId, int page, int limit) {
         Pageable pageable = PageRequest.of(page, limit);
-        Page<Product> result = productRepository.findByCategoryId(categoryId, pageable);
+        Page<Product> result = productRepository.findByCategory(categoryId, pageable);
         ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
         if (result.hasContent()) {
             List<ProductDTO> list = new ArrayList<>();

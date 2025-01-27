@@ -15,6 +15,8 @@ public class UpdateBrandCommand {
 
     private String name;
 
+    private String slug;
+
     private String image;
 
 }

@@ -2,9 +2,9 @@ server:
   port: 5008 # ${SERVER_PORT}
   servlet:
     context-path: /api
-  compression:
-    enabled: true
-    min-response-size: 1024
+#  compression:
+#    enabled: true
+#    min-response-size: 1024
 #  ssl:
 #    key-store: classpath:keystore.p12  # Đường dẫn đến keystore
 #    key-store-password: password       # Mật khẩu keystore
@@ -15,8 +15,10 @@ spring:
   application:
     name: congthanhapp-ecommerce-product-service
 
-#  profiles:
-#    active: dev
+  config:
+    import: optional:file:.env[.properties]
+    activate:
+      on-profile: dev
 
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
@@ -24,18 +26,11 @@ spring:
     password: 123456
     driver-class-name: org.postgresql.Driver
 
-
-    mysql:
-      url: jdbc:mysql://localhost:3306/mydream?allowPublicKeyRetrieval=true&useSSL=false
-      username: root
-      password: 123456
-      driver-class-name: com.mysql.cj.jdbc.Driver
-
   jpa:
     database: default
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -159,7 +154,8 @@ grpc:
     reflection-service-enabled: true
   client:
     catalog-service:
-      address: "static://localhost:9090"
+#      address: "static://localhost:9090"
+      address: "localhost:9090"
       negotiationType: "PLAINTEXT"
 
 congthanhapp:

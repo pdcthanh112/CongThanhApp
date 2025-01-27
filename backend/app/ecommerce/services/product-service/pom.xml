@@ -6,7 +6,11 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.4.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath/>
+        <!--        <groupId>com.congthanh</groupId>-->
+        <!--        <artifactId>services</artifactId>-->
+        <!--        <version>0.0.1-SNAPSHOT</version>-->
+        <!--        <relativePath>../pom.xml</relativePath>-->
     </parent>
     <groupId>com.congthanh</groupId>
     <artifactId>product-service</artifactId>
@@ -120,17 +124,17 @@
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
-            <version>1.51.0</version>
+            <version>1.53.0</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-stub</artifactId>
-            <version>1.51.0</version>
+            <version>1.53.0</version>
         </dependency>
         <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <scope>runtime</scope>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty-shaded</artifactId>
+            <version>1.53.0</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -168,12 +172,10 @@
             <artifactId>modelmapper</artifactId>
             <version>3.1.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
@@ -189,13 +191,11 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.5.0</version>
         </dependency>
-
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
             <version>1.6.14</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
@@ -214,10 +214,6 @@
             <artifactId>spring-rabbit-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--        <dependency>-->
-<!--            <groupId>org.springframework.integration</groupId>-->
-<!--            <artifactId>spring-integration-security</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka-test</artifactId>
@@ -243,9 +239,13 @@
         </dependency>
         <dependency>
             <groupId>com.congthanh</groupId>
-            <artifactId>catalog-service</artifactId>
+            <artifactId>common-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+<!--            <classifier>protos</classifier>-->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
         </dependency>
     </dependencies>
 
@@ -271,6 +271,24 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeArtifactIds>configuration-service</includeArtifactIds>
+                            <includes>**/*.proto</includes>
+                            <outputDirectory>${project.build.directory}/extracted-protos/main</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>0.6.1</version>
@@ -278,7 +296,8 @@
                     <protocArtifact>com.google.protobuf:protoc:3.21.7:exe:${os.detected.classifier}</protocArtifact>
                     <pluginId>grpc-java</pluginId>
                     <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.51.0:exe:${os.detected.classifier}</pluginArtifact>
-                    <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
+                    <!--                    <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>-->
+                    <protoSourceRoot>${project.build.directory}/extracted-protos/main/proto</protoSourceRoot>
                 </configuration>
                 <executions>
                     <execution>
@@ -286,6 +305,7 @@
                             <goal>compile</goal>
                             <goal>compile-custom</goal>
                         </goals>
+                        <phase>generate-sources</phase>
                     </execution>
                 </executions>
             </plugin>

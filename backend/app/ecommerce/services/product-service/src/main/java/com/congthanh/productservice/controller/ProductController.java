@@ -7,6 +7,7 @@ import com.congthanh.productservice.model.dto.ProductVariantAttributeValueDTO;
 import com.congthanh.productservice.model.response.Response;
 import com.congthanh.productservice.model.response.ResponseWithPagination;
 import com.congthanh.productservice.model.entity.Product;
+import com.congthanh.productservice.model.viewmodel.ProductVm;
 import com.congthanh.productservice.repository.product.ProductRepository;
 import com.congthanh.productservice.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ecommerce/product")
+@RequestMapping("/ecommerce/products")
 @Tag(name = "Product API", description = "Product API in CongThanhApp - Ecommerce")
 @RequiredArgsConstructor
 @Slf4j
@@ -78,11 +79,22 @@ public class ProductController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/getBySlug/{slug}")
+    @GetMapping("/back-office/slug/{slug}")
     @PermitAll
-    public ResponseEntity<Response<ProductDTO>> getProductBySlug(@PathVariable("slug") String slug) {
-        ProductDTO data = productService.getProductBySlug(slug);
+    public ResponseEntity<Response<ProductDTO>> getProductDTOBySlug(@PathVariable("slug") String slug) {
+        ProductDTO data = productService.getProductDTOBySlug(slug);
         Response<ProductDTO> response = new Response<>();
+        response.setData(data);
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        response.setMessage("Get by slug successfully");
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/store-front/slug/{slug}")
+    @PermitAll
+    public ResponseEntity<Response<ProductVm>> getProductVmBySlug(@PathVariable("slug") String slug) {
+        ProductVm data = productService.getProductVmBySlug(slug);
+        Response<ProductVm> response = new Response<>();
         response.setData(data);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
         response.setMessage("Get by slug successfully");
@@ -107,7 +119,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteProduct(@RequestParam("id") String id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") String id) {
         boolean result = productService.deleteProduct(id);
         return ResponseEntity.ok().body("Delete successfully");
     }

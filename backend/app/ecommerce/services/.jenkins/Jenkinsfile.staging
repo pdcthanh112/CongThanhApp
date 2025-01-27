@@ -1,0 +1,66 @@
+// .jenkins/Jenkinsfile.staging
+pipeline {
+    agent {
+        // Sử dụng agent có Docker và Maven
+        docker {
+            image 'maven:3.8.1-openjdk-17-slim'
+            args '-v /root/.m2:/root/.m2'
+        }
+    }
+    
+    environment {
+        DOCKER_REGISTRY = 'gcr.io/your-project-id'
+        SERVICE_NAMES = ['service1', 'service2']
+    }
+    
+    stages {
+        stage('Parallel Build') {
+            parallel {
+                stage('Build Service1') {
+                    steps {
+                        dir('microservices/service1') {
+                            sh 'mvn clean package'
+                        }
+                    }
+                }
+                stage('Build Service2') {
+                    steps {
+                        dir('microservices/service2') {
+                            sh 'mvn clean package'
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Build Docker Images') {
+            steps {
+                script {
+                    SERVICE_NAMES.each { serviceName ->
+                        sh """
+                            docker build \
+                            -t ${DOCKER_REGISTRY}/${serviceName}:${env.BUILD_NUMBER} \
+                            ./microservices/${serviceName}
+                        """
+                    }
+                }
+            }
+        }
+        
+        stage('Integration Tests') {
+            // Thực hiện các test tích hợp
+        }
+        
+        stage('Push to Registry') {
+            steps {
+                script {
+                    docker.withRegistry('https://gcr.io', 'gcr-credentials') {
+                        SERVICE_NAMES.each { serviceName ->
+                            docker.image("${DOCKER_REGISTRY}/${serviceName}:${env.BUILD_NUMBER}").push()
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

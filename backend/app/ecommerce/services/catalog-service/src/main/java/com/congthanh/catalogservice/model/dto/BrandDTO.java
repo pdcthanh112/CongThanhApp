@@ -15,4 +15,8 @@ public class BrandDTO {
 
     private String name;
 
+    private String slug;
+
+    private String image;
+
 }

@@ -1,6 +1,6 @@
 package com.congthanh.productservice.listener;
 
-import com.congthanh.catalogservice.model.entity.AbstractAuditEntity;
+import com.congthanh.productservice.model.entity.AbstractAuditEntity;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import org.springframework.beans.factory.ObjectFactory;

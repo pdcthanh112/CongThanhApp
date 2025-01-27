@@ -1,7 +1,6 @@
 package com.congthanh.productservice.cqrs.command.event;
 
 import com.congthanh.productservice.model.document.ProductDocument;
-import com.congthanh.productservice.repository.product.ProductDocumentRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class ProductEventListener {
 
-    private final ProductDocumentRepository productDocumentRepository;
+//    private final ProductDocumentRepository productDocumentRepository;
 
     private final ObjectMapper objectMapper;
 
