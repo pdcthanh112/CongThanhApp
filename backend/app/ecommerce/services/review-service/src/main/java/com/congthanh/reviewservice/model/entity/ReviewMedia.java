@@ -16,8 +16,7 @@ import lombok.NoArgsConstructor;
 public class ReviewMedia {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private Long id;
 
     private String url;
 

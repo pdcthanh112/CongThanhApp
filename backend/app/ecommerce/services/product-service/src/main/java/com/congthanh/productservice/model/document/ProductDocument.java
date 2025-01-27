@@ -3,7 +3,6 @@ package com.congthanh.productservice.model.document;
 import com.congthanh.productservice.constant.enums.ProductStatus;
 import com.congthanh.productservice.model.dto.ProductAttributeValueDTO;
 import com.congthanh.productservice.model.dto.ProductImageDTO;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "product")
@@ -25,6 +24,7 @@ public class ProductDocument {
     @Id
     private String id;
 
+    @NotNull
     private String name;
 
     private CategoryDocument category;
@@ -34,52 +34,16 @@ public class ProductDocument {
 
     private String description;
 
-    private List<ProductImageDTO> image;
+    private List<ProductImageDTO> image = new ArrayList<>();
 
-    private List<ProductAttributeValueDTO> attribute;
+    private List<ProductAttributeValueDTO> attribute = new ArrayList<>();
 
     private String supplier;
 
     private String brand;
 
-    private List<ProductVariantDocument> variant;
+    private List<ProductVariantDocument> variant = new ArrayList<>();
 
     private ProductStatus status;
-
-}
-
-@Data
-@Builder
-class ProductVariantDocument {
-    private String id;
-
-    private String product;
-
-    private String name;
-
-    private String sku;
-
-    private String gtin;
-
-    private BigDecimal price;
-
-    private List<ProductVariantImageDocument> image;
-
-}
-
-@Data
-@Builder
-class ProductVariantImageDocument {
-
-    private Long id;
-
-    private String variant;
-
-    private String imagePath;
-
-    private String alt;
-
-    @JsonProperty("isDefault")
-    private boolean isDefault;
 
 }

@@ -19,9 +19,7 @@ public class CategoryDocumentCustomRepositoryImpl implements CategoryDocumentCus
     @Override
     public CategoryDocument addSubcategory(SubcategoryDocument subcategory, String categoryId) {
         Query query = new Query(Criteria.where("id").is(categoryId));
-
         Update update = new Update().push("subcategories", subcategory);
-
         return mongoTemplate.findAndModify(
                 query,
                 update,
@@ -34,7 +32,6 @@ public class CategoryDocumentCustomRepositoryImpl implements CategoryDocumentCus
     public CategoryDocument removeSubcategory(String categoryId, String subcategoryId) {
         Query query = new Query(Criteria.where("id").is(categoryId));
         Update update = new Update().pull("subcategories", Query.query(Criteria.where("id").is(subcategoryId)));
-
         return mongoTemplate.findAndModify(
                 query,
                 update,
@@ -50,6 +47,5 @@ public class CategoryDocumentCustomRepositoryImpl implements CategoryDocumentCus
                 Update.update("status", CategoryStatus.INACTIVE),
                 CategoryDocument.class
         );
-        System.out.println("RRRRRRRRRRRRRRRRRRRRRRRRR" + parentResult);
     }
 }

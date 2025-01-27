@@ -12,7 +12,7 @@ import { useTranslations } from 'next-intl';
 import { useAddProductToWishlist, useRemoveProductFromWishlist } from '@/hooks/wishlist/wishlistHook';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { openModalAuth } from '@/redux/features/modalAuth';
-import { HeartEmpty, HeartFull } from '@/assets/icons';
+import { AddToCartIcon, HeartEmpty, HeartFull } from '@/assets/icons';
 import { toast } from 'react-toastify';
 import { useAddProductToCart } from '@/hooks/cart/cartHook';
 import { getWishlistByCustomer } from 'api/wishlistApi';
@@ -26,6 +26,7 @@ import { ReviewStatistic } from '@/models/types/Review';
 import { BarChart, Bar, XAxis, ResponsiveContainer } from 'recharts';
 import { Button } from '@/components/ui/button';
 import { PATH } from '@/utils/constants/path';
+import { useSession } from 'next-auth/react';
 
 type ProductDetailProps = {
   product: Product;
@@ -34,8 +35,7 @@ type ProductDetailProps = {
 };
 
 export default function ProductDetail({ product, reviewStatistic, supplier }: ProductDetailProps) {
-  console.log('PPPPPPPPPPPPPPP', product);
-  const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
+  const { data: user } = useSession();
   const router = useRouter();
   const params = useParams();
 
@@ -98,11 +98,11 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
 
   const { data: wishlist } = useQuery<Wishlist>({
     queryKey: [WISHLIST_KEY],
-    queryFn: async () => await getWishlistByCustomer(currentUser.userInfo.accountId).then((result) => result.data),
+    queryFn: async () => await getWishlistByCustomer(user.userInfo.accountId).then((result) => result.data),
   });
 
   const handleAddProductToCart = () => {
-    if (currentUser) {
+    if (user) {
       try {
         addProductToCart(
           { productId: product.id, quantity: quantity, cartId: '36c98af9-bee7-4e11-bd19-36426261d727' },
@@ -125,10 +125,10 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
   };
 
   const handleAddToWishlist = (productId: string) => {
-    if (currentUser) {
+    if (user) {
       try {
         addProductToWishlist(
-          { customerId: currentUser.userInfo.accountId, productId: productId },
+          { customerId: user.userInfo.accountId, productId: productId },
           {
             onSuccess() {
               toast.success(t('wishlist.add_item_to_wishlist_successfully'));
@@ -147,10 +147,10 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
   };
 
   const handleRemoveFromWishlist = (productId: string) => {
-    if (currentUser) {
+    if (user) {
       try {
         removeProductFromWishlist(
-          { customerId: currentUser.userInfo.accountId, productId: productId },
+          { customerId: user.userInfo.accountId, productId: productId },
           {
             onSuccess() {
               toast.success(t('wishlist.remove_item_from_wishlist_successfully'));
@@ -275,11 +275,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
             {product.image?.slice(...currentIndexImages).map((img: ProductImage) => {
               const isActive = img === currentImage;
               return (
-                <div
-                  key={img.id}
-                  className="relative w-[5rem] h-[5rem]"
-                  onClick={() => setCurrentImage(img)}
-                >
+                <div key={img.id} className="relative w-[5rem] h-[5rem]" onClick={() => setCurrentImage(img)}>
                   <Image
                     src={img.imagePath}
                     alt={img.alt || product.name}
@@ -441,7 +437,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
           <div className="col-span-1">{t('common.Category')}</div>
           <div className="col-span-3">{product.category}</div>
           <div className="col-span-1">{t('common.Subcategory')}</div>
-          <div className="col-span-3">{product.subcategory}</div>
+          <div className="col-span-3">{product.category}</div>
           <div className="col-span-1">{t('common.in_stock')}</div>
           {/* <div className="col-span-3">{product.quantity > 0 ? <p>{product.quantity}</p> : <p>0</p>}</div> */}
         </div>
@@ -465,14 +461,22 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
         <h2 className="bg-yellow-100 px-2 py-1 rounded-sm">{t('product.product_description').toUpperCase()}</h2>
         <div className="">{product.description}</div>
       </div>
+
+      <div className="bg-white mt-10 p-5">
+        <h2 className="bg-yellow-100 px-2 py-1 rounded-sm">{t('product.product_review').toUpperCase()}</h2>
+        <TableContainer>
+          <Table>
+            <TableBody>
+              {product.attribute?.map((item: ProductAttribute) => (
+                <TableRow key={item.id}>
+                  <TableCell>{item.attribute}</TableCell>
+                  <TableCell>{item.value}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </div>
   );
 }
-
-const AddToCartIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg baseProfile="tiny" viewBox="0 0 24 24" fill="currentColor" height="1em" width="1em" {...props}>
-    <path d="M20.756 5.345A1.003 1.003 0 0020 5H6.181l-.195-1.164A1 1 0 005 3H2.75a1 1 0 100 2h1.403l1.86 11.164.045.124.054.151.12.179.095.112.193.13.112.065a.97.97 0 00.367.075H18a1 1 0 100-2H7.847l-.166-1H19a1 1 0 00.99-.858l1-7a1.002 1.002 0 00-.234-.797zM18.847 7l-.285 2H15V7h3.847zM14 7v2h-3V7h3zm0 3v2h-3v-2h3zm-4-3v2H7l-.148.03L6.514 7H10zm-2.986 3H10v2H7.347l-.333-2zM15 12v-2h3.418l-.285 2H15z" />
-    <path d="M10 19.5 A1.5 1.5 0 0 1 8.5 21 A1.5 1.5 0 0 1 7 19.5 A1.5 1.5 0 0 1 10 19.5 z" />
-    <path d="M19 19.5 A1.5 1.5 0 0 1 17.5 21 A1.5 1.5 0 0 1 16 19.5 A1.5 1.5 0 0 1 19 19.5 z" />
-  </svg>
-);

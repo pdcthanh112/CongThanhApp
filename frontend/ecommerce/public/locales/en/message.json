@@ -125,7 +125,8 @@
     "product_attribute": "product attribute",
     "product_description": "product description",
     "price": "Price",
-    "product_name": "Product name"
+    "product_name": "Product name",
+    "product_review": "Review product"
   },
   "cart": {
     "your_cart": "Your cart",

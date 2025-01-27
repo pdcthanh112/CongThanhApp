@@ -131,6 +131,7 @@ public class ProductServiceImpl implements ProductService {
                 .id(data.getId())
                 .name(data.getName())
                 .slug(data.getSlug())
+                .description(data.getDescription())
                 .build();
     }
 

@@ -1,3 +1,17 @@
+export type Review = {
+  id: number;
+  content: string;
+  rating: number;
+  customerId: string;
+  product: string;
+  reviewMedia: ReviewMedia[];
+};
+
+export type ReviewMedia = {
+  id: number;
+  url: string;
+};
+
 export type ReviewStatistic = {
   totalReview: number;
   averageRating: number;

@@ -34,8 +34,9 @@ public class ProductProjection {
     }
 
     @QueryHandler
-    public ProductDocument getProductById(GetProductBySlugQuery product) {
-        ProductDocument result = productDocumentRepository.findById(product.getSlug()).orElseThrow(() -> new NotFoundException("Product not found"));
+    public ProductDocument getProductBySlug(GetProductBySlugQuery product) {
+        ProductDocument result = productDocumentRepository.findBySlug(product.getSlug()).orElseThrow(() -> new NotFoundException("Product not found"));
+        System.out.println("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"+result);
         return result;
     }
 
