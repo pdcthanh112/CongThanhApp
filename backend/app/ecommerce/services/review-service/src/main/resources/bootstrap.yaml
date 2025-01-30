@@ -1,48 +1,4 @@
-#spring:
-#  application:
-#    name: congthanhapp-ecommerce-catalog-service
-#  cloud:
-#    config:
-#      uri: http://localhost:8888
-#  profiles:
-#    active: dev
-
 spring:
-  profiles:
-    active: dev
-
----
-spring:
-  profiles: dev
   cloud:
     config:
-      uri: http://localhost:8888  # Địa chỉ của Config Server
-      fail-fast: true             # Dừng ngay nếu không thể kết nối
-      profile: dev                # Profile đang sử dụng (ví dụ: dev)
-
----
-spring:
-  profiles: test
-  cloud:
-    config:
-      uri: http://localhost:8888  # Địa chỉ của Config Server
-      fail-fast: true             # Dừng ngay nếu không thể kết nối
-      profile: dev                # Profile đang sử dụng (ví dụ: dev)
-
----
-spring:
-  profiles: staging
-  cloud:
-    config:
-      uri: http://localhost:8888  # Địa chỉ của Config Server
-      fail-fast: true             # Dừng ngay nếu không thể kết nối
-      profile: dev                # Profile đang sử dụng (ví dụ: dev)
-
----
-spring:
-  profiles: production
-  cloud:
-    config:
-      uri: http://localhost:8888  # Địa chỉ của Config Server
-      fail-fast: true             # Dừng ngay nếu không thể kết nối
-      profile: dev                # Profile đang sử dụng (ví dụ: dev)
+      uri: http://localhost:8888

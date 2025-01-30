@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -25,7 +26,7 @@ public class ReviewDTO {
     private int rating;
 
     @NotNull
-    private String customerId;
+    private String author;
 
     @NotNull
     private String product;
@@ -34,6 +35,6 @@ public class ReviewDTO {
 
     private List<ReviewMediaDTO> reviewMedia;
 
-    private long createdAt;
+    private Instant createdAt;
 
 }

@@ -24,6 +24,7 @@ INSERT INTO product_attribute_template (id, product_attribute, product_template,
 
 --Product
 INSERT INTO product(id, name, slug, category, brand, supplier, description, status) VALUES('74f9341a-54c1-4453-84e4-147e656e4a9c', 'Nhà Giả Kim', 'nha-gia-kim', 'd8be3328-2999-4557-83d7-fe939776f12f', null, null, 'description', 'ACTIVE');
+INSERT INTO product(id, name, slug, category, brand, supplier, description, status) VALUES('366f785f-26dd-4c33-8452-0b172ef0a5de', 'Iphone 16 Pro Max', 'iphone-16-pro-max', '44c8112a-4794-405b-91ec-98ca64296825', null, null, 'description', 'ACTIVE');
 
 --Product Attribute
 INSERT INTO product_attribute_value (id, value, product_id, product_attribute_id) VALUES (486580923245727745, 'Paulo Coelho', '74f9341a-54c1-4453-84e4-147e656e4a9c', 486580923245727745);

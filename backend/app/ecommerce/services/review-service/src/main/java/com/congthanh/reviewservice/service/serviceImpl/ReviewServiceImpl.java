@@ -12,8 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -58,7 +58,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .product(product.getId())
                 .variant(variant.getId())
                 .customerId(reviewDTO.getCustomerId())
-                .createdAt(new Date().getTime())
+                .createdAt(Instant.now())
                 .build();
         return reviewRepository.save(review);
     }

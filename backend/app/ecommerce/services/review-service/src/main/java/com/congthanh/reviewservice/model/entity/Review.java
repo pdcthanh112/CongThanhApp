@@ -26,7 +26,7 @@ public class Review {
     private int rating;
 
     @Column(nullable = false)
-    private String customerId;
+    private String author;
 
     private String product;
 
