@@ -2,10 +2,12 @@ package com.congthanh.reviewservice.controller;
 
 import com.congthanh.reviewservice.constant.common.ResponseStatus;
 import com.congthanh.reviewservice.model.dto.ReviewDTO;
+import com.congthanh.reviewservice.model.request.ReviewFilter;
 import com.congthanh.reviewservice.model.response.Response;
 import com.congthanh.reviewservice.model.entity.Review;
 import com.congthanh.reviewservice.model.response.ResponseWithPagination;
 import com.congthanh.reviewservice.model.response.StatisticReviewResponse;
+import com.congthanh.reviewservice.model.viewmodel.ReviewVm;
 import com.congthanh.reviewservice.service.ReviewService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/ecommerce/review")
+@RequestMapping("/ecommerce/reviews")
 @Tag(name = "Review API", description = "Review API in CongThanhApp - Ecommerce")
 @RequiredArgsConstructor
 public class ReviewController {
@@ -41,6 +43,17 @@ public class ReviewController {
         return ResponseEntity.ok().body(response);
     }
 
+    @GetMapping("/store-front/product/{productId}")
+    public ResponseEntity<Response<ResponseWithPagination<ReviewVm>>> getReviewVmByProductId(@PathVariable("productId") String productId, @RequestParam("rating") int rating, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int limit, @RequestParam(defaultValue = "false") boolean hasMedia) {
+        ReviewFilter filter = ReviewFilter.builder().build();
+        ResponseWithPagination<ReviewVm> data = reviewService.getReviewVmByProductId(productId, filter);
+        Response<ResponseWithPagination<ReviewVm>> response = new Response<>();
+        response.setData(data);
+        response.setMessage("Get successfully");
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        return ResponseEntity.ok().body(response);
+    }
+    
     @GetMapping("/statistic")
     public ResponseEntity<Response<StatisticReviewResponse>> getRatingStarOfProduct(@RequestParam("product") String productId) {
         StatisticReviewResponse data = reviewService.getReviewStatisticOfProduct(productId);

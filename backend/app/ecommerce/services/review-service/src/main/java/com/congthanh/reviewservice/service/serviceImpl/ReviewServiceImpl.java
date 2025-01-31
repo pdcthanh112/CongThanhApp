@@ -3,7 +3,11 @@ package com.congthanh.reviewservice.service.serviceImpl;
 import com.congthanh.reviewservice.model.dto.ReviewDTO;
 import com.congthanh.reviewservice.model.mapper.ReviewMapper;
 import com.congthanh.reviewservice.model.entity.Review;
+import com.congthanh.reviewservice.model.request.ReviewFilter;
 import com.congthanh.reviewservice.model.response.*;
+import com.congthanh.reviewservice.model.viewmodel.ReviewMediaVm;
+import com.congthanh.reviewservice.model.viewmodel.ReviewVm;
+import com.congthanh.reviewservice.repository.review.ReviewDocumentRepository;
 import com.congthanh.reviewservice.repository.review.ReviewRepository;
 import com.congthanh.reviewservice.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,7 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final ReviewDocumentRepository reviewDocumentRepository;
 
     @Override
     public ResponseWithPagination<ReviewDTO> getReviewByProductId(String productId, Integer page, Integer limit) {
@@ -36,6 +41,40 @@ public class ReviewServiceImpl implements ReviewService {
             PaginationInfo paginationInfo = PaginationInfo.builder()
                     .page(page)
                     .limit(limit)
+                    .totalPage(result.getTotalPages())
+                    .totalElement(result.getTotalElements())
+                    .build();
+            response.setResponseList(list);
+            response.setPaginationInfo(paginationInfo);
+            return response;
+        } else {
+            throw new RuntimeException("List empty exception");
+        }
+    }
+
+    @Override
+    public ResponseWithPagination<ReviewVm> getReviewVmByProductId(String productId, ReviewFilter filter) {
+        Pageable pageable = PageRequest.of(filter.page() - 1, filter.limit());
+        Page<Review> result = reviewDocumentRepository.findReviewsWithCriteria(productId, pageable);
+        if (result.hasContent()) {
+            ResponseWithPagination<ReviewVm> response = new ResponseWithPagination<>();
+            List<ReviewVm> list = new ArrayList<>();
+            for (Review review : result.getContent()) {
+                ReviewVm reviewVm = ReviewVm.builder()
+                        .id(review.getId())
+                        .author(review.getAuthor())
+                        .content(review.getContent())
+                        .rating(review.getRating())
+                        .product(review.getProduct())
+                        .variant(review.getVariant())
+                        .reviewMedia(review.getReviewMedia().stream().map(item -> ReviewMediaVm.builder().id(item.getId()).url(item.getUrl()).build()).toList())
+                        .createdAt(review.getCreatedAt())
+                        .build();
+                list.add(reviewVm);
+            }
+            PaginationInfo paginationInfo = PaginationInfo.builder()
+                    .page(filter.page())
+                    .limit(filter.limit())
                     .totalPage(result.getTotalPages())
                     .totalElement(result.getTotalElements())
                     .build();

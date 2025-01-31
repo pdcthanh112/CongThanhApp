@@ -1,3 +1,6 @@
 package com.congthanh.reviewservice.model.request;
 
-public record ReviewFilter (String filter, int page , int limit) { }
+import lombok.Builder;
+
+@Builder
+public record ReviewFilter (int page , int limit, int rating, boolean hasMedia) { }

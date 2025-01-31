@@ -1,24 +1,25 @@
-'use client'
+'use client';
+import React from 'react';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { createForgetPasswordSchema, ForgetPasswordSchemaType } from '@/models/schema/authSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Input } from '@/components/ui/';
+import { useTranslations } from 'next-intl';
 
-import React from "react";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { forgetPasswordSchema, forgetPasswordType } from "@/models/schema/authSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+export default function ForgetPasswordForm() {
+  const t = useTranslations();
+  const ForgetPasswordSchema = createForgetPasswordSchema(t);
 
-const ForgetPasswordForm = () => {
-
-  const forgetPasswordForm = useForm<forgetPasswordType>({
-    resolver: zodResolver(forgetPasswordSchema),
+  const forgetPasswordForm = useForm<ForgetPasswordSchemaType>({
     defaultValues: {
-      email: "",
+      email: '',
     },
+    resolver: zodResolver(ForgetPasswordSchema),
   });
 
-  const onSubmit: SubmitHandler<forgetPasswordType> = (data) => {
-    console.log("asflafjfksf", data);
+  const onSubmit: SubmitHandler<ForgetPasswordSchemaType> = (data) => {
+    console.log('asflafjfksf', data);
   };
 
   return (
@@ -31,7 +32,7 @@ const ForgetPasswordForm = () => {
             <FormItem className="h-24">
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="example@email.com" type="email" {...field} className="focus:outline-none"/>
+                <Input placeholder="example@email.com" type="email" {...field} className="focus:outline-none" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -44,6 +45,4 @@ const ForgetPasswordForm = () => {
       </form>
     </Form>
   );
-};
-
-export default ForgetPasswordForm;
+}

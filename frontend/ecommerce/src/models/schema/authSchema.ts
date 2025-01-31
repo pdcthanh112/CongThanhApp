@@ -62,16 +62,21 @@ export const createRegisterSchema = (t: ReturnType<typeof useTranslations>) => {
     });
 };
 
-// export type RegisterSchemaType = z.TypeOf<typeof RegisterSchema>;
 export type RegisterSchemaType = z.infer<Awaited<ReturnType<typeof createRegisterSchema>>>;
 
-export const ForgetPasswordSchema = z
-  .object({
-    email: z.string().trim().min(1, 'Email is required').email(),
-  })
-  .strict();
+export const createForgetPasswordSchema = (t: ReturnType<typeof useTranslations>) => {
+  return z
+    .object({
+      email: z
+        .string()
+        .trim()
+        .min(1, t('auth.validation.field_required', { field: t('auth.email') }))
+        .email(),
+    })
+    .strict();
+};
 
-export type ForgetPasswordType = z.TypeOf<typeof ForgetPasswordSchema>;
+export type ForgetPasswordSchemaType = z.infer<Awaited<ReturnType<typeof createForgetPasswordSchema>>>;
 
 export const resetPasswordSchema = z
   .object({

@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.0</version>
-		<relativePath>../pom.xml</relativePath>
+		<relativePath />
 	</parent>
 	<groupId>com.congthanh</groupId>
 	<artifactId>review-service</artifactId>
@@ -42,6 +42,12 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
+		<dependency>
+			<groupId>com.congthanh</groupId>
+			<artifactId>common-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<classifier>protos</classifier>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>

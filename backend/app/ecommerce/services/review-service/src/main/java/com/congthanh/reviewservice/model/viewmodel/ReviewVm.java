@@ -1,23 +1,18 @@
-package com.congthanh.reviewservice.model.dto;
+package com.congthanh.reviewservice.model.viewmodel;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+import com.congthanh.reviewservice.model.dto.ReviewMediaDTO;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class ReviewDTO {
+public class ReviewVm {
 
-    private String id;
+    private Long id;
 
     private String content;
 
@@ -31,7 +26,7 @@ public class ReviewDTO {
 
     private String variant;
 
-    private List<ReviewMediaDTO> reviewMedia;
+    private List<ReviewMediaVm> reviewMedia;
 
     private Instant createdAt;
 
