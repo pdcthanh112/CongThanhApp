@@ -36,8 +36,13 @@ export default function (sequelize: Sequelize): typeof ResetPasswordModel {
         defaultValue: false,
       },
     },
-    { tableName: 'reset_password', sequelize: sequelize, timestamps: true },
+    {
+      tableName: 'reset_password',
+      modelName: 'ResetPasswordModel',
+      sequelize: sequelize,
+      timestamps: true,
+    },
   );
-  
+
   return ResetPasswordModel;
 }

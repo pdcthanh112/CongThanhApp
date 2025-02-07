@@ -31,7 +31,8 @@ export default function (sequelize: Sequelize): typeof OTPModel {
       },
     },
     {
-      tableName: 'OTP',
+      tableName: 'otp',
+      modelName: 'OTPModel',
       sequelize,
     },
   );

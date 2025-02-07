@@ -3,7 +3,8 @@ import { Account, Customer } from './account.interface';
 
 export interface TokenPayload {
   accountId: string;
-  role: string;
+  role: string[];
+  permission: string[]
 }
 
 export interface TokenData {

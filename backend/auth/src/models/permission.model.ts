@@ -20,14 +20,13 @@ export default function (sequelize: Sequelize): typeof PermissionModel {
         autoIncrementIdentity: true,
         primaryKey: true,
       },
-      
       name: {
         allowNull: false,
         type: DataTypes.STRING(45),
       },
       description: {
         allowNull: false,
-        type: DataTypes.STRING(255),
+        type: DataTypes.TEXT,
       },
       action: {
         type: DataTypes.STRING,
@@ -37,7 +36,8 @@ export default function (sequelize: Sequelize): typeof PermissionModel {
       },
     },
     {
-      tableName: 'Permission',
+      tableName: 'permission',
+      modelName: 'PermissionModel',
       sequelize,
     },
   );

@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import { LoginError } from '@interfaces/auth.interface';
+import { LoginError } from '@/interfaces/auth.interface';
 
 export class LoginErrorModel extends Model<LoginError> implements LoginError {
   public id: number;
@@ -30,7 +30,8 @@ export default function (sequelize: Sequelize): typeof LoginErrorModel {
       },
     },
     {
-      tableName: 'LoginError',
+      modelName: 'LoginError',
+      tableName: 'login_error',
       timestamps: false,
       sequelize,
     },

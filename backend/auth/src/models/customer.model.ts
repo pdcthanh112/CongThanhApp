@@ -70,7 +70,8 @@ export default function (sequelize: Sequelize): typeof CustomerModel {
       },
     },
     {
-      tableName: 'Customer',
+      tableName: 'customer',
+      modelName: 'CustomerModel',
       sequelize,
     },
   );

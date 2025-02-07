@@ -1,9 +1,21 @@
 import Sequelize from 'sequelize';
 import { NODE_ENV, MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE } from '@/config/index';
 import { logger } from '@/utils/logger';
-import CustomerModel from '@/models/customer.model';
-import { AccountModel, ActivityLogModel, LoginErrorModel, OTPModel, RefreshTokenModel, UserModel, ResetPasswordModel } from '@/models/';
-import {  } from '@/models/resetPassword.model';
+import {
+  AccountModel,
+  ActivityLogModel,
+  CustomerModel,
+  LoginErrorModel,
+  OTPModel,
+  RefreshTokenModel,
+  UserModel,
+  ResetPasswordModel,
+  UserPermissionModel,
+  PermissionModel,
+  RolePermissionModel,
+  UserRoleModel,
+  RoleModel,
+} from '@/models';
 
 export const mysqlConnection = new Sequelize.Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
   dialect: 'mysql',
@@ -31,13 +43,18 @@ export const mysqlConnection = new Sequelize.Sequelize(MYSQL_DATABASE, MYSQL_USE
 
 export const MYSQL_DB = {
   Account: AccountModel(mysqlConnection),
-  Customer: CustomerModel(mysqlConnection),
   ActivityLog: ActivityLogModel(mysqlConnection),
-  OTP: OTPModel(mysqlConnection),
+  Customer: CustomerModel(mysqlConnection),
   LoginError: LoginErrorModel(mysqlConnection),
+  OTP: OTPModel(mysqlConnection),
+  Permission: PermissionModel(mysqlConnection),
   RefreshToken: RefreshTokenModel(mysqlConnection),
-  User: UserModel(mysqlConnection),
   ResetPassword: ResetPasswordModel(mysqlConnection),
-  mysqlConnection, // connection instance (RAW queries)
+  RolePermission: RolePermissionModel(mysqlConnection),
+  Role: RoleModel(mysqlConnection),
+  User: UserModel(mysqlConnection),
+  UserPermission: UserPermissionModel(mysqlConnection),
+  UserRole: UserRoleModel(mysqlConnection),
+  sequelize: mysqlConnection, // connection instance (RAW queries)
   Sequelize, // library
 };

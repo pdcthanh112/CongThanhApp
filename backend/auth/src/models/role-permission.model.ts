@@ -1,14 +1,31 @@
-import { Model, Sequelize } from 'sequelize';
-import { RoleModel } from './role.model';
-import { PermissionModel } from './permission.model';
+import { DataTypes, Model, Sequelize } from 'sequelize';
+import { RolePermission } from '@/interfaces/role-permission.interface';
+import { PermissionModel, RoleModel } from '@/models';
 
-export class RolePermissionModel extends Model {}
+export class RolePermissionModel extends Model<RolePermission> implements RolePermission {
+  roleId!: number;
+  permissionId!: number;
+}
 
 export default function (sequelize: Sequelize): typeof RolePermissionModel {
-  RolePermissionModel.init({}, { sequelize, modelName: 'RolePermission' });
-  // Associations
-  RoleModel.belongsToMany(PermissionModel, { through: RolePermissionModel });
-  PermissionModel.belongsToMany(RoleModel, { through: RolePermissionModel });
+  RolePermissionModel.init(
+    {
+      roleId: {
+        type: DataTypes.INTEGER,
+        // references: { model: RoleModel, key: 'id' },
+      },
+      permissionId: {
+        type: DataTypes.INTEGER,
+        // references: { model: PermissionModel, key: 'id' },
+      },
+    },
+    {
+      modelName: 'RolePermissionModel',
+      tableName: 'role_permission',
+      sequelize,
+      timestamps: false,
+    },
+  );
 
   return RolePermissionModel;
 }

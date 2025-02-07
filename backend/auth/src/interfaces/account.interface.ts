@@ -5,7 +5,6 @@ export interface Account {
   accountId?: string;
   email: string;
   password: string;
-  role: string
   customerInfo?: Customer
   supplierInfo?: Supplier
   employeeInfo?: Employee

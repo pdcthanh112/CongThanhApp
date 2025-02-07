@@ -1,6 +1,5 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 import { User } from '@/interfaces/user.interface';
-import { RoleModel } from './role.model';
 
 export class UserModel extends Model<User> implements User {
   public id!: string;
@@ -21,10 +20,9 @@ export default function (sequelize: Sequelize): typeof UserModel {
     },
     {
       tableName: 'User',
+      modelName: "User",
       sequelize: sequelize,
     },
   );
   return UserModel;
 }
-
-// UserModel.belongsTo(RoleModel, { foreignKey: 'roleId', as: 'role' });

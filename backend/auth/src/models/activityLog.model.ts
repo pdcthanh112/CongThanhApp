@@ -36,7 +36,7 @@ export default function (sequelize: Sequelize): typeof ActivityLogModel {
       },
     },
     {
-      tableName: 'Activity_Log',
+      tableName: 'activity_log',
       sequelize,
     },
   );

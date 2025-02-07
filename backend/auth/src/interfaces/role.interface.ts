@@ -1,10 +1,8 @@
-import { UserRoleType } from '@/constants/enum';
 import { Permission } from './permission.interface';
 
 export interface Role {
-  id: string;
+  id: number;
   name: string;
-  type: UserRoleType;
   description: string;
   permissions?: Permission[];
 }

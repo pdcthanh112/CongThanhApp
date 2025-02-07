@@ -6,7 +6,6 @@ export class AccountModel extends Model<Account> implements Account{
   public accountId: string;
   public email: string;
   public password: string;
-  public role: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -34,12 +33,10 @@ export default function (sequelize: Sequelize): typeof AccountModel {
         allowNull: false,
         type: DataTypes.STRING(255),
       },
-      role: {
-        type: DataTypes.STRING
-      }
     },
     {
-      tableName: 'Account',
+      tableName: 'account',
+      modelName: 'Account',
       sequelize: sequelize,
       timestamps: true,
     },

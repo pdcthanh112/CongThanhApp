@@ -1,10 +1,3 @@
-export enum UserRoleType {
-  SUPER_ADMIN = 'super_admin',
-  ADMIN = 'admin',
-  MANAGER = 'manager',
-  CUSTOMER = 'customer',
-}
-
 export enum LoginType {
   CREDENTIALS = 'credentials',
   GOOGLE = 'google',

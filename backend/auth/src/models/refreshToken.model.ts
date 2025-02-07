@@ -1,5 +1,5 @@
-import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
-import { RefreshToken } from '@interfaces/refreshToken.interface';
+import { Sequelize, DataTypes, Model } from 'sequelize';
+import { RefreshToken } from '@/interfaces/refreshToken.interface';
 
 export class RefreshTokenModel extends Model<RefreshToken> implements RefreshToken {
   id: number;
@@ -32,7 +32,8 @@ export default function (sequelize: Sequelize): typeof RefreshTokenModel {
       },
     },
     {
-      tableName: 'Refresh_Token',
+      tableName: 'refresh_token',
+      modelName: 'RefreshTokenModel',
       sequelize,
     },
   );
