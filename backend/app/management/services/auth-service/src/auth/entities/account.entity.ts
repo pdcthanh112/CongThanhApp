@@ -8,6 +8,9 @@ export class Account {
   @Column({ name: 'account_id', nullable: false, unique: true })
   accountId: string;
 
+  @Column({name: 'emp_email', nullable: false, unique: true})
+  empEmail: string;
+
   @Column({ name: 'password_hash', nullable: false })
   password_hash: string;
 

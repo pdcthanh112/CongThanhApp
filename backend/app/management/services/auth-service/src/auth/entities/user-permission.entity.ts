@@ -9,6 +9,9 @@ export class UserPermission extends AbstractAuditEntity {
   @Column({ name: 'account_id', nullable: false })
   accountId: number;
 
+  @Column({name: 'assign_by'})
+  assignBy: string;
+
   @Column('time without time zone', { name: 'expired_at' })
   expiredAt: Date;
 }
