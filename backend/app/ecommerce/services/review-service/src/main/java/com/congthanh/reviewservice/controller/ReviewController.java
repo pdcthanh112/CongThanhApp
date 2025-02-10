@@ -11,6 +11,8 @@ import com.congthanh.reviewservice.model.viewmodel.ReviewVm;
 import com.congthanh.reviewservice.service.ReviewService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +36,7 @@ public class ReviewController {
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<Response<ResponseWithPagination<ReviewDTO>>> getReviewByProductId(@PathVariable("productId") String productId,  @RequestParam(defaultValue = "All") String filterRequest, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int limit) {
+    public ResponseEntity<Response<ResponseWithPagination<ReviewDTO>>> getReviewByProductId(@PathVariable("productId") String productId, @RequestParam(defaultValue = "All") String filterRequest, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int limit) {
         ResponseWithPagination<ReviewDTO> data = reviewService.getReviewByProductId(productId, page, limit);
         Response<ResponseWithPagination<ReviewDTO>> response = new Response<>();
         response.setData(data);
@@ -44,16 +46,16 @@ public class ReviewController {
     }
 
     @GetMapping("/store-front/product/{productId}")
-    public ResponseEntity<Response<ResponseWithPagination<ReviewVm>>> getReviewVmByProductId(@PathVariable("productId") String productId, @RequestParam("rating") int rating, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int limit, @RequestParam(defaultValue = "false") boolean hasMedia) {
-        ReviewFilter filter = ReviewFilter.builder().build();
-        ResponseWithPagination<ReviewVm> data = reviewService.getReviewVmByProductId(productId, filter);
+    public ResponseEntity<Response<ResponseWithPagination<ReviewVm>>> getReviewVmByProductId(@PathVariable("productId") String productId, @RequestParam(value = "rating") int rating, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int limit, @RequestParam(defaultValue = "false") boolean hasMedia) {
+        Pageable pageable = PageRequest.of(page, limit);
+        ResponseWithPagination<ReviewVm> data = reviewService.getReviewVmByProductId(productId, rating, hasMedia, pageable);
         Response<ResponseWithPagination<ReviewVm>> response = new Response<>();
         response.setData(data);
         response.setMessage("Get successfully");
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
         return ResponseEntity.ok().body(response);
     }
-    
+
     @GetMapping("/statistic")
     public ResponseEntity<Response<StatisticReviewResponse>> getRatingStarOfProduct(@RequestParam("product") String productId) {
         StatisticReviewResponse data = reviewService.getReviewStatisticOfProduct(productId);

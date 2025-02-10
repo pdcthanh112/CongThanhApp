@@ -1,5 +1,6 @@
 package com.congthanh.reviewservice.service.serviceImpl;
 
+import com.congthanh.reviewservice.model.document.ReviewDocument;
 import com.congthanh.reviewservice.model.dto.ReviewDTO;
 import com.congthanh.reviewservice.model.mapper.ReviewMapper;
 import com.congthanh.reviewservice.model.entity.Review;
@@ -15,8 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,13 +54,13 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ResponseWithPagination<ReviewVm> getReviewVmByProductId(String productId, ReviewFilter filter) {
-        Pageable pageable = PageRequest.of(filter.page() - 1, filter.limit());
-        Page<Review> result = reviewDocumentRepository.findReviewsWithCriteria(productId, pageable);
+    public ResponseWithPagination<ReviewVm> getReviewVmByProductId(String productId, Integer rating, Boolean hasMedia, Pageable pageable) {
+        Assert.notNull(productId, "Product ID must not be null");
+        Page<ReviewDocument> result = reviewDocumentRepository.findReviewsWithCriteria(productId, rating, hasMedia, pageable);
         if (result.hasContent()) {
             ResponseWithPagination<ReviewVm> response = new ResponseWithPagination<>();
             List<ReviewVm> list = new ArrayList<>();
-            for (Review review : result.getContent()) {
+            for (ReviewDocument review : result.getContent()) {
                 ReviewVm reviewVm = ReviewVm.builder()
                         .id(review.getId())
                         .author(review.getAuthor())
@@ -73,8 +74,8 @@ public class ReviewServiceImpl implements ReviewService {
                 list.add(reviewVm);
             }
             PaginationInfo paginationInfo = PaginationInfo.builder()
-                    .page(filter.page())
-                    .limit(filter.limit())
+                    .page(pageable.getPageNumber())
+                    .limit(pageable.getPageSize())
                     .totalPage(result.getTotalPages())
                     .totalElement(result.getTotalElements())
                     .build();
@@ -88,25 +89,27 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review createReview(ReviewDTO reviewDTO) {
-        ProductResponse product = null;
-        ProductVariantResponse variant = null;
-        assert product != null && variant != null;
-        Review review = Review.builder()
-                .content(reviewDTO.getContent())
-                .rating(reviewDTO.getRating())
-                .product(product.getId())
-                .variant(variant.getId())
-                .customerId(reviewDTO.getCustomerId())
-                .createdAt(Instant.now())
-                .build();
-        return reviewRepository.save(review);
+//        ProductResponse product = null;
+//        ProductVariantResponse variant = null;
+//        assert product != null && variant != null;
+//        Review review = Review.builder()
+//                .content(reviewDTO.getContent())
+//                .rating(reviewDTO.getRating())
+//                .product(product.getId())
+//                .variant(variant.getId())
+//                .customerId(reviewDTO.getCustomerId())
+//                .createdAt(Instant.now())
+//                .build();
+//        return reviewRepository.save(review);
+        return null;
     }
 
     @Override
     public StatisticReviewResponse getReviewStatisticOfProduct(String productId) {
-        ProductResponse product = null;
-        StatisticReviewResponse result = reviewRepository.getStatisticReviewFromProduct(product.getId());
-        return result;
+//        ProductResponse product = null;
+//        StatisticReviewResponse result = reviewRepository.getStatisticReviewFromProduct(product.getId());
+//        return result;
+        return null;
     }
 
 }

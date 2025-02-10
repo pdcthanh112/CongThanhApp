@@ -38,7 +38,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("/getAll")
+    @GetMapping("")
     @PermitAll
     public ResponseEntity<Response<?>> getAllProduct(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer limit) {
         Object data = productService.getAllProduct(page, limit);
@@ -49,7 +49,7 @@ public class ProductController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/getById/{id}")
+    @GetMapping("/{id}")
     @PermitAll
     public ResponseEntity<Response<ProductDTO>> getProductById(@PathVariable("id") String id) {
         ProductDTO data = productService.getProductById(id);
@@ -124,8 +124,8 @@ public class ProductController {
         return ResponseEntity.ok().body("Delete successfully");
     }
 
-    @GetMapping("/getByCategory")
-    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductByCategory(@RequestParam String categoryId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
+    @GetMapping("/store-front/categories/{categoryId}/products")
+    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductByCategory(@PathVariable("categoryId") String categoryId, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int limit) {
         ResponseWithPagination<ProductDTO> data = productService.getProductByCategory(categoryId, page, limit);
         Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
         response.setData(data);

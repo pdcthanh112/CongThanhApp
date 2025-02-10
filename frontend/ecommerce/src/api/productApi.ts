@@ -34,9 +34,10 @@ export const getProductBySlug = async (productSlug: string): Promise<Response<Pr
     });
 };
 
-export const getProductBySubcategory = async (subcategoryId: any, page: number, limit: number) => {
+export const getProductByCategory = async (categoryId: any, page: number, limit: number) => {
   return await axiosConfig
-    .get(`product/getBySubcategory?subcategory=${subcategoryId}&page=${page}&limit=${limit}`)
+    // .get(`product/getBySubcategory?subcategory=${subcategoryId}&page=${page}&limit=${limit}`)
+    .get(`/store-front/categories/${categoryId}/products?page=${page}&limit=${limit}`)
     .then((response) => response.data)
     .catch((error) => {
       throw Error(error);
