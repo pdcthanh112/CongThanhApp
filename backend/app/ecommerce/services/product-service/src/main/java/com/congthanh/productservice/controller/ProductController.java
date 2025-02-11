@@ -126,7 +126,17 @@ public class ProductController {
 
     @GetMapping("/store-front/categories/{categoryId}/products")
     public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductByCategory(@PathVariable("categoryId") String categoryId, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int limit) {
-        ResponseWithPagination<ProductDTO> data = productService.getProductByCategory(categoryId, page, limit);
+        ResponseWithPagination<ProductDTO> data = productService.getProductByCategoryId(categoryId, page, limit);
+        Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
+        response.setData(data);
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        response.setMessage("Get successfully");
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/store-front/categories/slug/{slug}/products")
+    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductByCategorySlug(@PathVariable("slug") String slug, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int limit) {
+        ResponseWithPagination<ProductDTO> data = productService.getProductByCategorySlug(slug, page, limit);
         Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
         response.setData(data);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);

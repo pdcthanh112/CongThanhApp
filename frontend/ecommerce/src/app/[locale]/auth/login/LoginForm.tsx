@@ -49,7 +49,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
             control={formLogin.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="h-24">
+              <FormItem className="h-24 space-y-0">
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input placeholder="example@email.com" type="email" {...field} />
@@ -62,7 +62,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
             control={formLogin.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="h-24">
+              <FormItem className="h-24 space-y-0">
                 <FormLabel style={{ color: 'inherit' }}>{t('auth.password')}</FormLabel>
                 <FormControl>
                   <div className="relative">

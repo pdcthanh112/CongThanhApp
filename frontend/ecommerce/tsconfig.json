@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -21,39 +18,10 @@
         "name": "next"
       }
     ],
-    "baseUrl": "src",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
-    // "paths": {
-    //   "@/*": ["/*"],
-    //   "@api/*": ["api/*"],
-    //   "@app/*": ["app/*"],
-    //   "@assets/*": ["assets/*"],
-    //   "@components/*": ["components/*"],
-    //   "@config/*": ["config/*"],
-    //   "@context/*": ["context/*"],
-    //   "@hooks/*": ["hooks/*"],
-    //   "@layout/*": ["layout/*"],
-    //   "@lib/*": ["lib/*"],
-    //   "@models/*": ["models/*"],
-    //   "@pages/*": ["pages/*"],
-    //   "@redux/*": ["redux/*"],
-    //   "@styles/*": ["styles/*"],
-    //   "@utils/*": ["utils/*"]
-    // },
-    ,
-    "target": "ES2017",
-    "types": ["node", "jest", "cypress", "@testing-library/jest-dom"]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/*.test.ts", "cypress", "./cypress.config.ts", "**/*.cy.tsx"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next.config.mjs"],
+  "exclude": ["node_modules"]
 }

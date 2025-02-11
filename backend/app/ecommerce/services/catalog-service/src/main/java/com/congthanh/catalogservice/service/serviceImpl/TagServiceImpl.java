@@ -2,10 +2,10 @@ package com.congthanh.catalogservice.service.serviceImpl;
 
 import com.congthanh.catalogservice.constant.common.ErrorCode;
 import com.congthanh.catalogservice.constant.enums.TagStatus;
-import com.congthanh.catalogservice.cqrs.command.command.tag.CreateTagCommand;
-import com.congthanh.catalogservice.cqrs.command.command.tag.UpdateTagCommand;
-import com.congthanh.catalogservice.cqrs.query.query.tag.GetAllTagQuery;
-import com.congthanh.catalogservice.cqrs.query.query.tag.GetTagByIdQuery;
+import com.congthanh.catalogservice.cqrs.commands.command.tag.CreateTagCommand;
+import com.congthanh.catalogservice.cqrs.commands.command.tag.UpdateTagCommand;
+import com.congthanh.catalogservice.cqrs.queries.query.tag.GetAllTagQuery;
+import com.congthanh.catalogservice.cqrs.queries.query.tag.GetTagByIdQuery;
 import com.congthanh.catalogservice.model.dto.TagDTO;
 import com.congthanh.catalogservice.model.entity.Tag;
 import com.congthanh.catalogservice.exception.ecommerce.BadRequestException;

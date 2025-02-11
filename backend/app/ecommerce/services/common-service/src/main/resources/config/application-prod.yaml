@@ -1,0 +1,11 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+axon:
+  datasource:
+      url: jdbc:postgresql://localhost:5432/axon_db
+      username: postgres
+      password: postgres
+      driver-class-name: org.postgresql.Driver

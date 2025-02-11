@@ -7,10 +7,15 @@ import "google/protobuf/timestamp.proto";
 
 service CategoryService {
   rpc getCategoryById (CategoryRequest) returns (CategoryResponse) {}
+  rpc getCategoryBySlug (CategorySlugRequest) returns (CategoryResponse) {}
 }
 
 message CategoryRequest {
   string categoryId = 1;
+}
+
+message CategorySlugRequest {
+  string slug = 1;
 }
 
 message CategoryResponse {

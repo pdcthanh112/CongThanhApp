@@ -1,6 +1,6 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import * as actionName from '../actions/name/wishlist';
-import { addProductToWishlist, getWishlistByCustomer, removeProductFromWishlist } from 'api/wishlistApi';
+import { addProductToWishlist, getWishlistByCustomer, removeProductFromWishlist } from '@/api/wishlistApi';
 import { PayloadAction } from '@reduxjs/toolkit';
 import {
   addItemToWishlistFailed,

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { getOrderByStatus } from 'api/orderApi';
-import { Customer } from '@models/type/CustomerModel';
-import { useAppSelector } from '@redux/store';
+import { getOrderByStatus } from '@/api/orderApi';
+import { Customer } from '@/models/types/CustomerModel';
+import { useAppSelector } from '@/redux/store';
 import { useQuery } from '@tanstack/react-query';
-import { OrderDetail, PaginationParams } from '@models/type';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import moment from 'moment'
+import { OrderDetail, PaginationParams } from '@/models/types';
+
 
 export default function History(): React.ReactElement {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
@@ -66,12 +65,4 @@ export default function History(): React.ReactElement {
       )}
     </div>
   );
-}
-
-export async function getServerSideProps(context: any) {
-  return {
-    props: {
-      ...(await serverSideTranslations(context.locale, ['common'])),
-    },
-  };
 }

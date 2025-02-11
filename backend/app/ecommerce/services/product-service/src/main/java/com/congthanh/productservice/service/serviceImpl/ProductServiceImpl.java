@@ -1,5 +1,7 @@
 package com.congthanh.productservice.service.serviceImpl;
 
+import com.congthanh.catalogservice.grpc.CategoryResponse;
+import com.congthanh.catalogservice.grpc.CategorySlugRequest;
 import com.congthanh.productservice.cqrs.query.query.GetProductBySlugQuery;
 import com.congthanh.productservice.grpc.client.CategoryGrpcClient;
 import com.congthanh.productservice.model.response.PaginationInfo;
@@ -184,9 +186,36 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseWithPagination<ProductDTO> getProductByCategory(String categoryId, int page, int limit) {
+    public ResponseWithPagination<ProductDTO> getProductByCategoryId(String categoryId, int page, int limit) {
         Pageable pageable = PageRequest.of(page, limit);
         Page<Product> result = productRepository.findByCategory(categoryId, pageable);
+        ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
+        if (result.hasContent()) {
+            List<ProductDTO> list = new ArrayList<>();
+            for (Product product : result.getContent()) {
+                ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
+                list.add(productDTO);
+            }
+
+            PaginationInfo paginationInfo = PaginationInfo.builder()
+                    .page(page)
+                    .limit(limit)
+                    .totalPage(result.getTotalPages())
+                    .totalElement(result.getTotalElements())
+                    .build();
+            response.setResponseList(list);
+            response.setPaginationInfo(paginationInfo);
+        } else {
+            throw new RuntimeException("List empty exception");
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseWithPagination<ProductDTO> getProductByCategorySlug(String slug, int page, int limit) {
+        CategoryResponse category = categoryGrpcClient.getCategoryBySlug(slug);
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<Product> result = productRepository.findByCategory(category.getId(), pageable);
         ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
         if (result.hasContent()) {
             List<ProductDTO> list = new ArrayList<>();

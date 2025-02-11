@@ -4,7 +4,7 @@ import { Card, Icon } from '@mui/material';
 import { Done as DoneIcon, Clear, HighlightOff, Delete } from '@mui/icons-material';
 import { Cart, CartItem, Customer } from '@/models/types';
 import { useAppSelector } from '@/redux/store';
-import { getCartByCustomerId } from 'api/cartApi';
+import { getCartByCustomerId } from '@/api/cartApi';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import Image from 'next/image';

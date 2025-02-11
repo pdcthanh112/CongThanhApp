@@ -41,10 +41,10 @@ spring:
 #          filters:
 #            - RewritePath=/catalog-service/(?<segment>.*), /$\\{segment}
 
-        - id: chat-service
-          uri: lb://CONGTHANHAPP-ECOMMERCE-CHAT-SERVICE
+        - id: common-service
+          uri: lb://CONGTHANHAPP-ECOMMERCE-COMMON-SERVICE
           predicates:
-              - Path=/api/ecommerce/chat/**, /api/graphql
+            - Path=/api/ecommerce/common/**
 
         - id: customer-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-CUSTOMER-SERVICE
@@ -55,6 +55,11 @@ spring:
           uri: lb://CONGTHANHAPP-ECOMMERCE-INVENTORY-SERVICE
           predicates:
             - Path=/api/ecommerce/inventory/**, /api/graphql
+
+        - id: message-service
+          uri: lb://CONGTHANHAPP-ECOMMERCE-MESSAGE-SERVICE
+          predicates:
+            - Path=/api/ecommerce/message/**, /api/graphql
 
         - id: notification-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-NOTIFICATION-SERVICE

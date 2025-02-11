@@ -2,9 +2,9 @@ package com.congthanh.catalogservice.service.serviceImpl;
 
 import com.congthanh.catalogservice.constant.common.ErrorCode;
 import com.congthanh.catalogservice.constant.enums.CategoryStatus;
-import com.congthanh.catalogservice.cqrs.command.command.category.*;
-import com.congthanh.catalogservice.cqrs.query.query.category.GetAllCategoryQuery;
-import com.congthanh.catalogservice.cqrs.query.query.category.GetCategoryByIdQuery;
+import com.congthanh.catalogservice.cqrs.commands.command.category.*;
+import com.congthanh.catalogservice.cqrs.queries.query.category.GetAllCategoryQuery;
+import com.congthanh.catalogservice.cqrs.queries.query.category.GetCategoryByIdQuery;
 import com.congthanh.catalogservice.model.dto.CategoryDTO;
 import com.congthanh.catalogservice.model.entity.Category;
 import com.congthanh.catalogservice.model.document.CategoryDocument;
@@ -30,7 +30,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service

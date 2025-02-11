@@ -1,5 +1,5 @@
 import { put, takeEvery } from 'redux-saga/effects';
-import * as authApi from 'api/customerApi';
+import * as authApi from '@/api/customerApi';
 import { PayloadAction } from '@reduxjs/toolkit';
 import * as actionName from '../actions/name/auth';
 import {

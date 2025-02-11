@@ -3,6 +3,7 @@ package com.congthanh.productservice.grpc.client;
 import com.congthanh.catalogservice.grpc.CategoryRequest;
 import com.congthanh.catalogservice.grpc.CategoryResponse;
 import com.congthanh.catalogservice.grpc.CategoryServiceGrpc;
+import com.congthanh.catalogservice.grpc.CategorySlugRequest;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import net.devh.boot.grpc.client.inject.GrpcClient;
@@ -27,5 +28,12 @@ public class CategoryGrpcClient {
                 .setCategoryId(categoryId)
                 .build();
         return blockingStub.getCategoryById(request);
+    }
+
+    public CategoryResponse getCategoryBySlug(String categoryId) {
+        CategorySlugRequest request = CategorySlugRequest.newBuilder()
+                .setSlug(categoryId)
+                .build();
+        return blockingStub.getCategoryBySlug(request);
     }
 }

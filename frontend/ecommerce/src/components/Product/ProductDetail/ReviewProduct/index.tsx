@@ -1,63 +1,60 @@
 'use client';
 import { getReviewByProduct } from '@/api/reviewApi';
+import { PaginationParams } from '@/models/types';
 import { Review } from '@/models/types/Review';
+import { Pagination } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import React, { useState } from 'react';
+import ReviewComponent from './ReviewComponent';
 
 type PropsType = {
   productId: string;
 };
 
 export default function ReviewProduct({ productId }: PropsType) {
-  // const { data: reviews } = useQuery({
-  //   queryKey: ['review'],
-  //   queryFn: async () => await getReviewByProduct(productId),
-  // });
-  const reviews: Review[] = [
-    {
-      id: 34234080593,
-      content:
-        'Sản phẩm đẹp , đúng mẫu . Không biết thời gian sử dụng có bị ố vàng hay không . Nhưng trước mắt là thấy tuyệt ',
-      rating: 5,
-      customerId: '7ogh-34052here7280-g423',
-      product: 'j;df-fgdf-sfdsgfsd',
-      reviewMedia: [
-        {
-          id: 0,
-          url: 'https://www.usnews.com/object/image/00000162-f3bb-d0d5-a57f-fbfb3eef0000/32-lake-louise.jpg?update-time=1677094961403&size=responsive640',
-        },
-        {
-          id: 0,
-          url: 'https://www.usnews.com/object/image/00000186-7a58-d975-aff7-fffbc8910000/iguazu-falls-stock.jpg?update-time=1677089883729&size=responsive640',
-        },
-        {
-          id: 0,
-          url: 'https://www.usnews.com/object/image/00000162-f3a3-d0d5-a57f-fbf3af9b0000/20-mount-rainier-national-park.jpg?update-time=1677094377415&size=responsive640',
-        },
-      ],
-    },
-    {
-      id: 34234080593,
-      content:
-        'Sản phẩm đẹp , đúng mẫu . Không biết thời gian sử dụng có bị ố vàng hay không . Nhưng trước mắt là thấy tuyệt ',
-      rating: 4,
-      customerId: '7ogh-34052here7280-g423',
-      product: 'j;df-fgdf-sfdsgfsd',
-      reviewMedia: [
-        {
-          id: 0,
-          url: 'https://www.usnews.com/object/image/00000162-f3bb-d0d5-a57f-fbfb3eef0000/32-lake-louise.jpg?update-time=1677094961403&size=responsive640',
-        },
-        {
-          id: 0,
-          url: 'https://www.usnews.com/object/image/00000186-7a58-d975-aff7-fffbc8910000/iguazu-falls-stock.jpg?update-time=1677089883729&size=responsive640',
-        },
-        {
-          id: 0,
-          url: 'https://www.usnews.com/object/image/00000162-f3a3-d0d5-a57f-fbf3af9b0000/20-mount-rainier-national-park.jpg?update-time=1677094377415&size=responsive640',
-        },
-      ],
-    },
+  const [filter, setFilter] = useState({ rating: 0, hasMedia: false });
+  const [pagination, setPagination] = useState<PaginationParams>({ page: 1, limit: 10, totalPage: 0 });
+
+  const { data: reviews } = useQuery<Review[]>({
+    queryKey: ['review', filter, pagination],
+    queryFn: async () => await getReviewByProduct(productId).then((response) => response.data.responseList),
+  });
+  console.log('RRRRRR', reviews);
+  if (!reviews) return <div>Loading</div>;
+
+  const filterValue = [
+    { name: 'All', value: 0 },
+    { name: '5 sao', value: 5 },
+    { name: '4 sao', value: 4 },
+    { name: '3 sao', value: 3 },
+    { name: '2 sao', value: 2 },
+    { name: '1 sao', value: 1 },
   ];
 
-  return <div>àaaa</div>;
+  return (
+    <React.Fragment>
+      <div className="flex">
+        <div>4/5 sao</div>
+        <div className="space-x-2">
+          {filterValue.map((item) => (
+            <span key={item.value} className={`border-2 px-3 py-2 ${item.value === filter.rating ? 'border-green-400': 'border-gray-400'}`}  onClick={() => setFilter({...filter, rating: item.value})}>
+              {item.name}
+            </span>
+          ))}
+          <span className={`border-2 px-3 py-2 ${filter.hasMedia ? 'border-green-400': 'border-gray-400'}`}  onClick={() => setFilter({...filter, hasMedia: !filter.hasMedia})}>
+              Có hình ảnh
+            </span>
+        </div>
+      </div>
+      {reviews.map((review) => (
+        <ReviewComponent key={review.id} review={review}/>
+      ))}
+      <Pagination
+        shape="rounded"
+        page={pagination.page}
+        count={pagination.totalPage}
+        onChange={(_, page) => setPagination({ ...pagination, page: page })}
+      />
+    </React.Fragment>
+  );
 }

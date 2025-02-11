@@ -185,15 +185,11 @@ export default function RegisterForm() {
                 <FormItem className="h-24 w-full col-span-6 space-y-0">
                   <FormLabel style={{ color: 'inherit' }}>{t('auth.date_of_birth')}</FormLabel>
                   <FormControl>
-                    {/* <div className="flex relative items-center border-2 px-3 rounded">
-                      <CalendarDays /> */}
-                    {/* <Input type="text" {...field} className="border-none" /> */}
                     <DatePicker
                       size="large"
                       className="focus:outline-none w-full border-2 border-gray-200"
                       {...field}
                     />
-                    {/* </div> */}
                   </FormControl>
                   <FormMessage />
                 </FormItem>

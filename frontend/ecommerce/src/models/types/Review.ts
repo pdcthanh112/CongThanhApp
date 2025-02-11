@@ -5,6 +5,7 @@ export type Review = {
   customerId: string;
   product: string;
   reviewMedia: ReviewMedia[];
+  createdAt: Date
 };
 
 export type ReviewMedia = {

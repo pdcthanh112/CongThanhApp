@@ -1,6 +1,6 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import * as actionName from '../actions/name/notification';
-import { getNotificationByCustomer } from 'api/notificationApi';
+import { getNotificationByCustomer } from '@/api/notificationApi';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { fetchNotificationFailed, fetchNotificationStart, fetchNotificationSucceeded } from '@/redux/reducers/notificationReducer';
 

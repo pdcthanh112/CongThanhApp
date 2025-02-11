@@ -2,7 +2,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 import * as actionName from '../actions/name/cart';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { addItemToCartFailed, addItemToCartStart, addItemToCartSucceeded, createNewCartFailed, createNewCartStart, createNewCartSucceeded, deleteCartFailed, deleteCartStart, deleteCartSucceeded, fetchCartFailed, fetchCartStart, fetchCartSucceeded, removeItemFromCartFailed, removeItemFromCartStart, removeItemFromCartSucceeded } from '@/redux/reducers/cartReducer';
-import { getCartByCustomerId } from 'api/cartApi';
+import { getCartByCustomerId } from '@/api/cartApi';
 
 function* fetchCart(action: PayloadAction<any>) {
   try {

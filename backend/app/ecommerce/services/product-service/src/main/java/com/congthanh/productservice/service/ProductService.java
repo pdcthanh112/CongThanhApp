@@ -27,7 +27,8 @@ public interface ProductService {
 
   boolean deleteProduct(String id);
 
-  ResponseWithPagination<ProductDTO> getProductByCategory(String categoryId, int page, int limit);
+  ResponseWithPagination<ProductDTO> getProductByCategoryId(String categoryId, int page, int limit);
+  ResponseWithPagination<ProductDTO> getProductByCategorySlug(String categoryId, int page, int limit);
 
   List<ProductDTO> searchProduct(String keyword);
 

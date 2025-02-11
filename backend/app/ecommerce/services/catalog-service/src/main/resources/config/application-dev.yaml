@@ -226,7 +226,6 @@ axon:
       tag:
         mode: tracking
         source: eventStore
-
 #axoniq:
 #  console:
 #    enabled: true

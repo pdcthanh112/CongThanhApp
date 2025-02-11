@@ -2,7 +2,7 @@
 import React, { useRef, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { getImageByProductId, getSoldByProduct, getVariantAttributeValueByProduct } from 'api/productApi';
+import { getImageByProductId, getSoldByProduct, getVariantAttributeValueByProduct } from '@/api/productApi';
 import { Rating, Icon, Avatar, TableContainer, Table, TableBody, TableRow, TableCell, Popover } from '@mui/material';
 import { Storefront, ForumOutlined, KeyboardArrowDown } from '@mui/icons-material';
 import Image from 'next/image';
@@ -10,15 +10,15 @@ import DefaultImage from '@/assets/images/default-image.jpg';
 import { formatCurrency, roundNumber } from '@/utils/helper';
 import { useTranslations } from 'next-intl';
 import { useAddProductToWishlist, useRemoveProductFromWishlist } from '@/hooks/wishlist/wishlistHook';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { useAppDispatch } from '@/redux/store';
 import { openModalAuth } from '@/redux/features/modalAuth';
 import { AddToCartIcon, HeartEmpty, HeartFull } from '@/assets/icons';
 import { toast } from 'react-toastify';
 import { useAddProductToCart } from '@/hooks/cart/cartHook';
-import { getWishlistByCustomer } from 'api/wishlistApi';
+import { getWishlistByCustomer } from '@/api/wishlistApi';
 import { getSupplierById } from '@/api/supplierApi';
 import Link from 'next/link';
-import { Customer, Product, ProductAttribute, ProductImage, Supplier, Wishlist } from '@/models/types';
+import { Product, ProductAttribute, ProductImage, Supplier, Wishlist } from '@/models/types';
 import QuantitySelector from '@/components/QuantitySelector/QuantitySelector';
 import { PRODUCT_KEY, WISHLIST_KEY } from '@/utils/constants/queryKey';
 import ProductDetailSkeleton from '../ProductDetailSkeleton';
@@ -27,6 +27,7 @@ import { BarChart, Bar, XAxis, ResponsiveContainer } from 'recharts';
 import { Button } from '@/components/ui/button';
 import { PATH } from '@/utils/constants/path';
 import { useSession } from 'next-auth/react';
+import ReviewProduct from './ReviewProduct';
 
 type ProductDetailProps = {
   product: Product;
@@ -464,18 +465,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
 
       <div className="bg-white mt-10 p-5">
         <h2 className="bg-yellow-100 px-2 py-1 rounded-sm">{t('product.product_review').toUpperCase()}</h2>
-        <TableContainer>
-          <Table>
-            <TableBody>
-              {product.attribute?.map((item: ProductAttribute) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.attribute}</TableCell>
-                  <TableCell>{item.value}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <ReviewProduct productId={'366f785f-26dd-4c33-8452-0b172ef0a5de'}/>
       </div>
     </div>
   );
