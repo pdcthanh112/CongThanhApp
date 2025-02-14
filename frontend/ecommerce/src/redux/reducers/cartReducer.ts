@@ -45,7 +45,6 @@ const cartSlice = createSlice({
     },
     fetchCartClear: (state: CartState, action: PayloadAction<FetchCartFailedPayload>) => {
       state.status = 'idle';
-      state.error = null;
     },
     createNewCartStart: (state: CartState, action: PayloadAction<CreateNewCartStartPayload>) => {
       state.status = 'pending';
@@ -58,6 +57,9 @@ const cartSlice = createSlice({
       state.status = 'failed';
       state.error = action.payload.error;
     },
+    createNewCartClear: (state: CartState) => {
+      state.status = 'idle';
+    },
     deleteCartStart: (state: CartState, action: PayloadAction<DeleteCartStartPayload>) => {
       state.status = 'pending';
     },
@@ -68,6 +70,9 @@ const cartSlice = createSlice({
     deleteCartFailed: (state: CartState, action: PayloadAction<DeleteCartFailedPayload>) => {
       state.status = 'failed';
       state.error = action.payload.error;
+    },
+    deleteCartClear: (state: CartState) => {
+      state.status = 'idle';
     },
     addItemToCartStart: (state: CartState, action: PayloadAction<AddItemToCartStartPayload>) => {
       state.status = 'pending';
@@ -119,9 +124,11 @@ export const {
   createNewCartStart,
   createNewCartSucceeded,
   createNewCartFailed,
+  createNewCartClear,
   deleteCartStart,
   deleteCartSucceeded,
   deleteCartFailed,
+  deleteCartClear,
   addItemToCartStart,
   addItemToCartSucceeded,
   addItemToCartFailed,

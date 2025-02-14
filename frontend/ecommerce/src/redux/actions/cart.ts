@@ -47,7 +47,7 @@ import {
 } from './type/cart';
 
 export const fetchCartRequested = (payload: FetchCartRequestedPayload): FetchCartRequested => ({
-  type: actionName.FETCH_CART_REQUESTED,
+  type: actionName.FETCH_CART,
   payload,
 });
 
@@ -72,7 +72,7 @@ export const fetchCartClear = (payload: FetchCartClearPayload): FetchCartClear =
 });
 
 export const createNewCartRequested = (payload: CreateNewCartRequestedPayload): CreateNewCartRequested => ({
-  type: actionName.CREATE_NEW_CART_REQUESTED,
+  type: actionName.CREATE_NEW_CART,
   payload,
 });
 
@@ -92,7 +92,7 @@ export const createNewCartFailed = (payload: CreateNewCartFailedPayload): Create
 });
 
 export const deleteCartRequested = (payload: DeleteCartRequestedPayload): DeleteCartRequested => ({
-  type: actionName.DELETE_CART_REQUESTED,
+  type: actionName.DELETE_CART,
   payload,
 });
 
@@ -112,7 +112,7 @@ export const deleteCartFailed = (payload: DeleteCartFailedPayload): DeleteCartFa
 });
 
 export const addItemToCartRequested = (payload: AddItemToCartRequestedPayload): AddItemToCartRequested => ({
-  type: actionName.ADD_ITEM_TO_CART_REQUESTED,
+  type: actionName.ADD_ITEM_TO_CART,
   payload,
 });
 
@@ -132,7 +132,7 @@ export const addItemToCartFailed = (payload: AddItemToCartFailedPayload): AddIte
 });
 
 export const removeItemFromCartRequested = (payload: RemoveItemFromCartRequestedPayload): RemoveItemFromCartRequested => ({
-  type: actionName.REMOVE_ITEM_FROM_CART_REQUESTED,
+  type: actionName.REMOVE_ITEM_FROM_CART,
   payload,
 });
 

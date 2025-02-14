@@ -6,7 +6,7 @@ export const createNewCart = async (data: CreateCartForm) => {
     .post('cart/create', {
       name: data.name,
       customer: data.customer,
-      isDefault: data.isDefault
+      isDefault: data.isDefault,
     })
     .then((response) => response)
     .catch((error) => {
@@ -14,7 +14,7 @@ export const createNewCart = async (data: CreateCartForm) => {
     });
 };
 
-export const deleteCart = async (cartId: String) => {
+export const deleteCart = async (cartId: string) => {
   return await axiosConfig
     .delete(`cart/${cartId}`)
     .then((response) => response)
@@ -23,7 +23,7 @@ export const deleteCart = async (cartId: String) => {
     });
 };
 
-export const getCartById = async (id: any) => {
+export const getCartById = async (id: number) => {
   return await axiosConfig
     .get(`cart/${id}`)
     .then((response) => response.data)
@@ -41,7 +41,15 @@ export const getCartByCustomerId = async (customerId: string) => {
     });
 };
 
-export const addProductToCart = async ({productId, quantity, cartId}: {productId: string, quantity: number, cartId: string}) => {
+export const addProductToCart = async ({
+  productId,
+  quantity,
+  cartId,
+}: {
+  productId: string;
+  quantity: number;
+  cartId: string;
+}) => {
   return await axiosConfig
     .post(`cart-item/addToCart?productId=${productId}&quantity=${quantity}&cartId=${cartId}`)
     .then((response) => response)
@@ -50,7 +58,7 @@ export const addProductToCart = async ({productId, quantity, cartId}: {productId
     });
 };
 
-export const updateCartItem = async (cartItemId: string, quantity: number) => {
+export const updateCartItem = async ({ cartItemId, quantity }: { cartItemId: number; quantity: number }) => {
   return await axiosConfig
     .put(`cart-item/update?cartItemId=${cartItemId}&quantity=${quantity}`)
     .then((response) => response)
@@ -67,4 +75,3 @@ export const deleteCartItem = async (itemId: string) => {
       throw error;
     });
 };
-

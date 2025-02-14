@@ -5,7 +5,7 @@ export type CreateCartForm = {
 };
 
 export type AddToCartForm = {
-  productId: any;
+  productId: string;
   quantity: number;
   cartId: string;
 };

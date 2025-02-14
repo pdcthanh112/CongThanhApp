@@ -5,9 +5,11 @@ import {
   addItemToCartFailed,
   addItemToCartStart,
   addItemToCartSucceeded,
+  createNewCartClear,
   createNewCartFailed,
   createNewCartStart,
   createNewCartSucceeded,
+  deleteCartClear,
   deleteCartFailed,
   deleteCartStart,
   deleteCartSucceeded,
@@ -18,15 +20,16 @@ import {
   removeItemFromCartFailed,
   removeItemFromCartStart,
   removeItemFromCartSucceeded,
+  updateItemQuantityFailed,
   updateItemQuantityStart,
   updateItemQuantitySucceeded,
 } from '@/redux/reducers/cartReducer';
-import { getCartByCustomerId } from '@/api/cartApi';
+import * as cartApi  from '@/api/cartApi';
 
 function* fetchCart(action: PayloadAction<any>) {
   try {
     yield put(fetchCartStart(action.payload));
-    const { data } = yield getCartByCustomerId(action.payload);
+    const { data } = yield cartApi.getCartByCustomerId(action.payload.params.customerId);
     yield put(fetchCartSucceeded({ data: data }));
   } catch (error) {
     yield put(fetchCartFailed({ error: 'Error:' + error }));
@@ -38,29 +41,31 @@ function* fetchCart(action: PayloadAction<any>) {
 function* createNewCart(action: PayloadAction<any>) {
   try {
     yield put(createNewCartStart(action.payload));
-    // yield addToCartApi({ productId: action.payload.productId, quantity: action.payload.quantity, cartId: action.payload.cartId });
+    yield cartApi.createNewCart({ name: action.payload.name, customer: action.payload.customer, isDefault: action.payload.isDefault });
     yield put(createNewCartSucceeded(action.payload));
   } catch (error) {
     yield put(createNewCartFailed({ error: 'Error: ' + error }));
   } finally {
-    yield put();
+    yield put(createNewCartClear());
   }
 }
 
 function* deleteCart(action: PayloadAction<any>) {
   try {
-    yield put(deleteCartStart(action.payload));
-    // yield removeCartItem(action.payload);
+    yield put(deleteCartStart(action.payload.id));
+    yield cartApi.deleteCart(action.payload.id);
     yield put(deleteCartSucceeded(action.payload));
   } catch (error) {
     yield put(deleteCartFailed({ error: 'Error: ' + error }));
+  } finally {
+    yield put(deleteCartClear())
   }
 }
 
 function* addToCart(action: PayloadAction<any>) {
   try {
     yield put(addItemToCartStart(action.payload));
-
+    yield cartApi.addProductToCart({ productId: action.payload.productId, quantity: action.payload.quantity, cartId: action.payload.cartId });
     yield put(addItemToCartSucceeded(action.payload));
   } catch (error) {
     yield put(addItemToCartFailed({ error: 'Error' + error }));
@@ -70,7 +75,7 @@ function* addToCart(action: PayloadAction<any>) {
 function* removeFromCart(action: PayloadAction<any>) {
   try {
     yield put(removeItemFromCartStart(action.payload));
-    // yield Api.removeCartItem(action.payload);
+    yield cartApi.deleteCartItem(action.payload);
     yield put(removeItemFromCartSucceeded(action.payload));
   } catch (error) {
     yield put(removeItemFromCartFailed({ error: 'Error' + error }));
@@ -80,18 +85,18 @@ function* removeFromCart(action: PayloadAction<any>) {
 function* updateItemQuantity(action: PayloadAction<any>) {
   try {
     yield put(updateItemQuantityStart(action.payload));
-    //gọi api
+    yield cartApi.updateCartItem({cartItemId: action.payload.itemId, quantity: action.payload.quantity})
     yield put(updateItemQuantitySucceeded(action.payload))
   } catch (error) {
-    
+    yield put(updateItemQuantityFailed({error: "Error" + error}))
   }
 }
 
 export function* cartSaga() {
-  yield takeEvery(actionName.FETCH_CART_REQUESTED, fetchCart);
-  yield takeEvery(actionName.CREATE_NEW_CART_REQUESTED, createNewCart);
-  yield takeEvery(actionName.DELETE_CART_REQUESTED, deleteCart);
-  yield takeEvery(actionName.ADD_ITEM_TO_CART_REQUESTED, addToCart);
-  yield takeEvery(actionName.REMOVE_ITEM_FROM_CART_REQUESTED, removeFromCart);
-  yield takeEvery(actionName.UPDATE_ITEM_QUANTITY_REQUEST, updateItemQuantity);
+  yield takeEvery(actionName.FETCH_CART, fetchCart);
+  yield takeEvery(actionName.CREATE_NEW_CART, createNewCart);
+  yield takeEvery(actionName.DELETE_CART, deleteCart);
+  yield takeEvery(actionName.ADD_ITEM_TO_CART, addToCart);
+  yield takeEvery(actionName.REMOVE_ITEM_FROM_CART, removeFromCart);
+  yield takeEvery(actionName.UPDATE_ITEM_QUANTITY, updateItemQuantity);
 }

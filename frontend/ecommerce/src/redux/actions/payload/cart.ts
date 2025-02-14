@@ -1,11 +1,11 @@
 import { Cart } from '@/models/types/CartModel';
 
-export type FetchCartRequestedPayload = {
-  values: { id: string; name: string };
+export type FetchCartPayload = {
+  params: { customerId: string };
 };
 
 export type FetchCartStartPayload = {
-  values: { id: string; name: string };
+  params: { customerId: string };
 };
 
 export type FetchCartSucceededPayload = {
@@ -27,7 +27,7 @@ export type CreateNewCartStartPayload = {
 };
 
 export type CreateNewCartSucceededPayload = {
-  data: {};
+  data: [];
 };
 
 export type CreateNewCartFailedPayload = {
@@ -43,7 +43,7 @@ export type DeleteCartStartPayload = {
 };
 
 export type DeleteCartSucceededPayload = {
-  data: {};
+  data: [];
 };
 
 export type DeleteCartFailedPayload = {

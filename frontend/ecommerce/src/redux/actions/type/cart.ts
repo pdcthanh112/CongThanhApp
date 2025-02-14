@@ -37,7 +37,7 @@ export interface CartState {
 }
 
 export type FetchCartRequested = {
-  type: typeof actionName.FETCH_CART_REQUESTED;
+  type: typeof actionName.FETCH_CART;
   payload: FetchCartRequestedPayload;
 };
 
@@ -62,7 +62,7 @@ export type FetchCartClear = {
 };
 
 export type CreateNewCartRequested = {
-  type: typeof actionName.CREATE_NEW_CART_REQUESTED;
+  type: typeof actionName.CREATE_NEW_CART;
   payload: CreateNewCartRequestedPayload;
 };
 
@@ -82,7 +82,7 @@ export type CreateNewCartFailed = {
 };
 
 export type DeleteCartRequested = {
-  type: typeof actionName.DELETE_CART_REQUESTED;
+  type: typeof actionName.DELETE_CART;
   payload: DeleteCartRequestedPayload;
 };
 
@@ -102,7 +102,7 @@ export type DeleteCartFailed = {
 };
 
 export type AddItemToCartRequested = {
-  type: typeof actionName.ADD_ITEM_TO_CART_REQUESTED;
+  type: typeof actionName.ADD_ITEM_TO_CART;
   payload: AddItemToCartRequestedPayload;
 };
 
@@ -122,7 +122,7 @@ export type AddItemToCartFailed = {
 };
 
 export type RemoveItemFromCartRequested = {
-  type: typeof actionName.REMOVE_ITEM_FROM_CART_REQUESTED;
+  type: typeof actionName.REMOVE_ITEM_FROM_CART;
   payload: RemoveItemFromCartRequestedPayload;
 };
 
@@ -142,7 +142,7 @@ export type RemoveItemFromCartFailed = {
 };
 
 export type UpdateItemQuantityRequest = {
-  type: typeof actionName.UPDATE_ITEM_QUANTITY_REQUEST;
+  type: typeof actionName.UPDATE_ITEM_QUANTITY;
   payload: updateItemQuantityRequestPayload;
 };
 export type UpdateItemQuantityStart = {
