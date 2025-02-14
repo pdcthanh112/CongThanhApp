@@ -32,6 +32,9 @@ public class Review {
 
     private String variant;
 
+    @Column(name = "order_id", nullable = false)
+    private String orderId;
+
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     @JsonBackReference

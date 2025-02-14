@@ -1,12 +1,12 @@
-'use client'
-import React from "react";
-import { LayoutProps } from "@/app/[locale]/page";
-import AuthModal from "@/components/AuthModal";
-import { useAppSelector } from "@/redux/store";
-import { ToastContainer } from "react-toastify";
+'use client';
+import React from 'react';
+import { LayoutProps } from '@/app/[locale]/page';
+import AuthModal from '@/components/AuthModal';
+import { ToastContainer } from 'react-toastify';
+import useAppModalStore from '@/store/useAppModal';
 
 export const RootLayout = ({ children }: LayoutProps) => {
-  const openModalAuth = useAppSelector((state) => state.modalAuth.isOpenModalAuth);
+  const openModalAuth = useAppModalStore(state => state);
 
   return (
     <React.Fragment>

@@ -7,7 +7,6 @@ import com.congthanh.orderservice.model.mapper.OrderDetailMapper;
 import com.congthanh.orderservice.model.request.CreateOrderDetailRequest;
 import com.congthanh.orderservice.model.response.PaginationInfo;
 import com.congthanh.orderservice.model.response.ResponseWithPagination;
-import com.congthanh.orderservice.model.dto.ProductResponse;
 import com.congthanh.orderservice.repository.orderItem.OrderItemRepository;
 import com.congthanh.orderservice.service.OrderItemService;
 import lombok.RequiredArgsConstructor;

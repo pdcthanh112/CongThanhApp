@@ -1,6 +1,5 @@
 package com.congthanh.orderservice.service.serviceImpl;
 
-import com.congthanh.orderservice.constant.enums.PromotionType;
 import com.congthanh.orderservice.model.dto.CheckoutDTO;
 import com.congthanh.orderservice.model.dto.OrderDTO;
 import com.congthanh.orderservice.model.entity.Checkout;
@@ -13,14 +12,12 @@ import com.congthanh.promotionservice.grpc.PromotionServiceGrpc;
 import com.congthanh.orderservice.model.request.CreateOrderRequest;
 import com.congthanh.orderservice.model.mapper.OrderMapper;
 import com.congthanh.orderservice.model.dto.CartItemResponse;
-import com.congthanh.orderservice.model.dto.CartResponse;
 import com.congthanh.orderservice.repository.checkout.CheckoutRepository;
 import com.congthanh.orderservice.repository.order.OrderRepository;
 import com.congthanh.orderservice.service.OrderService;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

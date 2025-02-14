@@ -1,5 +1,5 @@
-import { Customer } from '@models/type';
-import { getAccessTokenFromLocalStorage, getProfileFromLocalStorage } from '@utils/auth';
+import { Customer } from '@/models/types';
+import { getAccessTokenFromLocalStorage, getProfileFromLocalStorage } from '@/utils/auth';
 import { createContext, useState } from 'react';
 
 interface AppContextInterface {
@@ -22,7 +22,7 @@ const initialAppContext: AppContextInterface = {
 };
 export const AppContext = createContext<AppContextInterface>(initialAppContext);
 
-export const AppProvider = ({ children }: { children: React.ReactNode }) => {
+export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAppContext.isAuthenticated);
   const [profile, setProfile] = useState<Customer | null>(initialAppContext.profile);
   //   const [extendedPurchase, setExtendedPurchase] = useState<ExtendedPurchase[]>(initialAppContext.extendedPurchase)

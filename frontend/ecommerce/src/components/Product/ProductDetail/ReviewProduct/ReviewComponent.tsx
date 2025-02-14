@@ -10,9 +10,9 @@ type PropsType = {
 };
 
 export default function ReviewComponent({ review }: PropsType) {
-  console.log('RRRRRRRRRRRRRRRRRRRRRRRRRRRR', review);
+
   return (
-    <React.Fragment>
+    <div className='mb-5'>
       <div className="flex items-center">
         <Avatar>
           <AvatarImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvTZzRBQJr3hGRmgOafgRHzNAvWYXA3RY3_g&s" />
@@ -30,12 +30,12 @@ export default function ReviewComponent({ review }: PropsType) {
       {review.reviewMedia && (
         <div className='flex'>
           {review.reviewMedia.map((item) => (
-            <span key={item.id} className="w-24 h-24 relative mr-2">
-              <Image src={item.url} alt={''} objectFit='contain' fill/>
+            <span key={item.id} className="w-20 h-20 relative mr-3">
+              <Image src={item.url} alt={''} objectFit='cover' fill/>
             </span>
           ))}
         </div>
       )}
-    </React.Fragment>
+    </div>
   );
 }

@@ -11,9 +11,11 @@ export const getStatisticFromProduct = async (productId: string): Promise<Respon
     });
 };
 
-export const getReviewByProduct = async (productId: string): Promise<ResponseWithPagination<Review>> => {
+export const getReviewByProduct = async (productId: string, filter: any, pagination: any): Promise<ResponseWithPagination<Review>> => {
+  const params = new URLSearchParams();
+  filter.hasMedia && params.append('hasMedia', true)
   return await axiosConfig
-    .get(`reviews/store-front/product/${productId}?page=1&limit=5&rating=0`)
+    .get(`reviews/store-front/product/${productId}?rating=${filter.rating}&page=${pagination.page}&limit=5`, {params})
     .then((response) => response.data)
     .catch((error) => {
       throw error;

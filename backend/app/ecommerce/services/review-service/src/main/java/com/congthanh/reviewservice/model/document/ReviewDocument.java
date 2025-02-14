@@ -26,6 +26,8 @@ public class ReviewDocument {
 
     private String variant;
 
+    private String orderId;
+
     private List<ReviewMediaDocument> reviewMedia;
 
     private Instant createdAt;

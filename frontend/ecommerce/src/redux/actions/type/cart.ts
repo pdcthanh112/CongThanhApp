@@ -1,4 +1,4 @@
-import { Cart } from '@models/type/CartModel';
+import { Cart } from '@/models/types/CartModel';
 import * as actionName from '../name/cart';
 import {
   AddItemToCartFailedPayload,
@@ -22,12 +22,18 @@ import {
   RemoveItemFromCartRequestedPayload,
   RemoveItemFromCartStartPayload,
   RemoveItemFromCartSucceededPayload,
+  updateItemQuantityClearPayload,
+  updateItemQuantityFailedPayload,
+  updateItemQuantityRequestPayload,
+  updateItemQuantityStartPayload,
+  updateItemQuantitySucceededPayload,
 } from '../payload/cart';
 
 export interface CartState {
-  status: 'idle' | 'pending' | 'succeeded' | 'failed'
+  status: 'idle' | 'pending' | 'succeeded' | 'failed';
   error: string | null;
   data: Cart[];
+  lastSync: string | null;
 }
 
 export type FetchCartRequested = {
@@ -135,3 +141,23 @@ export type RemoveItemFromCartFailed = {
   payload: RemoveItemFromCartFailedPayload;
 };
 
+export type UpdateItemQuantityRequest = {
+  type: typeof actionName.UPDATE_ITEM_QUANTITY_REQUEST;
+  payload: updateItemQuantityRequestPayload;
+};
+export type UpdateItemQuantityStart = {
+  type: typeof actionName.UPDATE_ITEM_QUANTITY_START;
+  payload: updateItemQuantityStartPayload;
+};
+export type UpdateItemQuantitySucceeded = {
+  type: typeof actionName.UPDATE_ITEM_QUANTITY_SUCCEEDED;
+  payload: updateItemQuantitySucceededPayload;
+};
+export type UpdateItemQuantityFailed = {
+  type: typeof actionName.UPDATE_ITEM_QUANTITY_FAILED;
+  payload: updateItemQuantityFailedPayload;
+};
+export type UpdateItemQuantityClear = {
+  type: typeof actionName.UPDATE_ITEM_QUANTITY_CLEAR;
+  payload: updateItemQuantityClearPayload;
+};

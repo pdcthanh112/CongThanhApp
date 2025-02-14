@@ -1,6 +1,8 @@
 package com.congthanh.orderservice.model.entity;
 
 import com.congthanh.orderservice.constant.enums.OrderStatus;
+import com.congthanh.orderservice.constant.enums.PaymentStatus;
+import com.congthanh.orderservice.constant.enums.ShippingStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -11,21 +13,25 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-@Table(name = "`Order`")
+@Table(name = "`orders`")
 public class Order extends AbstractAuditEntity{
 
   @Id
-//  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String customer;
+
+  @Column(name = "shipping_address_id", nullable = false)
+  private Long shippingAddress;
+
+  @Column(name = "billing_address_id", nullable = false)
+  private Long billingAddress;
 
   @Column(columnDefinition = "text")
   private String note;
@@ -38,6 +44,14 @@ public class Order extends AbstractAuditEntity{
 
   @Enumerated(EnumType.STRING)
   private OrderStatus status;
+
+  @Column(name = "payment_status")
+  @Enumerated(EnumType.STRING)
+  private PaymentStatus paymentStatus;
+
+  @Column(name = "shipping_status")
+  @Enumerated(EnumType.STRING)
+  private ShippingStatus shippingStatus;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "checkout", nullable = false, referencedColumnName = "id")

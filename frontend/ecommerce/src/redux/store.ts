@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 import { persistStore, persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
@@ -21,7 +21,7 @@ export const store = () => {
       reducer: rootReducer,
     });
   } else {
-    let Store: any = configureStore({
+    const Store = configureStore({
       reducer: persistedReducer,
       middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
@@ -40,7 +40,7 @@ export const store = () => {
 
 
 export type AppStore = ReturnType<typeof store>;
-type RootState = ReturnType<AppStore['getState']>;
+export type RootState = ReturnType<AppStore['getState']>;
 type AppDispatch = AppStore['dispatch'];
 
 export const useAppStore = useStore.withTypes<AppStore>();

@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import dynamic from 'next/dynamic';
 import './AppHeader.scss';
 import Image from 'next/image';
 import { Card, Icon } from '@mui/material';
@@ -10,7 +11,6 @@ import DefaultImage from '@/assets/images/default-image.jpg';
 import { NavigateNext, Category as CategoryIcon } from '@mui/icons-material';
 import CartModal from '@/components/Cart/CartModal';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import NotificationModal from '@/components/NotificationModal';
 import { PATH } from '@/utils/constants/path';
 import { NotificationIcon } from '@/assets/icons';
 import { logoutRequested } from '@/redux/actions/auth';
@@ -23,9 +23,11 @@ import { NOTIFICATION_KEY } from '@/utils/constants/queryKey';
 import { getNotificationByCustomer } from '@/api/notificationApi';
 import { Popover, PopoverContent, PopoverTrigger, Avatar, AvatarFallback, AvatarImage, Button } from '@/components/ui';
 import { useAuthenticated } from '@/hooks/auth/useAuthenticated';
-import CategoryComponent from '../Category/CategoryComponent';
 import SearchComponent from '../Search/SearchComponent';
 import { ChevronDown, LucideIcon, Settings } from 'lucide-react';
+
+const CategoryComponent = dynamic(() => import('../Category/CategoryComponent'), { ssr: false });
+const NotificationModal = dynamic(() => import('@/components/NotificationModal'), { ssr: false });
 
 export default function AppHeader() {
   const dispatch = useAppDispatch();

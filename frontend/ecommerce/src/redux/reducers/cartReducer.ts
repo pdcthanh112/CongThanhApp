@@ -16,12 +16,16 @@ import {
   RemoveItemFromCartFailedPayload,
   RemoveItemFromCartStartPayload,
   RemoveItemFromCartSucceededPayload,
+  updateItemQuantityFailedPayload,
+  updateItemQuantityStartPayload,
+  updateItemQuantitySucceededPayload,
 } from '@/redux/actions/payload/cart';
 
 const initialState: CartState = {
   status: 'idle',
   data: [],
   error: null,
+  lastSync: null,
 };
 
 const cartSlice = createSlice({
@@ -37,7 +41,7 @@ const cartSlice = createSlice({
     },
     fetchCartFailed: (state: CartState, action: PayloadAction<FetchCartFailedPayload>) => {
       state.status = 'failed';
-      state.error = 'loi';
+      state.error = action.payload.error;
     },
     fetchCartClear: (state: CartState, action: PayloadAction<FetchCartFailedPayload>) => {
       state.status = 'idle';
@@ -52,7 +56,7 @@ const cartSlice = createSlice({
     },
     createNewCartFailed: (state: CartState, action: PayloadAction<CreateNewCartFailedPayload>) => {
       state.status = 'failed';
-      state.error = 'loi';
+      state.error = action.payload.error;
     },
     deleteCartStart: (state: CartState, action: PayloadAction<DeleteCartStartPayload>) => {
       state.status = 'pending';
@@ -63,10 +67,16 @@ const cartSlice = createSlice({
     },
     deleteCartFailed: (state: CartState, action: PayloadAction<DeleteCartFailedPayload>) => {
       state.status = 'failed';
-      state.error = 'loi';
+      state.error = action.payload.error;
     },
     addItemToCartStart: (state: CartState, action: PayloadAction<AddItemToCartStartPayload>) => {
       state.status = 'pending';
+      const existingItem = state.data.find((item) => item.product === action.payload.product);
+      if (existingItem) {
+        existingItem.quantity += action.payload.quantity;
+      } else {
+        state.data.push(action.payload);
+      }
     },
     addItemToCartSucceeded: (state: CartState, action: PayloadAction<AddItemToCartSucceededPayload>) => {
       state.status = 'succeeded';
@@ -74,7 +84,7 @@ const cartSlice = createSlice({
     },
     addItemToCartFailed: (state: CartState, action: PayloadAction<AddItemToCartFailedPayload>) => {
       state.status = 'failed';
-      state.error = 'loi';
+      state.error = action.payload.error;
     },
     removeItemFromCartStart: (state: CartState, action: PayloadAction<RemoveItemFromCartStartPayload>) => {
       state.status = 'pending';
@@ -85,7 +95,18 @@ const cartSlice = createSlice({
     },
     removeItemFromCartFailed: (state: CartState, action: PayloadAction<RemoveItemFromCartFailedPayload>) => {
       state.status = 'failed';
-      state.error = 'loi';
+      state.error = action.payload.error;
+    },
+    updateItemQuantityStart: (state: CartState, action: PayloadAction<updateItemQuantityStartPayload>) => {
+      state.status = 'pending';
+    },
+    updateItemQuantitySucceeded: (state: CartState, action: PayloadAction<updateItemQuantitySucceededPayload>) => {
+      state.status = 'succeeded';
+      state.data = action.payload.data;
+    },
+    updateItemQuantityFailed: (state: CartState, action: PayloadAction<updateItemQuantityFailedPayload>) => {
+      state.status = 'failed';
+      state.error = action.payload.error;
     },
   },
 });
@@ -107,5 +128,8 @@ export const {
   removeItemFromCartStart,
   removeItemFromCartSucceeded,
   removeItemFromCartFailed,
+  updateItemQuantityStart,
+  updateItemQuantitySucceeded,
+  updateItemQuantityFailed
 } = cartSlice.actions;
 export default cartSlice.reducer;

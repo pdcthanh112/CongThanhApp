@@ -10,7 +10,6 @@ import DefaultImage from '@/assets/images/default-image.jpg';
 import { formatCurrency, roundNumber } from '@/utils/helper';
 import { useTranslations } from 'next-intl';
 import { useAddProductToWishlist, useRemoveProductFromWishlist } from '@/hooks/wishlist/wishlistHook';
-import { useAppDispatch } from '@/redux/store';
 import { openModalAuth } from '@/redux/features/modalAuth';
 import { AddToCartIcon, HeartEmpty, HeartFull } from '@/assets/icons';
 import { toast } from 'react-toastify';
@@ -28,6 +27,7 @@ import { Button } from '@/components/ui/button';
 import { PATH } from '@/utils/constants/path';
 import { useSession } from 'next-auth/react';
 import ReviewProduct from './ReviewProduct';
+import useAppModalStore from '@/store/useAppModal';
 
 type ProductDetailProps = {
   product: Product;
@@ -40,7 +40,6 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
   const router = useRouter();
   const params = useParams();
 
-  const dispatch = useAppDispatch();
   const t = useTranslations();
 
   const [quantity, setQuantity] = useState(1);
@@ -50,6 +49,8 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
   const [currentImage, setCurrentImage] = useState<ProductImage>();
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5]);
   const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
+
+  const { openModalAuth } = useAppModalStore((state) => state);
 
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -121,7 +122,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
         toast.error(t('cart.add_item_to_cart_failed'));
       }
     } else {
-      dispatch(openModalAuth());
+      openModalAuth();
     }
   };
 
@@ -143,7 +144,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
         toast.error(t('wishlist.add_item_to_wishlist_failed'));
       }
     } else {
-      dispatch(openModalAuth());
+      openModalAuth();
     }
   };
 
@@ -166,7 +167,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
         toast.error(t('wishlist.remove_item_from_wishlist_failed'));
       }
     } else {
-      dispatch(openModalAuth());
+      openModalAuth();
     }
   };
 
@@ -460,12 +461,13 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
       </div>
       <div className="bg-white mt-10 p-5">
         <h2 className="bg-yellow-100 px-2 py-1 rounded-sm">{t('product.product_description').toUpperCase()}</h2>
-        <div className="">{product.description}</div>
+        {/* <div className="">{product.description}</div> */}
+        <div dangerouslySetInnerHTML={{ __html: product.description }} className="prose" />
       </div>
 
       <div className="bg-white mt-10 p-5">
         <h2 className="bg-yellow-100 px-2 py-1 rounded-sm">{t('product.product_review').toUpperCase()}</h2>
-        <ReviewProduct productId={'366f785f-26dd-4c33-8452-0b172ef0a5de'}/>
+        <ReviewProduct productId={'366f785f-26dd-4c33-8452-0b172ef0a5de'} reviewStatictis={reviewStatistic} />
       </div>
     </div>
   );

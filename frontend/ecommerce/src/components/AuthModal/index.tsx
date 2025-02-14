@@ -1,10 +1,7 @@
 'use client';
-import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Modal, Box } from '@mui/material';
-import { useAppDispatch } from '@/redux/store';
-import { closeModalAuth } from '@/redux/features/modalAuth';
 import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,19 +9,17 @@ import LoginComponent from './LoginComponent';
 import RegisterComponent from './RegisterComponent';
 import { IMAGE, PATH } from '@/utils/constants/path';
 import { X } from 'lucide-react';
+import useAppModalStore from '@/store/useAppModal';
 
 const AuthModal = () => {
-  const dispatch = useAppDispatch();
   const t = useTranslations();
-
-  const [openAuthModal, setOpenAuthModal] = useState(true);
+  const { isOpenModalAuth, closeModalAuth } = useAppModalStore((state) => state);
 
   return (
     <Modal
-      open={openAuthModal}
+      open={isOpenModalAuth}
       onClose={() => {
-        setOpenAuthModal(false);
-        dispatch(closeModalAuth());
+        closeModalAuth();
       }}
     >
       <Box
@@ -47,7 +42,7 @@ const AuthModal = () => {
           <TabsList className="grid w-3/5 grid-cols-2">
             <TabsTrigger value="login">{t('auth.login')}</TabsTrigger>
             <TabsTrigger value="register">{t('auth.register')}</TabsTrigger>
-            <X className="absolute top-3 right-3 hover:cursor-pointer" onClick={() => setOpenAuthModal(false)} />
+            <X className="absolute top-3 right-3 hover:cursor-pointer" onClick={() => closeModalAuth} />
           </TabsList>
           <TabsContent value="login">
             <Card>

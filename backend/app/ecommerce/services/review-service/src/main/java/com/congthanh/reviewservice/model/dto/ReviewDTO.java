@@ -31,6 +31,9 @@ public class ReviewDTO {
 
     private String variant;
 
+    @NotNull
+    private String orderId;
+
     private List<ReviewMediaDTO> reviewMedia;
 
     private Instant createdAt;

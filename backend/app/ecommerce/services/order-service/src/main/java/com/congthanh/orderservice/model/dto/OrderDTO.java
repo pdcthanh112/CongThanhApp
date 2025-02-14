@@ -1,6 +1,8 @@
 package com.congthanh.orderservice.model.dto;
 
 import com.congthanh.orderservice.constant.enums.OrderStatus;
+import com.congthanh.orderservice.constant.enums.PaymentStatus;
+import com.congthanh.orderservice.constant.enums.ShippingStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +28,10 @@ public class OrderDTO implements Serializable {
     @NotNull
     private String customer;
 
+    private Long shippingAddress;
+
+    private Long billingAddress;
+
     private String note;
 
     private BigDecimal total;
@@ -36,5 +42,9 @@ public class OrderDTO implements Serializable {
 
     @NotNull
     private OrderStatus status;
+
+    private PaymentStatus paymentStatus;
+
+    private ShippingStatus shippingStatus;
 
 }

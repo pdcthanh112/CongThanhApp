@@ -1,83 +1,105 @@
-import { Cart } from "@models/type/CartModel";
+import { Cart } from '@/models/types/CartModel';
 
-export interface FetchCartRequestedPayload {
+export type FetchCartRequestedPayload = {
   values: { id: string; name: string };
-}
+};
 
-export interface FetchCartStartPayload {
+export type FetchCartStartPayload = {
   values: { id: string; name: string };
-}
+};
 
-export interface FetchCartSucceededPayload {
+export type FetchCartSucceededPayload = {
   data: Cart[];
-}
+};
 
-export interface FetchCartFailedPayload {
+export type FetchCartFailedPayload = {
   error: string;
-}
-export interface FetchCartClearPayload {
+};
+export type FetchCartClearPayload = {
   data: {};
-}
-export interface CreateNewCartRequestedPayload {
+};
+export type CreateNewCartRequestedPayload = {
   values: { id: string; name: string };
-}
+};
 
-export interface CreateNewCartStartPayload {
+export type CreateNewCartStartPayload = {
   values: { id: string; name: string };
-}
+};
 
-export interface CreateNewCartSucceededPayload {
+export type CreateNewCartSucceededPayload = {
   data: {};
-}
+};
 
-export interface CreateNewCartFailedPayload {
+export type CreateNewCartFailedPayload = {
   error: string;
-}
+};
 
-export interface DeleteCartRequestedPayload {
+export type DeleteCartRequestedPayload = {
   values: { id: string };
-}
+};
 
-export interface DeleteCartStartPayload {
+export type DeleteCartStartPayload = {
   values: { id: string };
-}
+};
 
-export interface DeleteCartSucceededPayload {
+export type DeleteCartSucceededPayload = {
   data: {};
-}
+};
 
-export interface DeleteCartFailedPayload {
+export type DeleteCartFailedPayload = {
   error: string;
-}
+};
 
-export interface AddItemToCartRequestedPayload {
+export type AddItemToCartRequestedPayload = {
   values: { productId: string; quantity: number; cartId: string };
-}
+};
 
-export interface AddItemToCartStartPayload {
+export type AddItemToCartStartPayload = {
+  product: any;
+  quantity: any;
   values: { productId: string; quantity: number; cartId: string };
-}
+};
 
-export interface AddItemToCartSucceededPayload {
+export type AddItemToCartSucceededPayload = {
   data: {};
-}
+};
 
-export interface AddItemToCartFailedPayload {
+export type AddItemToCartFailedPayload = {
   error: string;
-}
+};
 
-export interface RemoveItemFromCartRequestedPayload {
+export type RemoveItemFromCartRequestedPayload = {
   values: { productId: string; cartId: string };
-}
+};
 
-export interface RemoveItemFromCartStartPayload {
+export type RemoveItemFromCartStartPayload = {
   values: { productId: string; cartId: string };
-}
+};
 
-export interface RemoveItemFromCartSucceededPayload {
+export type RemoveItemFromCartSucceededPayload = {
   token: string;
-}
+};
 
-export interface RemoveItemFromCartFailedPayload {
+export type RemoveItemFromCartFailedPayload = {
   error: string;
-}
+};
+
+export type updateItemQuantityRequestPayload = {
+  values: {};
+};
+
+export type updateItemQuantityStartPayload = {
+  values: { cartId: number; itemId: number; quantity: number };
+};
+
+export type updateItemQuantitySucceededPayload = {
+  data: {};
+};
+
+export type updateItemQuantityFailedPayload = {
+  error: string;
+};
+
+export type updateItemQuantityClearPayload = {
+  data: {};
+};

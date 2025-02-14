@@ -1,6 +1,8 @@
-import { Product } from "@/models/types";
+import { Product } from '@/models/types';
 
 export type Cart = {
+  product: any;
+  quantity: any;
   id: string;
   name: string;
   customerId: string;
