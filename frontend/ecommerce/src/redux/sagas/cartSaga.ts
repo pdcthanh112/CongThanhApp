@@ -24,7 +24,7 @@ import {
   updateItemQuantityStart,
   updateItemQuantitySucceeded,
 } from '@/redux/reducers/cartReducer';
-import * as cartApi  from '@/api/cartApi';
+import * as cartApi from '@/api/cartApi';
 
 function* fetchCart(action: PayloadAction<any>) {
   try {
@@ -38,11 +38,15 @@ function* fetchCart(action: PayloadAction<any>) {
   }
 }
 
-function* createNewCart(action: PayloadAction<any>) {
+function* createNewCart(action: ReturnType<typeof createNewCartStart>) {
   try {
     yield put(createNewCartStart(action.payload));
-    yield cartApi.createNewCart({ name: action.payload.name, customer: action.payload.customer, isDefault: action.payload.isDefault });
-    yield put(createNewCartSucceeded(action.payload));
+    const { data } = yield cartApi.createNewCart({
+      name: action.payload.name,
+      customer: action.payload.customer,
+      isDefault: action.payload.isDefault,
+    });
+    yield put(createNewCartSucceeded({ data }));
   } catch (error) {
     yield put(createNewCartFailed({ error: 'Error: ' + error }));
   } finally {
@@ -50,22 +54,26 @@ function* createNewCart(action: PayloadAction<any>) {
   }
 }
 
-function* deleteCart(action: PayloadAction<any>) {
+function* deleteCart(action: ReturnType<typeof deleteCartStart>) {
   try {
-    yield put(deleteCartStart(action.payload.id));
-    yield cartApi.deleteCart(action.payload.id);
-    yield put(deleteCartSucceeded(action.payload));
+    yield put(deleteCartStart({cartId: action.payload.cartId}));
+    yield cartApi.deleteCart(action.payload.cartId);
+    yield put(deleteCartSucceeded({data: []}));
   } catch (error) {
     yield put(deleteCartFailed({ error: 'Error: ' + error }));
   } finally {
-    yield put(deleteCartClear())
+    yield put(deleteCartClear());
   }
 }
 
 function* addToCart(action: PayloadAction<any>) {
   try {
     yield put(addItemToCartStart(action.payload));
-    yield cartApi.addProductToCart({ productId: action.payload.productId, quantity: action.payload.quantity, cartId: action.payload.cartId });
+    yield cartApi.addProductToCart({
+      productId: action.payload.productId,
+      quantity: action.payload.quantity,
+      cartId: action.payload.cartId,
+    });
     yield put(addItemToCartSucceeded(action.payload));
   } catch (error) {
     yield put(addItemToCartFailed({ error: 'Error' + error }));
@@ -85,10 +93,10 @@ function* removeFromCart(action: PayloadAction<any>) {
 function* updateItemQuantity(action: PayloadAction<any>) {
   try {
     yield put(updateItemQuantityStart(action.payload));
-    yield cartApi.updateCartItem({cartItemId: action.payload.itemId, quantity: action.payload.quantity})
-    yield put(updateItemQuantitySucceeded(action.payload))
+    yield cartApi.updateCartItem({ cartItemId: action.payload.itemId, quantity: action.payload.quantity });
+    yield put(updateItemQuantitySucceeded(action.payload));
   } catch (error) {
-    yield put(updateItemQuantityFailed({error: "Error" + error}))
+    yield put(updateItemQuantityFailed({ error: 'Error' + error }));
   }
 }
 

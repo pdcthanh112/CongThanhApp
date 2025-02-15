@@ -16,14 +16,16 @@ export type FetchCartFailedPayload = {
   error: string;
 };
 export type FetchCartClearPayload = {
-  data: {};
+  data: [];
 };
 export type CreateNewCartRequestedPayload = {
   values: { id: string; name: string };
 };
 
 export type CreateNewCartStartPayload = {
-  values: { id: string; name: string };
+  name: string;
+  customer: string;
+  isDefault: boolean;
 };
 
 export type CreateNewCartSucceededPayload = {
@@ -39,7 +41,7 @@ export type DeleteCartRequestedPayload = {
 };
 
 export type DeleteCartStartPayload = {
-  values: { id: string };
+  cartId: number
 };
 
 export type DeleteCartSucceededPayload = {
@@ -55,13 +57,13 @@ export type AddItemToCartRequestedPayload = {
 };
 
 export type AddItemToCartStartPayload = {
-  product: any;
-  quantity: any;
+  product: string;
+  quantity: number;
   values: { productId: string; quantity: number; cartId: string };
 };
 
 export type AddItemToCartSucceededPayload = {
-  data: {};
+  data: [];
 };
 
 export type AddItemToCartFailedPayload = {
@@ -85,7 +87,7 @@ export type RemoveItemFromCartFailedPayload = {
 };
 
 export type updateItemQuantityRequestPayload = {
-  values: {};
+  values: [];
 };
 
 export type updateItemQuantityStartPayload = {
@@ -93,7 +95,7 @@ export type updateItemQuantityStartPayload = {
 };
 
 export type updateItemQuantitySucceededPayload = {
-  data: {};
+  data: [];
 };
 
 export type updateItemQuantityFailedPayload = {
@@ -101,5 +103,5 @@ export type updateItemQuantityFailedPayload = {
 };
 
 export type updateItemQuantityClearPayload = {
-  data: {};
+  data: [];
 };

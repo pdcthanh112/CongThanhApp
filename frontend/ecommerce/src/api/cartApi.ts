@@ -14,7 +14,7 @@ export const createNewCart = async (data: CreateCartForm) => {
     });
 };
 
-export const deleteCart = async (cartId: string) => {
+export const deleteCart = async (cartId: number) => {
   return await axiosConfig
     .delete(`cart/${cartId}`)
     .then((response) => response)
