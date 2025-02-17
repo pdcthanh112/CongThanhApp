@@ -11,32 +11,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "cart_item")
+@Table(name = "cart_items")
 public class CartItem {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private String id;
+    @Id
+    private Long id;
 
-//  @ManyToOne(fetch = FetchType.LAZY)
-//  @JoinColumn(name = "product", nullable = false)
-  private String product;
+    @Column(name = "product_id", nullable = false)
+    private String productId;
 
-//  @ManyToOne(fetch = FetchType.LAZY)
-//  @JoinColumn(name = "productVariant")
-  private String productVariant;
+    @Column(name = "product_variant_id", nullable = false)
+    private String productVariant;
 
-  private int quantity;
+    private int quantity;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "cart", nullable = false)
-  private Cart cart;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart", nullable = false)
+    private Cart cart;
 
-  @Column(name = "created_at")
-  private long createdAt;
-
-//  public BigDecimal getTotal() {
-//    return product.getPrice().multiply(BigDecimal.valueOf(quantity));
-//  }
+    @Column(name = "created_at")
+    private long createdAt;
 
 }

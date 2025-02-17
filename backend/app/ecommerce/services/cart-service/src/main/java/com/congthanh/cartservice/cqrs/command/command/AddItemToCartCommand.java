@@ -1,4 +1,4 @@
-package com.congthanh.cartservice.model.request;
+package com.congthanh.cartservice.cqrs.command.command;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddProductViewRequest {
-
-    private String productId;
-
-    private String customerId;
-
+public class AddItemToCartCommand {
+    private Long id;
+    
 }

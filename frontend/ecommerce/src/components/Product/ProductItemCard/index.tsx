@@ -2,9 +2,8 @@ import Image from 'next/image';
 import DefaultImage from '@/assets/images/default-image.jpg';
 import { Card, Rating, Icon, Box } from '@mui/material';
 import { ShoppingCart, Source } from '@mui/icons-material';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { useAppSelector } from '@/redux/store';
 import { useQuery } from '@tanstack/react-query';
-import { openModalAuth } from '@/redux/features/modalAuth';
 import { toast } from 'react-toastify';
 import { HeartEmpty, HeartFull } from '@/assets/icons';
 import { useAddProductToWishlist, useRemoveProductFromWishlist } from '@/hooks/wishlist/wishlistHook';
@@ -18,6 +17,7 @@ import { formatCurrency, roundNumber } from '@/utils/helper';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { PATH } from '@/utils/constants/path';
+import useAppModalStore from '@/store/useAppModal';
 
 type ProductItemProps = {
   product: Product;
@@ -26,7 +26,7 @@ type ProductItemProps = {
 const ProductItemCard = ({ product }: ProductItemProps) => {
   const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
   const t = useTranslations();
-  const dispatch = useAppDispatch();
+  const { openModalAuth } = useAppModalStore();
 
   const { data: reviewStatistic } = useQuery({
     queryKey: ['review', product],
@@ -56,7 +56,7 @@ const ProductItemCard = ({ product }: ProductItemProps) => {
       //  setshowSelectCart(true)
       // addToCart('CART_ID', 1, productId);
     } else {
-      dispatch(openModalAuth());
+      openModalAuth();
     }
   };
 
@@ -79,7 +79,7 @@ const ProductItemCard = ({ product }: ProductItemProps) => {
         toast.error(t('wishlist.add_item_to_wishlist_failed'));
       }
     } else {
-      dispatch(openModalAuth());
+      openModalAuth();
     }
   };
 
@@ -102,7 +102,7 @@ const ProductItemCard = ({ product }: ProductItemProps) => {
         toast.error(t('wishlist.remove_item_from_wishlist_failed'));
       }
     } else {
-      dispatch(openModalAuth());
+      openModalAuth();
     }
   };
 
@@ -114,7 +114,7 @@ const ProductItemCard = ({ product }: ProductItemProps) => {
             src={productImage?.imagePath || DefaultImage}
             alt={productImage?.alt ?? 'Product image'}
             fill
-            objectFit='fill'
+            objectFit="fill"
           />
         </Box>
         <ul className="w-full h-36 bg-gray-100 absolute -bottom-36 flex flex-col items-end justify-center gap-2 font-semibold px-2 border-l border-r group-hover:bottom-0 duration-700">

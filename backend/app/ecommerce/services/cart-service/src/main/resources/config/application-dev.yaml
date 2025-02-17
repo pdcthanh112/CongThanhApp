@@ -1,17 +1,25 @@
 server:
-  port: ${CART_SERVICE_PORT}
-#  port: 5001 # ${SERVER_PORT}
+  port: 5001
   servlet:
     context-path: /api
-  compression:
-    enabled: true
-    min-response-size: 1024
+#  compression:
+#    enabled: true
+#    min-response-size: 1024
 
 spring:
   application:
     name: congthanhapp-ecommerce-cart-service
-#  config:
-#    import: optional:file:.env[.properties]
+  web:
+    cors:
+      allowed-origins: "http://localhost:3000"
+      allowed-methods: GET,POST,PUT,PATCH,DELETE
+      allowed-headers: "*"
+      allow-credentials: true
+
+  config:
+    import: optional:file:.env[.properties]
+    activate:
+      on-profile: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
     username: postgres
@@ -22,7 +30,7 @@ spring:
     database: default
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         jdbc:
@@ -30,10 +38,28 @@ spring:
         format_sql: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/CongThanhApp-Ecommerce
+      database: CongThanhApp-Ecommerce
 
-  mongodb:
-    uri: mongodb://localhost:27017/MyDream
-    database: CongThanhApp
+    redis:
+      port: 6379
+      password: your_password_if_any
+      database: 0
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: congthanh
+    password: 123456
 
   graphql:
     graphiql:
@@ -81,30 +107,6 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-
-  web:
-    cors:
-      allowed-origins: "http://localhost:3000"
-      allowed-methods: GET,POST,PUT,PATCH,DELETE
-
-  data:
-    redis:
-      port: 6379
-      password: your_password_if_any
-      database: 0
-      timeout: 2000ms
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          min-idle: 0
-          max-wait: -1ms
-
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
 
   kafka:
     bootstrap-servers: localhost:9092
@@ -178,3 +180,8 @@ eureka:
 axon:
   axonserver:
     servers: localhost:8124
+    enabled: true
+
+snowflake:
+  worker-id: 1
+  datacenter-id: 1

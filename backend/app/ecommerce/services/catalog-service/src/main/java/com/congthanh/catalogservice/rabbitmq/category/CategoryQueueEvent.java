@@ -20,5 +20,4 @@ public class CategoryQueueEvent<T> implements Serializable {
     private CategoryEventType eventType;
 
     private T data;
-
 }

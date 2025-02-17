@@ -34,13 +34,13 @@ public class CartCustomRepositoryImpl implements CartCustomRepository{
     }
 
     @Override
-    public boolean setDefaultCartForCustomer(String customerId, String cartId) {
-        String resetDefault = "UPDATE cart SET is_default = false WHERE customer = ?1";
+    public boolean setDefaultCartForCustomer(String customerId, Long cartId) {
+        String resetDefault = "UPDATE carts SET is_default = false WHERE customer = ?1";
         Query resetDefaultQuery = entityManager.createNativeQuery(resetDefault);
         resetDefaultQuery.setParameter(1, customerId);
         resetDefaultQuery.executeUpdate();
 
-        String updateSingleCartSql = "UPDATE cart SET is_default = true WHERE id = ?1";
+        String updateSingleCartSql = "UPDATE carts SET is_default = true WHERE id = ?1";
         Query updateSingleCartQuery = entityManager.createNativeQuery(updateSingleCartSql);
         updateSingleCartQuery.setParameter(1, cartId);
         return updateSingleCartQuery.executeUpdate() > 0;

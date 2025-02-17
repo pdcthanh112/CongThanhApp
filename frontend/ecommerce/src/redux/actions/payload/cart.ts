@@ -1,4 +1,4 @@
-import { Cart } from '@/models/types/CartModel';
+import { Cart, CartItem } from '@/models/types/CartModel';
 
 export type FetchCartPayload = {
   params: { customerId: string };
@@ -29,7 +29,7 @@ export type CreateNewCartStartPayload = {
 };
 
 export type CreateNewCartSucceededPayload = {
-  data: [];
+  data: Cart;
 };
 
 export type CreateNewCartFailedPayload = {
@@ -41,11 +41,11 @@ export type DeleteCartRequestedPayload = {
 };
 
 export type DeleteCartStartPayload = {
-  cartId: number
+  cartId: number;
 };
 
 export type DeleteCartSucceededPayload = {
-  data: [];
+  cartId: number
 };
 
 export type DeleteCartFailedPayload = {
@@ -59,11 +59,11 @@ export type AddItemToCartRequestedPayload = {
 export type AddItemToCartStartPayload = {
   product: string;
   quantity: number;
-  values: { productId: string; quantity: number; cartId: string };
+  cartId: string;
 };
 
 export type AddItemToCartSucceededPayload = {
-  data: [];
+  item: CartItem;
 };
 
 export type AddItemToCartFailedPayload = {

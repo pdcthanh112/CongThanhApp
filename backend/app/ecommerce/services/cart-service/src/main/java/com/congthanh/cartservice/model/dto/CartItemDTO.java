@@ -17,14 +17,16 @@ public class CartItemDTO implements Serializable {
   @Serial
   private static final long serialVersionUID = 1L;
 
-  private String id;
+  private Long id;
 
-  private ProductDTO product;
+  private String product;
+
+  private String productVariant;
 
   private int quantity;
 
-  private CartDTO cart;
+  private Long cart;
 
-  private long createdDate;
+  private long createdAt;
 
 }

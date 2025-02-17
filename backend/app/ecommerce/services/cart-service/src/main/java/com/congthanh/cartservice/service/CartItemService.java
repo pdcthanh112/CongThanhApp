@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface CartItemService {
 
-  List<CartItemDTO> getItemByCartId(String cartId);
+  List<CartItemDTO> getItemByCartId(Long cartId);
 
-  CartItemDTO addToCart(String productId, int quantity, String cartId);
+  CartItemDTO addToCart(String productId, int quantity, Long cartId);
 
-  CartItemDTO updateCartItem(String cartItemId, int quantity);
+  CartItemDTO updateCartItem(Long cartItemId, int quantity);
 
-  boolean deleteCartItem(String cartItemId);
+  boolean deleteCartItem(Long cartItemId);
 
 }

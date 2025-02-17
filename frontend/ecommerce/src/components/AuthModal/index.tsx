@@ -42,7 +42,7 @@ const AuthModal = () => {
           <TabsList className="grid w-3/5 grid-cols-2">
             <TabsTrigger value="login">{t('auth.login')}</TabsTrigger>
             <TabsTrigger value="register">{t('auth.register')}</TabsTrigger>
-            <X className="absolute top-3 right-3 hover:cursor-pointer" onClick={() => closeModalAuth} />
+            <X className="absolute top-3 right-3 hover:cursor-pointer" onClick={() => closeModalAuth()} />
           </TabsList>
           <TabsContent value="login">
             <Card>

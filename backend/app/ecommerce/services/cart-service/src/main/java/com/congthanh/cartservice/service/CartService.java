@@ -1,23 +1,24 @@
 package com.congthanh.cartservice.service;
 
 import com.congthanh.cartservice.model.dto.CartDTO;
+import com.congthanh.cartservice.model.request.CreateCartRequest;
 
 import java.util.List;
 
 public interface CartService {
 
-  CartDTO getCartById(String id);
+  CartDTO getCartById(Long id);
 
   List<CartDTO> getActiveCartByCustomerId(String customerId);
 
-  CartDTO createCart(CartDTO cartDTO);
+  CartDTO createCart(CreateCartRequest request);
 
   CartDTO updateCart(CartDTO cartDTO);
 
-  boolean deleteCart(String cartId);
+  boolean deleteCart(Long cartId);
 
   CartDTO getDefaultCartOfCustomer(String customerId);
 
-  boolean setDefaultCartForCustomer(String customerId, String cartId);
+  boolean setDefaultCartForCustomer(String customerId, Long cartId);
 
 }

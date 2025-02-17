@@ -51,7 +51,7 @@ const cartSlice = createSlice({
     },
     createNewCartSucceeded: (state: CartState, action: PayloadAction<CreateNewCartSucceededPayload>) => {
       state.status = 'succeeded';
-      state.data = action.payload.data;
+      state.data.push(action.payload.data);
     },
     createNewCartFailed: (state: CartState, action: PayloadAction<CreateNewCartFailedPayload>) => {
       state.status = 'failed';
@@ -65,7 +65,7 @@ const cartSlice = createSlice({
     },
     deleteCartSucceeded: (state: CartState, action: PayloadAction<DeleteCartSucceededPayload>) => {
       state.status = 'succeeded';
-      state.data = action.payload.data;
+      state.data = state.data.filter(cart => cart.id != action.payload.cartId);
     },
     deleteCartFailed: (state: CartState, action: PayloadAction<DeleteCartFailedPayload>) => {
       state.status = 'failed';
@@ -76,16 +76,18 @@ const cartSlice = createSlice({
     },
     addItemToCartStart: (state: CartState, action: PayloadAction<AddItemToCartStartPayload>) => {
       state.status = 'pending';
-      const existingItem = state.data.find((item) => item.product === action.payload.product);
-      if (existingItem) {
-        existingItem.quantity += action.payload.quantity;
-      } else {
-        state.data.push(action.payload);
-      }
     },
     addItemToCartSucceeded: (state: CartState, action: PayloadAction<AddItemToCartSucceededPayload>) => {
+      const cart = state.data.find(c => c.id === action.payload.item.cart);
+      if (cart) {
+        const existingItem = cart.cartItems.find((item) => item.product === action.payload.item.product);
+        if (existingItem) {
+          existingItem.quantity += action.payload.item.quantity;
+      } else {
+        cart.cartItems.push(action.payload.item);
+      }
+    }
       state.status = 'succeeded';
-      state.data = action.payload.data;
     },
     addItemToCartFailed: (state: CartState, action: PayloadAction<AddItemToCartFailedPayload>) => {
       state.status = 'failed';

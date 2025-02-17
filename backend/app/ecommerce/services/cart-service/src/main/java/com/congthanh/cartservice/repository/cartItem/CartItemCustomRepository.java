@@ -10,6 +10,6 @@ import java.util.List;
 @Transactional
 public interface CartItemCustomRepository {
 
-    List<CartItem> getAllCartItemByCartId(String cartId);
+    List<CartItem> getAllCartItemByCartId(Long cartId);
 
 }

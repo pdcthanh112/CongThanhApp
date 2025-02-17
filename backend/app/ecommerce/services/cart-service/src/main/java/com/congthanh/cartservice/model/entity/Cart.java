@@ -1,5 +1,6 @@
 package com.congthanh.cartservice.model.entity;
 
+import com.congthanh.cartservice.constant.enums.CartStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,24 +13,24 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "cart")
+@Table(name = "carts")
 public class Cart {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private String id;
+  private Long id;
 
   private String name;
 
   private String customer;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", updatable = false)
   private Instant createdAt;
 
   @Column(name = "updated_at")
   private Instant updatedAt;
 
-  private String status;
+  @Enumerated(EnumType.STRING)
+  private CartStatus status;
 
   @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<CartItem> cartItems;
@@ -37,18 +38,6 @@ public class Cart {
   @Column(name = "is_default")
   @JsonProperty("isDefault")
   private boolean isDefault;
-
-//  @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//  @JsonBackReference
-//  @JsonIgnore
-//  @ToString.Exclude
-//  @EqualsAndHashCode.Exclude
-//  private Long checkout;
-
-  @PrePersist
-  public void prePersist() {
-    this.createdAt = Instant.now();
-  }
 
 
 //  @Transient

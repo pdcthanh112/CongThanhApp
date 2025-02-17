@@ -15,7 +15,7 @@ public class CartItemCustomRepositoryImpl implements CartItemCustomRepository{
     private EntityManager entityManager;
 
     @Override
-    public List<CartItem> getAllCartItemByCartId(String cartId) {
+    public List<CartItem> getAllCartItemByCartId(Long cartId) {
         String sql = "SELECT c FROM CartItem c WHERE c.cart.id = :cartId ORDER BY c.createdAt desc ";
         TypedQuery<CartItem> query = entityManager.createQuery(sql, CartItem.class);
         query.setParameter("cartId", cartId);

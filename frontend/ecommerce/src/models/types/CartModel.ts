@@ -1,9 +1,9 @@
 import { Product } from '@/models/types';
 
 export type Cart = {
-  product: any;
-  quantity: any;
-  id: string;
+  product: string;
+  quantity: number;
+  id: number;
   name: string;
   customerId: string;
   status: string;
@@ -13,9 +13,9 @@ export type Cart = {
 };
 
 export type CartItem = {
-  id: string;
+  id: number;
   product: Product;
   quantity: number;
   status: string;
-  cart?: string;
+  cart?: number;
 };
