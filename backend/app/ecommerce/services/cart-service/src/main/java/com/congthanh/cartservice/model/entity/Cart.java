@@ -32,7 +32,7 @@ public class Cart {
   @Enumerated(EnumType.STRING)
   private CartStatus status;
 
-  @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "cartId", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<CartItem> cartItems;
 
   @Column(name = "is_default")

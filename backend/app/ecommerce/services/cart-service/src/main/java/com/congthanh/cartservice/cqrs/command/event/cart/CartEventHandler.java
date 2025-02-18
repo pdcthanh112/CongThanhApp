@@ -2,10 +2,13 @@ package com.congthanh.cartservice.cqrs.command.event.cart;
 
 import com.congthanh.cartservice.config.RabbitMQConfig;
 import com.congthanh.cartservice.constant.common.RabbitMQConstants;
+import com.congthanh.cartservice.cqrs.command.event.cartItem.AddItemToCartCreatedEvent;
 import com.congthanh.cartservice.model.entity.Cart;
+import com.congthanh.cartservice.model.entity.CartItem;
 import com.congthanh.cartservice.rabbitmq.cart.CartEventType;
 import com.congthanh.cartservice.rabbitmq.cart.CartQueueEvent;
 import com.congthanh.cartservice.repository.cart.CartRepository;
+import com.congthanh.cartservice.repository.cartItem.CartItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.config.ProcessingGroup;
@@ -20,6 +23,8 @@ import org.springframework.stereotype.Component;
 public class CartEventHandler {
 
     private final CartRepository cartRepository;
+
+    private final CartItemRepository cartItemRepository;
 
     private final RabbitTemplate rabbitTemplate;
 
@@ -40,7 +45,27 @@ public class CartEventHandler {
         }
 
         CartQueueEvent<CartCreatedEvent> queueEvent = CartQueueEvent.<CartCreatedEvent>builder()
-                .eventType(CartEventType.CREATE)
+                .eventType(CartEventType.CREATE_CART)
+                .data(event)
+                .build();
+
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConstants.Cart.ROUTING_KEY, queueEvent);
+    }
+
+    @EventHandler
+    public void on(AddItemToCartCreatedEvent event) {
+        CartItem cartItem = CartItem.builder()
+                .id(event.getId())
+                .productId(event.getProductId())
+                .quantity(event.getQuantity())
+                .productVariant(event.getProductVariantId())
+                .createdAt(event.getCreatedAt())
+                .cartId(Cart.builder().id(event.getCartId()).build())
+                .build();
+        cartItemRepository.save(cartItem);
+
+        CartQueueEvent<AddItemToCartCreatedEvent> queueEvent = CartQueueEvent.<AddItemToCartCreatedEvent>builder()
+                .eventType(CartEventType.ADD_ITEM_TO_CART)
                 .data(event)
                 .build();
 

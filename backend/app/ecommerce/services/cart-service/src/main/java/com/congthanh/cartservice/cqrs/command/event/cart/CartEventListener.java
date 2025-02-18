@@ -1,7 +1,9 @@
 package com.congthanh.cartservice.cqrs.command.event.cart;
 
 import com.congthanh.cartservice.constant.common.RabbitMQConstants;
+import com.congthanh.cartservice.cqrs.command.event.cartItem.AddItemToCartCreatedEvent;
 import com.congthanh.cartservice.model.document.CartDocument;
+import com.congthanh.cartservice.model.document.CartItemDocument;
 import com.congthanh.cartservice.rabbitmq.cart.CartEventType;
 import com.congthanh.cartservice.rabbitmq.cart.CartQueueEvent;
 import com.congthanh.cartservice.repository.cart.CartDocumentRepository;
@@ -23,12 +25,16 @@ public class CartEventListener {
     @RabbitListener(queues = RabbitMQConstants.Cart.QUEUE_NAME)
     public void handleCartEvent(CartQueueEvent event) {
         switch (event.getEventType()) {
-            case CartEventType.CREATE -> {
+            case CartEventType.CREATE_CART -> {
                 CartCreatedEvent createdEvent = objectMapper.convertValue(event.getData(), CartCreatedEvent.class);
                 handleCartCreated(createdEvent);
             }
-            case CartEventType.UPDATE -> {}
-            case CartEventType.DELETE -> {}
+            case CartEventType.UPDATE_CART -> {}
+            case CartEventType.DELETE_CART -> {}
+            case CartEventType.ADD_ITEM_TO_CART -> {
+                AddItemToCartCreatedEvent addItemEvent = objectMapper.convertValue(event.getData(), AddItemToCartCreatedEvent.class);
+                handleItemAdded(addItemEvent);
+            }
         }
     }
 
@@ -46,5 +52,16 @@ public class CartEventListener {
         if(event.isDefault()) {
             cartDocumentRepository.setDefaultCartForCustomer(event.getCustomerId(), cart.getId());
         }
+    }
+
+    private void handleItemAdded(AddItemToCartCreatedEvent event) {
+        CartItemDocument cartItem = CartItemDocument.builder()
+                .id(event.getId())
+                .productId(event.getProductId())
+                .productVariantId(event.getProductVariantId())
+                .quantity(event.getQuantity())
+                .createdAt(event.getCreatedAt())
+                .build();
+        cartDocumentRepository.addItemToCart(event.getCartId(), cartItem);
     }
 }

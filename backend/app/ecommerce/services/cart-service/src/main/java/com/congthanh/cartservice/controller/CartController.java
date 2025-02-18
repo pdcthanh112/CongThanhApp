@@ -3,6 +3,7 @@ package com.congthanh.cartservice.controller;
 import com.congthanh.cartservice.constant.common.ResponseStatus;
 import com.congthanh.cartservice.model.dto.CartDTO;
 import com.congthanh.cartservice.model.dto.CartItemDTO;
+import com.congthanh.cartservice.model.request.AddItemToCartRequest;
 import com.congthanh.cartservice.model.request.CreateCartRequest;
 import com.congthanh.cartservice.model.response.Response;
 import com.congthanh.cartservice.model.entity.Cart;
@@ -85,8 +86,8 @@ public class CartController {
   }
 
   @PostMapping("/{cartId}/items")
-  public ResponseEntity<Response<CartItemDTO>> addItemToCart(@RequestParam String productId, @RequestParam int quantity, @PathVariable("cartId") Long cartId) {
-    CartItemDTO result = cartItemService.addToCart(productId, quantity, cartId);
+  public ResponseEntity<Response<CartItemDTO>> addItemToCart(@PathVariable("cartId")Long cartId, @RequestBody AddItemToCartRequest request) {
+    CartItemDTO result = cartItemService.addToCart(cartId, request);
     Response<CartItemDTO> response = new Response<>();
     response.setData(result);
     response.setStatus(ResponseStatus.STATUS_SUCCESS);

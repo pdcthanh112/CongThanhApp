@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.Instant;
 
 @Entity
 @Data
@@ -26,10 +29,11 @@ public class CartItem {
     private int quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart", nullable = false)
-    private Cart cart;
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cartId;
 
+    @CreationTimestamp
     @Column(name = "created_at")
-    private long createdAt;
+    private Instant createdAt;
 
 }

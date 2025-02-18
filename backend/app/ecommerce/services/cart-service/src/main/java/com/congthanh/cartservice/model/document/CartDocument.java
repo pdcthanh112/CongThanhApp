@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 
 @Document(collection = "carts")
@@ -32,7 +33,7 @@ public class CartDocument {
 
     private CartStatus status;
 
-    private Set<CartItemDocument> cartItems;
+    private Set<CartItemDocument> cartItems = new HashSet<>();
 
     @JsonProperty("isDefault")
     private boolean isDefault;

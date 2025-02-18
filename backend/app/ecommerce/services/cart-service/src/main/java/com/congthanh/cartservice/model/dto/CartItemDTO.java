@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 
 @Data
 @NoArgsConstructor
@@ -27,6 +28,6 @@ public class CartItemDTO implements Serializable {
 
   private Long cart;
 
-  private long createdAt;
+  private Instant createdAt;
 
 }
