@@ -1,17 +1,20 @@
 package com.congthanh.cartservice.service.serviceImpl;
 
 import com.congthanh.cartservice.cqrs.command.command.AddItemToCartCommand;
+import com.congthanh.cartservice.exception.ecommerce.NotFoundException;
+import com.congthanh.cartservice.grpc.client.ProductGrpcClient;
+import com.congthanh.cartservice.model.document.CartItemDocument;
 import com.congthanh.cartservice.model.dto.CartItemDTO;
 import com.congthanh.cartservice.model.entity.CartItem;
-
 import com.congthanh.cartservice.model.mapper.CartItemMapper;
 import com.congthanh.cartservice.model.request.AddItemToCartRequest;
+import com.congthanh.cartservice.model.viewmodel.CartItemDetailVm;
+import com.congthanh.cartservice.repository.cart.CartDocumentRepository;
 import com.congthanh.cartservice.repository.cartItem.CartItemRepository;
-import com.congthanh.cartservice.repository.cart.CartRepository;
 import com.congthanh.cartservice.service.CartItemService;
 import com.congthanh.cartservice.utils.SnowflakeIdGenerator;
+import com.congthanh.productservice.grpc.ProductResponse;
 import lombok.RequiredArgsConstructor;
-
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.stereotype.Service;
@@ -26,7 +29,7 @@ public class CartItemServiceImpl implements CartItemService {
 
     private final CartItemRepository cartItemRepository;
 
-    private final CartRepository cartRepository;
+    private final CartDocumentRepository cartDocumentRepository;
 
     private final CommandGateway commandGateway;
 
@@ -34,8 +37,7 @@ public class CartItemServiceImpl implements CartItemService {
 
     private final SnowflakeIdGenerator snowflakeIdGenerator;
 
-//  @GrpcClient("product-service")
-//  private final ProductServiceGrpc.ProductServiceBlockingStub productServiceStub;
+    private final ProductGrpcClient productGrpcClient;
 
     @Override
     public List<CartItemDTO> getItemByCartId(Long cartId) {
@@ -45,6 +47,23 @@ public class CartItemServiceImpl implements CartItemService {
             CartItemDTO itemDTO = CartItemMapper.mapCartItemEntityToDTO(item);
             result.add(itemDTO);
         }
+        return result;
+    }
+
+    @Override
+    public CartItemDetailVm getCartItemDetail(Long cartId, Long itemId) {
+        CartItemDocument data = cartDocumentRepository.getCartItemDetail(cartId, itemId).orElseThrow(() -> new NotFoundException("CartItem not found"));
+        ProductResponse product = productGrpcClient.getProductById(data.getProductId());
+        CartItemDetailVm result = CartItemDetailVm.builder()
+                .id(data.getId())
+                .quantity(data.getQuantity())
+                .product(CartItemDetailVm.Product.builder()
+                        .id(product.getId())
+                        .name(product.getName())
+                        .slug(product.getSlug())
+                        .image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdP-HLEOL8lPE3pRK8RBrCNnKzdDKYtE4UXQ&s")
+                        .build())
+                .build();
         return result;
     }
 

@@ -34,7 +34,7 @@ export const getCartById = async (id: number) => {
 
 export const getCartByCustomerId = async (customerId: string) => {
   return await axiosConfig
-    .get(`cart/getByCustomer?customerId=${customerId}`)
+    .get(`carts/customer/${customerId}`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
@@ -69,9 +69,15 @@ export const updateCartItem = async ({ cartItemId, quantity }: { cartItemId: num
 
 export const deleteCartItem = async (itemId: string) => {
   return await axiosConfig
-    .delete(`cart-item/${itemId}`)
+    .delete(`carts/items/${itemId}`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
     });
+};
+
+export const getItemDetail = async ({ cartId, itemId }: { cartId: number; itemId: number }) => {
+  return await axiosConfig.get(`carts/${cartId}/items/${itemId}/detail`).catch((error) => {
+    throw error;
+  });
 };

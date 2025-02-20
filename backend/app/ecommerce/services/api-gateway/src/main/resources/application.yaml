@@ -32,7 +32,7 @@ spring:
         - id: cart-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-CART-SERVICE
           predicates:
-            - Path=/api/ecommerce/cart/**, /api/graphql
+            - Path=/api/ecommerce/carts/**, /api/graphql
 
         - id: catalog-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-CATALOG-SERVICE

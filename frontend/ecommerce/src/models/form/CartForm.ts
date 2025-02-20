@@ -11,6 +11,6 @@ export type AddToCartForm = {
 };
 
 export type UpdateCartItemForm = {
+  itemId: number;
   quantity: number;
-  itemId: string;
 };

@@ -21,7 +21,8 @@ public class Cart {
 
   private String name;
 
-  private String customer;
+  @Column(name = "customer_id", nullable = false, updatable = false)
+  private String customerId;
 
   @Column(name = "created_at", updatable = false)
   private Instant createdAt;

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { getServerSession } from 'next-auth/next';
 
 async function getCartData(customerId: string) {
-  return await getCartByCustomerId(customerId);
+  return await getCartByCustomerId(customerId).then(response => response.data);
 }
 
 export default async function CartPage() {
@@ -24,11 +24,10 @@ export default async function CartPage() {
     );
   }
 
-  // const data = await getCartData('');
-  const data = []
+  const data = await getCartData("6304f010-3985-4ecc-a139-e8aba1eee7b1");
 
   return (
-    <div className="w-full">
+    <div className="w-4/5 mx-auto">
       <h3 className="px-5 py-2 mb-3 text-3xl bg-white">{'cart.your_cart'}</h3>
       <ShowListCart data={data} loading={false} />
     </div>

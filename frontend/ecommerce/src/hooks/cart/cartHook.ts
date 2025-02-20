@@ -18,7 +18,7 @@ export const useDeleteCart = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: [CART_KEY],
-    mutationFn: async (cartId: string) => await deleteCart(cartId),
+    mutationFn: async (cartId: number) => await deleteCart(cartId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
     },
@@ -41,7 +41,7 @@ export const useUpdateCartItem = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: [CART_KEY],
-    mutationFn: async (data: UpdateCartItemForm) => await updateCartItem(data.itemId, data.quantity),
+    mutationFn: async (data: UpdateCartItemForm) => await updateCartItem({cartItemId: data.itemId, quantity: data.quantity}),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
     },

@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -64,4 +65,24 @@ public class CartDocumentCustomRepositoryImpl implements CartDocumentCustomRepos
             );
         }
     }
+
+    @Override
+    public Optional<CartItemDocument> getCartItemDetail(Long cartId, Long itemId) {
+        Query query = new Query(Criteria.where("id").is(cartId));
+
+        // Sử dụng projection để chỉ lấy cart item cần thiết
+        query.fields().include("cartItems");
+
+        CartDocument cart = mongoTemplate.findOne(query, CartDocument.class);
+
+        if (cart == null || cart.getCartItems() == null || cart.getCartItems().isEmpty()) {
+            return Optional.empty();
+        }
+
+        // Tìm cart item theo ID trong danh sách cart items
+        return cart.getCartItems().stream()
+                .filter(item -> item.getId().equals(itemId))
+                .findFirst();
+    }
 }
+

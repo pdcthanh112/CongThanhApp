@@ -1,36 +1,5 @@
 type Query {
-    product: [Product]
-    category: [Category]
-    subcategory: [Subcategory]
     cart: [Cart]
-    appData: AppData
-    supplier: [Supplier]
-}
-
-union AppData = Category | Subcategory
-
-type Product {
-    id: ID!
-    name: String!
-    category: Category
-    subcategory: Subcategory
-    SKU: String
-    image: [ProductImage]
-    description: String
-    status: String
-    slug: String
-    supplier: Supplier
-}
-
-type Category {
-    id: ID!
-    name: String!
-}
-
-type Subcategory {
-    id: ID!
-    name: String!
-    category: Category
 }
 
 type Cart {
@@ -45,23 +14,7 @@ type Cart {
 type CartItem {
     id: ID!
     quantity: Int
-    product: Product
+    product: String
     cartId: String
     createdDate: String
-}
-
-type Supplier {
-    id: ID!
-    name: String!
-    avatar: String
-    background: String
-    domain: String
-}
-
-type ProductImage {
-    id: ID!
-    name: String
-    imagePath: String
-    alt: String
-    isDefault: Boolean
 }

@@ -25,7 +25,7 @@ public class CartDocument {
 
     private String name;
 
-    private String customer;
+    private String customerId;
 
     private Instant createdAt;
 

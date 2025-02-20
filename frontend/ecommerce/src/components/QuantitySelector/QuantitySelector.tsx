@@ -50,7 +50,7 @@ const QuantitySelector = ({ max, onIncrease, onDecrease, onType, onFocusOut, val
 
   return (
     <div className={'flex items-center'}>
-      <button className="bg-[#f3f3f3] flex h-8 w-8 items-center justify-center rounded-l-sm border border-gray-300 text-gray-600" onClick={decrease}>
+      <button className="p-2 bg-[#f3f3f3] flex h-8 w-8 items-center justify-center rounded-l-sm border border-gray-300 text-gray-600" onClick={decrease}>
         <MinusIcon />
       </button>
       <InputNumber
@@ -62,7 +62,7 @@ const QuantitySelector = ({ max, onIncrease, onDecrease, onType, onFocusOut, val
         value={value || localValue}
         {...rest}
       />
-      <button className="bg-[#f3f3f3] flex h-8 w-8 items-center justify-center rounded-r-sm border border-gray-300 text-gray-600" onClick={increase}>
+      <button className="p-2 bg-[#f3f3f3] flex h-8 w-8 items-center justify-center rounded-r-sm border border-gray-300 text-gray-600" onClick={increase}>
         <PlusIcon />
       </button>
     </div>

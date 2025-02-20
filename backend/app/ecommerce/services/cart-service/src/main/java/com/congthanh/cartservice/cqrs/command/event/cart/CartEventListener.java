@@ -42,7 +42,7 @@ public class CartEventListener {
         CartDocument cart = CartDocument.builder()
                 .id(event.getId())
                 .name(event.getName())
-                .customer(event.getCustomerId())
+                .customerId(event.getCustomerId())
                 .createdAt(event.getCreatedAt())
                 .updatedAt(event.getUpdatedAt())
                 .status(event.getStatus())

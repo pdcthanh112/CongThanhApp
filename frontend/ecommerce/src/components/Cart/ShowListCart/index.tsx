@@ -25,7 +25,7 @@ export default function ShowListCart({ data, loading = true }: PropsType) {
 
   const { mutate: deleteCart } = useDeleteCart();
 
-  const handleDeleteCart = (cartId: string) => {
+  const handleDeleteCart = (cartId: number) => {
     deleteCart(cartId, {
       onSuccess() {
         toast.success(t('cart.delete_cart_successfully'));
@@ -41,7 +41,9 @@ export default function ShowListCart({ data, loading = true }: PropsType) {
     return (
       <div className="w-full h-[40rem] bg-white text-center">
         <div className="w-full pt-12 flex justify-center">
-          <Image src={IMAGE.cartEmpty} alt={'Cart Empty'} width={300} height={100} />
+          <span className='w-20 h-20 relative'>
+          <Image src={IMAGE.cartEmpty} alt={'Cart Empty'} objectFit='fit' fill />
+          </span>
         </div>
         <div className="w-full flex justify-center font-medium text-xl mb-5">{t('cart.cart_empty')}</div>
         <div className="w-full flex justify-center">
@@ -84,8 +86,8 @@ export default function ShowListCart({ data, loading = true }: PropsType) {
                 <>
                   {cart.cartItems?.map((item: CartItem) => {
                     countItem++;
-                    sumPrice += item.product.price * item.quantity;
-                    return <ShowCartItem key={item.id} item={item} />;
+                    // sumPrice += item.product.price * item.quantity;
+                    return <ShowCartItem key={item.id} cartId={cart.id} item={item} />;
                   })}
                 </>
               ) : (

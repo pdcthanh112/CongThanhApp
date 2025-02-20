@@ -2,6 +2,7 @@ package com.congthanh.cartservice.service;
 
 import com.congthanh.cartservice.model.dto.CartDTO;
 import com.congthanh.cartservice.model.request.CreateCartRequest;
+import com.congthanh.cartservice.model.viewmodel.CartVm;
 
 import java.util.List;
 
@@ -10,6 +11,8 @@ public interface CartService {
   CartDTO getCartById(Long id);
 
   List<CartDTO> getActiveCartByCustomerId(String customerId);
+
+  List<CartVm> customerGetCartByCustomerId(String customerId);
 
   CartDTO createCart(CreateCartRequest request);
 

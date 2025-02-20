@@ -33,12 +33,13 @@ public class CartEventHandler {
         Cart cart = Cart.builder()
                 .id(event.getId())
                 .name(event.getName())
-                .customer(event.getCustomerId())
+                .customerId(event.getCustomerId())
                 .createdAt(event.getCreatedAt())
                 .updatedAt(event.getUpdatedAt())
                 .status(event.getStatus())
                 .isDefault(event.isDefault())
                 .build();
+        System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"+cart);
         cartRepository.save(cart);
         if (event.isDefault()) {
             cartRepository.setDefaultCartForCustomer(event.getCustomerId(), event.getId());
