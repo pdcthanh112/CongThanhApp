@@ -9,7 +9,7 @@ import { Divider, Icon } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { createLoginSchema, LoginSchemaType } from '@/models/schema/authSchema';
 import Link from 'next/link';
-import { ClientSafeProvider, LiteralUnion, useSession } from 'next-auth/react';
+import { ClientSafeProvider, LiteralUnion } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers/index';
 import { AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '@/assets/icons/socialLoginIcon';
@@ -25,7 +25,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const t = useTranslations();
-  const LoginSchema = createLoginSchema(t)
+  const LoginSchema = createLoginSchema(t);
 
   const formLogin = useForm<LoginSchemaType>({
     defaultValues: {
@@ -38,6 +38,24 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
 
   const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
     console.log('asflafjfksf', data);
+    signIn('credentials', data);
+  };
+
+  type SupportedProviderId = 'google' | 'facebook' | 'twitter' | 'apple';
+  function isSupportedProvider(providerId: string): providerId is SupportedProviderId {
+    return ['google', 'facebook', 'twitter', 'apple'].includes(providerId);
+  }
+  const providerIcons: Record<
+    SupportedProviderId,
+    {
+      icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
+      bgColor: string;
+    }
+  > = {
+    google: { icon: GoogleIcon, bgColor: 'bg-red-400' },
+    facebook: { icon: FacebookIcon, bgColor: 'bg-blue-500' },
+    twitter: { icon: TwitterIcon, bgColor: 'bg-blue-300' },
+    apple: { icon: AppleIcon, bgColor: 'bg-gray-300' },
   };
 
   return (
@@ -52,7 +70,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
               <FormItem className="h-24 space-y-0">
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="example@email.com" type="email" {...field} />
+                  <Input placeholder="example@email.com" type="text" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -96,40 +114,29 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
       <Divider>{t('common.or')}</Divider>
 
       <div className="grid grid-cols-12 gap-3 mt-3">
-        <div className="col-span-6">
-          <SocialLoginComponent id={'google'} name={'Google'} bgColor={'bg-red-400'} icon={GoogleIcon} />
-          <SocialLoginComponent id={'twitter'} name={'Twitter'} bgColor={'bg-blue-300'} icon={TwitterIcon} />
-        </div>
-        <div className="col-span-6">
-          <SocialLoginComponent id={'facebook'} name={'Facebook'} bgColor={'bg-blue-400'} icon={FacebookIcon} />
-          <SocialLoginComponent id={'apple'} name={'Apple'} bgColor={'bg-gray-400'} icon={AppleIcon} />
-        </div>
+        {Object.values(providers!).map((provider, idx) => {
+          if (provider.id === 'credentials') return;
+          if (isSupportedProvider(provider.id)) {
+            return (
+              <div
+                key={idx}
+                className={`${providerIcons[provider.id].bgColor} flex px-3 py-3 mb-3 hover:cursor-pointer rounded-lg col-span-6`}
+                title={t('auth.login_with_social', { social: provider.name })}
+                onClick={() =>
+                  signIn(provider.id)
+                    .then(() => console.log(`${provider.id} login initiated`))
+                    .catch((err) => console.error('Sign in error:', err))
+                }
+              >
+                <Icon component={providerIcons[provider.id].icon} className="h-2" />
+                <span className="ml-3 text-white font-medium">
+                  {t('auth.login_with_social', { social: provider.name })}
+                </span>
+              </div>
+            );
+          }
+        })}
       </div>
     </React.Fragment>
   );
 }
-
-const SocialLoginComponent = ({
-  id,
-  name,
-  bgColor,
-  icon,
-}: {
-  id: 'google' | 'facebook' | 'twitter' | 'apple';
-  name: 'Google' | 'Facebook' | 'Twitter' | 'Apple';
-  bgColor: string;
-  icon: any;
-}) => (
-  <div
-    className={`${bgColor} flex px-3 py-3 mb-3 hover:cursor-pointer rounded-lg`}
-    title={`Login with ${name}`}
-    onClick={() =>
-      signIn(id)
-        .then(() => console.log(`${id} login initiated`))
-        .catch((err) => console.error('Sign in error:', err))
-    }
-  >
-    <Icon component={icon} className="h-2" />
-    <span className="ml-3 text-white font-medium">Login with {name}</span>
-  </div>
-);

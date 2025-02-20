@@ -5,9 +5,8 @@ import './AppHeader.scss';
 import Image from 'next/image';
 import { Card, Icon } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { useAppDispatch } from '@/redux/store';
 import AppLogo from '@/assets/images/app-logo-removebg.png';
-import DefaultImage from '@/assets/images/default-image.jpg';
 import { NavigateNext, Category as CategoryIcon } from '@mui/icons-material';
 import CartModal from '@/components/Cart/CartModal';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
@@ -32,9 +31,8 @@ const NotificationModal = dynamic(() => import('@/components/NotificationModal')
 export default function AppHeader() {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const t = useTranslations();
-
   const { user, isAuthenticated, logout } = useAuthenticated();
+  const t = useTranslations();
 
   const { data: listNotification, isLoading } = useQuery({
     queryKey: [NOTIFICATION_KEY],

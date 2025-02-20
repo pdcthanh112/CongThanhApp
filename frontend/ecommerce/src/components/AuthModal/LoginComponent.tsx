@@ -44,7 +44,7 @@ export default function LoginComponent() {
   }) => (
     <div
       className={`${bgColor} flex px-3 py-2 mb-3 hover:cursor-pointer rounded-lg`}
-      title={`Login with ${name}`}
+      title={t('auth.login_with_social', {social: name})}
       onClick={() =>
         signIn(id)
           .then(() => console.log(`${id} login initiated`))

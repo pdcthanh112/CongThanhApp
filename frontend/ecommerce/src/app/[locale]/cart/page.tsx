@@ -9,7 +9,8 @@ async function getCartData(customerId: string) {
 }
 
 export default async function CartPage() {
-  const session = await getServerSession();
+  const session  = await getServerSession();
+  console.log('SSSSSSSSSSSSSs', session)
 
   if (!session || !session.user) {
     return (
