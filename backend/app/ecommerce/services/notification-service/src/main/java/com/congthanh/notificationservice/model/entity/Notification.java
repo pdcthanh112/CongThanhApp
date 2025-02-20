@@ -1,11 +1,13 @@
 package com.congthanh.notificationservice.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.congthanh.notificationservice.constant.enums.NotificationStatus;
+import com.congthanh.notificationservice.constant.enums.NotificationType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 
@@ -18,7 +20,6 @@ import java.time.Instant;
 public class Notification {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String customer;
@@ -29,18 +30,22 @@ public class Notification {
 
   private String url;
 
-  @Column(name = "is_read")
-  @JsonProperty("isRead")
-  private boolean isRead;
+  @Column(name = "sent_at")
+  private Instant sentAt;
 
+  @Column(name = "read_at")
+  private Instant readAt;
+
+  @Enumerated(EnumType.STRING)
+  private NotificationType type;
+
+  private String image;
+
+  @CreationTimestamp
   @Column(name = "created_at")
-  private long createdAt;
+  private Instant createdAt;
 
-  private String status;
-
-  @PrePersist
-  public void prePersist() {
-    this.createdAt = Instant.now().toEpochMilli();
-  }
+  @Enumerated(EnumType.STRING)
+  private NotificationStatus status;
 
 }

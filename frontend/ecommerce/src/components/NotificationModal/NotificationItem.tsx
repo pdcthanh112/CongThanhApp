@@ -10,11 +10,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { NOTIFICATION_KEY } from '@/utils/constants/queryKey';
 import { changeNotificationReadingStatus } from '@/api/notificationApi';
 
-type NotificationItemPropsType = {
+type PropsType = {
   item: Notification;
 };
 
-const NotificationItem = ({ item }: NotificationItemPropsType) => {
+const NotificationItem = ({ item }: PropsType) => {
   const queryClient = useQueryClient();
 
   const { mutate: handleChangeReadingStatus } = useMutation({

@@ -1,6 +1,6 @@
 package com.congthanh.notificationservice.model.request;
 
-import com.congthanh.notificationservice.constant.enums.NotificationType;
+import com.congthanh.notificationservice.constant.enums.NotificationMethod;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class NotificationRequest {
 
     @NotNull
-    private NotificationType type;
+    private NotificationMethod type;
 
     @NotBlank
     private String recipient;

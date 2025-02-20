@@ -1,10 +1,10 @@
-import { useAppSelector } from '@/redux/store';
 import Link from 'next/link';
-import { Customer, Notification } from '@/models/types';
+import { Notification } from '@/models/types';
 import { PATH } from '@/utils/constants/path';
 import NotificationItem from './NotificationItem';
 import NotificationItemSkeleton from './NotificationItemSkeleton';
 import { useTranslations } from 'next-intl';
+import { useAuthenticated } from '@/hooks/auth/useAuthenticated';
 
 type PropsType = {
   listNotification: Notification[];
@@ -12,10 +12,10 @@ type PropsType = {
 };
 
 export default function NotificationModal({ listNotification, loading = true }: PropsType) {
-  const currentUser: Customer = useAppSelector((state) => state.auth.currentUser);
+  const {user} = useAuthenticated()
   const t = useTranslations();
 
-  if(!currentUser) return <div>Needed signin</div> 
+  if(!user) return <div>Needed signin</div> 
 
   return (
     <div>

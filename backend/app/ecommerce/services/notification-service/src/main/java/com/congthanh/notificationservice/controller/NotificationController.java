@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ecommerce/notification")
+@RequestMapping("/ecommerce/notifications")
 @Tag(name = "Notification API", description = "Notification API in CongThanhApp - Ecommerce")
 @RequiredArgsConstructor
 public class NotificationController {
 
   private final NotificationService notificationService;
 
-  @GetMapping("/getByCustomer")
-  public ResponseEntity<Response<List<NotificationDTO>>> getNotificationByCustomer(@RequestParam("id") String customerId) {
+  @GetMapping("/customer/{customerId}")
+  public ResponseEntity<Response<List<NotificationDTO>>> getNotificationByCustomer(@PathVariable("customerId") String customerId) {
     List<NotificationDTO> result = notificationService.getNotificationByCustomer(customerId);
     Response<List<NotificationDTO>> response = new Response<>();
     response.setData(result);
@@ -30,7 +30,7 @@ public class NotificationController {
     return ResponseEntity.ok().body(response);
   }
 
-  @PostMapping("/create")
+  @PostMapping("")
   public ResponseEntity<Response<NotificationDTO>> createNotification(@RequestBody NotificationDTO notificationDTO) {
     NotificationDTO result = notificationService.createNotification(notificationDTO);
     Response<NotificationDTO> response = new Response<>();

@@ -1,5 +1,6 @@
 import axiosConfig from '@/config/axiosConfig';
 import { CreateCartForm } from '@/models/form';
+import { Cart, Response } from '@/models/types';
 
 export const createNewCart = async (data: CreateCartForm) => {
   return await axiosConfig
@@ -10,34 +11,34 @@ export const createNewCart = async (data: CreateCartForm) => {
     })
     .then((response) => response)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
 export const deleteCart = async (cartId: number) => {
   return await axiosConfig
-    .delete(`cart/${cartId}`)
+    .delete(`carts/${cartId}`)
     .then((response) => response)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
-export const getCartById = async (id: number) => {
+export const getCartById = async (id: number): Promise<Response<Cart>> => {
   return await axiosConfig
-    .get(`cart/${id}`)
+    .get(`carts/${id}`)
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
-export const getCartByCustomerId = async (customerId: string) => {
+export const getCartByCustomerId = async (customerId: string): Promise<Response<Cart[]>> => {
   return await axiosConfig
     .get(`carts/customer/${customerId}`)
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
@@ -54,7 +55,7 @@ export const addProductToCart = async ({
     .post(`cart-item/addToCart?productId=${productId}&quantity=${quantity}&cartId=${cartId}`)
     .then((response) => response)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
@@ -63,7 +64,7 @@ export const updateCartItem = async ({ cartItemId, quantity }: { cartItemId: num
     .put(`cart-item/update?cartItemId=${cartItemId}&quantity=${quantity}`)
     .then((response) => response)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
@@ -72,12 +73,15 @@ export const deleteCartItem = async (itemId: string) => {
     .delete(`carts/items/${itemId}`)
     .then((response) => response.data)
     .catch((error) => {
-      throw error;
+      throw Error(error);
     });
 };
 
 export const getItemDetail = async ({ cartId, itemId }: { cartId: number; itemId: number }) => {
-  return await axiosConfig.get(`carts/${cartId}/items/${itemId}/detail`).catch((error) => {
-    throw error;
-  });
+  return await axiosConfig
+    .get(`carts/${cartId}/items/${itemId}/detail`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw Error(error);
+    });
 };

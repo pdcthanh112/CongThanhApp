@@ -1,6 +1,6 @@
 package com.congthanh.notificationservice.service.orchestrator;
 
-import com.congthanh.notificationservice.constant.enums.NotificationType;
+import com.congthanh.notificationservice.constant.enums.NotificationMethod;
 import com.congthanh.notificationservice.service.strategy.NotificationStrategy;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import java.util.Map;
 @Component
 public class NotificationOrchestrator {
 
-    private final Map<NotificationType, NotificationStrategy> strategy;
+    private final Map<NotificationMethod, NotificationStrategy> strategy;
 
     public NotificationOrchestrator(
             EmailNotificationStrategy emailStrategy,
@@ -17,9 +17,9 @@ public class NotificationOrchestrator {
             FCMNotificationStrategy fcmStrategy
     ) {
         strategy = Map.of(
-                NotificationType.EMAIL, emailStrategy,
-                NotificationType.SMS, smsStrategy,
-                NotificationType.FCM, fcmStrategy
+                NotificationMethod.EMAIL, emailStrategy,
+                NotificationMethod.SMS, smsStrategy,
+                NotificationMethod.FCM, fcmStrategy
         );
     }
 

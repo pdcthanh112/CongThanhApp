@@ -1,6 +1,5 @@
 package com.congthanh.notificationservice.kafka.order;
 
-import com.congthanh.notificationservice.constant.enums.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
