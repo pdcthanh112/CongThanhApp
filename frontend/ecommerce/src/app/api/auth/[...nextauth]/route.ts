@@ -10,12 +10,12 @@ export const authOptions: AuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    //   name: "Google"
+      //   name: "Google"
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID!,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
-      name: "Facebook"
+      name: 'Facebook',
     }),
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID!,
@@ -25,7 +25,7 @@ export const authOptions: AuthOptions = {
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID!,
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
-      name: "Apple"
+      name: 'Apple',
     }),
     CredentialsProvider({
       name: 'Credentials',
@@ -72,7 +72,6 @@ export const authOptions: AuthOptions = {
       return { ...token, ...user };
     },
     async session({ session, token, user }) {
-      console.log('RRRRRRRRRRRRRRR', session, token, user);
       // session.user = token.sub as any;
       session.user = user;
       session.expires = token.sub!!;
@@ -88,21 +87,13 @@ const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
 
 async function refreshAccessToken(token: any) {
-  console.log('Refreshing access token', token);
   try {
-    console.log('Beaarer token', `Bearer ${token.refreshToken}`);
-
     const response = await fetch(`${process.env.API_SERVER_BASE_URL}/api/auth/refresh`, {
       headers: {
         Authorization: `Bearer ${token.refreshToken}`,
       },
     });
-
-    console.log(response);
-
     const tokens = await response.json();
-
-    console.log(tokens);
 
     if (!response.ok) {
       throw tokens;

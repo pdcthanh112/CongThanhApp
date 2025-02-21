@@ -155,5 +155,10 @@
   },
   "placeholder": {
     "input_field": "Enter your {field}"
+  },
+  "payment": {
+    "add_card": {
+      "cvv": "CVV"
+    }
   }
 }

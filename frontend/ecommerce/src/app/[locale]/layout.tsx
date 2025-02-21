@@ -67,7 +67,7 @@ export default async function Layout({ children, params: { locale } }: Readonly<
             <AppHeader />
             <AppNavbar />
             <RootLayout>
-              <main className="min-h-[calc(100vh-270px)]">{children}</main>
+              <main className="min-h-[calc(100vh-270px)] bg-[#F5F5F5]">{children}</main>
             </RootLayout>
             <AppFooter />
           </NextIntlClientProvider>

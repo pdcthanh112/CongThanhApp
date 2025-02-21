@@ -11,3 +11,12 @@ export const executePaypalPayment = async (paymentId: string, payerId: string) =
       throw Error(error);
     });
 };
+
+export const addPaymentCard = async () => {
+  return await axiosConfig
+    .post('/payments/card')
+    .then((response) => response.data)
+    .catch((error) => {
+      throw Error(error);
+    });
+};
