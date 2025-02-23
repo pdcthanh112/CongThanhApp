@@ -9,17 +9,16 @@ server:
 spring:
   application:
     name: congthanhapp-ecommerce-catalog-service
+  config:
+    import: optional:file:.env[.properties]
+    activate:
+      on-profile: dev
   web:
     cors:
       allowed-origins: "http://localhost:3000"
       allowed-methods: "*"
       allowed-headers: "*"
       allow-credentials: true
-
-  config:
-    import: optional:file:.env[.properties]
-    activate:
-      on-profile: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
     username: postgres
@@ -141,7 +140,7 @@ grpc:
 keycloak:
   realm: ecommerce-realm
   auth-server-url: http://keycloak:8080/auth
-  resource: product-service
+  resource: catalog-service
   bearer-only: true
   ssl-required: external
   credentials:

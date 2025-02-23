@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createAddress, deleteAddress, updateAddress } from 'api/addressApi';
+import { createAddress, deleteAddress, updateAddress } from '@/api/addressApi';
 import { CreateAddressForm, UpdateAddressForm } from '@/models/form';
 import { ADDRESS_KEY } from '@/utils/constants/queryKey';
 

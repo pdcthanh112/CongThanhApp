@@ -3,6 +3,7 @@ import InputNumber, { InputNumberProps } from './InputNumber';
 import { MinusIcon, PlusIcon } from '@/assets/icons';
 
 interface PropsType extends InputNumberProps {
+  value: number;
   min?: number;
   max?: number;
   onIncrease?: (value: number) => void;
@@ -11,18 +12,18 @@ interface PropsType extends InputNumberProps {
   onFocusOut?: (value: number) => void;
 }
 
-const QuantitySelector = ({ max, onIncrease, onDecrease, onType, onFocusOut, value, ...rest }: PropsType) => {
+const QuantitySelector = ({min, max, onIncrease, onDecrease, onType, onFocusOut, value, ...rest }: PropsType) => {
   const [localValue, setLocalValue] = useState<number>(Number(value || 0));
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let _value = Number(event.target.value);
-    // if (max !== undefined && _value > max) {
-    //   _value = max;
-    // } 
-    // else if (_value < 1) {
-    //   _value = 1;
-    // }
-    onType && onType(_value);
+    if (max !== undefined && _value > max) {
+      _value = max;
+    } 
+    else if (_value < 1) {
+      _value = 1;
+    }
+    onType && onType(_value); 
     setLocalValue(_value);
   };
 
@@ -50,7 +51,7 @@ const QuantitySelector = ({ max, onIncrease, onDecrease, onType, onFocusOut, val
 
   return (
     <div className={'flex items-center'}>
-      <button className="p-2 bg-[#f3f3f3] flex h-8 w-8 items-center justify-center rounded-l-sm border border-gray-300 text-gray-600" onClick={decrease}>
+      <button className="p-2 bg-[#f3f3f3] flex h-8 w-8 items-center justify-center rounded-l-sm border border-gray-300 text-gray-600" onClick={decrease} disabled={value <= min!}>
         <MinusIcon />
       </button>
       <InputNumber
@@ -62,7 +63,7 @@ const QuantitySelector = ({ max, onIncrease, onDecrease, onType, onFocusOut, val
         value={value || localValue}
         {...rest}
       />
-      <button className="p-2 bg-[#f3f3f3] flex h-8 w-8 items-center justify-center rounded-r-sm border border-gray-300 text-gray-600" onClick={increase}>
+      <button className="p-2 bg-[#f3f3f3] flex h-8 w-8 items-center justify-center rounded-r-sm border border-gray-300 text-gray-600" onClick={increase} disabled={value >= max! }>
         <PlusIcon />
       </button>
     </div>

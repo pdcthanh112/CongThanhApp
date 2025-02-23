@@ -7,7 +7,7 @@ import { useDeleteCart } from '@/hooks/cart/cartHook';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
 import { Delete } from '@mui/icons-material';
-import { Button } from '@/components/ui';
+import { Button, Checkbox, Separator } from '@/components/ui';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { IMAGE, PATH } from '@/utils/constants/path';
@@ -19,7 +19,7 @@ type PropsType = {
   loading: boolean;
 };
 
-export default function ShowListCart({ data, loading = true }: PropsType) {
+export default function ShowListCart({ data }: PropsType) {
   const router = useRouter();
   const t = useTranslations();
 
@@ -37,26 +37,11 @@ export default function ShowListCart({ data, loading = true }: PropsType) {
     });
   };
 
-  if (!data) {
-    return (
-      <div className="w-full h-[40rem] bg-white text-center">
-        <div className="w-full pt-12 flex justify-center">
-          <span className='w-20 h-20 relative'>
-          <Image src={IMAGE.cartEmpty} alt={'Cart Empty'} objectFit='fit' fill />
-          </span>
-        </div>
-        <div className="w-full flex justify-center font-medium text-xl mb-5">{t('cart.cart_empty')}</div>
-        <div className="w-full flex justify-center">
-          <Link href={PATH.HOME}>
-            <Button className="bg-green-400 rounded-xl text-white">{t('common.back_to_home')}</Button>
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  let totalCountItem: number = 0;
+  let totalSumPrice: number = 0;
 
   return (
-    <div>
+    <React.Fragment>
       {data.map((cart: Cart) => {
         let countItem: number = 0;
         let sumPrice: number = 0;
@@ -64,7 +49,7 @@ export default function ShowListCart({ data, loading = true }: PropsType) {
           <div key={cart.id} className="md:flex mb-5 ">
             <Card className="md:w-[80%] min-h-[10vh] px-4 py-5">
               <div className="flex justify-between">
-                <div className="font-medium text-lg">{cart.name}</div>
+                <div className="font-medium text-lg">{cart.cartItems.length > 0 && <Checkbox/>} {cart.name}</div>
                 <Popconfirm
                   title="Are you sure to delete this cart?"
                   okText={t('common.yes')}
@@ -86,6 +71,7 @@ export default function ShowListCart({ data, loading = true }: PropsType) {
                 <>
                   {cart.cartItems?.map((item: CartItem) => {
                     countItem++;
+                    totalCountItem++;
                     // sumPrice += item.product.price * item.quantity;
                     return <ShowCartItem key={item.id} cartId={cart.id} item={item} />;
                   })}
@@ -95,9 +81,9 @@ export default function ShowListCart({ data, loading = true }: PropsType) {
               )}
             </Card>
             <Card className="md:w-[20%] ml-4 p-4 relative">
-              <h1 className="font-semibold text-xl">{t('common.checkout')}</h1>
+              <span className="font-semibold text-xl">{t('common.checkout')}</span>
               {cart.cartItems?.length > 0 && (
-                <>
+                <React.Fragment>
                   <div className="px-3">
                     <div className="flex justify-between">
                       <span>Items({countItem}):</span>
@@ -118,12 +104,36 @@ export default function ShowListCart({ data, loading = true }: PropsType) {
                   >
                     {t('common.checkout')}
                   </Button>
-                </>
+                </React.Fragment>
               )}
             </Card>
           </div>
         );
       })}
-    </div>
+      <div className="flex justify-end">
+        <Card className="w-[22rem] px-4 py-5">
+          <h3 className="font-semibold text-xl text-center mb-3">{t('common.checkout')} all product</h3>
+
+          <div className="px-3">
+            <div className="flex justify-between">
+              <span>Items({totalCountItem}):</span>
+              <span>{totalSumPrice.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between">
+              {t('common.shipping')}: <span>{t('common.free')}</span>
+            </div>
+          </div>
+          <Separator className='h-[2px] bg-black'/>
+          <div className="flex justify-between px-3 bottom-16">
+            <span>{t('cart.subtotal')}:</span>
+            <span>{totalSumPrice.toFixed(2)}</span>
+          </div>
+          
+          <Button className="w-full bg-yellow-400" onClick={() => router.push(`/checkout/${cart.id}`)}>
+            {t('common.checkout')}
+          </Button>
+        </Card>
+      </div>
+    </React.Fragment>
   );
 }

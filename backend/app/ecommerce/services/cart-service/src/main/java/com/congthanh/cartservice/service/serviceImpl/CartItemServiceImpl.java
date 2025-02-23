@@ -53,7 +53,14 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     public CartItemDetailVm getCartItemDetail(Long cartId, Long itemId) {
         CartItemDocument data = cartDocumentRepository.getCartItemDetail(cartId, itemId).orElseThrow(() -> new NotFoundException("CartItem not found"));
-        ProductResponse product = productGrpcClient.getProductById(data.getProductId());
+//        ProductResponse product = productGrpcClient.getProductById(data.getProductId());
+        ProductResponse product = ProductResponse.newBuilder()
+                .setId("a7c24431-8c3d-4b8b-b425-a226c31e4485")
+                .setPrice(123456)
+                .setName("Product Name nè")
+                .setSlug("iphone-16-pro-max")
+                .setSku("88432858468438")
+                .build();
         CartItemDetailVm result = CartItemDetailVm.builder()
                 .id(data.getId())
                 .quantity(data.getQuantity())

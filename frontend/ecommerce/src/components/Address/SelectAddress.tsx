@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { useAppSelector } from '@redux/store';
+import { useAppSelector } from '@/redux/store';
 import { useQuery } from '@tanstack/react-query';
-import { getAddressByCustomer } from 'api/addressApi';
+import { getAddressByCustomer } from '@/api/addressApi';
 import { Modal, Radio, Button, message } from 'antd';
 import TabCreateAddress from './TabCreateAddress';
 import TabEditAddress from './TabEditAddress';
 import { Icon } from '@mui/material';
 import { Add } from '@mui/icons-material';
-import { Address } from '@models/type';
-import { CreateAddressForm, UpdateAddressForm } from '@models/form';
-import { useCreateAddress, useUpdateAddress } from '@hooks/address/addressHook';
+import { Address } from '@/models/types';
+import { CreateAddressForm, UpdateAddressForm } from '@/models/form';
+import { useCreateAddress, useUpdateAddress } from '@/hooks/address/addressHook';
 import { SubmitHandler } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 

@@ -10,13 +10,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AxonConfig {
 
-    public AxonConfig(EventProcessingConfigurer configurer) {
-//        configurer.registerSaga(SagaConfigurer.defaultConfiguration());
-    }
-
-    @Bean
-    public EventSourcingRepository<CartAggregate> productAggregateRepository(EventStore eventStore) {
-        return EventSourcingRepository.builder(CartAggregate.class).eventStore(eventStore).build();
-    }
+//    public AxonConfig(EventProcessingConfigurer configurer) {
+////        configurer.registerSaga(SagaConfigurer.defaultConfiguration());
+//    }
+//
+//    @Bean
+//    public EventSourcingRepository<CartAggregate> productAggregateRepository(EventStore eventStore) {
+//        return EventSourcingRepository.builder(CartAggregate.class).eventStore(eventStore).build();
+//    }
 
 }

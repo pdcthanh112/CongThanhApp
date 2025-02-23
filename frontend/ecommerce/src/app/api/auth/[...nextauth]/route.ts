@@ -10,30 +10,36 @@ export const authOptions: AuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      //   name: "Google"
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID!,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
-      name: 'Facebook',
     }),
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID!,
       clientSecret: process.env.TWITTER_CLIENT_SECRET!,
-      name: 'Twitter',
     }),
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID!,
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
-      name: 'Apple',
     }),
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        username: { label: 'Username', type: 'text', placeholder: 'abc@gmail.com' },
-        password: { label: 'Password', type: 'password', placeholder: '**************' },
+        username: {
+          label: 'Username',
+          type: 'text',
+          placeholder: 'abc@gmail.com',
+          validate: (value: string) => value?.length > 0 || 'Username is required',
+        },
+        password: {
+          label: 'Password',
+          type: 'password',
+          placeholder: '**************',
+          validate: (value: string) => value?.length > 0 || 'Password is required',
+        },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const res = await fetch('http://localhost:8000/auth/login', {
           method: 'POST',
           headers: {
@@ -46,11 +52,7 @@ export const authOptions: AuthOptions = {
         });
         const user = await res.json();
 
-        if (user) {
-          return user;
-        } else {
-          return null;
-        }
+        return user;
       },
     }),
   ],
@@ -63,18 +65,25 @@ export const authOptions: AuthOptions = {
     verifyRequest: '/auth/verify-request', // (used for check email message)
   },
 
+  session: {
+    strategy: 'jwt',
+  },
+
   callbacks: {
-    async jwt({ token, user, account }) {
-      if (Date.now() > account?.expires_at!!) {
+    async jwt({ token, user, account, trigger, session }) {
+      if (account?.expires_at && Date.now() > account.expires_at * 1000) {
         return refreshAccessToken(token);
       }
-      console.log({ account });
+      if (trigger === 'update' && session?.licenseId) {
+        token.accountId = session.accountId;
+      }
       return { ...token, ...user };
     },
     async session({ session, token, user }) {
       // session.user = token.sub as any;
       session.user = user;
-      session.expires = token.sub!!;
+      session.expires = token.exp ? new Date(token.exp * 1000).toISOString() : null;
+
       return session;
     },
   },

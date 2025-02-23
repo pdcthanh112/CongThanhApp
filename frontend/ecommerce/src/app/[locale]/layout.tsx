@@ -22,7 +22,7 @@ export const baseOpenGraph = {
 };
 
 export async function generateMetadata({ params }: { params: { locale: Locale } }): Promise<Metadata> {
-  const { locale } = await params;
+  const { locale } = params;
   const t = await getTranslations({ locale });
 
   return {
