@@ -1,18 +1,16 @@
 'use client';
 import React from 'react';
 import { Cart, CartItem } from '@/models/types';
-import { Card, Icon } from '@mui/material';
+import { Card, Checkbox } from '@mui/material';
 import { Popconfirm } from 'antd';
 import { useDeleteCart } from '@/hooks/cart/cartHook';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
-import { Delete } from '@mui/icons-material';
-import { Button, Checkbox, Separator } from '@/components/ui';
+import { Button, Separator } from '@/components/ui';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { IMAGE, PATH } from '@/utils/constants/path';
-import Link from 'next/link';
 import ShowCartItem from './ShowCartItem';
+import { Trash2 } from 'lucide-react';
+import useSelectedCheckout from '@/store/useSelectedCheckout';
 
 type PropsType = {
   data: Cart[];
@@ -22,6 +20,15 @@ type PropsType = {
 export default function ShowListCart({ data }: PropsType) {
   const router = useRouter();
   const t = useTranslations();
+
+  const {
+    toggleAllCarts,
+    isAllCartsSelected,
+    selectedCarts,
+    toggleCart,
+    toggleCartItem,
+    isCartSelected,
+  } = useSelectedCheckout();
 
   const { mutate: deleteCart } = useDeleteCart();
 
@@ -37,11 +44,44 @@ export default function ShowListCart({ data }: PropsType) {
     });
   };
 
+  const handleCheckout = (cartId: number) => {
+    const cartSelections = selectedCarts[cartId] || {};
+    const selectedItems = Object.entries(cartSelections)
+      .filter(([_, isSelected]) => isSelected)
+      .map(([itemId]) => Number(itemId));
+
+    if (selectedItems.length === 0) {
+      toast.error('Vui lòng chọn sản phẩm');
+      return;
+    }
+    router.push(`/checkout?items=${encodeURIComponent(JSON.stringify(selectedItems))}`);
+  };
+
+  const handleCheckoutAll = () => {
+    const selectedItems = Object.entries(selectedCarts)
+      .map(([cartId, items]) => ({
+        cartId: Number(cartId),
+        items: Object.entries(items)
+          .filter(([_, isSelected]) => isSelected)
+          .map(([itemId]) => Number(itemId)),
+      }))
+      .filter((cart) => cart.items.length > 0);
+    if (selectedItems.length === 0) {
+      toast.error('Vui lòng chọn sản phẩm');
+      return;
+    }
+    router.push('/checkout');
+  };
+
   let totalCountItem: number = 0;
   let totalSumPrice: number = 0;
 
   return (
     <React.Fragment>
+      <Card className="bg-yellow-100 flex items-center mb-5">
+        <Checkbox checked={isAllCartsSelected(data)} onChange={() => toggleAllCarts(data)} />
+        <span>Select all</span>
+      </Card>
       {data.map((cart: Cart) => {
         let countItem: number = 0;
         let sumPrice: number = 0;
@@ -49,7 +89,15 @@ export default function ShowListCart({ data }: PropsType) {
           <div key={cart.id} className="md:flex mb-5 ">
             <Card className="md:w-[80%] min-h-[10vh] px-4 py-5">
               <div className="flex justify-between">
-                <div className="font-medium text-lg">{cart.cartItems.length > 0 && <Checkbox/>} {cart.name}</div>
+                <div className="font-medium text-lg">
+                  {cart.cartItems.length > 0 && (
+                    <Checkbox
+                      checked={isCartSelected(cart.id, cart.cartItems)}
+                      onChange={() => toggleCart(cart.id, cart.cartItems)}
+                    />
+                  )}{' '}
+                  {cart.name}
+                </div>
                 <Popconfirm
                   title="Are you sure to delete this cart?"
                   okText={t('common.yes')}
@@ -60,11 +108,7 @@ export default function ShowListCart({ data }: PropsType) {
                   }}
                   placement="topRight"
                 >
-                  <Icon
-                    titleAccess={t('common.remove_this_item')}
-                    component={Delete}
-                    className="hover:cursor-pointer opacity-50 hover:opacity-100"
-                  />
+                  <Trash2 className="hover:cursor-pointer" size={20} />
                 </Popconfirm>
               </div>
               {cart.cartItems?.length > 0 ? (
@@ -73,17 +117,26 @@ export default function ShowListCart({ data }: PropsType) {
                     countItem++;
                     totalCountItem++;
                     // sumPrice += item.product.price * item.quantity;
-                    return <ShowCartItem key={item.id} cartId={cart.id} item={item} />;
+                    return (
+                      <div key={item.id} className="flex items-center hover:bg-gray-100 px-5 py-2">
+                        <Checkbox
+                          className="mr-2"
+                          checked={selectedCarts[cart.id]?.[item.id] || false}
+                          onChange={() => toggleCartItem(cart.id, item.id)}
+                        />{' '}
+                        <ShowCartItem cartId={cart.id} item={item} />
+                      </div>
+                    );
                   })}
                 </>
               ) : (
                 <div className="flex justify-center">{t('cart.this_cart_have_no_item')}</div>
               )}
             </Card>
-            <Card className="md:w-[20%] ml-4 p-4 relative">
+            <Card className="md:w-[20%] ml-4 p-4">
               <span className="font-semibold text-xl">{t('common.checkout')}</span>
               {cart.cartItems?.length > 0 && (
-                <React.Fragment>
+                <div className=" flex justify-between flex-col h-[90%]">
                   <div className="px-3">
                     <div className="flex justify-between">
                       <span>Items({countItem}):</span>
@@ -93,18 +146,17 @@ export default function ShowListCart({ data }: PropsType) {
                       {t('common.shipping')}: <span>{t('common.free')}</span>
                     </div>
                   </div>
-                  <div className="flex justify-between px-3 absolute bottom-16 border-t-2 border-t-gray-400 w-[85%]">
-                    <span>{t('cart.subtotal')}:</span>
-                    <span>{sumPrice.toFixed(2)}</span>
+                  <div>
+                    <Separator className="h-[1.5px] bg-gray-400" />
+                    <div className="flex justify-between px-3 w-[95%]">
+                      <span>{t('cart.subtotal')}:</span>
+                      <span>{sumPrice.toFixed(2)}</span>
+                    </div>
+                    <Button className="w-full bg-yellow-400 mt-2" onClick={() => handleCheckout(cart.id)}>
+                      {t('common.checkout')}
+                    </Button>
                   </div>
-
-                  <Button
-                    className="absolute bottom-4 w-[88%] bg-yellow-400"
-                    onClick={() => router.push(`/checkout/${cart.id}`)}
-                  >
-                    {t('common.checkout')}
-                  </Button>
-                </React.Fragment>
+                </div>
               )}
             </Card>
           </div>
@@ -123,13 +175,13 @@ export default function ShowListCart({ data }: PropsType) {
               {t('common.shipping')}: <span>{t('common.free')}</span>
             </div>
           </div>
-          <Separator className='h-[2px] bg-black'/>
+          <Separator className="h-[1.5px] bg-gray-400" />
           <div className="flex justify-between px-3 bottom-16">
             <span>{t('cart.subtotal')}:</span>
             <span>{totalSumPrice.toFixed(2)}</span>
           </div>
-          
-          <Button className="w-full bg-yellow-400" onClick={() => router.push(`/checkout/${cart.id}`)}>
+
+          <Button className="w-full bg-yellow-400" onClick={() => handleCheckoutAll()}>
             {t('common.checkout')}
           </Button>
         </Card>

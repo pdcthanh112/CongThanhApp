@@ -4,7 +4,7 @@ import { LayoutProps } from './[locale]/page';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { SessionProvider } from 'next-auth/react';
 import { ReactQueryProvider, ReduxStoreProvider, ThemeProvider } from '@/config/providers';
-import { AppContextProvider } from '@/context/AppContext';
+import { AuthContextProvider } from '@/context/AuthContext';
 
 const Providers = ({ children }: Readonly<LayoutProps>) => {
   const graphClient = new ApolloClient({
@@ -13,7 +13,7 @@ const Providers = ({ children }: Readonly<LayoutProps>) => {
   });
 
   return (
-    <AppContextProvider>
+    <AuthContextProvider>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
         <SessionProvider>
           <ApolloProvider client={graphClient}>
@@ -23,7 +23,7 @@ const Providers = ({ children }: Readonly<LayoutProps>) => {
           </ApolloProvider>
         </SessionProvider>
       </ThemeProvider>
-    </AppContextProvider>
+    </AuthContextProvider>
   );
 };
 

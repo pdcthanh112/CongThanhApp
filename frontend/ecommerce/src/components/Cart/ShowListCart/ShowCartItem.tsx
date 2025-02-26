@@ -6,9 +6,10 @@ import { IMAGE } from '@/utils/constants/path';
 import QuantitySelector from '@/components/QuantitySelector';
 import { formatCurrency } from '@/utils/helper';
 import { getItemDetail } from '@/api/cartApi';
-import { Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import useDebounce from '@/hooks/useDebounce';
+import { Icon } from '@mui/material';
+import { Delete } from '@mui/icons-material';
+import { useTranslations } from 'next-intl';
 
 type PropsType = {
   cartId: number;
@@ -16,6 +17,7 @@ type PropsType = {
 };
 
 export default function ShowCartItem({ cartId, item }: PropsType) {
+  const t = useTranslations();
 
   const { data: itemDetail, isLoading } = useQuery<CartItemDetail>({
     queryKey: ['cart-item-detail', item],
@@ -23,19 +25,19 @@ export default function ShowCartItem({ cartId, item }: PropsType) {
   });
 
   const handleIncrease = (value: number) => {
-console.log('IIIIIIIIIIIIIIIIIIII', value)
-// console.log('Deeeeeeeeeeee', useDebounce(value))
-  }
+    console.log('IIIIIIIIIIIIIIIIIIII', value);
+    // console.log('Deeeeeeeeeeee', useDebounce(value))
+  };
   const handleDecrease = (value: number) => {
-console.log("DDDDDDDDDDDDDDDDDDDĐ", value)
-  }
+    console.log('DDDDDDDDDDDDDDDDDDDĐ', value);
+  };
 
   if (isLoading || !itemDetail) return <div>Loading...</div>;
 
   return (
     <div
       key={itemDetail.id}
-      className="justify-between items-center px-5 py-2 hover:bg-gray-100 grid grid-cols-12 gap-3"
+      className="justify-between items-center w-full grid grid-cols-12 gap-3"
       title={itemDetail.product.name}
     >
       <span className="w-24 h-24 relative col-span-2">
@@ -52,10 +54,18 @@ console.log("DDDDDDDDDDDDDDDDDDDĐ", value)
       </Link>
       <span className="col-span-2">{formatCurrency(120000)}</span>
       <div className="col-span-2">
-        <QuantitySelector value={item.quantity} onIncrease={value => handleIncrease(value)} onDecrease={value => handleDecrease(value)}/>
+        <QuantitySelector
+          value={item.quantity}
+          onIncrease={(value) => handleIncrease(value)}
+          onDecrease={(value) => handleDecrease(value)}
+        />
       </div>
       <span className="col-span-1 flex justify-end">
-        <Trash2 />
+        <Icon
+          titleAccess={t('common.remove_this_item')}
+          component={Delete}
+          className="hover:cursor-pointer opacity-50 hover:opacity-100"
+        />
       </span>
     </div>
   );

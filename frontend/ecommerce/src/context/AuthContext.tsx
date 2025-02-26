@@ -1,8 +1,8 @@
+import { createContext, useState } from 'react';
 import { Customer } from '@/models/types';
 import { getAccessTokenFromLocalStorage, getProfileFromLocalStorage } from '@/utils/auth';
-import { createContext, useState } from 'react';
 
-interface AppContextInterface {
+interface AuthContextInterface {
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   profile: Customer | null;
@@ -11,7 +11,8 @@ interface AppContextInterface {
   //   setExtendedPurchase: React.Dispatch<React.SetStateAction<ExtendedPurchase[]>>
   reset: () => void;
 }
-const initialAppContext: AppContextInterface = {
+
+const initialAuthContext: AuthContextInterface = {
   isAuthenticated: Boolean(getAccessTokenFromLocalStorage()),
   setIsAuthenticated: () => null,
   profile: getProfileFromLocalStorage(),
@@ -20,12 +21,13 @@ const initialAppContext: AppContextInterface = {
   //   setExtendedPurchase: () => null,
   reset: () => null,
 };
-export const AppContext = createContext<AppContextInterface>(initialAppContext);
 
-export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAppContext.isAuthenticated);
-  const [profile, setProfile] = useState<Customer | null>(initialAppContext.profile);
-  //   const [extendedPurchase, setExtendedPurchase] = useState<ExtendedPurchase[]>(initialAppContext.extendedPurchase)
+export const AuthContext = createContext<AuthContextInterface>(initialAuthContext);
+
+export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAuthContext.isAuthenticated);
+  const [profile, setProfile] = useState<Customer | null>(initialAuthContext.profile);
+  //   const [extendedPurchase, setExtendedPurchase] = useState<ExtendedPurchase[]>(initialAuthContext.extendedPurchase)
 
   const reset = () => {
     setIsAuthenticated(false);
@@ -34,7 +36,7 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <AppContext.Provider
+    <AuthContext.Provider
       value={{
         isAuthenticated,
         setIsAuthenticated,
@@ -44,6 +46,6 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
         reset,
       }}>
       {children}
-    </AppContext.Provider>
+    </AuthContext.Provider>
   );
 };
