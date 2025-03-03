@@ -11,6 +11,7 @@ const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
   key: 'root',
   storage,
+  cart: ['data'] // Chỉ persist data, bỏ qua loading, error...
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

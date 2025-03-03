@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import { Cart, CartItem } from '@/models/types';
 import { Card, Checkbox } from '@mui/material';
@@ -21,15 +22,11 @@ export default function ShowListCart({ data }: PropsType) {
   const router = useRouter();
   const t = useTranslations();
 
-  const {
-    toggleAllCarts,
-    isAllCartsSelected,
-    selectedCarts,
-    toggleCart,
-    toggleCartItem,
-    isCartSelected,
-  } = useSelectedCheckout();
+  // const dispatch = useAppDispatch()
+  // dispatch(initialCart("6304f010-3985-4ecc-a139-e8aba1eee7b1"))
 
+  const { toggleAllCarts, isAllCartsSelected, selectedCarts, toggleCart, toggleCartItem, isCartSelected } =
+    useSelectedCheckout();
   const { mutate: deleteCart } = useDeleteCart();
 
   const handleDeleteCart = (cartId: number) => {
@@ -47,6 +44,7 @@ export default function ShowListCart({ data }: PropsType) {
   const handleCheckout = (cartId: number) => {
     const cartSelections = selectedCarts[cartId] || {};
     const selectedItems = Object.entries(cartSelections)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .filter(([_, isSelected]) => isSelected)
       .map(([itemId]) => Number(itemId));
 
@@ -116,6 +114,8 @@ export default function ShowListCart({ data }: PropsType) {
                   {cart.cartItems?.map((item: CartItem) => {
                     countItem++;
                     totalCountItem++;
+                    sumPrice = sumPrice * 2;
+                    totalSumPrice = totalSumPrice + 2;
                     // sumPrice += item.product.price * item.quantity;
                     return (
                       <div key={item.id} className="flex items-center hover:bg-gray-100 px-5 py-2">

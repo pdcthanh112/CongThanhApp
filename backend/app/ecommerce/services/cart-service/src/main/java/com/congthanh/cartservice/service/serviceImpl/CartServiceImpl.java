@@ -10,6 +10,7 @@ import com.congthanh.cartservice.model.entity.Cart;
 import com.congthanh.cartservice.model.entity.CartItem;
 import com.congthanh.cartservice.exception.ecommerce.NotFoundException;
 import com.congthanh.cartservice.model.mapper.CartMapper;
+import com.congthanh.cartservice.model.request.CartValidateRequest;
 import com.congthanh.cartservice.model.request.CreateCartRequest;
 import com.congthanh.cartservice.model.viewmodel.CartVm;
 import com.congthanh.cartservice.repository.cart.CartDocumentRepository;
@@ -158,6 +159,11 @@ public class CartServiceImpl implements CartService {
     @Override
     public boolean setDefaultCartForCustomer(String customerId, Long cartId) {
         return cartRepository.setDefaultCartForCustomer(customerId, cartId);
+    }
+
+    @Override
+    public void validateCart(CartValidateRequest request) {
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.congthanh.cartservice.service;
 
 import com.congthanh.cartservice.model.dto.CartDTO;
+import com.congthanh.cartservice.model.request.CartValidateRequest;
 import com.congthanh.cartservice.model.request.CreateCartRequest;
 import com.congthanh.cartservice.model.viewmodel.CartVm;
 
@@ -23,5 +24,7 @@ public interface CartService {
   CartDTO getDefaultCartOfCustomer(String customerId);
 
   boolean setDefaultCartForCustomer(String customerId, Long cartId);
+
+  void validateCart(CartValidateRequest request);
 
 }

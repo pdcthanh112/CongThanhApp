@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -14,6 +15,7 @@ import { signIn } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers/index';
 import { AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '@/assets/icons/socialLoginIcon';
 import { useTranslations } from 'next-intl';
+import { useSyncUserData } from '@/hooks/useSyncData';
 
 type PropsType = {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
@@ -27,6 +29,8 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
   const t = useTranslations();
   const LoginSchema = createLoginSchema(t);
 
+  const { syncData } = useSyncUserData();
+
   const formLogin = useForm<LoginSchemaType>({
     defaultValues: {
       email: '',
@@ -38,7 +42,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
 
   const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
     console.log('asflafjfksf', data);
-    signIn('credentials', data);
+    signIn('credentials', { ...data, callbackUrl: '/home', redirect: false });
   };
 
   type SupportedProviderId = 'google' | 'facebook' | 'twitter' | 'apple';
@@ -123,8 +127,8 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
                 className={`${providerIcons[provider.id].bgColor} flex px-3 py-3 mb-3 hover:cursor-pointer rounded-lg col-span-6`}
                 title={t('auth.login_with_social', { social: provider.name })}
                 onClick={() =>
-                  signIn(provider.id)
-                    .then(() => console.log(`${provider.id} login initiated`))
+                  signIn(provider.id, { callbackUrl: '/home', redirect: false })
+                    .then(async () => await syncData())
                     .catch((err) => console.error('Sign in error:', err))
                 }
               >

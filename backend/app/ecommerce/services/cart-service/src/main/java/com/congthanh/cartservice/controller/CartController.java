@@ -141,6 +141,11 @@ public class CartController {
         return ResponseEntity.ok().body(response);
     }
 
+    @PostMapping("/{cartId}/validate")
+    public ResponseEntity<Response<?>> validateCart() {
+        return null;
+    }
+
     @QueryMapping(value = "cart")
     List<Cart> carts() {
         return cartRepository.findAll();

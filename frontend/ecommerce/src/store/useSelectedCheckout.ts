@@ -68,6 +68,7 @@ const useSelectedCheckout = create<SelectedCheckoutState>((set, get) => ({
       .map(([cartId, items]) => ({
         cartId: Number(cartId),
         items: Object.entries(items)
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           .filter(([_, isSelected]) => isSelected)
           .map(([itemId]) => Number(itemId)),
       }))

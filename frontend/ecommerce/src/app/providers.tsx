@@ -1,10 +1,12 @@
 'use client';
+
 import React from 'react';
 import { LayoutProps } from './[locale]/page';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { SessionProvider } from 'next-auth/react';
 import { ReactQueryProvider, ReduxStoreProvider, ThemeProvider } from '@/config/providers';
 import { AuthContextProvider } from '@/context/AuthContext';
+import AuthWrapper from '@/components/AuthWrapper';
 
 const Providers = ({ children }: Readonly<LayoutProps>) => {
   const graphClient = new ApolloClient({
@@ -14,15 +16,17 @@ const Providers = ({ children }: Readonly<LayoutProps>) => {
 
   return (
     <AuthContextProvider>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-        <SessionProvider>
-          <ApolloProvider client={graphClient}>
-            <ReduxStoreProvider>
-              <ReactQueryProvider>{children}</ReactQueryProvider>
-            </ReduxStoreProvider>
-          </ApolloProvider>
-        </SessionProvider>
-      </ThemeProvider>
+      {/* <AuthWrapper> */}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <SessionProvider>
+            <ApolloProvider client={graphClient}>
+              <ReduxStoreProvider>
+                <ReactQueryProvider>{children}</ReactQueryProvider>
+              </ReduxStoreProvider>
+            </ApolloProvider>
+          </SessionProvider>
+        </ThemeProvider>
+      {/* </AuthWrapper> */}
     </AuthContextProvider>
   );
 };

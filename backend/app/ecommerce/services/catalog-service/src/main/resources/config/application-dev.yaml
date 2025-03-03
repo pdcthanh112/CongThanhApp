@@ -217,6 +217,8 @@ axon:
   axonserver:
     servers: localhost:8124
     enabled: true
+  serializer:
+    events: jackson
   eventhandling:
     processors:
       catalog-service:

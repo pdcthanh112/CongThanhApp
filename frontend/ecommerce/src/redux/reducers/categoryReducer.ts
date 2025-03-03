@@ -1,6 +1,7 @@
 import { FetchCategoryFailedPayload, FetchCategoryStartPayload, FetchCategorySucceededPayload } from '@/redux/actions/payload/category';
 import { CategoryState } from '@/redux/actions/type/category';
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getAllCategoryJson } from '@/api/categoryApi';
 
 const initialState: CategoryState = {
   status: 'idle',
@@ -22,9 +23,13 @@ const categorySlice = createSlice({
     fetchCategoryFailed: (state: CategoryState, action: PayloadAction<FetchCategoryFailedPayload>) => {
       state.status = 'failed';
       state.error = 'loi';
-    },
+    }, 
   },
 });
 
 export const { fetchCategoryStart, fetchCategorySucceeded, fetchCategoryFailed } = categorySlice.actions;
 export default categorySlice.reducer;
+
+export const initialCategory = createAsyncThunk('category/initialCatagory', async () => {
+  return await getAllCategoryJson();
+})

@@ -1,8 +1,6 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import { getCartById } from '@/api/cartApi';
 import { useAppSelector } from '@/redux/store';
 import styled from 'styled-components';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -24,6 +22,7 @@ import { checkout } from '@/api/checkoutApi';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { Address, Cart, CheckoutForm, Voucher } from '@/models/types';
+import useSelectedCheckout from '@/store/useSelectedCheckout';
 
 interface InputComponentProps {
   title: string;
@@ -51,17 +50,29 @@ const InputField = styled.div`
 
 export default function CheckoutPage() {
   const carts = useAppSelector((state) => state.cart);
-console.log('tttttttttttttttttttttttttt', carts)
+
+  const { getAllSelectedItems: checkoutItem } = useSelectedCheckout();
+
+  const filteredCarts = carts.data.map((cart) => {
+      const selectedCart = checkoutItem().find((sc) => sc.cartId === cart.id);
+      if (!selectedCart) return null; 
+
+      const filteredItems = cart.cartItems.filter((item) => selectedCart.items.includes(item.id));
+      if (filteredItems.length === 0) return null; 
+
+      return {
+        ...cart,
+        cartItems: filteredItems,
+      };
+    })
+    .filter(Boolean);
+
   const router = useRouter();
 
   const [pickPaymentMethod, setPickPaymentMethod] = useState('COD');
   const [openModalAddress, setOpenModalAddress] = useState(false);
   const [address, setAddress] = useState<Address>();
   const [voucher, setVoucher] = useState<Voucher>();
-  // const { data: cart, isLoading } = useQuery({
-  //   queryKey: ['cart', cartId],
-  //   queryFn: async () => await getCartById(cartId).then((response) => response.data),
-  // });
   const [total, setTotal] = useState<number>(0);
 
   // useEffect(() => {
@@ -130,12 +141,21 @@ console.log('tttttttttttttttttttttttttt', carts)
 
   // if (isLoading) return <div>Loading</div>;
 
- 
   return (
     <div className="bg-white py-3">
       <div className="w-[80%] mx-auto flex justify-between">
         <div className="border border-gray-400 rounded-md w-[70%] px-4 py-5">
           <h4 className="font-medium text-xl my-3">Checkout information</h4>
+
+          {filteredCarts && filteredCarts.map((cart) => (
+            <div key={cart?.id}>
+              <div>{cart?.name}</div>
+              {cart?.cartItems.map(item => (
+                <div key={item.id}>{item.quantity}</div>
+              ))}
+            </div>
+          ))}
+
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <InputComponent title="Shipping address" className="col-span-4" error={formState.errors.payment?.message}>

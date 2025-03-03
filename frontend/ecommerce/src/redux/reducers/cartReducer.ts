@@ -1,5 +1,5 @@
 import { CartState } from '@/redux/actions/type/cart';
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   AddItemToCartFailedPayload,
   AddItemToCartStartPayload,
@@ -20,6 +20,7 @@ import {
   updateItemQuantityStartPayload,
   updateItemQuantitySucceededPayload,
 } from '@/redux/actions/payload/cart';
+import { getCartByCustomerId } from '@/api/cartApi';
 
 const initialState: CartState = {
   status: 'idle',
@@ -65,7 +66,7 @@ const cartSlice = createSlice({
     },
     deleteCartSucceeded: (state: CartState, action: PayloadAction<DeleteCartSucceededPayload>) => {
       state.status = 'succeeded';
-      state.data = state.data.filter(cart => cart.id != action.payload.cartId);
+      state.data = state.data.filter((cart) => cart.id != action.payload.cartId);
     },
     deleteCartFailed: (state: CartState, action: PayloadAction<DeleteCartFailedPayload>) => {
       state.status = 'failed';
@@ -78,15 +79,15 @@ const cartSlice = createSlice({
       state.status = 'pending';
     },
     addItemToCartSucceeded: (state: CartState, action: PayloadAction<AddItemToCartSucceededPayload>) => {
-      const cart = state.data.find(c => c.id === action.payload.item.cart);
+      const cart = state.data.find((c) => c.id === action.payload.item.cart);
       if (cart) {
         const existingItem = cart.cartItems.find((item) => item.product === action.payload.item.product);
         if (existingItem) {
           existingItem.quantity += action.payload.item.quantity;
-      } else {
-        cart.cartItems.push(action.payload.item);
+        } else {
+          cart.cartItems.push(action.payload.item);
+        }
       }
-    }
       state.status = 'succeeded';
     },
     addItemToCartFailed: (state: CartState, action: PayloadAction<AddItemToCartFailedPayload>) => {
@@ -116,6 +117,19 @@ const cartSlice = createSlice({
       state.error = action.payload.error;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(initialCart.pending, (state) => {
+      state.status = 'pending';
+    })
+    .addCase(initialCart.fulfilled, (state, action: PayloadAction<FetchCartSucceededPayload>) => {
+      state.status = 'succeeded';
+      state.data = action.payload.data;
+    })
+    .addCase(initialCart.rejected, (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message ?? "Failed to fetch cart";
+    });
+  },
 });
 
 export const {
@@ -139,6 +153,10 @@ export const {
   removeItemFromCartFailed,
   updateItemQuantityStart,
   updateItemQuantitySucceeded,
-  updateItemQuantityFailed
+  updateItemQuantityFailed,
 } = cartSlice.actions;
 export default cartSlice.reducer;
+
+export const initialCart = createAsyncThunk('cart/initialCart', async (customerId: string) => {
+  return await getCartByCustomerId(customerId);
+});
