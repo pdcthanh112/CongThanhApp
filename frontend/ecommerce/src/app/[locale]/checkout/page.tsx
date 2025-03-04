@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAppSelector } from '@/redux/store';
 import styled from 'styled-components';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Card, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
-import { Button } from 'antd';
 import { PatternFormat } from 'react-number-format';
 import Image from 'next/image';
 import PaymentCOD from '@/assets/icons/payment-cod.png';
@@ -23,6 +22,10 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { Address, Cart, CheckoutForm, Voucher } from '@/models/types';
 import useSelectedCheckout from '@/store/useSelectedCheckout';
+import { Button } from '@/components/ui';
+import { IMAGE } from '@/utils/constants/path';
+import { formatCurrency } from '@/utils/helper';
+import { useQuery } from '@tanstack/react-query';
 
 interface InputComponentProps {
   title: string;
@@ -53,12 +56,13 @@ export default function CheckoutPage() {
 
   const { getAllSelectedItems: checkoutItem } = useSelectedCheckout();
 
-  const filteredCarts = carts.data.map((cart) => {
+  const filteredCarts = carts.data
+    .map((cart) => {
       const selectedCart = checkoutItem().find((sc) => sc.cartId === cart.id);
-      if (!selectedCart) return null; 
+      if (!selectedCart) return null;
 
       const filteredItems = cart.cartItems.filter((item) => selectedCart.items.includes(item.id));
-      if (filteredItems.length === 0) return null; 
+      if (filteredItems.length === 0) return null;
 
       return {
         ...cart,
@@ -66,12 +70,11 @@ export default function CheckoutPage() {
       };
     })
     .filter(Boolean);
-
+  console.log('FFFFFFFFFFFFFFFFFFFF', filteredCarts);
   const router = useRouter();
 
   const [pickPaymentMethod, setPickPaymentMethod] = useState('COD');
   const [openModalAddress, setOpenModalAddress] = useState(false);
-  const [address, setAddress] = useState<Address>();
   const [voucher, setVoucher] = useState<Voucher>();
   const [total, setTotal] = useState<number>(0);
 
@@ -90,10 +93,10 @@ export default function CheckoutPage() {
   const onSubmit: SubmitHandler<CheckoutForm> = async (data) => {
     data.customer = currentUser.userInfo.accountId;
     data.cart = cartId?.toString() ?? '';
-    if (!address) {
+    if (!defaultAddress) {
       setError('address', { message: 'choose address' });
     } else {
-      data.address = address.id;
+      data.address = defaultAddress.id;
     }
     data.phone = currentUser.userInfo.phone;
     data.total = total;
@@ -122,17 +125,13 @@ export default function CheckoutPage() {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await getDefaultAddressOfCustomer(currentUser.userInfo.accountId).then((response) => {
-        if (response) {
-          setAddress(response.data);
-        }
-      });
-    };
-    fetchData();
-  }, []);
+  const { data: defaultAddress } = useQuery<Address>({
+    queryKey: ['address'],
+    queryFn: async () =>
+      await getDefaultAddressOfCustomer('e6169aa0-d4a5-4740-b510-9285bbb73a0e').then((response) => response.data),
+  });
 
+  // console.log('wwwwwwwww', defaultAddress);
   // const total = cart.cartItems
   //   .reduce((accumulator: number, item: any) => {
   //     return accumulator + item.product.price * item.quantity;
@@ -147,23 +146,39 @@ export default function CheckoutPage() {
         <div className="border border-gray-400 rounded-md w-[70%] px-4 py-5">
           <h4 className="font-medium text-xl my-3">Checkout information</h4>
 
-          {filteredCarts && filteredCarts.map((cart) => (
-            <div key={cart?.id}>
-              <div>{cart?.name}</div>
-              {cart?.cartItems.map(item => (
-                <div key={item.id}>{item.quantity}</div>
-              ))}
-            </div>
-          ))}
+          {/* {filteredCarts &&
+            filteredCarts.map((cart) => (
+              <div key={cart?.id}>
+                <div>{cart?.name}</div>
+                {cart?.cartItems.map((item) => (
+                  <div key={item.id}>
+                    <span className="w-24 h-24 relative col-span-2">
+                      <Image
+                        src={
+                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-Zqj3z-Kbm0gGW_mxc5vTu8IZ9X5WAv4q0w&s'
+                        }
+                        alt={item.product.name}
+                        objectFit="fit"
+                        fill
+                        className="border border-gray-300"
+                      />
+                    </span>
+                    <span>Product này nè</span>
+                    <span>Quantity: {item.quantity}</span>
+                    <span className="col-span-2">{formatCurrency(120000)}</span>
+                  </div>
+                ))}
+              </div>
+            ))} */}
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <InputComponent title="Shipping address" className="col-span-4" error={formState.errors.payment?.message}>
                 <div className="flex justify-between">
-                  {address && (
+                  {defaultAddress && (
                     <p className="truncate">
-                      {address.street}, {address.addressLine3}, {address.addressLine2}, {address.addressLine1},{' '}
-                      {address.country}
+                      {defaultAddress.street}, {defaultAddress.addressLine3}, {defaultAddress.addressLine2},{' '}
+                      {defaultAddress.addressLine1}, {defaultAddress.country}
                     </p>
                   )}
                   {/* <input type="hidden" value={currentUser.userInfo.accountId} {...register('customer')} />

@@ -49,7 +49,7 @@ spring:
         - id: customer-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-CUSTOMER-SERVICE
           predicates:
-            - Path=/api/ecommerce/customer/address/**, /api/ecommerce/customer/wishlist/**, /api/graphql
+            - Path=/api/ecommerce/customer/address/**, /api/ecommerce/customer/**, /api/ecommerce/customer/wishlist/**, /api/graphql
 
         - id: inventory-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-INVENTORY-SERVICE

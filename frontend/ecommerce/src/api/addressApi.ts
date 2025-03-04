@@ -12,7 +12,7 @@ export const getAddressById = async (addressId: number) => {
 
 export const getAddressByCustomer = async (customerId: string) => {
   return await axiosConfig
-    .get(`address/getByCustomer?customer=${customerId}`)
+    .get(`customer/${customerId}/address`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
@@ -21,7 +21,7 @@ export const getAddressByCustomer = async (customerId: string) => {
 
 export const createAddress = async (data: CreateAddressForm) => {
   return await axiosConfig
-    .post('address/create', {
+    .post('address', {
       customer: data.customer,
       phone: data.phone,
       country: data.country,
@@ -40,7 +40,7 @@ export const createAddress = async (data: CreateAddressForm) => {
 
 export const updateAddress = async (addressId: number, data: UpdateAddressForm) => {
   return await axiosConfig
-    .put(`address/update/${addressId}`, {
+    .put(`address/${addressId}`, {
       phone: data.phone,
       country: data.country,
       addressLine1: data.addressLine1,
@@ -57,7 +57,7 @@ export const updateAddress = async (addressId: number, data: UpdateAddressForm) 
 
 export const deleteAddress = async (addressId: number) => {
   return await axiosConfig
-    .delete(`address/delete/${addressId}`)
+    .delete(`address/${addressId}`)
     .then((response) => response.data)
     .catch((error) => {
       throw new error;
@@ -66,7 +66,7 @@ export const deleteAddress = async (addressId: number) => {
 
 export const getDefaultAddressOfCustomer = async (customerId: string) => {
   return await axiosConfig
-    .get(`address/getDefaultAddress?customer=${customerId}`)
+    .get(`customer/${customerId}/address/default`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;

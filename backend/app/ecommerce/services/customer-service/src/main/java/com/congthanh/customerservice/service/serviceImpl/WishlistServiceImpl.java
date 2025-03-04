@@ -1,17 +1,19 @@
 package com.congthanh.customerservice.service.serviceImpl;
 
+import com.congthanh.customerservice.exception.ecommerce.NotFoundException;
 import com.congthanh.customerservice.model.dto.WishlistDTO;
 import com.congthanh.customerservice.model.entity.Wishlist;
-import com.congthanh.customerservice.model.response.ProductResponse;
+import com.congthanh.customerservice.model.entity.WishlistItem;
 import com.congthanh.customerservice.repository.wishlist.WishlistRepository;
+import com.congthanh.customerservice.repository.wishlist.item.WishlistItemRepository;
 import com.congthanh.customerservice.service.WishlistService;
-import jakarta.persistence.Tuple;
+import com.congthanh.customerservice.utils.SnowflakeIdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.time.Instant;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,24 +21,37 @@ public class WishlistServiceImpl implements WishlistService {
 
     private final WishlistRepository wishlistRepository;
 
+    private final WishlistItemRepository wishlistItemRepository;
+
+    private final SnowflakeIdGenerator snowflakeIdGenerator;
+
     @Override
     public boolean addProductToWishlist(String customerId, String productId) {
-        Tuple wishlist = wishlistRepository.checkExistWishlist(customerId);
-        if (wishlist != null) {
-            return wishlistRepository.addProductToWishlist(wishlist.get("customer", String.class), productId);
-        } else {
-            Wishlist createWishlist = Wishlist.builder()
-                    .customer(customerId)
+        Wishlist wishlist = wishlistRepository.getWishlistByCustomer(customerId);
+
+        if (wishlist == null) {
+            wishlist = Wishlist.builder()
+                    .customerId(customerId)
                     .build();
-            Wishlist newWishlist = wishlistRepository.save(createWishlist);
-            return wishlistRepository.addProductToWishlist(newWishlist.getCustomer(), productId);
+            wishlist = wishlistRepository.save(wishlist);
+        } else if (wishlistItemRepository.existsByWishlistIdAndProductId(wishlist.getId(), productId)) {
+            throw new RuntimeException("Item already exists!");
         }
+        WishlistItem item = WishlistItem.builder()
+                .id(snowflakeIdGenerator.nextId())
+                .wishlistId(wishlist.getId())
+                .productId(productId)
+                .createdAt(Instant.now())
+                .build();
+        wishlistItemRepository.save(item);
+        return true;
     }
 
     @Override
     public boolean removeProductFromWishlist(String customerId, String productId) {
         try {
-            return wishlistRepository.removeProductFromWishlist(productId, customerId);
+            wishlistItemRepository.removeItemFromWishlist(customerId, productId);
+            return true;
         } catch (Exception e) {
             throw new RuntimeException("fjalsf");
         }
@@ -44,24 +59,17 @@ public class WishlistServiceImpl implements WishlistService {
 
     @Override
     public WishlistDTO getWishlistByCustomer(String customerId) {
-        WishlistDTO result = new WishlistDTO();
-        List<Tuple> data = wishlistRepository.findWishlistByCustomer(customerId);
-        result.setId(data.get(0).get("wishlistId", Long.class));
-        result.setCustomer(data.get(0).get("customer", String.class));
-        Set<ProductResponse> listProduct = new HashSet<>();
-        for (Tuple item : data) {
-            ProductResponse product = ProductResponse.builder()
-                    .id(item.get("productId", String.class))
-                    .name(item.get("name", String.class))
-                    .category(item.get("category", String.class))
-                    .subcategory(item.get("subcategory", String.class))
-                    .description(item.get("description", String.class))
-                    .status(item.get("status", String.class))
-                    .slug(item.get("slug", String.class))
-                    .build();
-            listProduct.add(product);
+        Wishlist data = wishlistRepository.getWishlistByCustomer(customerId);
+        if (data == null) {
+            throw new NotFoundException("Wishlist not found");
         }
-        result.setProduct(listProduct);
+        List<WishlistItem> items = wishlistItemRepository.findByWishlistIdOrderByCreatedAtAsc(data.getId());
+        System.out.println("wishlist items " + items);
+        WishlistDTO result = WishlistDTO.builder()
+                .id(data.getId())
+                .customer(customerId)
+                .product(items.stream().map(WishlistItem::getProductId).collect(Collectors.toSet()))
+                .build();
         return result;
     }
 }

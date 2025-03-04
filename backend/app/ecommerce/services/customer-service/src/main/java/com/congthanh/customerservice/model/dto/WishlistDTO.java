@@ -1,6 +1,5 @@
 package com.congthanh.customerservice.model.dto;
 
-import com.congthanh.customerservice.model.response.ProductResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +17,6 @@ public class WishlistDTO {
 
     private String customer;
 
-    private Set<ProductResponse> product;
+    private Set<String> product;
 
 }

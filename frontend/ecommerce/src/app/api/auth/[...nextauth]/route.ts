@@ -71,6 +71,7 @@ export const authOptions: AuthOptions = {
 
   callbacks: {
     async jwt({ token, user, account, trigger, session }) {
+      token.accountId = account?.providerAccountId;
       if (account?.expires_at && Date.now() > account.expires_at * 1000) {
         return refreshAccessToken(token);
       }
@@ -80,8 +81,8 @@ export const authOptions: AuthOptions = {
       return { ...token, ...user };
     },
     async session({ session, token, user }) {
-      // session.user = token.sub as any;
       session.user = user;
+      session.user.accountId = token.accountId as string
       session.expires = token.exp ? new Date(token.exp * 1000).toISOString() : null;
 
       return session;

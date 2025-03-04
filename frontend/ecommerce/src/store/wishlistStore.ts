@@ -1,22 +1,25 @@
 import { create } from 'zustand';
-import { Product } from '@/models/types';
 
 interface WishlistStore {
-  items: Product[];
-  setWishlist: (items: Product[]) => void;
-  addToWishlist: (item: Product) => void;
+  items: string[];
+  setWishlist: (items: string[]) => void;
+  addToWishlist: (productId: string) => void;
   removeFromWishlist: (productId: string) => void;
+  checkExistItemInWishlist: (productId: string) => boolean;
 }
 
-export const useWishlistStore = create<WishlistStore>((set) => ({
+export const useWishlistStore = create<WishlistStore>((set, get) => ({
   items: [],
   setWishlist: (items) => set({ items }),
-  addToWishlist: (item) =>
+  addToWishlist: (productId) =>
     set((state) => ({
-      items: [...state.items, item],
+      items: [...state.items, productId],
     })),
   removeFromWishlist: (productId) =>
     set((state) => ({
-      items: state.items.filter((item) => item.id !== productId),
+      items: state.items.filter((item) => item !== productId),
     })),
+  checkExistItemInWishlist: (productId) => {
+    return get().items.find((item) => item === productId) === undefined;
+  },
 }));

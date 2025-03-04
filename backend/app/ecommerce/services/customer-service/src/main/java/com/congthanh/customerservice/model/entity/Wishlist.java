@@ -21,13 +21,7 @@ public class Wishlist {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String customer;
-
-//  @ManyToMany
-//  @JoinTable(name = "wishlist_item",
-//          joinColumns = @JoinColumn(name = "wishlist_id"),
-//          inverseJoinColumns = @JoinColumn(name = "product_id"))
-//  @JsonIgnore
-//  private Set<Product> product;
+  @Column(name = "customer_id", nullable = false, unique = true)
+  private String customerId;
 
 }

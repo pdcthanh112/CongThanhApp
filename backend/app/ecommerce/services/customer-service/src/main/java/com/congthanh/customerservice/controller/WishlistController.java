@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/ecommerce/wishlist")
+@RequestMapping("/ecommerce/customer")
 @Tag(name = "Wishlist API", description = "Wishlist API in CongThanhApp - Ecommerce")
 @RequiredArgsConstructor
 public class WishlistController {
 
   private final WishlistService wishlistService;
 
-  @GetMapping("/getByCustomer")
-  public ResponseEntity<Response<WishlistDTO>> getWishlistByCustomer(@RequestParam String customerId) {
+  @GetMapping("/{customerId}/wishlist")
+  public ResponseEntity<Response<WishlistDTO>> getWishlistByCustomer(@PathVariable("customerId") String customerId) {
     WishlistDTO data = wishlistService.getWishlistByCustomer(customerId);
     Response<WishlistDTO> response = new Response<>();
     response.setData(data);
     response.setStatus(ResponseStatus.STATUS_SUCCESS);
-    response.setMessage("Add successfully");
+    response.setMessage("Get successfully");
     return ResponseEntity.ok().body(response);
   }
 
-  @PostMapping("/add")
+  @PostMapping("/wishlist")
   public ResponseEntity<Response<?>> addProductToWishlist(@RequestBody Map<String, String> requestData) {
     String customerId = requestData.get("customerId");
     String productId = requestData.get("productId");
@@ -49,7 +49,7 @@ public class WishlistController {
     }
   }
 
-  @DeleteMapping("/remove")
+  @DeleteMapping("/wishlist")
   public ResponseEntity<Response<String>> removeProductFromWishlist(@RequestBody Map<String, String> requestData) {
     String customerId = requestData.get("customerId");
     String productId = requestData.get("productId");

@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useRef, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
@@ -10,7 +11,6 @@ import DefaultImage from '@/assets/images/default-image.jpg';
 import { formatCurrency, roundNumber } from '@/utils/helper';
 import { useTranslations } from 'next-intl';
 import { useAddProductToWishlist, useRemoveProductFromWishlist } from '@/hooks/wishlist/wishlistHook';
-import { openModalAuth } from '@/redux/features/modalAuth';
 import { AddToCartIcon, HeartEmpty, HeartFull } from '@/assets/icons';
 import { toast } from 'react-toastify';
 import { useAddProductToCart } from '@/hooks/cart/cartHook';
@@ -28,6 +28,7 @@ import { PATH } from '@/utils/constants/path';
 import { useSession } from 'next-auth/react';
 import ReviewProduct from './ReviewProduct';
 import useAppModalStore from '@/store/useAppModal';
+import { useWishlistStore } from '@/store/wishlistStore';
 
 type ProductDetailProps = {
   product: Product;
@@ -98,10 +99,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
   //    )
   // });
 
-  const { data: wishlist } = useQuery<Wishlist>({
-    queryKey: [WISHLIST_KEY],
-    queryFn: async () => await getWishlistByCustomer(user.userInfo.accountId).then((result) => result.data),
-  });
+  const { checkExistItemInWishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
 
   const handleAddProductToCart = () => {
     if (user) {
@@ -113,13 +111,12 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
               toast.success(t('cart.add_item_to_cart_successfully'));
             },
             onError(error) {
-              toast.error(t('cart.add_item_to_cart_failed'));
-              console.log(error);
+              toast.error(t('cart.add_item_to_cart_failed') + error);
             },
           }
         );
       } catch (error) {
-        toast.error(t('cart.add_item_to_cart_failed'));
+        toast.error(t('cart.add_item_to_cart_failed') + error);
       }
     } else {
       openModalAuth();
@@ -129,8 +126,9 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
   const handleAddToWishlist = (productId: string) => {
     if (user) {
       try {
+        addToWishlist(productId);
         addProductToWishlist(
-          { customerId: user.userInfo.accountId, productId: productId },
+          { customerId: user.user.accountId, productId: productId },
           {
             onSuccess() {
               toast.success(t('wishlist.add_item_to_wishlist_successfully'));
@@ -141,7 +139,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
           }
         );
       } catch (error) {
-        toast.error(t('wishlist.add_item_to_wishlist_failed'));
+        toast.error(t('wishlist.add_item_to_wishlist_failed') + error);
       }
     } else {
       openModalAuth();
@@ -151,8 +149,9 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
   const handleRemoveFromWishlist = (productId: string) => {
     if (user) {
       try {
+        removeFromWishlist(productId);
         removeProductFromWishlist(
-          { customerId: user.userInfo.accountId, productId: productId },
+          { customerId: user. userInfo.accountId, productId: productId },
           {
             onSuccess() {
               toast.success(t('wishlist.remove_item_from_wishlist_successfully'));
@@ -348,7 +347,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
               </Popover>
             </React.Fragment>
             <div>
-              {wishlist?.product.find((item) => item.id === product.id) === undefined ? (
+              {checkExistItemInWishlist(product.id) ? (
                 <span
                   className="hover:cursor-pointer"
                   title={t('common.add_to_wishlist')}
