@@ -79,7 +79,7 @@ spring:
         - id: product-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-PRODUCT-SERVICE
           predicates:
-            - Path=/api/ecommerce/products/**, /api/graphql, /api/graphql
+            - Path=/api/ecommerce/products/**, /api/graphql
 
         - id: promotion-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-PROMOTION-SERVICE

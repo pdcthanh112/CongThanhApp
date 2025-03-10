@@ -2,10 +2,10 @@ import { Sequelize, DataTypes, Model } from 'sequelize';
 import { Account } from '@/interfaces/account.interface';
 
 export class AccountModel extends Model<Account> implements Account{
-  public id: number;
-  public accountId: string;
-  public email: string;
-  public password: string;
+  public id!: number;
+  public accountId!: string;
+  public email!: string;
+  public password!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;

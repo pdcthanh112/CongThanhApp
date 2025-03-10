@@ -7,7 +7,7 @@ export const createLoginSchema = (t: ReturnType<typeof useTranslations>) => {
       email: z
         .string()
         .trim()
-        .min(1, t('auth.validation.field_required', { field: t('auth.email') }))
+        .nonempty(t('auth.validation.field_required', { field: t('auth.email') }))
         .email(t('auth.validation.field_invalid', { field: t('auth.email') })),
       password: z
         .string()
@@ -29,7 +29,7 @@ export const createRegisterSchema = (t: ReturnType<typeof useTranslations>) => {
       email: z
         .string()
         .trim()
-        .min(1, t('auth.validation.field_required', { field: t('auth.email') }))
+        .nonempty(t('auth.validation.field_required', { field: t('auth.email') }))
         .email(t('auth.validation.field_invalid', { field: t('auth.email') })),
       name: z
         .string()
@@ -45,7 +45,7 @@ export const createRegisterSchema = (t: ReturnType<typeof useTranslations>) => {
         ),
       password: z
         .string()
-        .min(1, t('auth.validation.field_required', { field: t('auth.password') }))
+        .nonempty(t('auth.validation.field_required', { field: t('auth.password') }))
         .min(8, 'Password at least 8 characters')
         .max(32),
       confirm: z.string().min(1, t('auth.validation.field_required', { field: t('auth.confirm') })),
@@ -70,7 +70,7 @@ export const createForgetPasswordSchema = (t: ReturnType<typeof useTranslations>
       email: z
         .string()
         .trim()
-        .min(1, t('auth.validation.field_required', { field: t('auth.email') }))
+        .nonempty(t('auth.validation.field_required', { field: t('auth.email') }))
         .email(),
     })
     .strict();
@@ -102,18 +102,18 @@ export const createChangePasswordSchema = (t: ReturnType<typeof useTranslations>
       currentPassword: z
         .string()
         .trim()
-        .min(1, t('auth.validation.field_required', { field: t('auth.change_password.current_password') })),
+        .nonempty(t('auth.validation.field_required', { field: t('auth.change_password.current_password') })),
       newPassword: z
         .string()
         .trim()
-        .min(1, t('auth.validation.field_required', { field: t('auth.change_password.new_password') }))
+        .nonempty(t('auth.validation.field_required', { field: t('auth.change_password.new_password') }))
         .min(8, 'Password at least 8 characters')
-        .max(32)
+        .max(32, 'Password maximum 32 characters')
         .regex(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/)),
       confirmPassword: z
         .string()
         .trim()
-        .min(1, t('auth.validation.field_required', { field: t('auth.change_password.confirm_password') })),
+        .nonempty(t('auth.validation.field_required', { field: t('auth.change_password.confirm_password') })),
     })
     .strict()
     .superRefine(({ confirmPassword, newPassword }, ctx) => {

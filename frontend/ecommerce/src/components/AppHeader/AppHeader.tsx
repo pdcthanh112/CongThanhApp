@@ -26,7 +26,10 @@ import SearchComponent from '../Search/SearchComponent';
 import { ChevronDown, LucideIcon, Settings } from 'lucide-react';
 
 const CategoryComponent = dynamic(() => import('../Category/CategoryComponent'), { ssr: false });
-const NotificationModal = dynamic(() => import('@/components/NotificationModal'), { ssr: false });
+const NotificationModal = dynamic(() => import('@/components/NotificationModal'), {
+  ssr: false,
+  loading: () => <div>Loading...</div>,
+});
 
 export default function AppHeader() {
   const dispatch = useAppDispatch();

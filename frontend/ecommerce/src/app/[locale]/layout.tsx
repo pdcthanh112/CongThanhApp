@@ -21,8 +21,8 @@ export const baseOpenGraph = {
   siteName: 'CongThanhApp - Ecommerce',
 };
 
-export async function generateMetadata({ params }: { params: { locale: Locale } }): Promise<Metadata> {
-  const { locale } = params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
+  const { locale } = await params;
   const t = await getTranslations({ locale });
 
   return {

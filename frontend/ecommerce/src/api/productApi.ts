@@ -90,3 +90,12 @@ export const getVariantAttributeValueByProduct = async (
       throw Error(error);
     });
 };
+
+export const getVariantValueDetail = async (productId: string) => {
+  return await axiosConfig
+    .get(`products/${productId}/variants/attributes/detail`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw Error(error);
+    });
+};

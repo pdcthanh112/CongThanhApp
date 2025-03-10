@@ -2,9 +2,9 @@ import { Sequelize, DataTypes, Model } from 'sequelize';
 import { Role } from '@/interfaces/role.interface';
 
 export class RoleModel extends Model<Role> implements Role {
-  id: number;
-  name: string;
-  description: string;
+  id!: number;
+  name!: string;
+  description!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;

@@ -40,10 +40,10 @@ record ProductVariantVm(String id,
                         String sku,
                         String gtin,
                         BigDecimal price,
-                        List<productVariantImageVm> image) {
+                        List<ProductVariantImageVm> image) {
 }
 
-record productVariantImageVm(Long id,
+record ProductVariantImageVm(Long id,
                              String variant,
                              String imagePath,
                              String alt,

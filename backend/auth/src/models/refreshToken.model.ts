@@ -2,9 +2,9 @@ import { Sequelize, DataTypes, Model } from 'sequelize';
 import { RefreshToken } from '@/interfaces/refreshToken.interface';
 
 export class RefreshTokenModel extends Model<RefreshToken> implements RefreshToken {
-  id: number;
-  accountId: string;
-  token: string;
+  id!: number;
+  accountId!: string;
+  token!: string;
   expiresAt: number | Date;
   createdAt: number | Date;
 }

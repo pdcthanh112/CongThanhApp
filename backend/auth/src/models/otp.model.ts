@@ -2,10 +2,10 @@ import { OTP } from '@interfaces/otp.interface';
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
 export class OTPModel extends Model<OTP> implements OTP {
-  id: number;
-  customerId: string;
-  code: string;
-  expiredAt: Date;
+  id!: number;
+  customerId!: string;
+  code!: string;
+  expiredAt!: Date;
 }
 
 export default function (sequelize: Sequelize): typeof OTPModel {

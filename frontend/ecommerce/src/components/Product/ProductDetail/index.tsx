@@ -3,7 +3,12 @@
 import React, { useRef, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { getImageByProductId, getSoldByProduct, getVariantAttributeValueByProduct } from '@/api/productApi';
+import {
+  getImageByProductId,
+  getSoldByProduct,
+  getVariantAttributeValueByProduct,
+  getVariantValueDetail,
+} from '@/api/productApi';
 import { Rating, Icon, Avatar, TableContainer, Table, TableBody, TableRow, TableCell, Popover } from '@mui/material';
 import { Storefront, ForumOutlined, KeyboardArrowDown } from '@mui/icons-material';
 import Image from 'next/image';
@@ -60,10 +65,67 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
   const { mutate: addProductToWishlist } = useAddProductToWishlist();
   const { mutate: removeProductFromWishlist } = useRemoveProductFromWishlist();
 
-  const { data: productVariantAttribute } = useQuery({
-    queryKey: ['list-product-attribute-value'],
-    queryFn: async () => await getVariantAttributeValueByProduct(product.id).then((response) => response.data),
-  });
+  // const { data: productVariantAttribute } = useQuery({
+  //   queryKey: ['list-product-attribute-value'],
+  //   queryFn: async () => await getVariantValueDetail(product.id).then((response) => response.data),
+  // });
+  const productVariantAttribute = [
+    {
+      title: 'Màu sắc',
+      option: [
+        {
+          name: 'Đen',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGzIvyt_xy57h1p6OstQpVbRZs6OtDDKpiOw&s',
+          displayOrder: 1,
+        },
+        {
+          name: 'Trắng',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc0wRIkUneSueNY53rOkf0DskgaL7i8bzThQ&s',
+          displayOrder: 2,
+        },
+        {
+          name: 'Xám',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc0wRIkUneSueNY53rOkf0DskgaL7i8bzThQ&s',
+          displayOrder: 3,
+        },
+        {
+          name: 'Vàng',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc0wRIkUneSueNY53rOkf0DskgaL7i8bzThQ&s',
+          displayOrder: 4,
+        },
+        {
+          name: 'Hồng',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc0wRIkUneSueNY53rOkf0DskgaL7i8bzThQ&s',
+          displayOrder: 5,
+        },
+      ],
+    },
+    {
+      title: 'Dung lượng',
+      option: [
+        {
+          name: '128GB',
+          image: null,
+          displayOrder: 1,
+        },
+        {
+          name: '256GB',
+          image: null,
+          displayOrder: 2,
+        },
+        {
+          name: '512GB',
+          image: null,
+          displayOrder: 3,
+        },
+        {
+          name: '1TB',
+          image: null,
+          displayOrder: 4,
+        },
+      ],
+    },
+  ];
 
   //   const { data: product, isLoading } = useQuery({
   //     queryKey: [PRODUCT_KEY, productSlug],
@@ -151,7 +213,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
       try {
         removeFromWishlist(productId);
         removeProductFromWishlist(
-          { customerId: user. userInfo.accountId, productId: productId },
+          { customerId: user.user.accountId, productId: productId },
           {
             onSuccess() {
               toast.success(t('wishlist.remove_item_from_wishlist_successfully'));
@@ -163,7 +225,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
           }
         );
       } catch (error) {
-        toast.error(t('wishlist.remove_item_from_wishlist_failed'));
+        toast.error(t('wishlist.remove_item_from_wishlist_failed') + error);
       }
     } else {
       openModalAuth();
@@ -242,7 +304,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
               className="absolute pointer-events-none top-0 left-0 h-full w-full bg-white object-cover"
             />
           </div>
-          <div className="relative mt-4 grid grid-cols-5 gap-2 h-28 overflow-hidden">
+          <div className="relative mt-4 grid grid-cols-5 gap-0 overflow-hidden">
             <button
               onClick={prev}
               className="absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white"
@@ -370,12 +432,20 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
 
           <div>
             {productVariantAttribute?.map((item) => (
-              <div key={item.id} className="flex space-y-5">
-                <div className="w-1/5 flex items-center">{item.attributeName}</div>
-                <div className="w-4/5">
-                  {item.value.map((item) => (
-                    <span key={item.id} className="border border-gray-200 rounded px-3 py-2 mr-3 hover:cursor-pointer">
-                      {item.value}
+              <div key={item.title} className="flex space-y-5">
+                <div className="w-1/5 flex items-center">{item.title}</div>
+                <div className="w-4/5 flex">
+                  {item.option.map((item) => (
+                    <span
+                      key={item.name}
+                      className="border border-gray-200 rounded p-2 mr-3 hover:cursor-pointer flex justify-center items-center w-fit min-w-16"
+                    >
+                      {item.image && (
+                        <span className="w-5 h-5 relative mr-2">
+                          <Image src={item.image} alt="" objectFit='fit' fill />
+                        </span>
+                      )}
+                      {item.name}
                     </span>
                   ))}
                 </div>

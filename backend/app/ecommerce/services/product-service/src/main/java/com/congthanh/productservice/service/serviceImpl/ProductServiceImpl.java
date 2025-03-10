@@ -1,7 +1,6 @@
 package com.congthanh.productservice.service.serviceImpl;
 
 import com.congthanh.catalogservice.grpc.CategoryResponse;
-import com.congthanh.catalogservice.grpc.CategorySlugRequest;
 import com.congthanh.productservice.cqrs.query.query.GetProductBySlugQuery;
 import com.congthanh.productservice.grpc.client.CategoryGrpcClient;
 import com.congthanh.productservice.model.response.PaginationInfo;

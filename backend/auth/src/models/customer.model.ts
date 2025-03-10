@@ -3,18 +3,18 @@ import { Customer } from '@/interfaces/account.interface';
 import { LoginType } from '@/constants/enum';
 
 export class CustomerModel extends Model<Customer> implements Customer {
-  accountId: string;
-  name: string;
-  phone: string;
-  phone_verified: boolean;
-  address: string;
-  dob: Date;
-  gender: string;
-  image: string;
-  id: number;
-  email: string;
-  password: string;
-  provider: LoginType;
+  accountId!: string;
+  name!: string;
+  phone!: string;
+  phone_verified!: boolean;
+  address!: string;
+  dob!: Date;
+  gender!: string;
+  image!: string;
+  id!: number;
+  email!: string;
+  password!: string;
+  provider!: LoginType;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;

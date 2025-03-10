@@ -4,9 +4,11 @@ import com.congthanh.productservice.constant.common.ResponseStatus;
 import com.congthanh.productservice.model.dto.ProductDTO;
 import com.congthanh.productservice.model.request.CreateProductRequest;
 import com.congthanh.productservice.model.dto.ProductVariantAttributeValueDTO;
+import com.congthanh.productservice.model.response.OptionValue;
 import com.congthanh.productservice.model.response.Response;
 import com.congthanh.productservice.model.response.ResponseWithPagination;
 import com.congthanh.productservice.model.entity.Product;
+import com.congthanh.productservice.model.response.VariantValueResponse;
 import com.congthanh.productservice.model.viewmodel.ProductVm;
 import com.congthanh.productservice.repository.product.ProductRepository;
 import com.congthanh.productservice.service.ProductService;
@@ -25,6 +27,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -60,7 +63,7 @@ public class ProductController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/detail/{id}")
+    @GetMapping("/{id}/detail")
     @PermitAll
     @Operation(
             summary = "Get product detail by Id",
@@ -168,6 +171,38 @@ public class ProductController {
     public ResponseEntity<Response<List<ProductVariantAttributeValueDTO>>> getVariantAttributeValueByProduct(@RequestParam("product") String productId) {
         List<ProductVariantAttributeValueDTO> result = productService.getVariantAttributeValueByProduct(productId);
         Response<List<ProductVariantAttributeValueDTO>> response = new Response<>();
+        response.setData(result);
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        response.setMessage("Get successfully");
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/{id}/variants/attributes/detail")
+    public ResponseEntity<Response<List<VariantValueResponse>>> getVariantAttributeValueDetail(@PathVariable("id") String productId) {
+//        List<VariantValueResponse> result = productService.getVariantAttributeValueByProduct(productId);
+        List<VariantValueResponse> result = new ArrayList<>();
+
+        List<OptionValue> options = new ArrayList<>();
+        options.add(new OptionValue("Đen", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGzIvyt_xy57h1p6OstQpVbRZs6OtDDKpiOw&s", 1));
+        options.add(new OptionValue("Trắng", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc0wRIkUneSueNY53rOkf0DskgaL7i8bzThQ&s", 2));
+        options.add(new OptionValue("Xám", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc0wRIkUneSueNY53rOkf0DskgaL7i8bzThQ&s", 3));
+        options.add(new OptionValue("Vàng", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc0wRIkUneSueNY53rOkf0DskgaL7i8bzThQ&s", 4));
+        options.add(new OptionValue("Hồng", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc0wRIkUneSueNY53rOkf0DskgaL7i8bzThQ&s", 5));
+
+        VariantValueResponse variantValueResponse = new VariantValueResponse("Màu sắc", options);
+
+        List<OptionValue> options1 = new ArrayList<>();
+        options1.add(new OptionValue("128GB", null, 1));
+        options1.add(new OptionValue("256GB", null, 2));
+        options1.add(new OptionValue("512GB", null, 3));
+        options1.add(new OptionValue("1TB", null, 4));
+
+        VariantValueResponse variantValueResponse1 = new VariantValueResponse("Dung lượng", options1);
+
+        result.add(variantValueResponse);
+        result.add(variantValueResponse1);
+
+        Response<List<VariantValueResponse>> response = new Response<>();
         response.setData(result);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
         response.setMessage("Get successfully");
