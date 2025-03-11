@@ -1,4 +1,4 @@
-package com.congthanh.productservice.model.dto;
+package com.congthanh.productservice.model.dto.variant;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

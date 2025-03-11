@@ -1,6 +1,5 @@
-package com.congthanh.productservice.model.entity;
+package com.congthanh.productservice.model.entity.variant;
 
-import com.congthanh.productservice.model.entity.variant.ProductVariant;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;

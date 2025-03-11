@@ -9,7 +9,6 @@ import com.congthanh.productservice.constant.enums.ProductStatus;
 import com.congthanh.productservice.cqrs.command.command.CreateProductCommand;
 import com.congthanh.productservice.cqrs.query.query.GetProductByIdQuery;
 import com.congthanh.productservice.model.dto.ProductDTO;
-import com.congthanh.productservice.model.dto.ProductVariantAttributeValueDTO;
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.document.ProductDocument;
 import com.congthanh.productservice.model.request.CreateProductRequest;
@@ -17,9 +16,7 @@ import com.congthanh.productservice.exception.ecommerce.NotFoundException;
 import com.congthanh.productservice.model.mapper.ProductMapper;
 import com.congthanh.productservice.model.viewmodel.ProductVm;
 import com.congthanh.productservice.repository.product.ProductRepository;
-import com.congthanh.productservice.service.ProductAttributeService;
-import com.congthanh.productservice.service.ProductService;
-import com.congthanh.productservice.service.ProductVariantService;
+import com.congthanh.productservice.service.*;
 import com.congthanh.productservice.utils.Helper;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +40,8 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
+    private final ProductCategoryService productCategoryService;
+
     private final ProductVariantService productVariantService;
 
     private final ProductAttributeService productAttributeService;
@@ -54,6 +53,8 @@ public class ProductServiceImpl implements ProductService {
     private final KafkaTemplate<String, ProductDTO> kafkaTemplate;
 
     private final CategoryGrpcClient categoryGrpcClient;
+
+    private final AwsS3Service awsS3Service;
 
     @Override
     @Cacheable("products")
@@ -138,16 +139,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO createProduct(CreateProductRequest request) {
-        var category = categoryGrpcClient.getCategoryById(request.getCategory());
-//        SupplierResponse supplier = null;
-//        var brand = null;
 
         String productSlug = Helper.generateSlug(request.getName());
 
 //        assert category != null && subcategory != null && supplier != null && brand != null;
         CreateProductCommand mainProduct = CreateProductCommand.builder()
+                .id(UUID.randomUUID().toString())
                 .name(request.getName())
-                .category(category.getId())
+//                .category(category.getId())
                 .description(request.getDescription())
 //                .brand((null)
                 .status(ProductStatus.ACTIVE)
@@ -155,6 +154,8 @@ public class ProductServiceImpl implements ProductService {
 //                .supplier(supplier.getId())
                 .build();
         ProductDTO result = commandGateway.sendAndWait(mainProduct);
+
+
         kafkaTemplate.send("create-product-topic", result);
         return result;
 
@@ -242,7 +243,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> data = productRepository.searchProduct(keyword);
         System.out.println("CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK" + data);
 
-        if (data.size() > 0) {
+        if (!data.isEmpty()) {
             List<ProductDTO> result = new ArrayList<>();
             for (Product product : data) {
                 ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);

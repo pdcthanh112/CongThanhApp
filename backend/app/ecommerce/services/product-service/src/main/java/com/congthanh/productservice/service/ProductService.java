@@ -2,7 +2,6 @@ package com.congthanh.productservice.service;
 
 import com.congthanh.productservice.model.dto.ProductDTO;
 import com.congthanh.productservice.model.request.CreateProductRequest;
-import com.congthanh.productservice.model.dto.ProductVariantAttributeValueDTO;
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.response.ResponseWithPagination;
 import com.congthanh.productservice.model.viewmodel.ProductVm;

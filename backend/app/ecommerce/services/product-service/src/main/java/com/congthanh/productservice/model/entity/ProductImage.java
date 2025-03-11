@@ -1,14 +1,14 @@
 package com.congthanh.productservice.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-//@Data
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -28,9 +28,4 @@ public class ProductImage {
     private String imagePath;
 
     private String alt;
-
-    @Column(name = "is_default")
-    @JsonProperty("isDefault")
-    private boolean isDefault;
-
 }

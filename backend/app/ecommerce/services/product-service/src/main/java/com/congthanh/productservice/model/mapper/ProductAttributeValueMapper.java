@@ -1,6 +1,6 @@
 package com.congthanh.productservice.model.mapper;
 
-import com.congthanh.productservice.model.dto.ProductAttributeValueDTO;
+import com.congthanh.productservice.model.dto.attribute.ProductAttributeValueDTO;
 import com.congthanh.productservice.model.entity.attribute.ProductAttributeValue;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;

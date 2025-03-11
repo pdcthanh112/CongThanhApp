@@ -1,26 +1,23 @@
 package com.congthanh.productservice.model.viewmodel;
 
 import com.congthanh.productservice.constant.enums.ProductStatus;
-import com.congthanh.productservice.model.dto.ProductAttributeValueDTO;
-import com.congthanh.productservice.model.dto.ProductImageDTO;
 import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Builder
 public class ProductVm {
     private String id;
     private String name;
-    private CategoryVm category;
+    private List<CategoryVm> category;
     private String slug;
     private String description;
-    private List<ProductImageDTO> image;
-    private List<ProductAttributeValueDTO> attribute;
+    private ProductImageVm thumbnail;
+    private List<ProductImageVm> image;
+    private List<ProductAttribute> attribute;
     private String supplier;
     private String brand;
     private List<ProductVariantVm> variant;
@@ -30,22 +27,26 @@ public class ProductVm {
 
 record CategoryVm(
         String id,
-        String name,
-        Set<CategoryVm> children) {
+        String name) {
 }
 
 record ProductVariantVm(String id,
                         String product,
                         String name,
+                        ProductImageVm thumbnail,
                         String sku,
                         String gtin,
                         BigDecimal price,
-                        List<ProductVariantImageVm> image) {
+                        List<VariantAttribute> attribute,
+                        List<ProductImageVm> image) {
 }
 
-record ProductVariantImageVm(Long id,
-                             String variant,
-                             String imagePath,
-                             String alt,
-                             boolean isDefault) {
+record ProductAttribute(Long id,
+                        String name,
+                        String value) {
+}
+
+record VariantAttribute(Long id,
+                        String name,
+                        String value) {
 }

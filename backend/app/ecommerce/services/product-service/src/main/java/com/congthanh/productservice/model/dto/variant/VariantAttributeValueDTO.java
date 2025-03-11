@@ -1,21 +1,22 @@
-package com.congthanh.productservice.model.entity.variant;
+package com.congthanh.productservice.model.dto.variant;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.io.Serial;
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "variant_attribute_value")
-public class VariantAttributeValue {
+public class VariantAttributeValueDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private Long id;
 
     private Long attributeId;

@@ -1,9 +1,9 @@
 package com.congthanh.productservice.model.mapper;
 
-import com.congthanh.productservice.model.dto.ProductAttributeValueDTO;
+import com.congthanh.productservice.model.dto.attribute.ProductAttributeValueDTO;
 import com.congthanh.productservice.model.dto.ProductDTO;
 import com.congthanh.productservice.model.dto.ProductImageDTO;
-import com.congthanh.productservice.model.dto.ProductVariantDTO;
+import com.congthanh.productservice.model.dto.variant.ProductVariantDTO;
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.entity.attribute.ProductAttributeValue;
 import com.congthanh.productservice.model.entity.ProductImage;

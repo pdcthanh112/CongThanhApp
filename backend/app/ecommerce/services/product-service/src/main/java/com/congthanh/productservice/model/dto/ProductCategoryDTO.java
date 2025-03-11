@@ -12,13 +12,16 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class VariantAttributeDTO implements Serializable {
+public class ProductCategoryDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    private String name;
+    private String productId;
 
+    private String categoryId;
+
+    private int displayOrder;
 }

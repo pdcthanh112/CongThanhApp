@@ -8,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,9 +32,8 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "category", nullable = false)
-    private String category;
+    @OneToMany(mappedBy = "product_id", cascade = CascadeType.PERSIST)
+    private List<ProductCategory> category = new ArrayList<>();
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "subcategory", nullable = false)
@@ -48,6 +49,8 @@ public class Product {
 
     @Column(columnDefinition = "text")
     private String description;
+
+    private String thumbnail;
 
     @Enumerated(EnumType.STRING)
     private ProductStatus status;

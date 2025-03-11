@@ -3,7 +3,6 @@ package com.congthanh.productservice.controller;
 import com.congthanh.productservice.constant.common.ResponseStatus;
 import com.congthanh.productservice.model.dto.ProductDTO;
 import com.congthanh.productservice.model.request.CreateProductRequest;
-import com.congthanh.productservice.model.dto.ProductVariantAttributeValueDTO;
 import com.congthanh.productservice.model.response.OptionValue;
 import com.congthanh.productservice.model.response.Response;
 import com.congthanh.productservice.model.response.ResponseWithPagination;
@@ -167,15 +166,15 @@ public class ProductController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/get-variant-attribute")
-    public ResponseEntity<Response<List<ProductVariantAttributeValueDTO>>> getVariantAttributeValueByProduct(@RequestParam("product") String productId) {
-        List<ProductVariantAttributeValueDTO> result = productService.getVariantAttributeValueByProduct(productId);
-        Response<List<ProductVariantAttributeValueDTO>> response = new Response<>();
-        response.setData(result);
-        response.setStatus(ResponseStatus.STATUS_SUCCESS);
-        response.setMessage("Get successfully");
-        return ResponseEntity.ok().body(response);
-    }
+//    @GetMapping("/get-variant-attribute")
+//    public ResponseEntity<Response<List<ProductVariantAttributeValueDTO>>> getVariantAttributeValueByProduct(@RequestParam("product") String productId) {
+//        List<ProductVariantAttributeValueDTO> result = productService.getVariantAttributeValueByProduct(productId);
+//        Response<List<ProductVariantAttributeValueDTO>> response = new Response<>();
+//        response.setData(result);
+//        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+//        response.setMessage("Get successfully");
+//        return ResponseEntity.ok().body(response);
+//    }
 
     @GetMapping("/{id}/variants/attributes/detail")
     public ResponseEntity<Response<List<VariantValueResponse>>> getVariantAttributeValueDetail(@PathVariable("id") String productId) {

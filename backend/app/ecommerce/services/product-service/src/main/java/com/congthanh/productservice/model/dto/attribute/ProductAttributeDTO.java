@@ -1,4 +1,4 @@
-package com.congthanh.productservice.model.dto;
+package com.congthanh.productservice.model.dto.attribute;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

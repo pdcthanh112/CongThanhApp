@@ -11,13 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "variant_attribute")
-public class VariantAttribute {
+@Table(name = "variant_option_value")
+public class VariantOptionValue {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Column(name = "option_id", nullable = false)
+    private Long optionId;
+
+    @Column(nullable = false)
+    private String value;
+
+    @Column(name = "variant_id", nullable = false)
+    private String variantId;
 
 }

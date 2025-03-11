@@ -1,9 +1,9 @@
 package com.congthanh.productservice.cqrs.command.event;
 
 import com.congthanh.productservice.constant.enums.ProductStatus;
-import com.congthanh.productservice.model.dto.ProductAttributeValueDTO;
+import com.congthanh.productservice.model.dto.attribute.ProductAttributeValueDTO;
 import com.congthanh.productservice.model.dto.ProductImageDTO;
-import com.congthanh.productservice.model.dto.ProductVariantDTO;
+import com.congthanh.productservice.model.dto.variant.ProductVariantDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +19,7 @@ public class ProductCreatedEvent {
 
     private final String name;
 
-    private final String category;
+    private final List<String> category;
 
     private final String slug;
 

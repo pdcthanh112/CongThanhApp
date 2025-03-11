@@ -1,6 +1,6 @@
 package com.congthanh.productservice.service;
 
-import com.congthanh.productservice.model.dto.ProductVariantDTO;
+import com.congthanh.productservice.model.dto.variant.ProductVariantDTO;
 import com.congthanh.productservice.model.request.ProductVariantRequest;
 
 import java.util.List;

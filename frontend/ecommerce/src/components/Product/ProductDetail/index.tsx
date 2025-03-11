@@ -22,7 +22,7 @@ import { useAddProductToCart } from '@/hooks/cart/cartHook';
 import { getWishlistByCustomer } from '@/api/wishlistApi';
 import { getSupplierById } from '@/api/supplierApi';
 import Link from 'next/link';
-import { Product, ProductAttribute, ProductImage, Supplier, Wishlist } from '@/models/types';
+import { Breadcrumb, Product, ProductAttribute, ProductImage, Supplier, Wishlist } from '@/models/types';
 import QuantitySelector from '@/components/QuantitySelector/QuantitySelector';
 import { PRODUCT_KEY, WISHLIST_KEY } from '@/utils/constants/queryKey';
 import ProductDetailSkeleton from '../ProductDetailSkeleton';
@@ -34,6 +34,7 @@ import { useSession } from 'next-auth/react';
 import ReviewProduct from './ReviewProduct';
 import useAppModalStore from '@/store/useAppModal';
 import { useWishlistStore } from '@/store/wishlistStore';
+import BreadcrumbComponent from '@/components/Breadcrumb/Breadcrumb';
 
 type ProductDetailProps = {
   product: Product;
@@ -286,8 +287,24 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
     },
   ];
 
+  const crumb: Breadcrumb[] = [
+    {
+      pageName: 'Home',
+      url: '/',
+    },
+    {
+      pageName: 'Product',
+      url: '/product',
+    },
+    {
+      pageName: product.name,
+      url: '',
+    },
+  ];
+
   return (
     <div className="w-[80%] mx-auto my-3">
+      <BreadcrumbComponent items={crumb} />
       <div className="bg-white flex px-3 py-2">
         <div className="w-[40%] py-3">
           <div
@@ -480,7 +497,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
           </div>
         </div>
       </div>
-      <div className="bg-white mt-10 p-5 flex">
+      {/* <div className="bg-white mt-10 p-5 flex">
         <div className="w-[35%] flex">
           <Avatar src={supplier.avatar} alt="Store Avatar" style={{ width: '6rem', height: '6rem' }} />
           <div className="w-full ml-3">
@@ -501,7 +518,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
           </div>
         </div>
         <div className="bg-red-400 w-[65%]">asdfasjl</div>
-      </div>
+      </div> */}
       <div className="bg-white mt-10 p-5">
         <h2 className="bg-yellow-100 px-2 py-1 rounded-sm">{t('product.product_detail').toUpperCase()}</h2>
         <div className="grid grid-cols-4">

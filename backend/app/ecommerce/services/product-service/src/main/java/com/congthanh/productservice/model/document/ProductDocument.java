@@ -1,10 +1,8 @@
 package com.congthanh.productservice.model.document;
 
 import com.congthanh.productservice.constant.enums.ProductStatus;
-import com.congthanh.productservice.model.dto.ProductAttributeValueDTO;
 import com.congthanh.productservice.model.dto.ProductImageDTO;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,19 +22,19 @@ public class ProductDocument {
     @Id
     private String id;
 
-    @NotNull
     private String name;
 
-    private CategoryDocument category;
+    private List<CategoryDocument> category;
 
-    @NotNull
     private String slug;
 
     private String description;
 
+    private String thumbnail;
+
     private List<ProductImageDTO> image = new ArrayList<>();
 
-    private List<ProductAttributeValueDTO> attribute = new ArrayList<>();
+    private List<ProductAttributeDocument> attribute = new ArrayList<>();
 
     private String supplier;
 
@@ -46,4 +44,6 @@ public class ProductDocument {
 
     private ProductStatus status;
 
+    record ProductAttributeDocument(Long id, String attribute, String value) {
+    }
 }

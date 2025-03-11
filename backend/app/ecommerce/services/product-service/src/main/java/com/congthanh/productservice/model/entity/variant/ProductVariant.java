@@ -1,7 +1,6 @@
 package com.congthanh.productservice.model.entity.variant;
 
 import com.congthanh.productservice.model.entity.Product;
-import com.congthanh.productservice.model.entity.ProductVariantImage;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -38,6 +37,8 @@ public class ProductVariant {
 
     @Column(name = "price", precision = 19, scale = 4)
     private BigDecimal price;
+
+    private String thumbnail;
 
     @OneToMany(mappedBy = "variant", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference

@@ -196,3 +196,18 @@ eureka:
 axon:
   axonserver:
     servers: localhost:8124
+
+snowflake:
+  worker-id: 1
+  datacenter-id: 1
+
+aws:
+  access:
+    key:
+      id: lạdljlasfsd
+  secret:
+    access:
+      key: ádjflajdsl
+  s3:
+    region: jasjkaf
+    bucket: áljaf

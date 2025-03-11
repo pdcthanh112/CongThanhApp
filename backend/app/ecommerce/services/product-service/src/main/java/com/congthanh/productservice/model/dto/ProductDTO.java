@@ -1,6 +1,8 @@
 package com.congthanh.productservice.model.dto;
 
 import com.congthanh.productservice.constant.enums.ProductStatus;
+import com.congthanh.productservice.model.dto.attribute.ProductAttributeValueDTO;
+import com.congthanh.productservice.model.dto.variant.ProductVariantDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

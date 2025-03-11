@@ -78,7 +78,7 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 
     @Override
     public List<Tuple> getVariantAttributeValueByProduct(String productId) {
-        String sql = "SELECT vav.id as variantAttributeId, va.name as variantAttributeName, vav.value as variantAttributeValue, vav.variantId as variantId FROM VariantAttribute va JOIN VariantAttributeValue vav ON va.id = vav.attributeId\n" +
+        String sql = "SELECT vav.id as variantAttributeId, va.name as variantAttributeName, vav.value as variantAttributeValue, vav.variantId as variantId FROM VariantOption va JOIN VariantOptionValue vav ON va.id = vav.attributeId\n" +
                 "WHERE vav.variantId IN (SELECT pv.id from ProductVariant pv where pv.product.id = :productId)";
         Query query = entityManager.createQuery(sql, Tuple.class);
         query.setParameter("productId", productId);

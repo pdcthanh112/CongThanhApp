@@ -1,4 +1,4 @@
-package com.congthanh.productservice.model.dto;
+package com.congthanh.productservice.model.dto.attribute;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +17,7 @@ public class ProductAttributeValueDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private long id;
+    private Long id;
 
     private String attribute;
 

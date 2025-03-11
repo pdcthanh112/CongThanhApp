@@ -1,14 +1,13 @@
 package com.congthanh.productservice.model.request;
 
-import com.congthanh.productservice.model.dto.ProductAttributeValueDTO;
-import com.congthanh.productservice.model.dto.ProductImageDTO;
-import com.congthanh.productservice.model.dto.ProductVariantDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -21,7 +20,7 @@ public class CreateProductRequest {
     private String name;
 
     @NotNull
-    private String category;
+    private List<String> category;
 
     @NotNull
     private String slug;
@@ -32,10 +31,16 @@ public class CreateProductRequest {
 
     private String brand;
 
-    private List<ProductImageDTO> image;
+    @NotNull
+    private MultipartFile thumbnail;
 
-    private List<ProductAttributeValueDTO> attribute;
+    private List<MultipartFile> image;
 
-    private List<ProductVariantDTO> variant;
+    private List<ProductAttributeRequest> attribute;
 
+    private List<ProductVariantRequest> variant;
+
+
+    record ProductAttributeRequest(@NotNull String attribute, @NotNull String value) {}
+    record ProductVariantRequest(@NotNull String name, @NotNull String sku, @NotNull String gtin, @NotNull BigDecimal price) {}
 }
