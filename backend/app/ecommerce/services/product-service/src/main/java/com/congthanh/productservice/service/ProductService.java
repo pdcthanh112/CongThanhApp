@@ -33,6 +33,6 @@ public interface ProductService {
 
   Long getSoldByProduct(String productId);
 
-  List<ProductVariantAttributeValueDTO> getVariantAttributeValueByProduct(String productId);
+//  List<ProductVariantAttributeValueDTO> getVariantAttributeValueByProduct(String productId);
 
 }

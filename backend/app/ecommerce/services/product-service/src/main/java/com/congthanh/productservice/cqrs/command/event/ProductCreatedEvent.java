@@ -23,9 +23,11 @@ public class ProductCreatedEvent {
 
     private final String slug;
 
+    private final String thumbnail;
+
     private final String description;
 
-    private final List<ProductImageDTO> image;
+    private final List<ProductImage> image;
 
     private final List<ProductAttributeValueDTO> attribute;
 
@@ -36,5 +38,7 @@ public class ProductCreatedEvent {
     private final List<ProductVariantDTO> variant;
 
     private final ProductStatus status;
+
+    record ProductImage(String imagePath, int displayOrder) {}
 
 }

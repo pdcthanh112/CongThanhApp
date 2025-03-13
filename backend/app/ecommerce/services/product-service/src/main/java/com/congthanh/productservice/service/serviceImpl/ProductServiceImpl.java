@@ -3,6 +3,7 @@ package com.congthanh.productservice.service.serviceImpl;
 import com.congthanh.catalogservice.grpc.CategoryResponse;
 import com.congthanh.productservice.cqrs.query.query.GetProductBySlugQuery;
 import com.congthanh.productservice.grpc.client.CategoryGrpcClient;
+import com.congthanh.productservice.model.request.ProductImageRequest;
 import com.congthanh.productservice.model.response.PaginationInfo;
 import com.congthanh.productservice.model.response.ResponseWithPagination;
 import com.congthanh.productservice.constant.enums.ProductStatus;
@@ -18,6 +19,7 @@ import com.congthanh.productservice.model.viewmodel.ProductVm;
 import com.congthanh.productservice.repository.product.ProductRepository;
 import com.congthanh.productservice.service.*;
 import com.congthanh.productservice.utils.Helper;
+import com.congthanh.productservice.utils.SnowflakeIdGenerator;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +57,8 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryGrpcClient categoryGrpcClient;
 
     private final AwsS3Service awsS3Service;
+
+    private final SnowflakeIdGenerator snowflakeIdGenerator;
 
     @Override
     @Cacheable("products")
@@ -140,23 +144,35 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO createProduct(CreateProductRequest request) {
 
-        String productSlug = Helper.generateSlug(request.getName());
+        categoryGrpcClient.validateCategory(request.getCategory());
 
+        String thumbnailUrl = awsS3Service.uploadFile(request.getThumbnail());
+
+        List<ProductImageRequest> images = request.getImage().stream().map(image -> {
+            String url = awsS3Service.uploadFile(image);
+            return ProductImageRequest.builder()
+                    .id(snowflakeIdGenerator.nextId())
+                    .imagePath(url)
+                    .displayOrder(1)
+                    .build();
+        }).toList();
 //        assert category != null && subcategory != null && supplier != null && brand != null;
         CreateProductCommand mainProduct = CreateProductCommand.builder()
                 .id(UUID.randomUUID().toString())
                 .name(request.getName())
-//                .category(category.getId())
+                .category(request.getCategory())
                 .description(request.getDescription())
+                .thumbnail(thumbnailUrl)
+                .image(images)
 //                .brand((null)
                 .status(ProductStatus.ACTIVE)
-                .slug(productSlug)
+                .slug(Helper.generateSlug(request.getName()))
 //                .supplier(supplier.getId())
                 .build();
         ProductDTO result = commandGateway.sendAndWait(mainProduct);
 
 
-        kafkaTemplate.send("create-product-topic", result);
+//        kafkaTemplate.send("create-product-topic", result);
         return result;
 
     }
@@ -261,36 +277,36 @@ public class ProductServiceImpl implements ProductService {
         return result != null ? result : 0;
     }
 
-    @Override
-    public List<ProductVariantAttributeValueDTO> getVariantAttributeValueByProduct(String productId) {
-        List<Tuple> data = (List<Tuple>) productRepository.getVariantAttributeValueByProduct(productId);
-        if (!data.isEmpty()) {
-            Map<String, ProductVariantAttributeValueDTO> responseMap = new HashMap<>();
-            long idCounter = 1;
-
-            for (Tuple row : data) {
-                String attributeName = row.get("variantAttributeName", String.class);
-                String attributeValue = row.get("variantAttributeValue", String.class);
-
-                if (!responseMap.containsKey(attributeName)) {
-                    ProductVariantAttributeValueDTO response = new ProductVariantAttributeValueDTO();
-                    response.setId(idCounter++);
-                    response.setAttributeName(attributeName);
-                    response.setValue(new ArrayList<>());
-                    responseMap.put(attributeName, response);
-                }
-
-                ProductVariantAttributeValueDTO.Value value = new ProductVariantAttributeValueDTO.Value();
-                value.setId(Long.valueOf(row.get("variantAttributeId", Integer.class)));
-                value.setValue(attributeValue);
-
-                responseMap.get(attributeName).getValue().add(value);
-            }
-
-            return new ArrayList<>(responseMap.values());
-        }
-        return null;
-    }
+//    @Override
+//    public List<ProductVariantAttributeValueDTO> getVariantAttributeValueByProduct(String productId) {
+//        List<Tuple> data = (List<Tuple>) productRepository.getVariantAttributeValueByProduct(productId);
+//        if (!data.isEmpty()) {
+//            Map<String, ProductVariantAttributeValueDTO> responseMap = new HashMap<>();
+//            long idCounter = 1;
+//
+//            for (Tuple row : data) {
+//                String attributeName = row.get("variantAttributeName", String.class);
+//                String attributeValue = row.get("variantAttributeValue", String.class);
+//
+//                if (!responseMap.containsKey(attributeName)) {
+//                    ProductVariantAttributeValueDTO response = new ProductVariantAttributeValueDTO();
+//                    response.setId(idCounter++);
+//                    response.setAttributeName(attributeName);
+//                    response.setValue(new ArrayList<>());
+//                    responseMap.put(attributeName, response);
+//                }
+//
+//                ProductVariantAttributeValueDTO.Value value = new ProductVariantAttributeValueDTO.Value();
+//                value.setId(Long.valueOf(row.get("variantAttributeId", Integer.class)));
+//                value.setValue(attributeValue);
+//
+//                responseMap.get(attributeName).getValue().add(value);
+//            }
+//
+//            return new ArrayList<>(responseMap.values());
+//        }
+//        return null;
+//    }
 
 }
 

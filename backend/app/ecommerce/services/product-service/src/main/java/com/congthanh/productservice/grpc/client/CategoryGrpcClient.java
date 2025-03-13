@@ -1,14 +1,13 @@
 package com.congthanh.productservice.grpc.client;
 
-import com.congthanh.catalogservice.grpc.CategoryRequest;
-import com.congthanh.catalogservice.grpc.CategoryResponse;
-import com.congthanh.catalogservice.grpc.CategoryServiceGrpc;
-import com.congthanh.catalogservice.grpc.CategorySlugRequest;
+import com.congthanh.catalogservice.grpc.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CategoryGrpcClient {
@@ -35,5 +34,16 @@ public class CategoryGrpcClient {
                 .setSlug(categoryId)
                 .build();
         return blockingStub.getCategoryBySlug(request);
+    }
+
+    public boolean validateCategory(List<String> categoryIds) {
+        ValidateCategoriesRequest request = ValidateCategoriesRequest.newBuilder()
+                .addAllCategoryIds(categoryIds)
+                .build();
+        ValidateCategoriesResponse response = blockingStub.validateCategories(request);
+        if (!response.getValid()) {
+            throw new IllegalArgumentException("Invalid categories: " + response.getInvalidCategoryIdsList());
+        }
+        return true;
     }
 }

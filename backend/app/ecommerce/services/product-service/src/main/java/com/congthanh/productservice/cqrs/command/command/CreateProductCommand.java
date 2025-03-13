@@ -2,8 +2,8 @@ package com.congthanh.productservice.cqrs.command.command;
 
 import com.congthanh.productservice.constant.enums.ProductStatus;
 import com.congthanh.productservice.model.dto.attribute.ProductAttributeValueDTO;
-import com.congthanh.productservice.model.dto.ProductImageDTO;
 import com.congthanh.productservice.model.dto.variant.ProductVariantDTO;
+import com.congthanh.productservice.model.request.ProductImageRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,13 +23,13 @@ public class CreateProductCommand {
 
     private final List<String> category;
 
-    private final Long subcategory;
-
     private final String slug;
+
+    private final String thumbnail;
 
     private final String description;
 
-    private final List<ProductImageDTO> image;
+    private final List<ProductImageRequest> image;
 
     private final List<ProductAttributeValueDTO> attribute;
 

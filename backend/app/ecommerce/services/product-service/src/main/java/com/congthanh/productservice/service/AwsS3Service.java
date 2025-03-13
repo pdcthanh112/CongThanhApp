@@ -23,10 +23,8 @@ public class AwsS3Service {
 
     public String uploadFile(MultipartFile file) {
         try {
-            // Tạo tên file duy nhất để tránh trùng lặp
             String fileName = generateUniqueFileName(file.getOriginalFilename());
 
-            // Upload file lên S3
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());
             metadata.setContentType(file.getContentType());
@@ -38,14 +36,13 @@ public class AwsS3Service {
                     metadata
             ).withCannedAcl(CannedAccessControlList.PublicRead));
 
-            // Trả về URL của file
             return amazonS3Client.getUrl(bucketName, fileName).toString();
         } catch (IOException e) {
-            throw new RuntimeException("Không thể upload file", e);
+            throw new RuntimeException("Cannot upload file: ", e);
         }
     }
 
     private String generateUniqueFileName(String originalFilename) {
-        return UUID.randomUUID().toString() + "_" + originalFilename;
+        return UUID.randomUUID() + "_" + originalFilename;
     }
 }
