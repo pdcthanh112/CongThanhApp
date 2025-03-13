@@ -40,6 +40,10 @@ public class CreateProductRequest {
 
     private List<ProductVariantRequest> variant;
 
+    private Boolean isFeatured;
+
+    private MetadataRequest metadata;
+
 
     record ProductAttributeRequest(@NotNull String attribute, @NotNull String value) {}
     record ProductVariantRequest(@NotNull String sku, @NotNull String gtin, @NotNull BigDecimal price) {}

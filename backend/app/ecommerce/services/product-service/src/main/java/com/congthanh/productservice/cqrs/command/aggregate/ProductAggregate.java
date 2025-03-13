@@ -26,10 +26,12 @@ public class ProductAggregate {
     private String category;
     private String slug;
     private String description;
+    private String thumbnail;
     private List<ProductImageDTO> image;
     private List<ProductAttributeValueDTO> attribute;
     private String supplier;
     private String brand;
+    private List<Long> tag;
     private List<ProductVariantDTO> variant;
     private ProductStatus status;
 

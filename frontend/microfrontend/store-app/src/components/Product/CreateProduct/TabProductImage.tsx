@@ -16,8 +16,8 @@ const TabProductImage = ({ form }: Props) => {
         control={form.control}
         name="thumbnail"
         render={({ field }) => (
-          <FormItem className="h-36 space-y-0">
-            <FormLabel>Thumbnail</FormLabel>
+          <FormItem className="h-32 gap-0.5 mb-3">
+            <FormLabel style={{ color: 'inherit' }}>Thumbnail</FormLabel>
             <FormControl {...field}>
               <MultiImageUpload
                 value={thumbnail}
@@ -34,9 +34,9 @@ const TabProductImage = ({ form }: Props) => {
         control={form.control}
         name="image"
         render={({ field }) => (
-          <FormItem className="">
-            <FormLabel>Image</FormLabel>
-            <FormControl {...field} className='w-full h-80 border border-gray-400 p-3 rounded'>
+          <FormItem className="gap-0.5">
+            <FormLabel style={{ color: 'inherit' }}>Image</FormLabel>
+            <FormControl {...field} className="w-full h-80 border border-gray-400 p-3 rounded">
               <MultiImageUpload value={images} onChange={(files) => form.setValue('image', files)} maxImages={20} />
             </FormControl>
             <FormMessage />

@@ -37,6 +37,8 @@ public class CreateProductCommand {
 
     private final String brand;
 
+    private final List<Long> tag;
+
     private final List<ProductVariantDTO> variant;
 
     private final ProductStatus status;

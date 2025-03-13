@@ -5,7 +5,7 @@ export const createProductSchema = (t: ReturnType<typeof useTranslations>) => {
   return z.object({
     name: z.string().nonempty(t('auth.validation.field_required', { field: 'Name' })),
     slug: z.string().nonempty(),
-    category: z.string().array().nonempty({message: 'at least 1'}),
+    category: z.string().array().nonempty({ message: 'at least 1' }),
     thumbnail: z
       .instanceof(File, { message: 'Vui lòng chọn một file hợp lệ' })
       .refine((file) => ['image/png', 'image/jpeg', 'image/jpg'].includes(file.type), {
@@ -51,6 +51,12 @@ export const createProductSchema = (t: ReturnType<typeof useTranslations>) => {
         })
     ),
     description: z.string(),
+    isFeatured: z.boolean().default(false),
+    metadata: z.object({
+      title: z.string(),
+      keyword: z.string(),
+      description: z.string(),
+    }),
   });
 };
 

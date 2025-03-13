@@ -27,7 +27,7 @@ const TabProductVariant = ({ form }: Props) => {
                 name={`variant.${index}.sku`}
                 render={() => (
                   <FormItem className="col-span-6 mb-3 space-y-0 gap-0.5">
-                    <FormLabel>SKU</FormLabel>
+                    <FormLabel style={{ color: 'inherit' }}>SKU</FormLabel>
                     <FormControl>
                       <Input {...form.register(`variant.${index}.sku`)} />
                     </FormControl>
@@ -41,7 +41,7 @@ const TabProductVariant = ({ form }: Props) => {
                 name={`variant.${index}.gtin`}
                 render={() => (
                   <FormItem className="space-y-0 col-span-6 mb-3 gap-0.5">
-                    <FormLabel>Gtin</FormLabel>
+                    <FormLabel style={{ color: 'inherit' }}>GTIN</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter value" className="" {...form.register(`variant.${index}.gtin`)} />
                     </FormControl>
@@ -55,7 +55,7 @@ const TabProductVariant = ({ form }: Props) => {
                 name={`variant.${index}.price`}
                 render={() => (
                   <FormItem className="space-y-0 col-span-6 mb-3 gap-0.5">
-                    <FormLabel>Price</FormLabel>
+                    <FormLabel style={{ color: 'inherit' }}>Price</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter value" className="" {...form.register(`variant.${index}.price`)} />
                     </FormControl>
@@ -69,7 +69,7 @@ const TabProductVariant = ({ form }: Props) => {
                 name={`variant.${index}.image`}
                 render={({ field }) => (
                   <FormItem className="">
-                    <FormLabel>Image</FormLabel>
+                    <FormLabel style={{ color: 'inherit' }}>Image</FormLabel>
                     <FormControl {...field} className="w-full border border-gray-400 p-3 rounded">
                       <MultiImageUpload
                         value={images}

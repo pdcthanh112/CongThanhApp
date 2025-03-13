@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from '@/components/ui/';
+import { Checkbox, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Label } from '@/components/ui/';
 import { ProductSchemaType } from '@/models/schema/productSchema';
 import CustomEditor from '@/components/CustomEditor';
 import { Autocomplete, TextField } from '@mui/material';
@@ -23,10 +23,10 @@ const TabProductInfo = ({ form }: Props) => {
         control={form.control}
         name="name"
         render={({ field }) => (
-          <FormItem className=" mb-3 gap-0.5 space-y-0">
-            <FormLabel>Name</FormLabel>
+          <FormItem className="gap-0.5 h-20 mb-3">
+            <FormLabel style={{ color: 'inherit' }}>Name</FormLabel>
             <FormControl>
-              <Input placeholder="example@email.com" type="text" {...field} />
+              <Input {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -37,8 +37,8 @@ const TabProductInfo = ({ form }: Props) => {
         control={form.control}
         name="slug"
         render={({ field }) => (
-          <FormItem className=" mb-3 gap-0.5 space-y-0">
-            <FormLabel>Slug</FormLabel>
+          <FormItem className="gap-0.5 h-20 mb-3">
+            <FormLabel style={{ color: 'inherit' }}>Slug</FormLabel>
             <FormControl>
               <Input placeholder="example@email.com" {...field} />
             </FormControl>
@@ -51,8 +51,8 @@ const TabProductInfo = ({ form }: Props) => {
         control={form.control}
         name="category"
         render={({ field }) => (
-          <FormItem className=" mb-3 gap-0.5 space-y-0">
-            <FormLabel>Category</FormLabel>
+          <FormItem className="gap-0.5 h-20 mb-3">
+            <FormLabel style={{ color: 'inherit' }}>Category</FormLabel>
             <FormControl>
               <Autocomplete
                 multiple
@@ -76,8 +76,8 @@ const TabProductInfo = ({ form }: Props) => {
         control={form.control}
         name="description"
         render={({ field }) => (
-          <FormItem className=" mb-3 gap-0.5 space-y-0">
-            <FormLabel>Description</FormLabel>
+          <FormItem className="gap-0 h-80 mb-3">
+            <FormLabel style={{ color: 'inherit' }}>Description</FormLabel>
             <FormControl {...field}>
               <CustomEditor />
             </FormControl>
@@ -85,6 +85,18 @@ const TabProductInfo = ({ form }: Props) => {
           </FormItem>
         )}
       />
+
+      <div className="items-top flex space-x-2">
+        <Checkbox id="is_featured" />
+        <div className="grid gap-1.5 leading-none">
+          <Label
+            htmlFor="is_featured"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Is Featured
+          </Label>
+        </div>
+      </div>
     </div>
   );
 };

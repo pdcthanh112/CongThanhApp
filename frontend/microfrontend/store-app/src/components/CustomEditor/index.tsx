@@ -11,6 +11,7 @@ import { ClassicEditor, Essentials, Paragraph, Bold, Italic, Heading } from 'cke
 
 import 'ckeditor5/ckeditor5.css';
 import 'ckeditor5-premium-features/ckeditor5-premium-features.css';
+import './style.css'
 
 function CustomEditor() {
   return (
