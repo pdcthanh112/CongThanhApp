@@ -7,7 +7,7 @@ import com.congthanh.productservice.model.dto.variant.ProductVariantDTO;
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.entity.attribute.ProductAttributeValue;
 import com.congthanh.productservice.model.entity.ProductImage;
-import com.congthanh.productservice.model.entity.variant.ProductVariant;
+import com.congthanh.productservice.model.entity.ProductVariant;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

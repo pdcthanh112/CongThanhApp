@@ -2,7 +2,7 @@ package com.congthanh.productservice.service.serviceImpl;
 
 import com.congthanh.productservice.model.dto.ProductDTO;
 import com.congthanh.productservice.model.dto.variant.ProductVariantDTO;
-import com.congthanh.productservice.model.entity.variant.ProductVariant;
+import com.congthanh.productservice.model.entity.ProductVariant;
 import com.congthanh.productservice.model.mapper.ProductVariantMapper;
 import com.congthanh.productservice.model.request.ProductVariantRequest;
 import com.congthanh.productservice.repository.product.ProductRepository;

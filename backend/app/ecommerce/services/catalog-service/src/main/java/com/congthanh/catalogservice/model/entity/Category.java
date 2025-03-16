@@ -32,4 +32,11 @@ public class Category  extends AbstractAuditEntity{
     @Enumerated(EnumType.STRING)
     private CategoryStatus status;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "parent_id", insertable = false, updatable = false)
+//    private Category parent;
+//
+//    @OneToMany(mappedBy = "parent")
+//    private Set<Category> children = new HashSet<>();
+
 }

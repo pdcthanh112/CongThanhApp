@@ -2,7 +2,7 @@ package com.congthanh.productservice.repository.product;
 
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.entity.ProductImage;
-import com.congthanh.productservice.model.entity.variant.ProductVariant;
+import com.congthanh.productservice.model.entity.ProductVariant;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 

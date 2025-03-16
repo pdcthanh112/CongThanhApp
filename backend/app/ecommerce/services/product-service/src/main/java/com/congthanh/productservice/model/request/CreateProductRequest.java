@@ -16,32 +16,20 @@ import java.util.List;
 @Builder
 public class CreateProductRequest {
 
-    @NotNull
-    private String name;
-
-    @NotNull
-    private List<String> category;
-
-    @NotNull
-    private String slug;
-
+    @NotNull private String name;
+    @NotNull private List<String> category;
+    @NotNull private String slug;
+    private String sku;
+    private String gtin;
+    private BigDecimal price;
     private String description;
-
     private String supplier;
-
     private String brand;
-
-    @NotNull
-    private MultipartFile thumbnail;
-
+    @NotNull private MultipartFile thumbnail;
     private List<MultipartFile> image;
-
     private List<ProductAttributeRequest> attribute;
-
     private List<ProductVariantRequest> variant;
-
     private Boolean isFeatured;
-
     private MetadataRequest metadata;
 
 

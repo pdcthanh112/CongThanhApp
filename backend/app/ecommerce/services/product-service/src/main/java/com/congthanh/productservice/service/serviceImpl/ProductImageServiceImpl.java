@@ -48,8 +48,6 @@ public class ProductImageServiceImpl implements ProductImageService {
         ProductImage image = ProductImage.builder()
                 .product(product)
                 .imagePath(productImageDTO.getImagePath())
-                .alt(productImageDTO.getAlt())
-                .isDefault(productImageDTO.isDefault())
                 .build();
         ProductImage result = productImageRepository.save(image);
         return ProductImageMapper.mapProductImageEntityToDTO(result);

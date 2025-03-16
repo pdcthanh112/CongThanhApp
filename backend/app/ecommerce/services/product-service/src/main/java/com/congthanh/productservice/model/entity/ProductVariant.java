@@ -1,11 +1,11 @@
-package com.congthanh.productservice.model.entity.variant;
+package com.congthanh.productservice.model.entity;
 
-import com.congthanh.productservice.model.entity.Product;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,22 +17,21 @@ import java.util.Set;
 public class ProductVariant {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product", nullable = false)
-    @JsonManagedReference
-    @ToString.Exclude
+    @JoinColumn(name = "product_id", nullable = false)
+//    @JsonManagedReference
+//    @ToString.Exclude
     private Product product;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true, name = "sku")
+    @Column(name = "sku", nullable = false, unique = true)
     private String sku;
 
-    @Column(nullable = false, unique = true, name = "gtin")
+    @Column(name = "gtin", nullable = false, unique = true)
     private String gtin;
 
     @Column(name = "price", precision = 19, scale = 4)
@@ -43,6 +42,9 @@ public class ProductVariant {
     @OneToMany(mappedBy = "variant", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     @ToString.Exclude
-    private Set<ProductVariantImage> image;
+    private Set<ProductVariantImage> image = new HashSet<>();
+
+    @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<VariantAttributeOption> attributeOptions = new HashSet<>();
 
 }

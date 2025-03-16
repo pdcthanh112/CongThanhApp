@@ -42,5 +42,4 @@ public class CreateProductCommand {
     private final List<ProductVariantDTO> variant;
 
     private final ProductStatus status;
-
 }

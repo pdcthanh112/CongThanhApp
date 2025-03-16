@@ -20,6 +20,11 @@ public class ProductAttributeServiceImpl implements ProductAttributeService {
     private final ProductAttributeRepository productAttributeRepository;
 
     @Override
+    public List<ProductAttributeDTO> getAllProductAttribute() {
+        return productAttributeRepository.findAll().stream().map(item -> ProductAttributeDTO.builder().id(item.getId()).name(item.getName()).build()).toList();
+    }
+
+    @Override
     public ProductAttributeDTO createProductAttribute(ProductAttributeDTO productAttributeDTO) {
         ProductAttribute productAttribute = ProductAttribute.builder()
                 .name(productAttributeDTO.getName())

@@ -2,7 +2,6 @@ package com.congthanh.productservice.model.entity;
 
 import com.congthanh.productservice.constant.enums.ProductStatus;
 import com.congthanh.productservice.model.entity.attribute.ProductAttributeValue;
-import com.congthanh.productservice.model.entity.variant.ProductVariant;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -32,12 +31,8 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "product_id", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ProductCategory> category = new ArrayList<>();
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "subcategory", nullable = false)
-//    private Long subcategory;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "supplier")

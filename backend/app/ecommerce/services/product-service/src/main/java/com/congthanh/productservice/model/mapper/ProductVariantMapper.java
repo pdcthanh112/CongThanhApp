@@ -2,8 +2,8 @@ package com.congthanh.productservice.model.mapper;
 
 import com.congthanh.productservice.model.dto.variant.ProductVariantDTO;
 import com.congthanh.productservice.model.dto.variant.ProductVariantImageDTO;
-import com.congthanh.productservice.model.entity.variant.ProductVariant;
-import com.congthanh.productservice.model.entity.variant.ProductVariantImage;
+import com.congthanh.productservice.model.entity.ProductVariant;
+import com.congthanh.productservice.model.entity.ProductVariantImage;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

@@ -40,17 +40,26 @@ public class ProductAggregate {
 
     @CommandHandler
     public ProductAggregate(CreateProductCommand command) {
-        apply(new ProductCreatedEvent(command.getId(), command.getName(), command.getCategory(), command.getSlug(), command.getDescription(), command.getImage(), command.getAttribute(), command.getSupplier(), command.getBrand(), command.getVariant(), command.getStatus()));
+//        apply(new ProductCreatedEvent(command.getId(), command.getName(), command.getCategory(), command.getSlug(), command.getDescription(), command.getImage(), command.getAttribute(), command.getSupplier(), command.getBrand(), command.getVariant(), command.getStatus()));
+        apply(ProductCreatedEvent.builder()
+                .id(command.getId())
+                .name(command.getName())
+                .category(command.getCategory())
+                .slug(command.getSlug())
+                .description(command.getDescription())
+                .thumbnail(command.getThumbnail())
+                .status(command.getStatus())
+                .build());
     }
 
     @EventSourcingHandler
     public void onProductCreated(ProductCreatedEvent event) {
         this.id = event.getId();
         this.name = event.getName();
-        this.category = event.getCategory();
+//        this.category = event.getCategory();
         this.slug = event.getSlug();
         this.description = event.getDescription();
-        this.image = event.getImage();
+        this.thumbnail = event.getThumbnail();
         this.attribute = event.getAttribute();
         this.supplier = event.getSupplier();
         this.brand = event.getBrand();

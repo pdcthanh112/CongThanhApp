@@ -50,8 +50,8 @@ public class ProductEventHandler {
         List<ProductCategory> productCategories = setProductCategories(event.getCategory(), mainProduct);
         productCategoryRepository.saveAll(productCategories);
 
-        List<ProductImage> productImages = setProductImages(event.getImage(), mainProduct);
-        productImageRepository.saveAll(productImages);
+//        List<ProductImage> productImages = setProductImages(event.getImage(), mainProduct);
+//        productImageRepository.saveAll(productImages);
 
     }
 
@@ -66,7 +66,7 @@ public class ProductEventHandler {
                     productCategoryList.add(ProductCategory.builder()
                             .id(snowflakeIdGenerator.nextId())
                             .categoryId(categoryId)
-                            .productId(product.getId())
+                            .product(product)
                             .displayOrder(index)
                             .build());
                     index++;
@@ -94,7 +94,7 @@ public class ProductEventHandler {
                         .map(id -> ProductImage.builder().id(id).product(product).build()).toList();
             }
             if (CollectionUtils.isNotEmpty(deletedImageIds)) {
-                productImageRepository.deleteByImageIdInAndProductId(deletedImageIds, product.getId());
+//                productImageRepository.deleteByImageIdInAndProductId(deletedImageIds, product.getId());
             }
         }
         return productImages;

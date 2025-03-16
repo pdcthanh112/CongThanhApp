@@ -1,4 +1,4 @@
-package com.congthanh.productservice.model.entity.variant;
+package com.congthanh.productservice.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;

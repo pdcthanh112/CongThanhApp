@@ -1,6 +1,6 @@
 package com.congthanh.productservice.repository.productVariant;
 
-import com.congthanh.productservice.model.entity.variant.ProductVariant;
+import com.congthanh.productservice.model.entity.ProductVariant;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

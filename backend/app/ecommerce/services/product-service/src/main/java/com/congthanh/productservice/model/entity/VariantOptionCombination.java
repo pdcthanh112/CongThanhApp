@@ -11,18 +11,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductCategory {
+@Table(name = "variant_option_combination")
+public class VariantOptionCombination {
 
     @Id
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false, updatable = false)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @Column(name = "category_id", nullable = false, updatable = false)
-    private String categoryId;
+    @ManyToOne
+    @JoinColumn(name = "variant_attribute_id", nullable = false)
+    private VariantAttribute variantAttribute;
 
-    @Column(name = "display_order", nullable = false)
+    @Column(name = "display_order")
     private int displayOrder;
 }

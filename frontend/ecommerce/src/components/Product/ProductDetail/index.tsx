@@ -550,11 +550,6 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
         {/* <div className="">{product.description}</div> */}
         <div dangerouslySetInnerHTML={{ __html: product.description }} className="prose" />
       </div>
-
-      <div className="bg-white mt-10 p-5">
-        <h2 className="bg-yellow-100 px-2 py-1 rounded-sm">{t('product.product_review').toUpperCase()}</h2>
-        <ReviewProduct productId={'366f785f-26dd-4c33-8452-0b172ef0a5de'} reviewStatictis={reviewStatistic} />
-      </div>
     </div>
   );
 }

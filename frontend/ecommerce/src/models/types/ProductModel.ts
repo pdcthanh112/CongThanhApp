@@ -10,6 +10,11 @@ export type Product = {
   status: string;
   variant: ProductVariant[];
   attribute: ProductAttribute[];
+  metadata: {
+    title: string;
+    keywords: string;
+    description: string;
+  };
 };
 
 export type ProductAttribute = {
@@ -51,6 +56,6 @@ export type ProductVariantAttribute = {
     {
       id: number;
       value: string;
-    }
+    },
   ];
 };

@@ -40,8 +40,40 @@ INSERT INTO product(id, name, slug, category, brand, supplier, description, stat
                                                                                           ('eb553ba5-475d-4335-9d69-9bf3da7ee70d', 'Rolex GMT Master II ', 'rolex-gmt-master-ii', '414f47d5-b33d-4493-8449-4bbd8cb4f499', null, null, 'description', 'ACTIVE'),
                                                                                           ('933585e6-4983-48c6-b4fa-160db579baf5', 'Richard Mille RM 70-01 Tourbillon', 'richard-mille-rm-70-01', '414f47d5-b33d-4493-8449-4bbd8cb4f499', null, null, 'description', 'ACTIVE');
 
---Product Attribute
+--Product Attribute Value
 INSERT INTO product_attribute_value (id, value, product_id, product_attribute_id) VALUES (486580923245727745, 'Paulo Coelho', '74f9341a-54c1-4453-84e4-147e656e4a9c', 486580923245727745);
 INSERT INTO product_attribute_value (id, value, product_id, product_attribute_id) VALUES (486580923245727746, '225', '74f9341a-54c1-4453-84e4-147e656e4a9c', 486580923245727746);
 INSERT INTO product_attribute_value (id, value, product_id, product_attribute_id) VALUES (486580923245727747, '978-604-53-7204-3', '74f9341a-54c1-4453-84e4-147e656e4a9c', 486580923245727747);
 INSERT INTO product_attribute_value (id, value, product_id, product_attribute_id) VALUES (486580923245727748,'Potugal', '74f9341a-54c1-4453-84e4-147e656e4a9c',486580923245727748);
+
+
+--Product Variant
+INSERT INTO product_variant (id, name, product_id, sku, gtin, price) VALUES ('d1a06c9a-78cb-4c7e-beef-0fb4245aacad', 'Iphone 16 Pro Max Đen 128GB', '366f785f-26dd-4c33-8452-0b172ef0a5de', 'IPHON-COLOR-CAPAC-1432', '1845678901901', 25000000),
+                                                                            ('722b82e5-04c2-44ca-9042-55f74460687b', 'Iphone 16 Pro Max Đen 256GB', '366f785f-26dd-4c33-8452-0b172ef0a5de', 'IPHON-COLOR-CAPAC-5432', '1845678901001', 35000000),
+                                                                            ('86be8381-04fa-42d6-a9d7-6349b482f00d', 'Iphone 16 Pro Max Đen 512GB', '366f785f-26dd-4c33-8452-0b172ef0a5de', 'IPHON-COLOR-CAPAC-7652', '1845678901201', 45000000),
+                                                                            ('d072fe63-af8a-4de0-9e61-9a897149332a', 'Iphone 16 Pro Max Đen 1TB', '366f785f-26dd-4c33-8452-0b172ef0a5de', 'IPHON-COLOR-CAPAC-1245', '1845678901301', 55000000),
+                                                                            ('bb2e3911-e3ad-4689-a1af-2fedbe58b11e', 'Iphone 16 Pro Max Trắng 128GB', '366f785f-26dd-4c33-8452-0b172ef0a5de', 'IPHON-COLOR-CAPAC-6565', '1845678901021', 26000000),
+                                                                            ('c86cc7d9-a0bf-43e1-9943-8b70639dda1e', 'Iphone 16 Pro Max Trắng 256GB', '366f785f-26dd-4c33-8452-0b172ef0a5de', 'IPHON-COLOR-CAPAC-8623', '1845678901401', 36000000),
+                                                                            ('e50e7957-f71d-4787-ad60-9fcba599debd', 'Iphone 16 Pro Max Trắng 512GB', '366f785f-26dd-4c33-8452-0b172ef0a5de', 'IPHON-COLOR-CAPAC-4184', '1845678901501', 46000000),
+                                                                            ('4d7a3609-bf78-4e4d-97a6-b392b5b986d0', 'Iphone 16 Pro Max Trắng 1TB', '366f785f-26dd-4c33-8452-0b172ef0a5de', 'IPHON-COLOR-CAPAC-1457', '1845678901601', 56000000),
+                                                                            ('94e86ccf-c4ff-41a7-a60b-289eb726f8c0', 'Iphone 16 Pro Max Titan 128GB', '366f785f-26dd-4c33-8452-0b172ef0a5de', 'IPHON-COLOR-CAPAC-6894', '1845678901071', 29000000),
+                                                                            ('6d3b283e-00c9-46a2-93a3-443695a87e53', 'Iphone 16 Pro Max Titan 256GB', '366f785f-26dd-4c33-8452-0b172ef0a5de', 'IPHON-COLOR-CAPAC-9867', '1845678901611', 39000000),
+                                                                            ('f676813b-09cc-42cb-916b-6d4777e76ada', 'Iphone 16 Pro Max Titan 512B', '366f785f-26dd-4c33-8452-0b172ef0a5de', 'IPHON-COLOR-CAPAC-6474', '1845678901614', 49000000),
+                                                                            ('ab25dead-5017-4cbb-9cdb-7bda81f45eaa', 'Iphone 16 Pro Max Titan 1TB', '366f785f-26dd-4c33-8452-0b172ef0a5de', 'IPHON-COLOR-CAPAC-8735', '1845678901612', 59000000),
+
+
+--Variant Attribute
+INSERT INTO variant_attribute (id, name) VALUES (1865809232457270, 'Size'),
+                                                (1865809232457271, 'Color'),
+                                                (1865809232457272, 'Capacity');
+
+INSERT INTO variant_attribute_option(id, variant_id, attribute_id, value, display_order) VALUES (1965809232457270, 'd1a06c9a-78cb-4c7e-beef-0fb4245aacad', 1865809232457271, 'Black', 1),
+                                                                                                (1965809232457271, '722b82e5-04c2-44ca-9042-55f74460687b', 1865809232457271, 'White', 2),
+                                                                                                (1965809232457272, '722b82e5-04c2-44ca-9042-55f74460687b', 1865809232457271, 'Titan', 3),
+                                                                                                (1965809232457273, 'd1a06c9a-78cb-4c7e-beef-0fb4245aacad', 1865809232457272, '128 GB', 1),
+                                                                                                (1965809232457274, '', 1865809232457272, '256 GB', 2),
+                                                                                                (1965809232457275, '', 1865809232457272, '512 GB', 3),
+                                                                                                (1965809232457276, '', 1865809232457272, '1 TB', 4);
+
+INSERT INTO variant_option_combination (id, product_id, variant_attribute_id, display_order) VALUES (556939800219647, '366f785f-26dd-4c33-8452-0b172ef0a5de', 1865809232457271, 1),
+                                                                                                    (556939800219648, '366f785f-26dd-4c33-8452-0b172ef0a5de', 1865809232457272, 2)

@@ -6,7 +6,9 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ProductImageCustomRepositoryImpl implements ProductImageCustomRepository{
 
     @PersistenceContext
@@ -22,6 +24,17 @@ public class ProductImageCustomRepositoryImpl implements ProductImageCustomRepos
             return query.getSingleResult();
         } catch (NoResultException e) {
             return null;
+        }
+    }
+
+    @Override
+    public void deleteByProductId(String productId) {
+        try {
+            String sql = "DELETE FROM ProductImage i WHERE i.product.id = :productId";
+            TypedQuery<ProductImage> query = entityManager.createQuery(sql, ProductImage.class);
+            query.setParameter("productId", productId);
+        } catch (NoResultException e) {
+            throw new RuntimeException("Lỗi");
         }
     }
 }

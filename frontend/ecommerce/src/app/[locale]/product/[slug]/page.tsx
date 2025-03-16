@@ -7,6 +7,9 @@ import { notFound } from 'next/navigation';
 import { getSupplierById } from '@/api/supplierApi';
 import { Product, Supplier } from '@/models/types';
 import { ReviewStatistic } from '@/models/types/Review';
+import RelatedProduct from '@/components/Product/RelatedProduct';
+import ReviewProduct from '@/components/Product/ProductDetail/ReviewProduct';
+import { getTranslations } from 'next-intl/server';
 
 async function getProductDetail(slug: string) {
   return await getProductBySlug(slug).catch(() => notFound());
@@ -79,6 +82,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         product: '',
       },
     ],
+    metadata: {
+      title: '',
+      keywords: '',
+      description: '',
+    },
   };
   return {
     title: product.name,
@@ -100,6 +108,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const t = await getTranslations();
   // const product = await getProductDetail(slug).then((response) => response.data);
   const product: Product = {
     id: '043-103090340-34543',
@@ -157,6 +166,11 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         product: '',
       },
     ],
+    metadata: {
+      title: '',
+      keywords: '',
+      description: '',
+    },
   };
   // const reviewStatistic = await getReviewStatisticByProduct(product.id).then((response) => response.data);
   const reviewStatistic: ReviewStatistic = {
@@ -183,6 +197,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   return (
     <React.Fragment>
       <ProductDetail product={product} reviewStatistic={reviewStatistic} supplier={supplier} />
+
+      <div className="bg-white mt-10 p-5">
+        <h2 className="bg-yellow-100 px-2 py-1 rounded-sm">{t('product.product_review').toUpperCase()}</h2>
+        <ReviewProduct productId={'366f785f-26dd-4c33-8452-0b172ef0a5de'} reviewStatictis={reviewStatistic} />
+      </div>
+
+      <RelatedProduct />
     </React.Fragment>
   );
 }

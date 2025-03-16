@@ -3,6 +3,7 @@ package com.congthanh.productservice.service.serviceImpl;
 import com.congthanh.catalogservice.grpc.CategoryResponse;
 import com.congthanh.productservice.exception.ecommerce.NotFoundException;
 import com.congthanh.productservice.grpc.client.CategoryGrpcClient;
+import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.entity.ProductCategory;
 import com.congthanh.productservice.repository.productCategory.ProductCategoryRepository;
 import com.congthanh.productservice.service.ProductCategoryService;
@@ -36,7 +37,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         ProductCategory newProductCategory = ProductCategory.builder()
                 .id(snowflakeIdGenerator.nextId())
                 .categoryId(categoryId)
-                .productId(productId)
+                .product(Product.builder().id(productId).build())
                 .build();
 
         productCategoryRepository.save(newProductCategory);
@@ -53,7 +54,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
             ProductCategory newProductCategory = ProductCategory.builder()
                     .id(snowflakeIdGenerator.nextId())
                     .categoryId(categoryIds.get(i))
-                    .productId(productId)
+                    .product(Product.builder().id(productId).build())
                     .displayOrder(i)
                     .build();
 
