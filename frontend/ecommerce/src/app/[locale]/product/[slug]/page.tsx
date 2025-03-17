@@ -29,7 +29,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const product: Product = {
     id: '043-103090340-34543',
     name: 'Iphone 16 Pro Max',
-    category: 'Cateeeeeeeeee',
+    category: [{
+      id: '4435rjiqow',
+      name: 'Smart phone',
+      slug: 'smart-phone'
+    }, {
+      id: '',
+      name: 'Cell phone',
+      slug: 'cell-phone'
+    }],
     slug: 'iphone-16-pro-max',
     description:
       '<p>iPhone 16 brings you Dynamic Island, a 48MP Main camera, and USB-C—all in a durable color-infused glass and aluminum design.</p>',
@@ -38,7 +46,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       {
         imagePath: 'https://www.vntousa.org/images/users/images/news/halong.jpg',
         alt: 'alt',
-        isDefault: true,
         id: 0,
         product: '',
       },
@@ -46,21 +53,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         imagePath:
           'https://www.mrlinhadventure.com/UserFiles/image/Travel-blog/Image-content/Top-Landscapes-in-Vietnam-1.jpg',
         alt: 'alt',
-        isDefault: false,
         id: 0,
         product: '',
       },
       {
         imagePath: 'https://lilystravelagency.com/wp-content/uploads/2022/10/Tam-Co-Trang-An-1.jpg',
         alt: 'alt',
-        isDefault: true,
         id: 0,
         product: '',
       },
       {
         imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvTZzRBQJr3hGRmgOafgRHzNAvWYXA3RY3_g&s',
         alt: 'alt',
-        isDefault: true,
         id: 0,
         product: '',
       },
@@ -122,7 +126,6 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       {
         imagePath: 'https://www.vntousa.org/images/users/images/news/halong.jpg',
         alt: 'alt',
-        isDefault: true,
         id: 0,
         product: '',
       },
@@ -130,21 +133,18 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         imagePath:
           'https://www.mrlinhadventure.com/UserFiles/image/Travel-blog/Image-content/Top-Landscapes-in-Vietnam-1.jpg',
         alt: 'alt',
-        isDefault: false,
         id: 0,
         product: '',
       },
       {
         imagePath: 'https://lilystravelagency.com/wp-content/uploads/2022/10/Tam-Co-Trang-An-1.jpg',
         alt: 'alt',
-        isDefault: true,
         id: 0,
         product: '',
       },
       {
         imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvTZzRBQJr3hGRmgOafgRHzNAvWYXA3RY3_g&s',
         alt: 'alt',
-        isDefault: true,
         id: 0,
         product: '',
       },

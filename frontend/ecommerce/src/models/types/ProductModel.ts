@@ -1,7 +1,7 @@
 export type Product = {
   id: string;
   name: string;
-  category: string;
+  category: ProductCategory[];
   slug: string;
   description: string;
   supplier: string;
@@ -17,6 +17,12 @@ export type Product = {
   };
 };
 
+export type ProductCategory = {
+  id: string
+  name: string
+  slug: string
+}
+
 export type ProductAttribute = {
   id: number;
   attribute: string;
@@ -29,7 +35,6 @@ export type ProductImage = {
   product: string;
   imagePath: string;
   alt: string;
-  isDefault: boolean;
 };
 
 export type ProductVariant = {
@@ -46,7 +51,6 @@ export type ProductVariantImage = {
   variant: string;
   imagePath: string;
   alt: string;
-  isDefault: boolean;
 };
 
 export type ProductVariantAttribute = {

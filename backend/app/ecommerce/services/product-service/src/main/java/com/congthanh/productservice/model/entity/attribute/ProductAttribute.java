@@ -23,13 +23,13 @@ public class ProductAttribute extends AbstractAuditEntity {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "product_attribute_group")
-    private ProductAttributeGroup productAttributeGroup;
-
-    @OneToMany(mappedBy = "productAttribute")
-    @JsonIgnore
-    private List<ProductAttributeTemplate> productAttributeTemplates = new ArrayList<>();
+//    @ManyToOne
+//    @JoinColumn(name = "product_attribute_group")
+//    private ProductAttributeGroup productAttributeGroup;
+//
+//    @OneToMany(mappedBy = "productAttribute")
+//    @JsonIgnore
+//    private List<ProductAttributeTemplate> productAttributeTemplates = new ArrayList<>();
 
     @OneToMany(mappedBy = "productAttribute")
     private List<ProductAttributeValue> attributeValues = new ArrayList<>();

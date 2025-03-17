@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -75,6 +76,7 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    @Transactional
     public CartItemDTO addToCart(Long cartId, AddItemToCartRequest request) {
         AddItemToCartCommand command = AddItemToCartCommand.builder()
                 .id(snowflakeIdGenerator.nextId())
@@ -112,6 +114,7 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    @Transactional
     public CartItemDTO updateCartItem(Long cartItemId, int quantity) {
         CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow();
         cartItem.setQuantity(quantity);
@@ -127,6 +130,7 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    @Transactional
     public boolean deleteCartItem(Long cartItemId) {
         try {
             cartItemRepository.deleteById(cartItemId);
