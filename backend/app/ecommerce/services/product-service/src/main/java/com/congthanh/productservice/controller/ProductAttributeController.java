@@ -1,7 +1,7 @@
 package com.congthanh.productservice.controller;
 
 import com.congthanh.productservice.constant.common.ResponseStatus;
-import com.congthanh.productservice.model.dto.attribute.ProductAttributeDTO;
+import com.congthanh.productservice.model.dto.ProductAttributeDTO;
 import com.congthanh.productservice.model.response.Response;
 import com.congthanh.productservice.service.ProductAttributeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

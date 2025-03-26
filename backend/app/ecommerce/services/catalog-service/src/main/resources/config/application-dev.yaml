@@ -133,7 +133,7 @@ spring:
 
 grpc:
   server:
-    port: 9090
+    port: 19090 #9090
     in-process-name: congthanhapp-ecommerce-catalog-service
     reflection-service-enabled: true
 

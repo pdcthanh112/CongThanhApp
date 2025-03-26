@@ -7,8 +7,9 @@ import "google/protobuf/timestamp.proto";
 
 service CategoryService {
   rpc getCategoryById (CategoryRequest) returns (CategoryResponse) {}
-  rpc getCategoryBySlug (CategorySlugRequest) returns (CategoryResponse) {}
-  rpc ValidateCategories(ValidateCategoriesRequest) returns (ValidateCategoriesResponse);
+  rpc getListCategoryByIds (ListCategoryRequest) returns (ListCategoryResponse);
+  rpc getCategoryBySlug (CategorySlugRequest) returns (CategoryResponse);
+  rpc validateCategories(ValidateCategoriesRequest) returns (ValidateCategoriesResponse);
 }
 
 message CategoryRequest {
@@ -38,4 +39,12 @@ message ValidateCategoriesRequest {
 message ValidateCategoriesResponse {
   bool valid = 1;
   repeated string invalidCategoryIds = 2;
+}
+
+message ListCategoryRequest {
+  repeated string categoryId = 1;
+}
+
+message ListCategoryResponse {
+  repeated CategoryResponse response = 1;
 }

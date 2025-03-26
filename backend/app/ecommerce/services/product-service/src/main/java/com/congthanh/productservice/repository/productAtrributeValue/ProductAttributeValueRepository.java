@@ -1,6 +1,6 @@
 package com.congthanh.productservice.repository.productAtrributeValue;
 
-import com.congthanh.productservice.model.entity.attribute.ProductAttributeValue;
+import com.congthanh.productservice.model.entity.ProductAttributeValue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

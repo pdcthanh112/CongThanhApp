@@ -16,7 +16,7 @@ import java.time.Instant;
 @MappedSuperclass
 @Data
 @EntityListeners(CustomAuditingEntityListener.class)
-public class AbstractAuditEntity {
+public abstract class AbstractAuditEntity {
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)

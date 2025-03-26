@@ -1,13 +1,11 @@
 package com.congthanh.productservice.model.mapper;
 
-import com.congthanh.productservice.model.dto.attribute.ProductAttributeValueDTO;
+import com.congthanh.productservice.model.dto.ProductAttributeValueDTO;
 import com.congthanh.productservice.model.dto.ProductDTO;
 import com.congthanh.productservice.model.dto.ProductImageDTO;
-import com.congthanh.productservice.model.dto.variant.ProductVariantDTO;
 import com.congthanh.productservice.model.entity.Product;
-import com.congthanh.productservice.model.entity.attribute.ProductAttributeValue;
+import com.congthanh.productservice.model.entity.ProductAttributeValue;
 import com.congthanh.productservice.model.entity.ProductImage;
-import com.congthanh.productservice.model.entity.ProductVariant;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -57,7 +55,6 @@ public class ProductMapper {
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
         productDTO.setImage(mapProductImageListToProductImageDTOList(product.getImage()));
         productDTO.setAttribute(mapProductAttributeValueListToProductAttributeValueDTOList(product.getAttribute()));
-        productDTO.setVariant(mapProductVariantListToProductVariantDTOList(product.getVariant()));
         return productDTO;
     }
 
@@ -70,12 +67,6 @@ public class ProductMapper {
     private static List<ProductAttributeValueDTO> mapProductAttributeValueListToProductAttributeValueDTOList(Set<ProductAttributeValue> productAttributeValues) {
         return productAttributeValues.stream()
                 .map(productAttributeValue -> ProductAttributeValueMapper.mapProductAttributeValueEntityToDTO(productAttributeValue))
-                .collect(Collectors.toList());
-    }
-
-    private static List<ProductVariantDTO> mapProductVariantListToProductVariantDTOList(Set<ProductVariant> productVariants) {
-        return productVariants.stream()
-                .map(productVariant -> ProductVariantMapper.mapProductVariantEntityToDTO(productVariant))
                 .collect(Collectors.toList());
     }
 

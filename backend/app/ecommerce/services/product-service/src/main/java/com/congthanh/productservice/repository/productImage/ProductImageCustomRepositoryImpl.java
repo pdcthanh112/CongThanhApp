@@ -5,23 +5,23 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class ProductImageCustomRepositoryImpl implements ProductImageCustomRepository{
 
     @PersistenceContext
-    @Qualifier("ecommerceEntityManagerFactory")
     private EntityManager entityManager;
 
     @Override
-    public ProductImage getDefaultImageByProduct(String productId) {
+    public List<ProductImage> getProductImages(String productId) {
         try {
-            String sql = "SELECT i FROM ProductImage i WHERE i.product.id = :productId AND isDefault = TRUE";
+            String sql = "SELECT i FROM ProductImage i WHERE i.product.id = :productId";
             TypedQuery<ProductImage> query = entityManager.createQuery(sql, ProductImage.class);
             query.setParameter("productId", productId);
-            return query.getSingleResult();
+            return query.getResultList();
         } catch (NoResultException e) {
             return null;
         }

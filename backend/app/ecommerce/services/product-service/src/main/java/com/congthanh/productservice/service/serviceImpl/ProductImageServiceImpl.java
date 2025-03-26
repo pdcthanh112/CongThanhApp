@@ -34,15 +34,6 @@ public class ProductImageServiceImpl implements ProductImageService {
     }
 
     @Override
-    public ProductImageDTO getDefaultImageByProduct(String productId) {
-        ProductImage data = productImageRepository.getDefaultImageByProduct(productId);
-        if (data == null) {
-            return null;
-        }
-        return ProductImageMapper.mapProductImageEntityToDTO(data);
-    }
-
-    @Override
     public ProductImageDTO addProductImage(ProductImageDTO productImageDTO) {
         Product product = productRepository.findById(productImageDTO.getProduct()).orElseThrow(() -> new NotFoundException(("not found")));
         ProductImage image = ProductImage.builder()

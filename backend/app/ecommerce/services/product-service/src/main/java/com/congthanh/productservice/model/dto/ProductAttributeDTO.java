@@ -1,4 +1,4 @@
-package com.congthanh.productservice.model.dto.variant;
+package com.congthanh.productservice.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,17 +12,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class VariantAttributeValueDTO implements Serializable {
+public class ProductAttributeDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private long id;
 
-    private Long attributeId;
-
-    private String value;
-
-    private String variantId;
+    private String name;
 
 }

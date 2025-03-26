@@ -149,14 +149,14 @@ spring:
 
 grpc:
   server:
-    port: 9090
+    port: 29090 #9090
     in-process-name: congthanhapp-ecommerce-product-service
     reflection-service-enabled: true
   client:
     catalog-service:
-#      address: "static://localhost:9090"
-      address: "localhost:9090"
-      negotiationType: "PLAINTEXT"
+      address: "static://localhost:19090"
+#      address: "localhost:19090"
+      negotiationType: PLAINTEXT
 
 congthanhapp:
   openapi:

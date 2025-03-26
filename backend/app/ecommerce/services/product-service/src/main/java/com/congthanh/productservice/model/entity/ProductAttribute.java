@@ -1,7 +1,5 @@
-package com.congthanh.productservice.model.entity.attribute;
+package com.congthanh.productservice.model.entity;
 
-import com.congthanh.productservice.model.entity.AbstractAuditEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 

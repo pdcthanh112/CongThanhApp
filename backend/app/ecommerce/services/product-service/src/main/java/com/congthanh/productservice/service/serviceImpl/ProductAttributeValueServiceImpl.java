@@ -1,9 +1,9 @@
 package com.congthanh.productservice.service.serviceImpl;
 
-import com.congthanh.productservice.model.dto.attribute.ProductAttributeValueDTO;
-import com.congthanh.productservice.model.entity.attribute.ProductAttributeValue;
+import com.congthanh.productservice.model.dto.ProductAttributeValueDTO;
+import com.congthanh.productservice.model.entity.ProductAttributeValue;
 import com.congthanh.productservice.model.entity.Product;
-import com.congthanh.productservice.model.entity.attribute.ProductAttribute;
+import com.congthanh.productservice.model.entity.ProductAttribute;
 import com.congthanh.productservice.exception.ecommerce.NotFoundException;
 import com.congthanh.productservice.model.mapper.ProductAttributeValueMapper;
 import com.congthanh.productservice.model.request.ProductAttributeValueRequest;

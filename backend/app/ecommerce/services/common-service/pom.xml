@@ -29,11 +29,11 @@
     <properties>
         <java.version>23</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-cloud.version>2024.0.0</spring-cloud.version>
+        <grpc.version>1.67.1</grpc.version>
         <protobuf.version>3.21.7</protobuf.version>
-        <grpc.version>1.53.0</grpc.version>
         <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
         <os-maven-plugin.version>1.7.1</os-maven-plugin.version>
-        <spring-cloud.version>2024.0.0</spring-cloud.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -92,25 +92,112 @@
         </dependency>
     </dependencies>
 
+<!--    <build>-->
+<!--        <extensions>-->
+<!--            <extension>-->
+<!--                <groupId>kr.motd.maven</groupId>-->
+<!--                <artifactId>os-maven-plugin</artifactId>-->
+<!--                <version>${os-maven-plugin.version}</version>-->
+<!--            </extension>-->
+<!--        </extensions>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.xolstice.maven.plugins</groupId>-->
+<!--                <artifactId>protobuf-maven-plugin</artifactId>-->
+<!--                <version>${protobuf-plugin.version}</version>-->
+<!--                <configuration>-->
+<!--                    <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}-->
+<!--                    </protocArtifact>-->
+<!--                    <pluginId>grpc-java</pluginId>-->
+<!--                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}-->
+<!--                    </pluginArtifact>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>compile</goal>-->
+<!--                            <goal>compile-custom</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-source-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>attach-sources</id>-->
+<!--                        <goals>-->
+<!--                            <goal>jar</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>kr.motd.maven</groupId>-->
+<!--                <artifactId>os-maven-plugin</artifactId>-->
+<!--                <version>1.7.0</version>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <version>3.8.1</version>-->
+<!--                <configuration>-->
+<!--                    <source>${java.version}</source>-->
+<!--                    <target>${java.version}</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
     <build>
         <extensions>
             <extension>
                 <groupId>kr.motd.maven</groupId>
                 <artifactId>os-maven-plugin</artifactId>
-                <version>${os-maven-plugin.version}</version>
+                <version>1.7.0</version>
             </extension>
         </extensions>
         <plugins>
             <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeArtifactIds>configuration-service</includeArtifactIds>
+                            <includes>**/*.proto</includes>
+                            <outputDirectory>${project.build.directory}/extracted-protos/main</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
-                <version>${protobuf-plugin.version}</version>
+                <version>0.6.1</version>
                 <configuration>
-                    <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}
-                    </protocArtifact>
+                    <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
                     <pluginId>grpc-java</pluginId>
-                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}
-                    </pluginArtifact>
+                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+                    <protoSourceRoot>../common-service/src/main/proto</protoSourceRoot>
+                    <!--					<protoSourceRoot>${project.build.directory}/extracted-protos/main/proto</protoSourceRoot>-->
                 </configuration>
                 <executions>
                     <execution>
@@ -118,35 +205,11 @@
                             <goal>compile</goal>
                             <goal>compile-custom</goal>
                         </goals>
+                        <phase>generate-sources</phase>
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>kr.motd.maven</groupId>
-                <artifactId>os-maven-plugin</artifactId>
-                <version>1.7.0</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
+
         </plugins>
     </build>
 

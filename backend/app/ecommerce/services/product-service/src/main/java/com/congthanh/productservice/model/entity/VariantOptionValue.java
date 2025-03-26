@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "variant_option_combination")
-public class VariantOptionCombination {
+@Table(name = "variant_option_value")
+public class VariantOptionValue {
 
     @Id
     private Long id;

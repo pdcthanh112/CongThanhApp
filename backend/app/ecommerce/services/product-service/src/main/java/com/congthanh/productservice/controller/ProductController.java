@@ -8,6 +8,7 @@ import com.congthanh.productservice.model.response.Response;
 import com.congthanh.productservice.model.response.ResponseWithPagination;
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.response.VariantValueResponse;
+import com.congthanh.productservice.model.viewmodel.ProductDetailVm;
 import com.congthanh.productservice.model.viewmodel.ProductVm;
 import com.congthanh.productservice.repository.product.ProductRepository;
 import com.congthanh.productservice.service.ProductService;
@@ -97,6 +98,17 @@ public class ProductController {
     public ResponseEntity<Response<ProductVm>> getProductVmBySlug(@PathVariable("slug") String slug) {
         ProductVm data = productService.getProductVmBySlug(slug);
         Response<ProductVm> response = new Response<>();
+        response.setData(data);
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        response.setMessage("Get by slug successfully");
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/store-front/slug/{slug}/detail")
+    @PermitAll
+    public ResponseEntity<Response<ProductDetailVm>> getProductDetailVmBySlug(@PathVariable("slug") String slug) {
+        ProductDetailVm data = productService.getProductDetailBySlug(slug);
+        Response<ProductDetailVm> response = new Response<>();
         response.setData(data);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
         response.setMessage("Get by slug successfully");

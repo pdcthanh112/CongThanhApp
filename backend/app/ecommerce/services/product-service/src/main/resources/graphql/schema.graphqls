@@ -7,6 +7,7 @@ type Product {
     name: String!
     category: String!
     SKU: String
+    thumbnail: String!
     image: [ProductImage]
     description: String
     status: String
@@ -19,5 +20,4 @@ type ProductImage {
     name: String
     imagePath: String
     alt: String
-    isDefault: Boolean
 }

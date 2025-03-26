@@ -51,6 +51,18 @@ export const createProductSchema = (t: ReturnType<typeof useTranslations>) => {
         })
     ),
     description: z.string(),
+    option: z.array(
+      z.object({
+        name: z.string(),
+        displayOrder: z.number(),
+        value: z.array(
+          z.object({
+            name: z.string(),
+            displayOrder: z.number(),
+          })
+        ),
+      })
+    ),
     isFeatured: z.boolean().default(false),
     metadata: z.object({
       title: z.string(),

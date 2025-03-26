@@ -3,6 +3,9 @@ package com.congthanh.productservice.service.serviceImpl;
 import com.congthanh.catalogservice.grpc.CategoryResponse;
 import com.congthanh.productservice.cqrs.query.query.GetProductBySlugQuery;
 import com.congthanh.productservice.grpc.client.CategoryGrpcClient;
+import com.congthanh.productservice.model.entity.ProductAttributeValue;
+import com.congthanh.productservice.model.entity.ProductCategory;
+import com.congthanh.productservice.model.entity.ProductImage;
 import com.congthanh.productservice.model.request.ProductImageRequest;
 import com.congthanh.productservice.model.response.PaginationInfo;
 import com.congthanh.productservice.model.response.ResponseWithPagination;
@@ -15,14 +18,17 @@ import com.congthanh.productservice.model.document.ProductDocument;
 import com.congthanh.productservice.model.request.CreateProductRequest;
 import com.congthanh.productservice.exception.ecommerce.NotFoundException;
 import com.congthanh.productservice.model.mapper.ProductMapper;
+import com.congthanh.productservice.model.viewmodel.ProductAttributeVm;
+import com.congthanh.productservice.model.viewmodel.ProductDetailVm;
 import com.congthanh.productservice.model.viewmodel.ProductVm;
 import com.congthanh.productservice.repository.product.ProductRepository;
+import com.congthanh.productservice.repository.productImage.ProductImageRepository;
 import com.congthanh.productservice.service.*;
 import com.congthanh.productservice.utils.Helper;
 import com.congthanh.productservice.utils.SnowflakeIdGenerator;
-import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
@@ -44,8 +50,6 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductCategoryService productCategoryService;
 
-    private final ProductVariantService productVariantService;
-
     private final ProductAttributeService productAttributeService;
 
     private final CommandGateway commandGateway;
@@ -59,6 +63,8 @@ public class ProductServiceImpl implements ProductService {
     private final AwsS3Service awsS3Service;
 
     private final SnowflakeIdGenerator snowflakeIdGenerator;
+
+    private final ProductImageRepository productImageRepository;
 
     @Override
     @Cacheable("products")
@@ -139,6 +145,47 @@ public class ProductServiceImpl implements ProductService {
                 .slug(data.getSlug())
                 .description(data.getDescription())
                 .build();
+    }
+
+    @Override
+    public ProductDetailVm getProductDetailBySlug(String slug) {
+        Product product = productRepository.findProductBySlug(slug).orElseThrow(() -> new NotFoundException("Product not found"));
+
+        List<String> categoryIds = product.getCategory().stream().map(ProductCategory::getCategoryId).toList();
+        List<String> category = categoryGrpcClient.getListCategoryByIds(categoryIds).stream().map(CategoryResponse::getName).toList();
+
+
+//        List<String> images = productImageRepository.getProductImages(product.getId()).stream().map(ProductImage::getImagePath).toList();
+        List<String> images = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(product.getImage())) {
+            for (ProductImage image : product.getImage()) {
+                images.add(image.getImagePath());
+            }
+        }
+
+        Set<ProductAttributeValue> productAttributeValues = product.getAttribute();
+        System.out.println("RRRRRRRRRRRRRRRRRRR"+ productAttributeValues);
+        List<ProductAttributeVm> attributeVms = new ArrayList<>();
+//        if (CollectionUtils.isNotEmpty(productAttributeValues)) {
+//            List<ProductAttributeGroup> productAttributeGroups = productAttributeValues.stream()
+//                    .map(productAttributeValue
+//                            -> productAttributeValue.getProductAttribute().getProductAttributeGroup())
+//                    .distinct()
+//                    .toList();
+
+        return new ProductDetailVm(
+                product.getId(),
+                product.getName(),
+                product.getBrand() == null ? null : product.getBrand().toString(),
+                category,
+                attributeVms,
+                product.getDescription(),
+                product.isFeatured(),
+                product.isHasVariant(),
+                product.getPrice(),
+                product.getThumbnail(),
+                images
+        );
     }
 
     @Override

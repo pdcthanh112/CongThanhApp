@@ -1,8 +1,7 @@
 package com.congthanh.productservice.cqrs.command.command;
 
 import com.congthanh.productservice.constant.enums.ProductStatus;
-import com.congthanh.productservice.model.dto.attribute.ProductAttributeValueDTO;
-import com.congthanh.productservice.model.dto.variant.ProductVariantDTO;
+import com.congthanh.productservice.model.dto.ProductAttributeValueDTO;
 import com.congthanh.productservice.model.request.ProductImageRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,8 +37,6 @@ public class CreateProductCommand {
     private final String brand;
 
     private final List<Long> tag;
-
-    private final List<ProductVariantDTO> variant;
 
     private final ProductStatus status;
 }

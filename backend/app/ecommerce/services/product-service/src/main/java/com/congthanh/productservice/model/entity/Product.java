@@ -1,12 +1,12 @@
 package com.congthanh.productservice.model.entity;
 
 import com.congthanh.productservice.constant.enums.ProductStatus;
-import com.congthanh.productservice.model.entity.attribute.ProductAttributeValue;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,11 +18,10 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Table(name = "product")
-@NamedEntityGraph(name = "Product.WithAll", attributeNodes = {
-        @NamedAttributeNode("image"),
-        @NamedAttributeNode("variant"),
-        @NamedAttributeNode("attribute")
-}, subgraphs = {})
+//@NamedEntityGraph(name = "Product.WithAll", attributeNodes = {
+//        @NamedAttributeNode("image"),
+//        @NamedAttributeNode("attribute")
+//}, subgraphs = {})
 public class Product {
 
     @Id
@@ -31,70 +30,61 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
+    @Column(unique = true)
+    private String slug;
+
+    @Column( unique = true)
+    private String sku;
+
+    private String gtin;
+
+    @Column(name = "has_variant", nullable = false)
+    private boolean hasVariant;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private Product parent;
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    @Builder.Default
+    private List<Product> variant = new ArrayList<>();
+
+    @Column(name = "price", precision = 19, scale = 2)
+    private BigDecimal price;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OrderBy("displayOrder ASC")
     private List<ProductCategory> category = new ArrayList<>();
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "supplier")
     private String supplier;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "brand")
     private Long brand;
+
+    @Column(name = "is_featured")
+    private boolean isFeatured;
 
     @Column(columnDefinition = "text")
     private String description;
 
+    @Column(nullable = false)
     private String thumbnail;
 
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
-    @Column(nullable = false, unique = true)
-    private String slug;
-
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    @JsonBackReference
-    @ToString.Exclude
-    @Builder.Default
+//    @JsonIgnore
+//    @JsonBackReference
+//    @ToString.Exclude
+//    @Builder.Default
     private Set<ProductImage> image = new HashSet<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    @JsonBackReference
-    @ToString.Exclude
-    @Builder.Default
-    private Set<ProductAttributeValue> attribute = new HashSet<>();
-
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    @JsonBackReference
-    @ToString.Exclude
-    @Builder.Default
-    private Set<ProductVariant> variant = new HashSet<>();
-
-//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIgnore
-//    private List<Review> review;
-//
-//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-//    @JsonIgnore
-//    private Set<CartItem> cartItems;
-//
-//    @ManyToMany(mappedBy = "product")
 //    @JsonIgnore
 //    @JsonBackReference
-//    private Set<Wishlist> wishlist;
-//
-//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIgnore
-//    private List<OrderDetail> orderDetail;
-//
-//    @ManyToMany
-//    @JoinTable(name = "product_tag",
-//            joinColumns = @JoinColumn(name = "product_id"),
-//            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-//    private Set<Tag> tag;
+//    @ToString.Exclude
+//    @Builder.Default
+    private Set<ProductAttributeValue> attribute = new HashSet<>();
 
 }

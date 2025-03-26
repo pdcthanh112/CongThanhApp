@@ -30,16 +30,6 @@ public class ProductImageController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/getDefaultImage")
-    public ResponseEntity<Response<ProductImageDTO>> getDefaultImageByProduct(@RequestParam("product") String productId) {
-        ProductImageDTO data = productImageService.getDefaultImageByProduct(productId);
-        Response<ProductImageDTO> response = new Response<>();
-        response.setData(data);
-        response.setMessage("Get successfully");
-        response.setStatus(ResponseStatus.STATUS_SUCCESS);
-        return ResponseEntity.ok().body(response);
-    }
-
     @PostMapping("/create")
     public ResponseEntity<Response<ProductImageDTO>> addProductImage(@RequestBody ProductImageDTO productImageDTO) {
         ProductImageDTO data = productImageService.addProductImage(productImageDTO);

@@ -1,7 +1,7 @@
 package com.congthanh.productservice.model.mapper;
 
-import com.congthanh.productservice.model.dto.attribute.ProductAttributeDTO;
-import com.congthanh.productservice.model.entity.attribute.ProductAttribute;
+import com.congthanh.productservice.model.dto.ProductAttributeDTO;
+import com.congthanh.productservice.model.entity.ProductAttribute;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

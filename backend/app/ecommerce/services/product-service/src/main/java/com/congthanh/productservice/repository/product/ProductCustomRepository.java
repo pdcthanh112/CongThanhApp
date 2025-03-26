@@ -2,7 +2,6 @@ package com.congthanh.productservice.repository.product;
 
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.entity.ProductImage;
-import com.congthanh.productservice.model.entity.ProductVariant;
 import jakarta.persistence.Tuple;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -26,7 +25,7 @@ public interface ProductCustomRepository {
 
     List<Tuple> getProductAttributeValueByProductId(String productId);
 
-    List<ProductVariant> getVariantByProductId(String productId);
+    List<Product> getVariantByProductId(String productId);
 
     List<ProductImage> getImageByProduct(String productId);
 

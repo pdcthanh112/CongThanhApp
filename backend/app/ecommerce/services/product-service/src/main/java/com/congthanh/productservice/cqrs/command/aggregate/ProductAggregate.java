@@ -5,9 +5,8 @@ import com.congthanh.productservice.cqrs.command.command.CreateProductCommand;
 import com.congthanh.productservice.cqrs.command.command.UpdateProductCommand;
 import com.congthanh.productservice.cqrs.command.event.ProductCreatedEvent;
 import com.congthanh.productservice.cqrs.command.event.ProductUpdatedEvent;
-import com.congthanh.productservice.model.dto.attribute.ProductAttributeValueDTO;
+import com.congthanh.productservice.model.dto.ProductAttributeValueDTO;
 import com.congthanh.productservice.model.dto.ProductImageDTO;
-import com.congthanh.productservice.model.dto.variant.ProductVariantDTO;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -32,7 +31,6 @@ public class ProductAggregate {
     private String supplier;
     private String brand;
     private List<Long> tag;
-    private List<ProductVariantDTO> variant;
     private ProductStatus status;
 
     public ProductAggregate() {
@@ -63,13 +61,12 @@ public class ProductAggregate {
         this.attribute = event.getAttribute();
         this.supplier = event.getSupplier();
         this.brand = event.getBrand();
-        this.variant = event.getVariant();
         this.status = event.getStatus();
     }
 
     @CommandHandler
     public void handleUpdateProduct(UpdateProductCommand command) {
-        apply(new ProductUpdatedEvent(command.getId(), command.getName(), command.getCategory(), command.getSlug(), command.getDescription(), command.getSupplier(), command.getBrand(),command.getImage(), command.getAttribute(), command.getVariant(), command.getStatus()));
+        apply(new ProductUpdatedEvent(command.getId(), command.getName(), command.getCategory(), command.getSlug(), command.getDescription(), command.getSupplier(), command.getBrand(),command.getImage(), command.getAttribute(), command.getStatus()));
     }
 
     @EventSourcingHandler

@@ -1,7 +1,5 @@
-package com.congthanh.productservice.model.entity.attribute;
+package com.congthanh.productservice.model.entity;
 
-import com.congthanh.productservice.model.entity.Product;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

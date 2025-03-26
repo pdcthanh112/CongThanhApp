@@ -2,7 +2,6 @@ package com.congthanh.productservice.repository.product;
 
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.entity.ProductImage;
-import com.congthanh.productservice.model.entity.ProductVariant;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -61,9 +60,9 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
     }
 
     @Override
-    public List<ProductVariant> getVariantByProductId(String productId) {
-        String sql = "SELECT pv FROM ProductVariant pv WHERE pv.product.id = :productId";
-        TypedQuery<ProductVariant> query = entityManager.createQuery(sql, ProductVariant.class);
+    public List<Product> getVariantByProductId(String productId) {
+        String sql = "SELECT p FROM Product p WHERE p.parent = :productId";
+        TypedQuery<Product> query = entityManager.createQuery(sql, Product.class);
         query.setParameter("productId", productId);
         return query.getResultList();
     }

@@ -36,7 +36,7 @@ public class CategoryGrpcClient {
         return blockingStub.getCategoryBySlug(request);
     }
 
-    public boolean validateCategory(List<String> categoryIds) {
+    public void validateCategory(List<String> categoryIds) {
         ValidateCategoriesRequest request = ValidateCategoriesRequest.newBuilder()
                 .addAllCategoryIds(categoryIds)
                 .build();
@@ -44,6 +44,10 @@ public class CategoryGrpcClient {
         if (!response.getValid()) {
             throw new IllegalArgumentException("Invalid categories: " + response.getInvalidCategoryIdsList());
         }
-        return true;
+    }
+
+    public List<CategoryResponse> getListCategoryByIds(List<String> categoryIds) {
+        ListCategoryRequest request = ListCategoryRequest.newBuilder().addAllCategoryId(categoryIds).build();
+        return blockingStub.getListCategoryByIds(request).getResponseList();
     }
 }

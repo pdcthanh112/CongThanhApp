@@ -15,10 +15,6 @@ import java.util.Optional;
 @Transactional
 public interface ProductRepository extends JpaRepository<Product, String>, ProductCustomRepository {
 
-  @Query(nativeQuery = true, value = "SELECT product.*\n" +
-          "FROM product JOIN category on product.category = category.id\n" +
-          "JOIN subcategory on product.subcategory = subcategory.id\n" +
-          "WHERE product.slug ILIKE ?1")
   Optional<Product> findProductBySlug(String slug);
 
   Optional<Product> findByName(String name);

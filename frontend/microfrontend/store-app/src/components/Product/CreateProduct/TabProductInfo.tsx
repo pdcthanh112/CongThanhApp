@@ -4,10 +4,14 @@ import { Checkbox, FormControl, FormField, FormItem, FormLabel, FormMessage, Inp
 import { ProductSchemaType } from '@/models/schema/productSchema';
 import CustomEditor from '@/components/CustomEditor';
 import { Autocomplete, TextField } from '@mui/material';
+import { ProductType } from '@/utils/enum';
 
-type Props = { form: UseFormReturn<ProductSchemaType> };
+type Props = {
+  form: UseFormReturn<ProductSchemaType>;
+  productType: ProductType;
+};
 
-const TabProductInfo = ({ form }: Props) => {
+const TabProductInfo = ({ productType, form }: Props) => {
   const category = [
     { id: 'a', name: 'AAAAAAAAAAAAAAAAAAAAAA' },
     { id: 'b', name: 'BBBBBBBBBBBBBBBBBBBBBB' },
@@ -16,7 +20,7 @@ const TabProductInfo = ({ form }: Props) => {
     { id: 'e', name: 'EEEEEEEEEEEEEEEEEEEEEE' },
     { id: 'f', name: 'FFFFFFFFFFFFFFFFFFFFFF' },
   ];
-
+console.log('pppppp', productType)
   return (
     <div>
       <FormField
@@ -33,19 +37,21 @@ const TabProductInfo = ({ form }: Props) => {
         )}
       />
 
-      <FormField
-        control={form.control}
-        name="slug"
-        render={({ field }) => (
-          <FormItem className="gap-0.5 h-20 mb-3">
-            <FormLabel style={{ color: 'inherit' }}>Slug</FormLabel>
-            <FormControl>
-              <Input placeholder="example@email.com" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      {productType === ProductType.Single && (
+        <FormField
+          control={form.control}
+          name="slug"
+          render={({ field }) => (
+            <FormItem className="gap-0.5 h-20 mb-3">
+              <FormLabel style={{ color: 'inherit' }}>Slug</FormLabel>
+              <FormControl>
+                <Input placeholder="example@email.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      )}
 
       <FormField
         control={form.control}

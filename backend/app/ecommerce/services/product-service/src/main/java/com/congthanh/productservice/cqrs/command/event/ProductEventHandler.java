@@ -7,7 +7,6 @@ import com.congthanh.productservice.repository.product.ProductRepository;
 import com.congthanh.productservice.repository.productCategory.ProductCategoryRepository;
 import com.congthanh.productservice.repository.productImage.ProductImageRepository;
 import com.congthanh.productservice.service.ProductAttributeService;
-import com.congthanh.productservice.service.ProductVariantService;
 import com.congthanh.productservice.utils.SnowflakeIdGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +30,6 @@ public class ProductEventHandler {
     private final ProductImageRepository productImageRepository;
 
     private final ProductAttributeService productAttributeService;
-
-    private final ProductVariantService productVariantService;
 
     private final SnowflakeIdGenerator snowflakeIdGenerator;
 
