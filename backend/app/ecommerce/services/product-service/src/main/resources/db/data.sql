@@ -8,11 +8,10 @@ INSERT INTO product_attribute_group (id, name, created_at, created_by, updated_a
 INSERT INTO product_attribute_group (id, name, created_at, created_by, updated_at, updated_by) VALUES(396556939800219653, 'Memory', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh');
 
 --Attribute
-INSERT INTO product_attribute(id, name, product_attribute_group, created_at, created_by, updated_at, updated_by) VALUES(486580923245727745,'Author', 396556939800219648, CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh');
-INSERT INTO product_attribute(id, name, product_attribute_group, created_at, created_by, updated_at, updated_by) VALUES(486580923245727746,'Pages', 396556939800219648, CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh');
-INSERT INTO product_attribute(id, name, product_attribute_group, created_at, created_by, updated_at, updated_by) VALUES(486580923245727747,'ISBN', 396556939800219648, CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh');
-INSERT INTO product_attribute(id, name, product_attribute_group, created_at, created_by, updated_at, updated_by) VALUES(486580923245727748,'Language', 396556939800219648, CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh');
-
+INSERT INTO product_attribute (id, name, created_at, created_by, updated_at, updated_by) VALUES (16556939800219641, 'Manufacture', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', null, null),
+                                                                                                (16556939800219642, 'Made in', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', null, null),
+                                                                                                (16556939800219643, 'Material', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', null, null),
+                                                                                                (16556939800219644, 'Author', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', null, null);
 --Product Template
 INSERT INTO product_template (id, name, created_at, created_by, updated_at, updated_by) VALUES (1, 'Sample Template', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh', CURRENT_TIMESTAMP AT TIME ZONE 'UTC', 'thanh');
 
@@ -81,3 +80,6 @@ INSERT INTO variant_option_combination (id, product_id, variant_attribute_id, di
                                                                                                     (556939800219648, '366f785f-26dd-4c33-8452-0b172ef0a5de', 1865809232457272, 2);
 
 
+INSERT INTO product_category (id, product_id, category_id, display_order) VALUES (1, '366f785f-26dd-4c33-8452-0b172ef0a5de', '44c8112a-4794-405b-91ec-98ca64296825', 1),
+                                                                                 (2, '366f785f-26dd-4c33-8452-0b172ef0a5de', '004f0f2b-3d9c-4cbf-95d6-b2852dfe5468', 2),
+                                                                                 (3, '366f785f-26dd-4c33-8452-0b172ef0a5de', '00f494ad-3f51-4a10-bb16-51f137a9299b', 3);

@@ -1,10 +1,7 @@
 package com.congthanh.productservice.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
@@ -18,6 +15,7 @@ public class ProductCategory {
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false, updatable = false)
+    @ToString.Exclude
     private Product product;
 
     @Column(name = "category_id", nullable = false, updatable = false)

@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -43,6 +45,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
+    @ToString.Exclude
     private Product parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)
@@ -67,17 +70,17 @@ public class Product {
     @Column(columnDefinition = "text")
     private String description;
 
-    @Column(nullable = false)
-    private String thumbnail;
+    @Column()
+    private Long thumbnail;
 
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIgnore
-//    @JsonBackReference
-//    @ToString.Exclude
-//    @Builder.Default
+    @JsonIgnore
+    @JsonBackReference
+    @ToString.Exclude
+    @Builder.Default
     private Set<ProductImage> image = new HashSet<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

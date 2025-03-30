@@ -5,7 +5,9 @@ export type Product = {
   slug: string;
   description: string;
   supplier: string;
+  thumbnail: ProductImage;
   image: ProductImage[];
+  hasVariant: boolean;
   brand: string;
   status: string;
   variant: ProductVariant[];
@@ -18,10 +20,10 @@ export type Product = {
 };
 
 export type ProductCategory = {
-  id: string
-  name: string
-  slug: string
-}
+  id: string;
+  name: string;
+  slug: string;
+};
 
 export type ProductAttribute = {
   id: number;
@@ -34,23 +36,27 @@ export type ProductImage = {
   id: number;
   product: string;
   imagePath: string;
-  alt: string;
 };
 
 export type ProductVariant = {
   id: string;
   product: string;
   name: string;
-  SKU: string;
+  sku: string;
+  gtin: string;
+  slug: string;
   price: number;
-  image: ProductVariantImage[];
+  image: ProductImage[];
+  thumbnail: ProductImage;
+  options: {
+    [key: number]: string;
+  };
 };
 
-export type ProductVariantImage = {
+export type ProductOptions = {
   id: number;
-  variant: string;
-  imagePath: string;
-  alt: string;
+  name: string;
+  value: string[];
 };
 
 export type ProductVariantAttribute = {
@@ -60,6 +66,29 @@ export type ProductVariantAttribute = {
     {
       id: number;
       value: string;
-    },
+    }
   ];
+};
+
+export type ProductView = {
+  id: number;
+  productId: string;
+  customerId: string;
+  viewedAt: Date | number;
+};
+
+export type ProductOptionValueGet = {
+  id: number;
+  productOptionName: string;
+  productOptionId: number;
+  productOptionValue: string;
+};
+
+export type ProductOptionValueDisplay = {
+  id: number;
+  productOptionId: number;
+  productOptionValue: string;
+  displayType?: string;
+  displayOrder?: number;
+  productOptionName: string;
 };

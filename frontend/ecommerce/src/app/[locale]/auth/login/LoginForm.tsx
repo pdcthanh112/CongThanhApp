@@ -109,7 +109,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
               </FormItem>
             )}
           />
-          <Button type="submit" className="!mt-8 w-full">
+          <Button type="submit" className="mt-8! w-full">
             {t('auth.login')}
           </Button>
         </form>

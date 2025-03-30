@@ -48,7 +48,7 @@ export default function ChangePassword() {
               type={showCurrentPassword ? 'text' : 'password'}
               placeholder="Enter your current password"
               {...register('currentPassword', { required: 'Please your current password' })}
-              className={`focus:outline-none ml-3 w-[22rem] ${formState.errors.currentPassword && 'bg-red-100'}`}
+              className={`focus:outline-hidden ml-3 w-[22rem] ${formState.errors.currentPassword && 'bg-red-100'}`}
             />
             <Icon
               component={showNewPassword ? Visibility : VisibilityOff}
@@ -65,7 +65,7 @@ export default function ChangePassword() {
                 type={showNewPassword ? 'text' : 'password'}
                 placeholder="Enter your new password"
                 {...register('newPassword', { required: 'Please your new password' })}
-                className={`focus:outline-none ml-3 w-[22rem] ${formState.errors.newPassword && 'bg-red-100'}`}
+                className={`focus:outline-hidden ml-3 w-[22rem] ${formState.errors.newPassword && 'bg-red-100'}`}
                 onChange={(e) => setNewPassword(e.target.value)}
                 onFocus={() => setShowModalNewPassword(true)}
                 onBlur={() => setShowModalNewPassword(false)}
@@ -86,7 +86,7 @@ export default function ChangePassword() {
                 type={showNewPassword ? 'text' : 'password'}
                 placeholder="Enter confirm your password"
                 {...register('confirmPassword', { required: 'Please your current password' })}
-                className={`focus:outline-none ml-3 w-[22rem] ${formState.errors.confirmPassword && 'bg-red-100'}`}
+                className={`focus:outline-hidden ml-3 w-[22rem] ${formState.errors.confirmPassword && 'bg-red-100'}`}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 onFocus={() => setShowModalConfirmPassword(true)}
                 onBlur={() => setShowModalConfirmPassword(false)}

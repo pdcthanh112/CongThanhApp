@@ -254,7 +254,7 @@ export default function CheckoutPage() {
                           format="#### #### #### ####"
                           allowEmptyFormatting
                           mask="_"
-                          className="focus:outline-none"
+                          className="focus:outline-hidden"
                         />
                       </InputField>
                     </InputComponent>
@@ -264,7 +264,7 @@ export default function CheckoutPage() {
                           format="##/##"
                           allowEmptyFormatting
                           mask="_"
-                          className="focus:outline-none"
+                          className="focus:outline-hidden"
                           style={{ width: 80 }}
                         />
                       </InputField>
@@ -277,7 +277,7 @@ export default function CheckoutPage() {
                             required: 'Name is require',
                           })}
                             placeholder="Enter name on card"
-                            className={`focus:outline-none ml-3 w-[100%] ${formState.errors.name && 'bg-red-100'}`}
+                            className={`focus:outline-hidden ml-3 w-[100%] ${formState.errors.name && 'bg-red-100'}`}
                           />
                         </InputField>
                       </InputComponent> */}
@@ -287,7 +287,7 @@ export default function CheckoutPage() {
                         format="###"
                         allowEmptyFormatting
                         mask="X"
-                        className="focus:outline-none"
+                        className="focus:outline-hidden"
                         style={{ width: 80, opacity: 0.6 }}
                       />
                     </InputField>
@@ -333,7 +333,7 @@ export default function CheckoutPage() {
                       type="text"
                       placeholder="Enter voucher code"
                       {...formApplyVoucher.register('voucherCode')}
-                      className={`focus:outline-none ml-3 w-[100%] ${formApplyVoucher.formState.errors.voucherCode ? 'bg-red-100' : ''}`}
+                      className={`focus:outline-hidden ml-3 w-[100%] ${formApplyVoucher.formState.errors.voucherCode ? 'bg-red-100' : ''}`}
                     />
                   </InputField>
                 </InputComponent>

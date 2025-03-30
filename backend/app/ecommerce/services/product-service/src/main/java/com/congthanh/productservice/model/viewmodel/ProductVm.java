@@ -20,7 +20,7 @@ public class ProductVm {
     private List<ProductAttribute> attribute;
     private String supplier;
     private String brand;
-    private List<ProductVariantVm> variant;
+//    private List<ProductVariantVm> variant;
     private ProductStatus status;
 }
 
@@ -30,16 +30,16 @@ record CategoryVm(
         String name) {
 }
 
-record ProductVariantVm(String id,
-                        String product,
-                        String name,
-                        ProductImageVm thumbnail,
-                        String sku,
-                        String gtin,
-                        BigDecimal price,
-                        List<VariantAttribute> attribute,
-                        List<ProductImageVm> image) {
-}
+//record ProductVariantVm(String id,
+//                        String product,
+//                        String name,
+//                        ProductImageVm thumbnail,
+//                        String sku,
+//                        String gtin,
+//                        BigDecimal price,
+//                        List<VariantAttribute> attribute,
+//                        List<ProductImageVm> image) {
+//}
 
 record ProductAttribute(Long id,
                         String name,

@@ -65,7 +65,7 @@ const TabCreateAddress = ({ handleCreate, onBack }: PropsType) => {
                       type="text"
                       placeholder="Enter your phone number"
                       {...field}
-                      className={`focus:outline-none ml-3 w-[100%] ${form.formState.errors.phone && 'bg-red-100'}`}
+                      className={`focus:outline-hidden ml-3 w-[100%] ${form.formState.errors.phone && 'bg-red-100'}`}
                     />
                   </FormItem>
                 )}
@@ -81,7 +81,7 @@ const TabCreateAddress = ({ handleCreate, onBack }: PropsType) => {
                       type="text"
                       {...field}
                       placeholder="Enter zip code"
-                      className={`focus:outline-none ml-3 w-[100%] ${form.formState.errors.postalCode && 'bg-red-100'}`}
+                      className={`focus:outline-hidden ml-3 w-[100%] ${form.formState.errors.postalCode && 'bg-red-100'}`}
                     />
                   </FormItem>
                 )}
@@ -142,7 +142,7 @@ const TabCreateAddress = ({ handleCreate, onBack }: PropsType) => {
                     required: 'Address is require',
                   })}
                   placeholder="Enter your address"
-                  className={`focus:outline-none ml-3 w-[100%] ${formState.errors.street && 'bg-red-100'}`}
+                  className={`focus:outline-hidden ml-3 w-[100%] ${formState.errors.street && 'bg-red-100'}`}
                 />
               </InputField>
             </InputComponent> */}

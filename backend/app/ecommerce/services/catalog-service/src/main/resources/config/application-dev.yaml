@@ -5,20 +5,28 @@ server:
 #  compression:
 #    enabled: true
 #    min-response-size: 1024
+#  ssl:
+#    key-store: classpath:keystore.p12  # Đường dẫn đến keystore
+#    key-store-password: password       # Mật khẩu keystore
+#    key-store-type: PKCS12             # Loại keystore
+#    key-alias: tomcat                  # Alias của key
 
 spring:
   application:
     name: congthanhapp-ecommerce-catalog-service
+
   config:
     import: optional:file:.env[.properties]
     activate:
       on-profile: dev
+
   web:
     cors:
       allowed-origins: "http://localhost:3000"
       allowed-methods: "*"
       allowed-headers: "*"
       allow-credentials: true
+
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
     username: postgres
@@ -55,24 +63,14 @@ spring:
           min-idle: 0
           max-wait: -1ms
 
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: congthanh
-    password: 123456
-  activemq:
-    packages:
-      trust-all: true
-
   graphql:
     graphiql:
-      enable: true
+      enabled: true
     cors:
       allowed-origins: "*"
     schema:
       printer:
         enabled: true
-#    path: /ecommerce/catalog/graphql
     path: /graphql
 
   security:
@@ -123,13 +121,17 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: congthanh
+    password: 123456
+  activemq:
+    packages:
+      trust-all: true
+
   messages:
     basename: messages
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
 
 grpc:
   server:

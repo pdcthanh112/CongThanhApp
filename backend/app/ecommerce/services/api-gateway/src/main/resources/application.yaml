@@ -24,10 +24,16 @@ spring:
             scope: openid, profile, email, roles
 
   cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+
     gateway:
       discovery:
         locator:
           enabled: true
+          lower-case-service-id: true
+
       routes:
         - id: cart-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-CART-SERVICE

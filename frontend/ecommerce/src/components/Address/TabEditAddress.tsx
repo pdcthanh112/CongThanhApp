@@ -42,7 +42,7 @@ const TabEditAddress = ({ address, onBack, handleUpdate }: PropsType) => {
                         {...field}
                         defaultValue={address?.phone}
                         placeholder="Enter your phone number"
-                        className={`focus:outline-none ml-3 w-[100%] ${form.formState.errors.phone && 'bg-red-100'}`}
+                        className={`focus:outline-hidden ml-3 w-[100%] ${form.formState.errors.phone && 'bg-red-100'}`}
                       />
                     </FormControl>
                   </FormItem>
@@ -62,7 +62,7 @@ const TabEditAddress = ({ address, onBack, handleUpdate }: PropsType) => {
                         {...field}
                         defaultValue={address?.phone}
                         placeholder="Enter your phone number"
-                        className={`focus:outline-none ml-3 w-[100%] ${form.formState.errors.phone && 'bg-red-100'}`}
+                        className={`focus:outline-hidden ml-3 w-[100%] ${form.formState.errors.phone && 'bg-red-100'}`}
                       />
                     </FormControl>
                     <FormMessage />
@@ -177,7 +177,7 @@ const TabEditAddress = ({ address, onBack, handleUpdate }: PropsType) => {
                       })}
                       defaultValue={address?.street}
                       placeholder="Enter your address"
-                      className={`focus:outline-none ml-3 w-[100%] ${form.formState.errors.street && 'bg-red-100'}`}
+                      className={`focus:outline-hidden ml-3 w-[100%] ${form.formState.errors.street && 'bg-red-100'}`}
                     />
                   </FormControl>
                 </FormItem>

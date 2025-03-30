@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -32,14 +33,14 @@ export default function ForgetPasswordForm() {
             <FormItem className="h-24">
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="example@email.com" type="email" {...field} className="focus:outline-none" />
+                <Input placeholder="example@email.com" type="email" {...field} className="focus:outline-hidden" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="!mt-8 w-full">
+        <Button type="submit" className="mt-8! w-full">
           Send
         </Button>
       </form>

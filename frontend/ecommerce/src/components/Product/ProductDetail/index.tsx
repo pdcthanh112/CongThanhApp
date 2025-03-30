@@ -1,14 +1,7 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import {
-  getImageByProductId,
-  getSoldByProduct,
-  getVariantAttributeValueByProduct,
-  getVariantValueDetail,
-} from '@/api/productApi';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Rating, Icon, Avatar, TableContainer, Table, TableBody, TableRow, TableCell, Popover } from '@mui/material';
 import { Storefront, ForumOutlined, KeyboardArrowDown } from '@mui/icons-material';
 import Image from 'next/image';
@@ -19,10 +12,15 @@ import { useAddProductToWishlist, useRemoveProductFromWishlist } from '@/hooks/w
 import { AddToCartIcon, HeartEmpty, HeartFull } from '@/assets/icons';
 import { toast } from 'react-toastify';
 import { useAddProductToCart } from '@/hooks/cart/cartHook';
-import { getWishlistByCustomer } from '@/api/wishlistApi';
-import { getSupplierById } from '@/api/supplierApi';
-import Link from 'next/link';
-import { Breadcrumb, Product, ProductAttribute, ProductImage, Supplier, Wishlist } from '@/models/types';
+import {
+  Breadcrumb,
+  Product,
+  ProductAttribute,
+  ProductImage,
+  ProductOptions,
+  ProductOptionValueDisplay,
+  ProductVariant,
+} from '@/models/types';
 import QuantitySelector from '@/components/QuantitySelector/QuantitySelector';
 import { PRODUCT_KEY, WISHLIST_KEY } from '@/utils/constants/queryKey';
 import ProductDetailSkeleton from '../ProductDetailSkeleton';
@@ -31,21 +29,33 @@ import { BarChart, Bar, XAxis, ResponsiveContainer } from 'recharts';
 import { Button } from '@/components/ui/button';
 import { PATH } from '@/utils/constants/path';
 import { useSession } from 'next-auth/react';
-import ReviewProduct from './ReviewProduct';
 import useAppModalStore from '@/store/useAppModal';
 import { useWishlistStore } from '@/store/wishlistStore';
 import BreadcrumbComponent from '@/components/Breadcrumb/Breadcrumb';
 
 type ProductDetailProps = {
   product: Product;
+  pvid: string | null;
   reviewStatistic: ReviewStatistic;
-  supplier: Supplier;
+  productOption?: ProductOptions[];
+  productVariant?: ProductVariant[];
+  productOptionValueGet?: ProductOptionValueDisplay[];
 };
 
-export default function ProductDetail({ product, reviewStatistic, supplier }: ProductDetailProps) {
+type CurrentSelectedOption = {
+  [key: string]: string;
+};
+
+export default function ProductDetail({
+  product,
+  pvid,
+  reviewStatistic,
+  productOption,
+  productVariant,
+  productOptionValueGet,
+}: ProductDetailProps) {
   const { data: user } = useSession();
   const router = useRouter();
-  const params = useParams();
 
   const t = useTranslations();
 
@@ -54,6 +64,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
 
   // const [showReviewStatistic, setShowReviewStatistic] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<ProductImage>();
+  const [listImages, setListImages] = useState<string[]>([]);
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5]);
   const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
 
@@ -66,10 +77,106 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
   const { mutate: addProductToWishlist } = useAddProductToWishlist();
   const { mutate: removeProductFromWishlist } = useRemoveProductFromWishlist();
 
-  // const { data: productVariantAttribute } = useQuery({
-  //   queryKey: ['list-product-attribute-value'],
-  //   queryFn: async () => await getVariantValueDetail(product.id).then((response) => response.data),
-  // });
+  const initCurrentSelectedOption = useMemo(() => {
+    if (!productOption?.length || !productVariant?.length) {
+      setListImages([
+        ...(product.thumbnail.imagePath ? [product.thumbnail.imagePath] : []),
+        // ...product.thumbnail.imagePath,
+        ...(Array.isArray(product.thumbnail.imagePath) ? product.thumbnail.imagePath : []),
+      ]);
+      return {};
+    }
+
+    const productVariation = pvid && productVariant.find((item) => item.id.toString() === pvid);
+    if (productVariation) {
+      return productVariation.options;
+    }
+
+    setListImages([
+      ...(product.thumbnail.imagePath ? [product.thumbnail.imagePath] : []),
+      // ...product.thumbnail.imagePath,
+      ...(Array.isArray(product.thumbnail.imagePath) ? product.thumbnail.imagePath : []),
+    ]);
+    return productVariant[0].options;
+  }, [productOption, productVariant, pvid]);
+
+  const [currentSelectedOption, setCurrentSelectedOption] = useState<CurrentSelectedOption>(initCurrentSelectedOption);
+  const [optionSelected, setOptionSelected] = useState<CurrentSelectedOption>({});
+  const [isUnchecking, setIsUnchecking] = useState<boolean>(false);
+  const [currentProduct, setCurrentProduct] = useState<Product | ProductVariant>(product);
+
+  // useEffect(() => {
+  //   if (productOption && productOption.length > 0 && productVariant && productVariant.length > 0) {
+  //     // router.query.pvid = currentProduct.id.toString();
+  //     // router.push(router, undefined, { shallow: true });
+  //     const url = new URL(window.location.href);
+  //     url.searchParams.set('pvid', currentProduct.id.toString());
+  //     router.replace(url.toString());
+  //   }
+
+  // }, [productOption, productVariant, pvid, currentProduct.id]);
+
+  useEffect(() => {
+    const isOptionSelected = (key: string, currentSelectedOption: CurrentSelectedOption, item: ProductVariant) => {
+      return currentSelectedOption[+key] === item.options[+key];
+    };
+
+    const areAllOptionsSelected = (
+      optionKeys: string[],
+      currentSelectedOption: CurrentSelectedOption,
+      item: ProductVariant
+    ) => {
+      return optionKeys.every((key: string) => isOptionSelected(key, currentSelectedOption, item));
+    };
+
+    const findProductVariationMatchAllOptions = () => {
+      return productVariant?.find((item) => {
+        const optionKeys = Object.keys(item.options);
+        return (
+          optionKeys.length === Object.keys(currentSelectedOption).length &&
+          areAllOptionsSelected(optionKeys, currentSelectedOption, item)
+        );
+      });
+    };
+
+    const updateListImagesByProductVariationMatchAllOptions = (variation: ProductVariant) => {
+      const urls = [
+        ...(variation.thumbnail?.imagePath ? [variation.thumbnail.imagePath] : []),
+        ...variation.image.map((image) => image.imagePath),
+      ];
+      setListImages(urls);
+      setCurrentProduct(variation);
+      setCurrentSelectedOption(variation.options);
+    };
+
+    const updateListImagesBySelectedOption = (productVariations: ProductVariant[]) => {
+      const productSelected = productVariations.find((item) => {
+        return item.options[+Object.keys(optionSelected)[0]] == Object.values(optionSelected)[0];
+      });
+
+      if (productSelected) {
+        const urlList = productSelected.image.map((image) => image.imagePath);
+        setListImages([
+          ...(productSelected.thumbnail?.imagePath ? [productSelected.thumbnail.imagePath] : []),
+          ...urlList,
+        ]);
+        setCurrentSelectedOption(productSelected.options);
+        setCurrentProduct(productSelected);
+      }
+    };
+
+    if (productOption?.length && productVariant?.length) {
+      const productVariationMatchAllOptions = findProductVariationMatchAllOptions();
+      if (productVariationMatchAllOptions) {
+        updateListImagesByProductVariationMatchAllOptions(productVariationMatchAllOptions);
+      } else if (!isUnchecking) {
+        updateListImagesBySelectedOption(productVariant);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [JSON.stringify(currentSelectedOption)]);
+  }, [currentSelectedOption]);
+
   const productVariantAttribute = [
     {
       title: 'Màu sắc',
@@ -302,19 +409,38 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
     },
   ];
 
+  const handleSelectOption = (optionId: number, optionValue: string) => {
+    if (productOption && productOption.length > 0 && productVariant && productVariant.length > 0) {
+      if (currentSelectedOption[+optionId] === optionValue) {
+        if (Object.keys(currentSelectedOption).length > 1) {
+          setCurrentSelectedOption((prev) => {
+            const newOption = { ...prev };
+            delete newOption[+optionId];
+            return newOption;
+          });
+          setIsUnchecking(true);
+        }
+      } else {
+        setCurrentSelectedOption({ ...currentSelectedOption, [optionId]: optionValue });
+        setOptionSelected({ [optionId]: optionValue });
+        setIsUnchecking(false);
+      }
+    }
+  };
+
   return (
     <div className="w-[80%] mx-auto my-3">
-      <BreadcrumbComponent items={crumb} />
+      {/* <BreadcrumbComponent items={crumb} /> */}
       <div className="bg-white flex px-3 py-2">
         <div className="w-[40%] py-3">
           <div
-            className="relative w-full pt-[100%] shadow cursor-zoom-in overflow-hidden"
+            className="relative w-full pt-[100%] shadow-sm cursor-zoom-in overflow-hidden"
             onMouseLeave={handleRemoveZoom}
             onMouseMove={handleZoom}
           >
             <Image
               src={currentImage?.imagePath || DefaultImage}
-              alt={currentImage?.alt || product.name}
+              alt={product.name}
               width={300}
               height={300}
               ref={imageRef}
@@ -358,7 +484,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
                 <div key={img.id} className="relative w-[5rem] h-[5rem]" onClick={() => setCurrentImage(img)}>
                   <Image
                     src={img.imagePath}
-                    alt={img.alt || product.name}
+                    alt={product.name}
                     fill
                     objectFit="fill"
                     className={`cursor-pointer ${isActive && 'border-2 border-red-400'}`}
@@ -425,6 +551,9 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
                 </div>
               </Popover>
             </React.Fragment>
+
+            {/* <ProductImageGallery listImages={listImages} /> */}
+
             <div>
               {checkExistItemInWishlist(product.id) ? (
                 <span
@@ -446,7 +575,6 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
             </div>
           </div>
           <div className="font-semibold text-3xl text-yellow-400">{formatCurrency(10000000000000, 'vi', 'VND')}</div>
-
           <div>
             {productVariantAttribute?.map((item) => (
               <div key={item.title} className="flex space-y-5">
@@ -459,7 +587,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
                     >
                       {item.image && (
                         <span className="w-5 h-5 relative mr-2">
-                          <Image src={item.image} alt="" objectFit='fit' fill />
+                          <Image src={item.image} alt="" objectFit="fit" fill />
                         </span>
                       )}
                       {item.name}
@@ -469,7 +597,43 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
               </div>
             ))}
           </div>
+          {/* product options */}
+          aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+          {(productOption || []).map((productOption) => {
+            const productOptionPost = productOptionValueGet?.find(
+              (option) => option.productOptionId === productOption.id
+            );
+            const parsedValue = productOptionPost?.productOptionValue
+              ? JSON.parse('["color", "Black"]')
+              : // ? JSON.parse(productOptionPost.productOptionValue)
+                [];
 
+            return productOptionPost ? (
+              <div className="mb-3" key={productOption.id}>
+                <h5 className="mb-2 fs-6">{productOption.name}:</h5>
+
+                <div className="d-flex gap-2">
+                  {Object.entries(parsedValue).map(([key, value]: any) => (
+                    <Button
+                      key={key}
+                      className={`${
+                        currentSelectedOption[productOptionPost.productOptionId] === key
+                          ? 'btn btn-primary text-white'
+                          : 'text-dark btn-outline-primary'
+                      }`}
+                      onClick={() => handleSelectOption(productOptionPost.productOptionId, key)}
+                      aria-label={`Color option ${value}`}
+                    >
+                      {key}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              productOption.name
+            );
+          })}
+          bbbbbbbbbbbbbbbbbbbbbbbb
           <div className="flex mt-10">
             <span className="flex items-center mr-10">{t('product.Quantity')}</span>
             <QuantitySelector
@@ -523,9 +687,7 @@ export default function ProductDetail({ product, reviewStatistic, supplier }: Pr
         <h2 className="bg-yellow-100 px-2 py-1 rounded-sm">{t('product.product_detail').toUpperCase()}</h2>
         <div className="grid grid-cols-4">
           <div className="col-span-1">{t('common.Category')}</div>
-          <div className="col-span-3">{product.category}</div>
-          <div className="col-span-1">{t('common.Subcategory')}</div>
-          <div className="col-span-3">{product.category}</div>
+          <div className="col-span-3">{product.category.map((item) => item.name)}</div>
           <div className="col-span-1">{t('common.in_stock')}</div>
           {/* <div className="col-span-3">{product.quantity > 0 ? <p>{product.quantity}</p> : <p>0</p>}</div> */}
         </div>

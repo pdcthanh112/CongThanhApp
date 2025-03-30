@@ -1,6 +1,7 @@
 package com.congthanh.productservice.controller;
 
 import com.congthanh.productservice.constant.common.ResponseStatus;
+import com.congthanh.productservice.exception.ecommerce.NotFoundException;
 import com.congthanh.productservice.model.dto.ProductDTO;
 import com.congthanh.productservice.model.request.CreateProductRequest;
 import com.congthanh.productservice.model.response.OptionValue;
@@ -8,11 +9,13 @@ import com.congthanh.productservice.model.response.Response;
 import com.congthanh.productservice.model.response.ResponseWithPagination;
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.response.VariantValueResponse;
-import com.congthanh.productservice.model.viewmodel.ProductDetailVm;
-import com.congthanh.productservice.model.viewmodel.ProductVm;
+import com.congthanh.productservice.model.viewmodel.*;
 import com.congthanh.productservice.repository.product.ProductRepository;
+import com.congthanh.productservice.repository.variantOptionCombination.VariantOptionCombinationRepository;
+import com.congthanh.productservice.repository.variantOptionValue.VariantOptionValueRepository;
 import com.congthanh.productservice.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,7 +31,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/ecommerce/products")
@@ -41,11 +46,15 @@ public class ProductController {
 
     private final ProductService productService;
 
+    private final VariantOptionCombinationRepository productOptionCombinationRepository;
+
+    private final VariantOptionValueRepository productOptionValueRepository;
+
     @GetMapping("")
     @PermitAll
-    public ResponseEntity<Response<?>> getAllProduct(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer limit) {
-        Object data = productService.getAllProduct(page, limit);
-        Response<Object> response = new Response<>();
+    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getAllProduct(@RequestParam(name = "page", required = false, defaultValue = "0") int page, @RequestParam(name = "limit", required = false, defaultValue = "10") int limit) {
+        ResponseWithPagination<ProductDTO> data = productService.getAllProduct(page, limit);
+        Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
         response.setData(data);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
         response.setMessage("Get all successfully");
@@ -107,6 +116,7 @@ public class ProductController {
     @GetMapping("/store-front/slug/{slug}/detail")
     @PermitAll
     public ResponseEntity<Response<ProductDetailVm>> getProductDetailVmBySlug(@PathVariable("slug") String slug) {
+        System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTTTTT");
         ProductDetailVm data = productService.getProductDetailBySlug(slug);
         Response<ProductDetailVm> response = new Response<>();
         response.setData(data);
@@ -158,6 +168,20 @@ public class ProductController {
         return ResponseEntity.ok().body(response);
     }
 
+    @GetMapping("/storefront/products/featured")
+    public ResponseEntity<Response<List<?>>> getFeaturedProducts(
+            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(value = "limit", defaultValue = "10", required = false) int limit
+    ) {
+//        ResponseWithPagination<?> data = productService.getListFeaturedProducts(page, limit);
+//        Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
+//        response.setData(data);
+//        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+//        response.setMessage("Get successfully");
+//        return ResponseEntity.ok().body(response);
+        return null;
+    }
+
     @GetMapping("/search")
     public ResponseEntity<Response<List<ProductDTO>>> searchProduct(@RequestParam String search) {
         List<ProductDTO> result = productService.searchProduct(search);
@@ -187,6 +211,20 @@ public class ProductController {
 //        response.setMessage("Get successfully");
 //        return ResponseEntity.ok().body(response);
 //    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Get product variations by parent id successfully",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = ProductVariantVm.class)))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+    })
+    @GetMapping({"/storefront/product-variations/{id}", "/backoffice/product-variations/{id}"})
+    public ResponseEntity<List<ProductVariantVm>> getProductVariationsByParentId(@PathVariable String id) {
+        return ResponseEntity.ok(productService.getProductVariationsByParentId(id));
+    }
 
     @GetMapping("/{id}/variants/attributes/detail")
     public ResponseEntity<Response<List<VariantValueResponse>>> getVariantAttributeValueDetail(@PathVariable("id") String productId) {
@@ -218,6 +256,52 @@ public class ProductController {
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
         response.setMessage("Get successfully");
         return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping({"/storefront/product-option-combinations/{productId}/values"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(schema = @Schema(implementation = ProductOptionCombinationGetVm.class))),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = Error.class))),
+    })
+    public ResponseEntity<List<ProductOptionCombinationGetVm>> listProductOptionCombinationOfProduct(@PathVariable("productId") String productId) {
+
+        Product product = productRepository
+                .findById(productId)
+                .orElseThrow(() -> new NotFoundException("Not found"));
+
+        List<ProductOptionCombinationGetVm> productOptionCombinationGetVms = productOptionCombinationRepository
+                .findAllByParentProductId(product.getId()).stream()
+                .map(ProductOptionCombinationGetVm::fromModel)
+                .toList();
+
+        return ResponseEntity.ok(new ArrayList<>(productOptionCombinationGetVms
+                .stream().collect(Collectors.toMap(
+                        p -> Arrays.asList(p.productOptionId(), p.productOptionValue()),
+                        p -> p, (existing, replacement) -> existing
+                )).values()));
+    }
+
+    @GetMapping({"/storefront/product-option-values/{productId}"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(schema = @Schema(
+                            implementation = ProductOptionValueGetVm.class))),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = Error.class))),
+    })
+    public ResponseEntity<List<ProductOptionValueGetVm>> listProductOptionValueOfProduct(
+            @PathVariable("productId") String productId
+    ) {
+        Product product = productRepository
+                .findById(productId)
+                .orElseThrow(() -> new NotFoundException("Not found"));
+        List<ProductOptionValueGetVm> productVariations = productOptionValueRepository
+                .findAllByProduct(product).stream()
+                .map(ProductOptionValueGetVm::fromModel)
+                .toList();
+        return ResponseEntity.ok(productVariations);
     }
 
     @QueryMapping(value = "product")

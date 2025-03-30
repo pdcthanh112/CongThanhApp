@@ -3,18 +3,21 @@ package com.congthanh.searchservice.service.serviceImpl;
 import com.congthanh.searchservice.repository.ProductRepository;
 import com.congthanh.searchservice.service.ProductSyncDataService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProductSyncDataServiceImpl implements ProductSyncDataService {
 
     private final RestClient restClient;
     private final ServiceUrlConfig serviceUrlConfig;
     private final ProductRepository productRepository;
 
-    public ProductEsDetailVm getProductEsDetailById(Long id) {
+    @Override
+    public ProductEsDetailVm getProductEsDetailById(String id) {
         final URI url = UriComponentsBuilder.fromHttpUrl(
                 serviceUrlConfig.product()).path("/storefront/products-es/{id}").buildAndExpand(id).toUri();
         return restClient.get()
@@ -23,7 +26,8 @@ public class ProductSyncDataServiceImpl implements ProductSyncDataService {
                 .body(ProductEsDetailVm.class);
     }
 
-    public void updateProduct(Long id) {
+    @Override
+    public void updateProduct(String id) {
         ProductEsDetailVm productEsDetailVm = getProductEsDetailById(id);
         Product product = productRepository.findById(id).orElseThrow(()
                 -> new NotFoundException(MessageCode.PRODUCT_NOT_FOUND, id));
@@ -47,7 +51,8 @@ public class ProductSyncDataServiceImpl implements ProductSyncDataService {
         productRepository.save(product);
     }
 
-    public void createProduct(Long id) {
+    @Override
+    public void createProduct(String id) {
         ProductEsDetailVm productEsDetailVm = getProductEsDetailById(id);
 
         Product product = Product.builder()
@@ -68,7 +73,8 @@ public class ProductSyncDataServiceImpl implements ProductSyncDataService {
         productRepository.save(product);
     }
 
-    public void deleteProduct(Long id) {
+    @Override
+    public void deleteProduct(String id) {
         final boolean isProductExisted = productRepository.existsById(id);
         if (isProductExisted) {
             productRepository.deleteById(id);

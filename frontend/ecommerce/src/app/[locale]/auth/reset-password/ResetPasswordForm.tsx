@@ -48,7 +48,7 @@ export default function ResetPasswordForm () {
           )}
         />
 
-        <Button type="submit" className="!mt-8 w-full">
+        <Button type="submit" className="mt-8! w-full">
           Send
         </Button>
       </form>

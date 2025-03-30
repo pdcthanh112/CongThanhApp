@@ -53,7 +53,7 @@ type LayoutPropsType = {
 };
 
 export default async function Layout({ children, params: { locale } }: Readonly<LayoutPropsType>) {
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale)) {
     notFound();
   }
 

@@ -27,6 +27,8 @@ public class ProductDTO implements Serializable {
 
   private List<ProductCategoryDTO> category;
 
+  private boolean hasVariant;
+
   private String description;
 
   private String thumbnail;
@@ -38,8 +40,6 @@ public class ProductDTO implements Serializable {
   private String supplier;
 
   private String brand;
-
-  private List<ProductDTO> variant;
 
   private ProductStatus status;
 }

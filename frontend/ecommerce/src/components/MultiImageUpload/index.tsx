@@ -27,7 +27,7 @@ interface ImagePreviewProps {
 const ImagePreview: React.FC<ImagePreviewProps> = ({ src, alt, onDelete, fileType }) => {
   const isImage = fileType.startsWith("image/");
   return (
-    <div className="relative flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-md">
+    <div className="relative shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-md">
       {isImage ? (
         <Image src={src} alt={alt || "File preview"} className="w-full h-full object-cover rounded-md" loading="lazy" width={20} height={20}/>
       ) : (
@@ -84,7 +84,7 @@ export const MultiImageUpload: React.FC<MultiImageUploadProps> = ({ value = [], 
     <div className={cn("flex flex-col w-full", className)}>
       <div className="flex flex-wrap gap-4">
         {(maxImages === undefined || files.length < maxImages) && (
-          <Button variant="outline" className="h-20 w-20 sm:h-24 sm:w-24 flex-shrink-0" asChild>
+          <Button variant="outline" className="h-20 w-20 sm:h-24 sm:w-24 shrink-0" asChild>
             <label className="flex h-full w-full cursor-pointer items-center justify-center text-sm sm:text-base">
               Browse
               <input

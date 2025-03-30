@@ -26,6 +26,4 @@ public class ProductImage {
 
     @Column(name = "image_path", length = 1500)
     private String imagePath;
-
-    private String alt;
 }

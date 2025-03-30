@@ -5,13 +5,14 @@ import com.congthanh.productservice.model.request.CreateProductRequest;
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.response.ResponseWithPagination;
 import com.congthanh.productservice.model.viewmodel.ProductDetailVm;
+import com.congthanh.productservice.model.viewmodel.ProductVariantVm;
 import com.congthanh.productservice.model.viewmodel.ProductVm;
 
 import java.util.List;
 
 public interface ProductService {
 
-  Object getAllProduct(Integer page, Integer limit);
+  ResponseWithPagination<ProductDTO> getAllProduct(Integer page, Integer limit);
 
   ProductDTO getProductById(String id);
 
@@ -29,12 +30,16 @@ public interface ProductService {
 
   boolean deleteProduct(String id);
 
+  List<ProductVariantVm> getProductVariationsByParentId(String parentId);
+
   ResponseWithPagination<ProductDTO> getProductByCategoryId(String categoryId, int page, int limit);
   ResponseWithPagination<ProductDTO> getProductByCategorySlug(String categoryId, int page, int limit);
 
   List<ProductDTO> searchProduct(String keyword);
 
   Long getSoldByProduct(String productId);
+
+  List<?> getListFeaturedProducts (int page, int limit);
 
 //  List<ProductVariantAttributeValueDTO> getVariantAttributeValueByProduct(String productId);
 

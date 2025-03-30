@@ -187,7 +187,7 @@ export default function RegisterForm() {
                   <FormControl>
                     <DatePicker
                       size="large"
-                      className="focus:outline-none w-full border-2 border-gray-200"
+                      className="focus:outline-hidden w-full border-2 border-gray-200"
                       {...field}
                     />
                   </FormControl>

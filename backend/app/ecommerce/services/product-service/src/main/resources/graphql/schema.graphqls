@@ -4,9 +4,10 @@ type Query {
 
 type Product {
     id: ID!
-    name: String!
+    name: [String]
     category: String!
-    SKU: String
+    sku: String
+    gtin: String
     thumbnail: String!
     image: [ProductImage]
     description: String

@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Search as SearchIcon, ArrowDropDownOutlined } from '@mui/icons-material';
 import { useTranslations } from 'next-intl';
@@ -30,7 +31,7 @@ export default function SearchComponent() {
 
   const { mutate: addSearchHistory } = useMutation({
     mutationKey: ['search-history'],
-    mutationFn: async (keyword: string) => await addSearchHistoryItem('user email', keyword),
+    mutationFn: async (keyword: string) => await addSearchHistoryItem(user?.email as string, keyword),
   });
 
   const handleSearch = (term: string) => {
@@ -57,7 +58,7 @@ export default function SearchComponent() {
   }, []);
 
   return (
-    <div className="hidden sm:flex items-center h-10 rounded-md flex-grow relative" ref={modalRef}>
+    <div className="hidden sm:flex items-center h-10 rounded-md grow relative" ref={modalRef}>
       <span className="bg-gray-300 h-[2.5rem] w-20 rounded-l-md flex justify-center items-center relative group">
         <span className="">
           {t('common.all')}
@@ -74,7 +75,7 @@ export default function SearchComponent() {
       </span>
 
       <Input
-        className="p-2 h-full w-6 flex-grow flex-shrink focus:outline-none px-4 rounded-none"
+        className="p-2 h-full w-6 grow shrink focus:outline-hidden px-4 rounded-none bg-white"
         onFocus={() => setShowModal(true)}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
@@ -84,7 +85,7 @@ export default function SearchComponent() {
       {showModal && <SearchModal searchTerm={searchTerm} debouncedSearchTerm={debouncedSearchTerm} handleSearch={handleSearch} />}
 
       <SearchIcon
-        className="!w-14 !h-10 p-1 bg-yellow-400 hover:bg-yellow-500 rounded-r-md hover:cursor-pointer"
+        className="w-14! h-10! p-1 bg-yellow-400 hover:bg-yellow-500 rounded-r-md hover:cursor-pointer"
         onClick={() => handleSearch(searchTerm)}
       />
     </div>

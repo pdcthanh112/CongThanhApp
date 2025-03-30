@@ -20,6 +20,13 @@ spring:
     activate:
       on-profile: dev
 
+  web:
+    cors:
+      allowed-origins: "http://localhost:3000"
+      allowed-methods: "*" #GET,POST,PUT,PATCH,DELETE
+      allowed-headers: "*"
+      allow-credentials: true
+
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
     username: postgres
@@ -33,6 +40,8 @@ spring:
     show-sql: false
     properties:
       hibernate:
+        jdbc:
+          time-zone: UTC
         format_sql: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -40,7 +49,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/MyDream
-      database: CongThanhApp
+      database: CongThanhApp-Ecommerce
 
     redis:
       port: 6379
@@ -53,7 +62,6 @@ spring:
           max-idle: 8
           min-idle: 0
           max-wait: -1ms
-
 
   graphql:
     graphiql:
@@ -71,7 +79,7 @@ spring:
       password: password # Mật khẩu mặc định
     jwt:
       token:
-        secretKey: ${JWT_SECRET_KEY}
+        secretKey: "secretKey" # ${JWT_SECRET_KEY}
         tokenPrefix: "Bearer "
         tokenExpirationAfterDays: 30
 
@@ -79,39 +87,28 @@ spring:
     allow-circular-references: true
     allow-bean-definition-overriding: true
 
-  mail:
-    host: smtp.example.com
-    port: 587
-    username: myemail@example.com
-    password: emailpassword
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-
-  cache:
-    type: caffeine
-    caffeine:
-      spec: maximumSize=500,expireAfterAccess=600s
+#  mail:
+#    host: smtp.example.com
+#    port: 587
+#    username: myemail@example.com
+#    password: emailpassword
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#
+#  cache:
+#    type: caffeine
+#    caffeine:
+#      spec: maximumSize=500,expireAfterAccess=600s
 
 #    Cấu hình upload file
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-
-  web:
-    cors:
-      allowed-origins: "http://localhost:3000"
-      allowed-methods: GET,POST,PUT,PATCH,DELETE
-
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
 
   kafka:
     bootstrap-servers: localhost:9092
@@ -124,28 +121,18 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  activemq:
+    packages:
+      trust-all: true
 #  Cấu hình quốc tế hoá i18n
   messages:
     basename: messages
 
-  ai:
-    ollama:
-      embedding:
-        enabled: false
-    vectorstore:
-      pgvector:
-        index-type: hnsw
-        distance-type: cosine_distance
-        dimensions: 384
-
-
-
-  sleuth:
-    sampler:
-      probability: 1.0
-
-  zipkin:
-    base-url: http://localhost:9411
 
 grpc:
   server:
@@ -155,8 +142,29 @@ grpc:
   client:
     catalog-service:
       address: "static://localhost:19090"
-#      address: "localhost:19090"
+      #      address: "localhost:19090"
       negotiationType: PLAINTEXT
+
+keycloak:
+  realm: ecommerce-realm
+  auth-server-url: http://keycloak:8080/auth
+  resource: catalog-service
+  bearer-only: true
+  ssl-required: external
+  credentials:
+    secret: your-client-secret
+  autodetect-bearer-only: true
+  cors: true
+
+ai:
+  ollama:
+    embedding:
+    enabled: false
+  vectorstore:
+    pgvector:
+      index-type: hnsw
+      distance-type: cosine_distance
+      dimensions: 384
 
 congthanhapp:
   openapi:
@@ -188,18 +196,41 @@ management:
 
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
     service-url:
       default-zone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    hostname: localhost
 
 axon:
   axonserver:
     servers: localhost:8124
+    enabled: true
+  serializer:
+    events: jackson
+#axoniq:
+#  console:
+#    enabled: true
+#    url: https://console.axoniq.io
 
 snowflake:
   worker-id: 1
   datacenter-id: 1
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      rest-circuit-breaker:
+        sliding-window-type: COUNT_BASED
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        permitted-number-of-calls-in-half-open-state: 3
+  retry:
+    instances:
+      rest-api:
+        max-attempts: 3
 
 aws:
   access:
@@ -211,3 +242,11 @@ aws:
   s3:
     region: jasjkaf
     bucket: áljaf
+
+
+  sleuth:
+    sampler:
+      probability: 1.0
+
+  zipkin:
+    base-url: http://localhost:9411

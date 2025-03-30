@@ -104,7 +104,7 @@ const CartModal = () => {
                         {...register('name', { value: 'New cart' })}
                         defaultValue="New cart"
                         placeholder="Enter cart name"
-                        className="focus:outline-none w-[12rem]"
+                        className="focus:outline-hidden w-[12rem]"
                       />
                       <Checkbox onChange={(event) => setValue('isDefault', event.target.value)}>Default</Checkbox>
                       <Icon

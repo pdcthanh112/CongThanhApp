@@ -3,6 +3,7 @@ package com.congthanh.productservice.cqrs.query.projection;
 import com.congthanh.productservice.cqrs.query.query.GetAllProductQuery;
 import com.congthanh.productservice.cqrs.query.query.GetProductByIdQuery;
 import com.congthanh.productservice.cqrs.query.query.GetProductBySlugQuery;
+import com.congthanh.productservice.cqrs.query.query.GetProductDetailBySlugQuery;
 import com.congthanh.productservice.exception.ecommerce.NotFoundException;
 import com.congthanh.productservice.model.document.ProductDocument;
 import com.congthanh.productservice.repository.product.ProductDocumentRepository;
@@ -28,15 +29,23 @@ public class ProductProjection {
     }
 
     @QueryHandler
-    public ProductDocument getProductById(GetProductByIdQuery product) {
-        ProductDocument result = productDocumentRepository.findById(product.getProductId()).orElseThrow(() -> new NotFoundException("Product not found"));
+    public ProductDocument getProductById(GetProductByIdQuery query) {
+        ProductDocument result = productDocumentRepository.findById(query.getProductId()).orElseThrow(() -> new NotFoundException("Product not found"));
         return result;
     }
 
     @QueryHandler
-    public ProductDocument getProductBySlug(GetProductBySlugQuery product) {
-        ProductDocument result = productDocumentRepository.findBySlug(product.getSlug()).orElseThrow(() -> new NotFoundException("Product not found"));
+    public ProductDocument getProductBySlug(GetProductBySlugQuery query) {
+        ProductDocument result = productDocumentRepository.findBySlug(query.getSlug()).orElseThrow(() -> new NotFoundException("Product not found"));
         System.out.println("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"+result);
+        return result;
+    }
+
+    @QueryHandler
+    public ProductDocument getProductDetailBySlug(GetProductDetailBySlugQuery query) {
+        ProductDocument result = productDocumentRepository.findBySlug(query.getSlug()).orElseThrow(() -> new NotFoundException("Product not found"));
+        if(result.isHasVariant()) {
+        }
         return result;
     }
 

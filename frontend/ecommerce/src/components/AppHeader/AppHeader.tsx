@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import dynamic from 'next/dynamic';
 import './AppHeader.scss';
@@ -50,7 +51,7 @@ export default function AppHeader() {
   };
 
   return (
-    <div className="flex items-center bg-slate-400 p-1 flex-grow py-2 h-20">
+    <div className="flex items-center bg-slate-400 p-1 grow py-2 h-20">
       <Link href={PATH.HOME}>
         <Image src={AppLogo} alt="App Logo" width={100} className="cursor-pointer mx-12" />
       </Link>

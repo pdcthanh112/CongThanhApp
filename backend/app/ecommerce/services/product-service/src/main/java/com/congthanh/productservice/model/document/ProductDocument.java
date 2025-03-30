@@ -1,14 +1,15 @@
 package com.congthanh.productservice.model.document;
 
 import com.congthanh.productservice.constant.enums.ProductStatus;
-import com.congthanh.productservice.model.dto.ProductImageDTO;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,15 +25,25 @@ public class ProductDocument {
 
     private String name;
 
-    private List<CategoryDocument> category;
+    private List<ProductCategory> category;
 
+    @Indexed(unique = true)
     private String slug;
+
+    private String sku;
+
+    private String gtin;
+
+    @Indexed(name = "has_variant")
+    private boolean hasVariant;
 
     private String description;
 
+    private BigDecimal price;
+
     private String thumbnail;
 
-    private List<ProductImageDTO> image = new ArrayList<>();
+    private List<ProductImage> image = new ArrayList<>();
 
     private List<ProductAttributeDocument> attribute = new ArrayList<>();
 
@@ -40,9 +51,16 @@ public class ProductDocument {
 
     private String brand;
 
-    private List<ProductVariantDocument> variant = new ArrayList<>();
+    @Indexed(name = "is_featured")
+    private boolean isFeatured;
 
     private ProductStatus status;
+
+    record ProductCategory(Long id, String categoryId, @Indexed(name = "display_order") int displayOrder) {
+    }
+
+    record ProductImage(Long id, @Indexed(name = "image_path") String imagePath) {
+    }
 
     record ProductAttributeDocument(Long id, String attribute, String value) {
     }

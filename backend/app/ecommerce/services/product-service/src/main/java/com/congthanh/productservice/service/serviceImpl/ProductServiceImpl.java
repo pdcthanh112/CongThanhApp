@@ -3,9 +3,7 @@ package com.congthanh.productservice.service.serviceImpl;
 import com.congthanh.catalogservice.grpc.CategoryResponse;
 import com.congthanh.productservice.cqrs.query.query.GetProductBySlugQuery;
 import com.congthanh.productservice.grpc.client.CategoryGrpcClient;
-import com.congthanh.productservice.model.entity.ProductAttributeValue;
-import com.congthanh.productservice.model.entity.ProductCategory;
-import com.congthanh.productservice.model.entity.ProductImage;
+import com.congthanh.productservice.model.entity.*;
 import com.congthanh.productservice.model.request.ProductImageRequest;
 import com.congthanh.productservice.model.response.PaginationInfo;
 import com.congthanh.productservice.model.response.ResponseWithPagination;
@@ -13,16 +11,14 @@ import com.congthanh.productservice.constant.enums.ProductStatus;
 import com.congthanh.productservice.cqrs.command.command.CreateProductCommand;
 import com.congthanh.productservice.cqrs.query.query.GetProductByIdQuery;
 import com.congthanh.productservice.model.dto.ProductDTO;
-import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.document.ProductDocument;
 import com.congthanh.productservice.model.request.CreateProductRequest;
 import com.congthanh.productservice.exception.ecommerce.NotFoundException;
 import com.congthanh.productservice.model.mapper.ProductMapper;
-import com.congthanh.productservice.model.viewmodel.ProductAttributeVm;
-import com.congthanh.productservice.model.viewmodel.ProductDetailVm;
-import com.congthanh.productservice.model.viewmodel.ProductVm;
+import com.congthanh.productservice.model.viewmodel.*;
 import com.congthanh.productservice.repository.product.ProductRepository;
 import com.congthanh.productservice.repository.productImage.ProductImageRepository;
+import com.congthanh.productservice.repository.variantOptionCombination.VariantOptionCombinationRepository;
 import com.congthanh.productservice.service.*;
 import com.congthanh.productservice.utils.Helper;
 import com.congthanh.productservice.utils.SnowflakeIdGenerator;
@@ -40,6 +36,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -66,42 +63,34 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductImageRepository productImageRepository;
 
+    private final VariantOptionCombinationRepository variantOptionCombinationRepository;
+
     @Override
     @Cacheable("products")
-    public Object getAllProduct(Integer page, Integer limit) {
-        if (page != null & limit != null) {
-            Pageable pageable = PageRequest.of(page, limit);
-            Page<Product> result = productRepository.findAll(pageable);
+    public ResponseWithPagination<ProductDTO> getAllProduct(Integer page, Integer limit) {
 
-            if (result.hasContent()) {
-                ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
-                List<ProductDTO> list = new ArrayList<>();
-                for (Product product : result.getContent()) {
-                    ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
-                    list.add(productDTO);
-                }
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<Product> result = productRepository.findAll(pageable);
 
-                PaginationInfo paginationInfo = PaginationInfo.builder()
-                        .page(page)
-                        .limit(limit)
-                        .totalPage(result.getTotalPages())
-                        .totalElement(result.getTotalElements())
-                        .build();
-                response.setResponseList(list);
-                response.setPaginationInfo(paginationInfo);
-                return response;
-            } else {
-                throw new RuntimeException("List empty exception");
-            }
-
-        } else {
-            List<Product> list = productRepository.findAll();
-            List<ProductDTO> result = new ArrayList<>();
-            for (Product product : list) {
+        if (result.hasContent()) {
+            ResponseWithPagination<ProductDTO> response = new ResponseWithPagination<>();
+            List<ProductDTO> list = new ArrayList<>();
+            for (Product product : result.getContent()) {
                 ProductDTO productDTO = ProductMapper.mapProductEntityToDTO(product);
-                result.add(productDTO);
+                list.add(productDTO);
             }
-            return result;
+
+            PaginationInfo paginationInfo = PaginationInfo.builder()
+                    .page(page)
+                    .limit(limit)
+                    .totalPage(result.getTotalPages())
+                    .totalElement(result.getTotalElements())
+                    .build();
+            response.setResponseList(list);
+            response.setPaginationInfo(paginationInfo);
+            return response;
+        } else {
+            throw new RuntimeException("List empty exception");
         }
     }
 
@@ -152,8 +141,9 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findProductBySlug(slug).orElseThrow(() -> new NotFoundException("Product not found"));
 
         List<String> categoryIds = product.getCategory().stream().map(ProductCategory::getCategoryId).toList();
-        List<String> category = categoryGrpcClient.getListCategoryByIds(categoryIds).stream().map(CategoryResponse::getName).toList();
+        List<ProductCategoryVm> category = categoryGrpcClient.getListCategoryByIds(categoryIds).stream().map(item -> new ProductCategoryVm(item.getId(), item.getName(), item.getSlug())).toList();
 
+        ProductImage thumbnail = productImageRepository.findById(product.getThumbnail()).orElseThrow(() -> new NotFoundException("Product image not found"));
 
 //        List<String> images = productImageRepository.getProductImages(product.getId()).stream().map(ProductImage::getImagePath).toList();
         List<String> images = new ArrayList<>();
@@ -164,7 +154,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         Set<ProductAttributeValue> productAttributeValues = product.getAttribute();
-        System.out.println("RRRRRRRRRRRRRRRRRRR"+ productAttributeValues);
+
         List<ProductAttributeVm> attributeVms = new ArrayList<>();
 //        if (CollectionUtils.isNotEmpty(productAttributeValues)) {
 //            List<ProductAttributeGroup> productAttributeGroups = productAttributeValues.stream()
@@ -183,7 +173,7 @@ public class ProductServiceImpl implements ProductService {
                 product.isFeatured(),
                 product.isHasVariant(),
                 product.getPrice(),
-                product.getThumbnail(),
+                thumbnail.getImagePath(),
                 images
         );
     }
@@ -246,6 +236,42 @@ public class ProductServiceImpl implements ProductService {
             boolean result = productRepository.deleteProduct(id);
             return result;
         }
+    }
+
+    @Override
+    public List<ProductVariantVm> getProductVariationsByParentId(String parentId) {
+        System.out.println("Co vooooooooooooooooooooooooooooooo");
+        Product parentProduct = productRepository.findById(parentId).orElseThrow(() -> new NotFoundException("Product not found"));
+        System.out.println("IIIIIIIIIIIIIIIIIIIIIUUUUUUUUUUU"+parentProduct);
+        if (Boolean.TRUE.equals(parentProduct.isHasVariant())) {
+            List<Product> productVariations = parentProduct.getVariant().stream().filter(item -> item.getStatus().equals(ProductStatus.ACTIVE)).toList();
+            System.out.println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"+productVariations);
+            return productVariations.stream().map(product -> {
+                List<VariantOptionCombination> productOptionCombinations =
+                        variantOptionCombinationRepository.findAllByProduct(product);
+                Map<Long, String> options = productOptionCombinations.stream().collect(Collectors.toMap(
+                        productOptionCombination -> productOptionCombination.getVariantOption().getId(),
+                        VariantOptionCombination::getValue
+                ));
+
+                ProductImage thumbnail = productImageRepository.findById(product.getThumbnail()).orElseThrow(() -> new NotFoundException("Product image not found"));
+                ProductImageVm thumbnailVm = new ProductImageVm(thumbnail.getId(), thumbnail.getImagePath());
+//
+                return new ProductVariantVm(
+                        product.getId(),
+                        product.getName(),
+                        product.getSlug(),
+                        product.getSku(),
+                        product.getGtin(),
+                        product.getPrice(),
+                        thumbnailVm,
+                        product.getImage().stream()
+                                .map(productImage -> new ProductImageVm(productImage.getId(), productImage.getImagePath())).toList(),
+                        options
+                );
+            }).toList();
+        }
+        return Collections.emptyList();
     }
 
     @Override
@@ -324,6 +350,11 @@ public class ProductServiceImpl implements ProductService {
         return result != null ? result : 0;
     }
 
+    @Override
+    public List<?> getListFeaturedProducts(int page, int limit) {
+        return List.of();
+    }
+
 //    @Override
 //    public List<ProductVariantAttributeValueDTO> getVariantAttributeValueByProduct(String productId) {
 //        List<Tuple> data = (List<Tuple>) productRepository.getVariantAttributeValueByProduct(productId);
@@ -354,6 +385,7 @@ public class ProductServiceImpl implements ProductService {
 //        }
 //        return null;
 //    }
+
 
 }
 

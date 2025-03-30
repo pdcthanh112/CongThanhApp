@@ -1,5 +1,14 @@
 import axiosConfig from '@/config/axiosConfig';
-import { ProductVariantAttribute, Product, ProductImage, Response, ResponseWithPagination } from '@/models/types';
+import {
+  ProductVariantAttribute,
+  Product,
+  ProductImage,
+  Response,
+  ResponseWithPagination,
+  ProductOptionValueGet,
+  ProductVariant,
+  ProductOptionValueDisplay,
+} from '@/models/types';
 import { cacheLife } from 'next/dist/server/use-cache/cache-life';
 
 export const getAllProduct = async (page?: number, limit?: number): Promise<ResponseWithPagination<Product>> => {
@@ -27,7 +36,16 @@ export const getProductById = async (productId: string): Promise<Product> => {
 
 export const getProductBySlug = async (productSlug: string): Promise<Response<Product>> => {
   return await axiosConfig
-    .get(`product/getBySlug/${productSlug}`)
+    .get(`products/slug/${productSlug}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw Error(error);
+    });
+};
+
+export const getProductDetailBySlug = async (productSlug: string): Promise<Response<Product>> => {
+  return await axiosConfig
+    .get(`products/store-front/slug/${productSlug}/detail`)
     .then((response) => response.data)
     .catch((error) => {
       throw Error(error);
@@ -99,3 +117,30 @@ export const getVariantValueDetail = async (productId: string) => {
       throw Error(error);
     });
 };
+
+export async function getProductOptionValues(productId: string): Promise<ProductOptionValueGet[]> {
+  return await axiosConfig
+    .get(`/products/storefront/product-option-combinations/${productId}/values`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw Error(error);
+    });
+}
+
+export async function getProductVariationsByParentId(parentId: string): Promise<ProductVariant[]> {
+  return await axiosConfig
+    .get(`/products/storefront/product-variations/${parentId}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw Error(error);
+    });
+}
+
+export async function getProductOptionValueByProductId(productId: string): Promise<ProductOptionValueDisplay[]> {
+  return await axiosConfig
+    .get(`/products/storefront/product-option-values/${productId}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw Error(error);
+    });
+}

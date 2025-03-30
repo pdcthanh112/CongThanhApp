@@ -57,7 +57,7 @@ const QuantitySelector = ({min, max, onIncrease, onDecrease, onType, onFocusOut,
       <InputNumber
         className=""
         classNameError="hidden"
-        classNameInput="h-8 w-14 border-t border-b border-gray-300 p-1 text-center outline-none"
+        classNameInput="h-8 w-14 border-t border-b border-gray-300 p-1 text-center outline-hidden"
         onChange={handleChange}
         onBlur={handleBlur}
         value={value || localValue}

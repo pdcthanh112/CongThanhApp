@@ -7,7 +7,7 @@ public record ProductDetailVm(
         String id,
         String name,
         String brandName,
-        List<String> category,
+        List<ProductCategoryVm> category,
         List<ProductAttributeVm> attribute,
         String description,
         Boolean isFeatured,

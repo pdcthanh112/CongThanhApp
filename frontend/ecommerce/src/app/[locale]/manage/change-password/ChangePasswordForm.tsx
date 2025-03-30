@@ -133,7 +133,7 @@ export default function ChangePasswordForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="!mt-8 w-full">
+          <Button type="submit" className="mt-8! w-full">
             {t('common.save')}
           </Button>
         </form>

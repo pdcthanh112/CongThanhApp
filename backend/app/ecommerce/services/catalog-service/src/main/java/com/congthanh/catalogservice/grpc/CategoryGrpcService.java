@@ -87,7 +87,6 @@ public class CategoryGrpcService extends CategoryServiceGrpc.CategoryServiceImpl
     @Override
     public void getListCategoryByIds(ListCategoryRequest request, StreamObserver<ListCategoryResponse> responseObserver) {
         try {
-
             List<String> categoryIds = request.getCategoryIdList();
 
             List<Category> categories = categoryRepository.findAllById(categoryIds);
