@@ -7,6 +7,7 @@ import { SessionProvider } from 'next-auth/react';
 import { ReactQueryProvider, ReduxStoreProvider, ThemeProvider } from '@/config/providers';
 import { AuthContextProvider } from '@/context/AuthContext';
 import AuthWrapper from '@/components/AuthWrapper';
+import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 const Providers = ({ children }: Readonly<LayoutProps>) => {
   const graphClient = new ApolloClient({
@@ -21,7 +22,9 @@ const Providers = ({ children }: Readonly<LayoutProps>) => {
           <SessionProvider>
             <ApolloProvider client={graphClient}>
               <ReduxStoreProvider>
-                <ReactQueryProvider>{children}</ReactQueryProvider>
+                <ReactQueryProvider>
+                <AntdRegistry>{children}</AntdRegistry>
+                  </ReactQueryProvider>
               </ReduxStoreProvider>
             </ApolloProvider>
           </SessionProvider>

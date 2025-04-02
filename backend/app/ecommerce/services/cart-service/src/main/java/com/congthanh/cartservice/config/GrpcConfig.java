@@ -1,12 +1,12 @@
-//package com.congthanh.cartservice.config;
+package com.congthanh.cartservice.config;
 //
 //import io.grpc.ManagedChannel;
 //import io.grpc.ManagedChannelBuilder;
 //import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Configuration;
 //
-//@Configuration
-//public class GrpcConfig {
+@Configuration
+public class GrpcConfig {
 //
 //    @Bean
 //    public ManagedChannel productServiceChannel() {
@@ -29,4 +29,4 @@
 //                .build();
 //    }
 //
-//}
+}

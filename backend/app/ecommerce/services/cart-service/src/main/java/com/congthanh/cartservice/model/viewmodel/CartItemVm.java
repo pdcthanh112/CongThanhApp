@@ -12,6 +12,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 public class CartItemVm {
+
     private Long id;
 
     private String productId;

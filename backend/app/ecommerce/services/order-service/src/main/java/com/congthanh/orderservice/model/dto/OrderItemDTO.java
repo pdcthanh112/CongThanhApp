@@ -21,11 +21,9 @@ public class OrderItemDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private int quantity;
 
-    @NotNull
-    private String productVariant;
+    private String productId;
 
     private String order;
 

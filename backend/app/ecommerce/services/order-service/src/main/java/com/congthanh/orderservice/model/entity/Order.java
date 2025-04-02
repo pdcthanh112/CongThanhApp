@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,8 @@ public class Order extends AbstractAuditEntity{
   @Id
   private Long id;
 
-  private String customer;
+  @Column(name = "customer_id", nullable = false)
+  private String customerId;
 
   @Column(name = "shipping_address_id", nullable = false)
   private Long shippingAddress;
@@ -36,8 +38,8 @@ public class Order extends AbstractAuditEntity{
   @Column(columnDefinition = "text")
   private String note;
 
-  @Column(precision = 38, scale = 2)
-  private BigDecimal total;
+  @Column(name = "total_amount", precision = 38, scale = 2)
+  private BigDecimal totalAmount;
 
   @Column(name = "order_date")
   private Instant orderDate;
@@ -58,8 +60,7 @@ public class Order extends AbstractAuditEntity{
   @JsonManagedReference
   private Checkout checkout;
 
-  @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonIgnore
-  private List<OrderItem> orderItem;
-
+  private List<OrderItem> orderItem = new ArrayList<>();
 }

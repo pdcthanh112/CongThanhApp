@@ -58,7 +58,6 @@ public class CartEventListener {
         CartItemDocument cartItem = CartItemDocument.builder()
                 .id(event.getId())
                 .productId(event.getProductId())
-                .productVariantId(event.getProductVariantId())
                 .quantity(event.getQuantity())
                 .createdAt(event.getCreatedAt())
                 .build();

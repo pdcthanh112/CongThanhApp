@@ -27,20 +27,17 @@ public class CartDocumentCustomRepositoryImpl implements CartDocumentCustomRepos
     public void addItemToCart(Long cartId, CartItemDocument document) {
         // Tìm cart item trong cart có cùng productId và productVariantId
         Query query = new Query(Criteria.where("id").is(cartId)
-                .and("cartItems").elemMatch(Criteria.where("productId").is(document.getProductId())
-                        .and("productVariantId").is(document.getProductVariantId())));
+                .and("cartItems").elemMatch(Criteria.where("productId").is(document.getProductId())));
 
         CartDocument existingCart = mongoTemplate.findOne(query, CartDocument.class);
 
         if (existingCart != null && existingCart.getCartItems().stream()
-                .anyMatch(item -> item.getProductId().equals(document.getProductId())
-                        && item.getProductVariantId().equals(document.getProductVariantId()))) {
+                .anyMatch(item -> item.getProductId().equals(document.getProductId()))) {
             // Nếu item đã tồn tại, cập nhật quantity
             Update update = new Update().inc("cartItems.$.quantity", document.getQuantity());
             mongoTemplate.updateFirst(
                     Query.query(Criteria.where("id").is(cartId)
-                            .and("cartItems.productId").is(document.getProductId())
-                            .and("cartItems.productVariantId").is(document.getProductVariantId())),
+                            .and("cartItems.productId").is(document.getProductId())),
                     update,
                     CartDocument.class
             );
@@ -49,7 +46,6 @@ public class CartDocumentCustomRepositoryImpl implements CartDocumentCustomRepos
             CartItemDocument newItem = CartItemDocument.builder()
                     .id(document.getId()) // Bạn cần implement method này
                     .productId(document.getProductId())
-                    .productVariantId(document.getProductVariantId())
                     .quantity(document.getQuantity())
                     .createdAt(document.getCreatedAt())
                     .build();

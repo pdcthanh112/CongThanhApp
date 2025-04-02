@@ -20,7 +20,6 @@ public class AddItemToCartCreatedEvent implements Serializable {
 
     private Long id;
     private String productId;
-    private String productVariantId;
     private int quantity;
     private Long cartId;
     private Instant createdAt;

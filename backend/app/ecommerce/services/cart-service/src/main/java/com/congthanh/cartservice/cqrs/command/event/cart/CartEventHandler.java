@@ -59,7 +59,6 @@ public class CartEventHandler {
                 .id(event.getId())
                 .productId(event.getProductId())
                 .quantity(event.getQuantity())
-                .productVariant(event.getProductVariantId())
                 .createdAt(event.getCreatedAt())
                 .cartId(Cart.builder().id(event.getCartId()).build())
                 .build();

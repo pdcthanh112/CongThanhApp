@@ -17,7 +17,6 @@ public class CartItemAggregate {
     @AggregateIdentifier
     private Long id;
     private String productId;
-    private String productVariantId;
     private int quantity;
     private Long cartId;
     private Instant createdAt;
@@ -29,7 +28,6 @@ public class CartItemAggregate {
         apply(AddItemToCartCreatedEvent.builder()
                 .id(command.getId())
                 .productId(command.getProductId())
-                .productVariantId(command.getProductVariantId())
                 .quantity(command.getQuantity())
                 .cartId(command.getCartId())
                 .createdAt(command.getCreatedAt())
@@ -40,7 +38,6 @@ public class CartItemAggregate {
     public void on(AddItemToCartCreatedEvent event) {
         this.id = event.getId();
         this.productId = event.getProductId();
-        this.productVariantId = event.getProductVariantId();
         this.quantity = event.getQuantity();
         this.cartId = event.getCartId();
         this.createdAt = event.getCreatedAt();

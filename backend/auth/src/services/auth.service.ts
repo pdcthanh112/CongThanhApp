@@ -1,5 +1,5 @@
-import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { MYSQL_DB } from '@/databases/mysql';
 import { ChangePasswordDTO, CustomerLoginDTO, CustomerSignupDTO } from '@/dtos/customer.dto';
 import { HttpException, TokenError } from '@/exceptions/';

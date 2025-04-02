@@ -81,7 +81,6 @@ public class CartItemServiceImpl implements CartItemService {
         AddItemToCartCommand command = AddItemToCartCommand.builder()
                 .id(snowflakeIdGenerator.nextId())
                 .productId(request.getProductId())
-                .productVariantId(request.getProductQuantityId())
                 .quantity(request.getQuantity())
                 .createdAt(Instant.now())
                 .cartId(cartId)
@@ -123,7 +122,6 @@ public class CartItemServiceImpl implements CartItemService {
                 .id(result.getId())
                 .quantity(result.getQuantity())
                 .product(result.getProductId())
-                .productVariant(result.getProductVariant())
                 .cart(result.getCartId().getId())
                 .build();
         return response;

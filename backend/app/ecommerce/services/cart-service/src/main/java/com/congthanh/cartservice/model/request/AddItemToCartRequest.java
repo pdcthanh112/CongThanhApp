@@ -13,9 +13,6 @@ public class AddItemToCartRequest {
     @NotBlank
     private String productId;
 
-    @NotBlank
-    private String productQuantityId;
-
     @NotNull
     @Min(1)
     private int quantity;

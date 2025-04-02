@@ -5,20 +5,28 @@ server:
 #  compression:
 #    enabled: true
 #    min-response-size: 1024
+#  ssl:
+#    key-store: classpath:keystore.p12  # Đường dẫn đến keystore
+#    key-store-password: password       # Mật khẩu keystore
+#    key-store-type: PKCS12             # Loại keystore
+#    key-alias: tomcat                  # Alias của key
 
 spring:
   application:
     name: congthanhapp-ecommerce-cart-service
+
   config:
     import: optional:file:.env[.properties]
     activate:
       on-profile: dev
+
   web:
     cors:
       allowed-origins: "http://localhost:3000"
       allowed-methods: GET,POST,PUT,PATCH,DELETE
       allowed-headers: "*"
       allow-credentials: true
+
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
     username: postgres
@@ -55,25 +63,15 @@ spring:
           min-idle: 0
           max-wait: -1ms
 
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: congthanh
-    password: 123456
-  activemq:
-    packages:
-      trust-all: true
-
   graphql:
     graphiql:
-      enable: true
+      enabled: true
     cors:
       allowed-origins: "*"
     schema:
       printer:
         enabled: true
     path: /graphql
-
 
   security:
     user:
@@ -123,18 +121,38 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: congthanh
+    password: 123456
+  activemq:
+    packages:
+      trust-all: true
+
   messages:
     basename: messages
 
 grpc:
   server:
-    port: 9090
+    port: 19091
     in-process-name: congthanhapp-ecommerce-cart-service
     reflection-service-enabled: true
   client:
     product-service:
       address: "localhost:9090"
       negotiationType: "PLAINTEXT"
+
+keycloak:
+  realm: ecommerce-realm
+  auth-server-url: http://keycloak:8080/auth
+  resource: catalog-service
+  bearer-only: true
+  ssl-required: external
+  credentials:
+    secret: your-client-secret
+  autodetect-bearer-only: true
+  cors: true
 
 ai:
   ollama:
@@ -189,6 +207,8 @@ axon:
   axonserver:
     servers: localhost:8124
     enabled: true
+  serializer:
+    events: jackson
 
 snowflake:
   worker-id: 1

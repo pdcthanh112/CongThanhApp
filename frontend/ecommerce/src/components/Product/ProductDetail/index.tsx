@@ -177,64 +177,6 @@ export default function ProductDetail({
     // }, [JSON.stringify(currentSelectedOption)]);
   }, [currentSelectedOption]);
 
-  const productVariantAttribute = [
-    {
-      title: 'Màu sắc',
-      option: [
-        {
-          name: 'Đen',
-          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGzIvyt_xy57h1p6OstQpVbRZs6OtDDKpiOw&s',
-          displayOrder: 1,
-        },
-        {
-          name: 'Trắng',
-          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc0wRIkUneSueNY53rOkf0DskgaL7i8bzThQ&s',
-          displayOrder: 2,
-        },
-        {
-          name: 'Xám',
-          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc0wRIkUneSueNY53rOkf0DskgaL7i8bzThQ&s',
-          displayOrder: 3,
-        },
-        {
-          name: 'Vàng',
-          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc0wRIkUneSueNY53rOkf0DskgaL7i8bzThQ&s',
-          displayOrder: 4,
-        },
-        {
-          name: 'Hồng',
-          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc0wRIkUneSueNY53rOkf0DskgaL7i8bzThQ&s',
-          displayOrder: 5,
-        },
-      ],
-    },
-    {
-      title: 'Dung lượng',
-      option: [
-        {
-          name: '128GB',
-          image: null,
-          displayOrder: 1,
-        },
-        {
-          name: '256GB',
-          image: null,
-          displayOrder: 2,
-        },
-        {
-          name: '512GB',
-          image: null,
-          displayOrder: 3,
-        },
-        {
-          name: '1TB',
-          image: null,
-          displayOrder: 4,
-        },
-      ],
-    },
-  ];
-
   //   const { data: product, isLoading } = useQuery({
   //     queryKey: [PRODUCT_KEY, productSlug],
   //     queryFn: async () => await getProductBySlug(productSlug as string).then(async(result) => {
@@ -427,10 +369,10 @@ export default function ProductDetail({
       }
     }
   };
-
+console.log('TTTTTTTTTTTTTT', productOption, '\nBBBBBBBBBBBBBBBBBBBBBBBBBB', productVariant, '\nVVVVVVVVVVVVVVVVVVVVVVV', productOptionValueGet)
   return (
     <div className="w-[80%] mx-auto my-3">
-      {/* <BreadcrumbComponent items={crumb} /> */}
+      <BreadcrumbComponent items={crumb} />
       <div className="bg-white flex px-3 py-2">
         <div className="w-[40%] py-3">
           <div
@@ -575,65 +517,73 @@ export default function ProductDetail({
             </div>
           </div>
           <div className="font-semibold text-3xl text-yellow-400">{formatCurrency(10000000000000, 'vi', 'VND')}</div>
-          <div>
-            {productVariantAttribute?.map((item) => (
-              <div key={item.title} className="flex space-y-5">
-                <div className="w-1/5 flex items-center">{item.title}</div>
-                <div className="w-4/5 flex">
-                  {item.option.map((item) => (
-                    <span
-                      key={item.name}
-                      className="border border-gray-200 rounded p-2 mr-3 hover:cursor-pointer flex justify-center items-center w-fit min-w-16"
-                    >
-                      {item.image && (
-                        <span className="w-5 h-5 relative mr-2">
-                          <Image src={item.image} alt="" objectFit="fit" fill />
-                        </span>
-                      )}
-                      {item.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+          
+          ===========================================
           {/* product options */}
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
           {(productOption || []).map((productOption) => {
-            const productOptionPost = productOptionValueGet?.find(
-              (option) => option.productOptionId === productOption.id
-            );
+            console.log('PPPPPPPPPP', productOption)
+            const productOptionPost = productOptionValueGet?.find((productOptionPost) => productOptionPost.productOptionId === productOption.id);
             const parsedValue = productOptionPost?.productOptionValue
-              ? JSON.parse('["color", "Black"]')
-              : // ? JSON.parse(productOptionPost.productOptionValue)
-                [];
-
+          //   ? (() => {
+          //     try {
+          //       return JSON.parse(productOptionPost.productOptionValue);
+          //     } catch (error) {
+          //       console.error("JSON parse error:", error);
+          //       return { [productOptionPost.productOptionValue]: productOptionPost.productOptionValue };
+          //     }
+          //   })()
+          // : [];
+              ? JSON.parse(productOptionPost.productOptionValue)
+              : [];
             return productOptionPost ? (
-              <div className="mb-3" key={productOption.id}>
+              <div className="mb-3" key={productOption.name}>
                 <h5 className="mb-2 fs-6">{productOption.name}:</h5>
-
-                <div className="d-flex gap-2">
-                  {Object.entries(parsedValue).map(([key, value]: any) => (
-                    <Button
-                      key={key}
-                      className={`${
-                        currentSelectedOption[productOptionPost.productOptionId] === key
-                          ? 'btn btn-primary text-white'
-                          : 'text-dark btn-outline-primary'
-                      }`}
-                      onClick={() => handleSelectOption(productOptionPost.productOptionId, key)}
-                      aria-label={`Color option ${value}`}
-                    >
-                      {key}
-                    </Button>
-                  ))}
-                </div>
+                {productOptionPost.displayType === 'color' ? (
+                  <div className="d-flex">
+                    {Object.entries(parsedValue).map(([key, value]: any, id: any) => (
+                      <Button
+                        key={key}
+                        className={`color-swatch me-2 py-1 px-2 ${
+                          currentSelectedOption[productOptionPost.productOptionId] === key
+                            ? 'border border-2 border-primary opacity-100'
+                            : 'btn-outline-primary opacity-25'
+                        }`}
+                        style={{
+                          backgroundColor: value,
+                          width: '30px',
+                          height: '30px',
+                          borderRadius: '50%',
+                        }}
+                        onClick={() => handleSelectOption(productOptionPost.productOptionId, key)}
+                        aria-label={`Color option ${value}`}
+                      ></Button>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="d-flex gap-2">
+                    {Object.entries(parsedValue).map(([key, value]: any, id: any) => (
+                      <Button
+                        key={key}
+                        className={`${
+                          currentSelectedOption[productOptionPost.productOptionId] === key
+                            ? 'btn btn-primary text-white'
+                            : 'text-dark btn-outline-primary'
+                        }`}
+                        onClick={() => handleSelectOption(productOptionPost.productOptionId, key)}
+                        aria-label={`Color option ${value}`}
+                        variant="outline-secondary"
+                      >
+                        {key}
+                      </Button>
+                    ))}
+                  </div>
+                )}
               </div>
             ) : (
               productOption.name
             );
           })}
-          bbbbbbbbbbbbbbbbbbbbbbbb
+          ===================================
           <div className="flex mt-10">
             <span className="flex items-center mr-10">{t('product.Quantity')}</span>
             <QuantitySelector

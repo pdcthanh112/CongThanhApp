@@ -12,10 +12,14 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 public class AddItemToCartCommand {
+
     private Long id;
+
+    private Long cartId
+            ;
     private String productId;
-    private String productVariantId;
+
     private int quantity;
-    private Long cartId;
+
     private Instant createdAt;
 }

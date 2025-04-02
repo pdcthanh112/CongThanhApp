@@ -11,7 +11,6 @@ import com.congthanh.promotionservice.grpc.PromotionResponse;
 import com.congthanh.promotionservice.grpc.PromotionServiceGrpc;
 import com.congthanh.orderservice.model.request.CreateOrderRequest;
 import com.congthanh.orderservice.model.mapper.OrderMapper;
-import com.congthanh.orderservice.model.dto.CartItemResponse;
 import com.congthanh.orderservice.repository.checkout.CheckoutRepository;
 import com.congthanh.orderservice.repository.order.OrderRepository;
 import com.congthanh.orderservice.service.OrderService;

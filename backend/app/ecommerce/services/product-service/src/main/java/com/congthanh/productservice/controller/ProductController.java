@@ -283,7 +283,7 @@ public class ProductController {
                 )).values()));
     }
 
-    @GetMapping({"/storefront/product-option-values/{productId}"})
+    @GetMapping("/storefront/product-option-values/{productId}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK",
                     content = @Content(schema = @Schema(
@@ -291,9 +291,7 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Not found",
                     content = @Content(schema = @Schema(implementation = Error.class))),
     })
-    public ResponseEntity<List<ProductOptionValueGetVm>> listProductOptionValueOfProduct(
-            @PathVariable("productId") String productId
-    ) {
+    public ResponseEntity<List<ProductOptionValueGetVm>> listProductOptionValueOfProduct(@PathVariable("productId") String productId) {
         Product product = productRepository
                 .findById(productId)
                 .orElseThrow(() -> new NotFoundException("Not found"));

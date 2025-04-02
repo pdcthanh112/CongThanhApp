@@ -20,14 +20,11 @@ public class CartItemDTO implements Serializable {
 
   private Long id;
 
-  private String product;
+  private Long cart;
 
-  private String productVariant;
+  private String product;
 
   private int quantity;
 
-  private Long cart;
-
   private Instant createdAt;
-
 }

@@ -23,9 +23,7 @@ public class CartItem {
     @Column(name = "product_id", nullable = false)
     private String productId;
 
-    @Column(name = "product_variant_id", nullable = false)
-    private String productVariant;
-
+    @Column(nullable = false)
     private int quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)

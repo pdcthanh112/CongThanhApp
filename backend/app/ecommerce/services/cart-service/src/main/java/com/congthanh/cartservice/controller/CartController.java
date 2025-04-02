@@ -68,9 +68,9 @@ public class CartController {
     }
 
     @GetMapping("/{cartId}/items")
-    public ResponseEntity<Response<List<CartDTO>>> getAllItemByCartId(@PathVariable("cartId") String cartId) {
-        List<CartDTO> result = cartService.getActiveCartByCustomerId(cartId);
-        Response<List<CartDTO>> response = new Response<>();
+    public ResponseEntity<Response<List<CartItemDTO>>> getAllItemByCartId(@PathVariable("cartId") Long cartId) {
+        List<CartItemDTO> result = cartItemService.getItemByCartId(cartId);
+        Response<List<CartItemDTO>> response = new Response<>();
         response.setData(result);
         response.setStatus(ResponseStatus.STATUS_SUCCESS);
         response.setMessage(result != null ? "Get xong" : "Cart emply");
@@ -98,7 +98,7 @@ public class CartController {
     }
 
     @PostMapping("/{cartId}/items")
-    public ResponseEntity<Response<CartItemDTO>> addItemToCart(@PathVariable("cartId") Long cartId, @RequestBody AddItemToCartRequest request) {
+    public ResponseEntity<Response<CartItemDTO>> addItemToCart(@PathVariable("cartId") Long cartId, @RequestBody @Valid AddItemToCartRequest request) {
         CartItemDTO result = cartItemService.addToCart(cartId, request);
         Response<CartItemDTO> response = new Response<>();
         response.setData(result);
