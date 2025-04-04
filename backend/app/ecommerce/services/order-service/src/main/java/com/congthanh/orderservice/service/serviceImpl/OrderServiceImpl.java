@@ -1,14 +1,13 @@
 package com.congthanh.orderservice.service.serviceImpl;
 
+import com.congthanh.orderservice.listener.saga.OrderSagaOrchestrator;
 import com.congthanh.orderservice.model.dto.CheckoutDTO;
 import com.congthanh.orderservice.model.dto.OrderDTO;
 import com.congthanh.orderservice.model.entity.Checkout;
 import com.congthanh.orderservice.model.entity.Order;
 import com.congthanh.orderservice.constant.enums.OrderStatus;
 import com.congthanh.orderservice.exception.NotFoundException;
-import com.congthanh.promotionservice.grpc.GetPromotionByCodeRequest;
-import com.congthanh.promotionservice.grpc.PromotionResponse;
-import com.congthanh.promotionservice.grpc.PromotionServiceGrpc;
+import com.congthanh.orderservice.model.entity.OrderItem;
 import com.congthanh.orderservice.model.request.CreateOrderRequest;
 import com.congthanh.orderservice.model.mapper.OrderMapper;
 import com.congthanh.orderservice.repository.checkout.CheckoutRepository;
@@ -16,7 +15,7 @@ import com.congthanh.orderservice.repository.order.OrderRepository;
 import com.congthanh.orderservice.service.OrderService;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
-import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,18 +35,18 @@ public class OrderServiceImpl implements OrderService {
 
     private final CheckoutRepository checkoutRepository;
 
-    private final KafkaTemplate<String, Order> kafkaTemplate;
+    private final OrderSagaOrchestrator sagaOrchestrator;
 
-    @GrpcClient("promotion-service")
-    private final PromotionServiceGrpc.PromotionServiceBlockingStub promotionServiceStub ;
+    private final KafkaTemplate<String, Order> kafkaTemplate;
 
     @Override
     @Transactional
-    public OrderDTO createOrder(CreateOrderRequest createOrderRequest) {
-        Checkout checkout = checkoutRepository.findById((int) createOrderRequest.getCheckout()).orElseThrow(() -> new NotFoundException("Checkout not found"));
+    public OrderDTO createOrder(CreateOrderRequest request) {
+        validateOrder(request);
+        Checkout checkout = checkoutRepository.findById((int) request.getCheckout()).orElseThrow(() -> new NotFoundException("Checkout not found"));
         PromotionResponse voucher = promotionServiceStub.getPromotionByCode(GetPromotionByCodeRequest.newBuilder().build());
 //        PromotionDTO promotion =
-        BigDecimal orderTotal = createOrderRequest.getTotal();
+        BigDecimal orderTotal = request.getTotal();
         if(voucher != null) {
             if(voucher.getType().equals(PromotionType.VOUCHER)) {
                 orderTotal = checkout.getTotal().subtract(BigDecimal.valueOf(voucher.getValue()));
@@ -56,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         Order order = Order.builder()
-                .customer(createOrderRequest.getCustomer())
+                .customer(request.getCustomer())
                 .orderDate(Instant.now())
                 .checkout(checkout)
                 .total(orderTotal)
@@ -64,9 +63,28 @@ public class OrderServiceImpl implements OrderService {
                 .build();
         Order result = orderRepository.save(order);
 
-        kafkaTemplate.send("order-created-topic", result);
+        sagaOrchestrator.startOrderSaga(request);
 
         return OrderMapper.mapOrderEntityToDTO(result);
+    }
+
+    @KafkaListener(topics = "order-completed")
+    public void handleOrderCompleted(OrderCompletedEvent event) {
+        Order order = orderRepository.findById(event.getOrderId())
+                .orElseThrow(() -> new OrderNotFoundException("Order not found: " + event.getOrderId()));
+
+        order.setStatus(OrderStatus.COMPLETED);
+        orderRepository.save(order);
+    }
+
+    @KafkaListener(topics = "order-cancelled")
+    public void handleOrderCancelled(OrderCancelEvent event) {
+        Order order = orderRepository.findById(event.getOrderId())
+                .orElseThrow(() -> new OrderNotFoundException("Order not found: " + event.getOrderId()));
+
+        order.setStatus(OrderStatus.CANCELLED);
+        order.setCancellationReason(event.getReason());
+        orderRepository.save(order);
     }
 
     @Override
@@ -108,15 +126,23 @@ public class OrderServiceImpl implements OrderService {
         return response;
     }
 
-//    @KafkaListener(topics = "shipment-completed-topic")
-//    public void handleShipmentCompleted(ShippingEvent shippingEvent) {
-//        // Cập nhật trạng thái đơn hàng thành "Shipped"
-//        Order order = orderRepository.findById(shippingEvent.eventType);
-//        order.setStatus(OrderStatus.SHIPPED);
-//        Order result = orderRepository.save(order);
-//
-//        // Đẩy sự kiện OrderStatusUpdated lên Kafka
-//        OrderEvent orderEvent = new OrderEvent("UPDATE", OrderMapper.mapOrderEntityToDTO(result));
-//        kafkaTemplate.send("order-topic", orderEvent);
-//    }
+    private void validateOrder(CreateOrderRequest orderRequest) {
+        if (orderRequest.getCustomer() == null || orderRequest.getCustomer().isEmpty()) {
+            throw new ValidationException("Customer ID is required");
+        }
+
+        if (orderRequest.getOrderItems() == null || orderRequest.getOrderItems().isEmpty()) {
+            throw new ValidationException("Order must contain at least one item");
+        }
+
+        if (orderRequest.getDeliveryAddress() == null) {
+            throw new ValidationException("Delivery address is required");
+        }
+    }
+
+    private BigDecimal calculateTotalAmount(List<OrderItem> items) {
+        return items.stream()
+                .map(item -> item.getOrderPrice().multiply(new BigDecimal(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 }

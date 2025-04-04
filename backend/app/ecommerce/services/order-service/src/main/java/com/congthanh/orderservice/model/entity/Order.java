@@ -27,7 +27,7 @@ public class Order extends AbstractAuditEntity{
   private Long id;
 
   @Column(name = "customer_id", nullable = false)
-  private String customerId;
+  private String customer;
 
   @Column(name = "shipping_address_id", nullable = false)
   private Long shippingAddress;
@@ -60,7 +60,11 @@ public class Order extends AbstractAuditEntity{
   @JsonManagedReference
   private Checkout checkout;
 
-  @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonIgnore
   private List<OrderItem> orderItem = new ArrayList<>();
+
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
+  private List<OrderItem> statusTracking = new ArrayList<>();
 }

@@ -40,6 +40,9 @@ public class Cart {
   @JsonProperty("isDefault")
   private boolean isDefault;
 
+  @Version
+  private int version;
+
 
 //  @Transient
 //  public BigDecimal getTotalOrderPrice() {

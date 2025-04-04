@@ -10,6 +10,7 @@ import com.congthanh.inventoryservice.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,11 @@ import org.springframework.stereotype.Service;
 public class InventoryServiceImpl implements InventoryService {
 
     private final InventoryRepository inventoryRepository;
+
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
+    private static final String INVENTORY_UPDATED_TOPIC = "inventory-updated";
+    private static final String INVENTORY_FAILED_TOPIC = "inventory-failed";
 
     public InventoryDTO addInventoryItem(InventoryRequest request) {
         ProductResponse product = null;
@@ -56,20 +62,113 @@ public class InventoryServiceImpl implements InventoryService {
                 .orElse(false);
     }
 
-//    @KafkaListener(topics = "product-topic")
-//    private void handleCreateProduct(ProductEvent productEvent) {
-//        if ("PRODUCT_CREATED".equals(productEvent.eventType())) {
-//            ProductResponse product = productEvent.product();
-//            InventoryRequest inventory = InventoryRequest.builder().quantity(0).sku(product.getSku()).build();
-//            this.addInventoryItem(inventory);
-//        }
-//    }
+    @KafkaListener(topics = "payment-processed")
+    @Transactional
+    public void updateInventory(InventoryRequestEvent event) {
+        try {
+            log.info("Updating inventory for order: {}", event.getOrderId());
 
-    @KafkaListener(topics = "create-product-variant-topic")
-    private void handleCreateVariant(ProductVariantResponse variant) {
-            InventoryRequest inventory = InventoryRequest.builder().stock(0).sku(variant.getSku()).build();
-            this.addInventoryItem(inventory);
+            boolean allItemsAvailable = true;
+            List<String> unavailableItems = new ArrayList<>();
+            List<InventoryChange> changes = new ArrayList<>();
 
+            // Kiểm tra và cập nhật inventory cho từng sản phẩm
+            for (OrderItem item : event.getItems()) {
+                Inventory inventory = inventoryRepository.findByProductId(item.getProductId())
+                        .orElseThrow(() -> new ProductNotFoundException("Product not found: " + item.getProductId()));
+
+                if (inventory.getQuantity() < item.getQuantity()) {
+                    allItemsAvailable = false;
+                    unavailableItems.add(item.getProductName() + " (requested: " + item.getQuantity() +
+                            ", available: " + inventory.getQuantity() + ")");
+                } else {
+                    // Lưu thay đổi để thực hiện sau khi kiểm tra tất cả items
+                    changes.add(new InventoryChange(inventory, item.getQuantity()));
+                }
+            }
+
+            if (allItemsAvailable) {
+                // Thực hiện cập nhật số lượng
+                for (InventoryChange change : changes) {
+                    Inventory inventory = change.getInventory();
+                    int newQuantity = inventory.getQuantity() - change.getReduceBy();
+                    inventory.setQuantity(newQuantity);
+                    inventoryRepository.save(inventory);
+
+                    // Lưu lịch sử
+                    InventoryHistory history = new InventoryHistory();
+                    history.setProductId(inventory.getProductId());
+                    history.setOrderId(event.getOrderId());
+                    history.setQuantityChanged(-change.getReduceBy());
+                    history.setTimestamp(new Date());
+                    history.setOperation(InventoryOperation.RESERVE);
+                    historyRepository.save(history);
+                }
+
+                // Gửi sự kiện cập nhật inventory thành công
+                InventoryUpdatedEvent updatedEvent = new InventoryUpdatedEvent();
+                updatedEvent.setSagaId(event.getSagaId());
+                updatedEvent.setOrderId(event.getOrderId());
+                updatedEvent.setOrderDTO(event.getOrderDTO());
+
+                kafkaTemplate.send(INVENTORY_UPDATED_TOPIC, updatedEvent);
+
+                log.info("Inventory updated successfully for order: {}", event.getOrderId());
+            } else {
+                // Gửi sự kiện cập nhật inventory thất bại
+                InventoryFailedEvent failedEvent = new InventoryFailedEvent();
+                failedEvent.setSagaId(event.getSagaId());
+                failedEvent.setOrderId(event.getOrderId());
+                failedEvent.setOrderDTO(event.getOrderDTO());
+                failedEvent.setReason("Some items are out of stock: " + String.join(", ", unavailableItems));
+
+                kafkaTemplate.send(INVENTORY_FAILED_TOPIC, failedEvent);
+
+                log.warn("Inventory update failed for order {}: some items out of stock", event.getOrderId());
+            }
+        } catch (Exception e) {
+            log.error("Error updating inventory for order {}: {}", event.getOrderId(), e.getMessage());
+
+            // Gửi sự kiện cập nhật inventory thất bại
+            InventoryFailedEvent failedEvent = new InventoryFailedEvent();
+            failedEvent.setSagaId(event.getSagaId());
+            failedEvent.setOrderId(event.getOrderId());
+            failedEvent.setOrderDTO(event.getOrderDTO());
+            failedEvent.setReason("System error: " + e.getMessage());
+
+            kafkaTemplate.send(INVENTORY_FAILED_TOPIC, failedEvent);
+        }
+    }
+
+    // Xử lý khôi phục inventory khi có lỗi xảy ra ở các bước sau
+    @KafkaListener(topics = "delivery-failed")
+    @Transactional
+    public void rollbackInventory(InventoryRollbackEvent event) {
+        try {
+            log.info("Rolling back inventory for order: {}", event.getOrderId());
+
+            for (OrderItem item : event.getItems()) {
+                Inventory inventory = inventoryRepository.findByProductId(item.getProductId())
+                        .orElseThrow(() -> new ProductNotFoundException("Product not found: " + item.getProductId()));
+
+                // Khôi phục số lượng
+                inventory.setQuantity(inventory.getQuantity() + item.getQuantity());
+                inventoryRepository.save(inventory);
+
+                // Lưu lịch sử
+                InventoryHistory history = new InventoryHistory();
+                history.setProductId(inventory.getProductId());
+                history.setOrderId(event.getOrderId());
+                history.setQuantityChanged(item.getQuantity());
+                history.setTimestamp(new Date());
+                history.setOperation(InventoryOperation.ROLLBACK);
+                historyRepository.save(history);
+            }
+
+            log.info("Inventory rolled back successfully for order: {}", event.getOrderId());
+        } catch (Exception e) {
+            log.error("Error rolling back inventory for order {}: {}", event.getOrderId(), e.getMessage());
+        }
     }
 
 }

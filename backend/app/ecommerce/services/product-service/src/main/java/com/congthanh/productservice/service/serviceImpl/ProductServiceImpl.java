@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
     @Cacheable("products")
     public ResponseWithPagination<ProductDTO> getAllProduct(Integer page, Integer limit) {
 
-        Pageable pageable = PageRequest.of(page, limit);
+        Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Product> result = productRepository.findAll(pageable);
 
         if (result.hasContent()) {
@@ -355,37 +355,10 @@ public class ProductServiceImpl implements ProductService {
         return List.of();
     }
 
-//    @Override
-//    public List<ProductVariantAttributeValueDTO> getVariantAttributeValueByProduct(String productId) {
-//        List<Tuple> data = (List<Tuple>) productRepository.getVariantAttributeValueByProduct(productId);
-//        if (!data.isEmpty()) {
-//            Map<String, ProductVariantAttributeValueDTO> responseMap = new HashMap<>();
-//            long idCounter = 1;
-//
-//            for (Tuple row : data) {
-//                String attributeName = row.get("variantAttributeName", String.class);
-//                String attributeValue = row.get("variantAttributeValue", String.class);
-//
-//                if (!responseMap.containsKey(attributeName)) {
-//                    ProductVariantAttributeValueDTO response = new ProductVariantAttributeValueDTO();
-//                    response.setId(idCounter++);
-//                    response.setAttributeName(attributeName);
-//                    response.setValue(new ArrayList<>());
-//                    responseMap.put(attributeName, response);
-//                }
-//
-//                ProductVariantAttributeValueDTO.Value value = new ProductVariantAttributeValueDTO.Value();
-//                value.setId(Long.valueOf(row.get("variantAttributeId", Integer.class)));
-//                value.setValue(attributeValue);
-//
-//                responseMap.get(attributeName).getValue().add(value);
-//            }
-//
-//            return new ArrayList<>(responseMap.values());
-//        }
-//        return null;
-//    }
-
+    @Override
+    public ResponseWithPagination<ProductDTO> getProductWithFilter(int page, int limit, String keyword, int rating, Double startPrice, Double endPrice) {
+        return null;
+    }
 
 }
 

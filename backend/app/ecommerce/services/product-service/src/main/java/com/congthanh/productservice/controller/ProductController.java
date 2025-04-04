@@ -12,8 +12,8 @@ import com.congthanh.productservice.model.response.VariantValueResponse;
 import com.congthanh.productservice.model.viewmodel.*;
 import com.congthanh.productservice.repository.product.ProductRepository;
 import com.congthanh.productservice.repository.variantOptionCombination.VariantOptionCombinationRepository;
-import com.congthanh.productservice.repository.variantOptionValue.VariantOptionValueRepository;
 import com.congthanh.productservice.service.ProductService;
+import com.congthanh.productservice.service.VariantOptionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -46,13 +46,13 @@ public class ProductController {
 
     private final ProductService productService;
 
-    private final VariantOptionCombinationRepository productOptionCombinationRepository;
+    private final VariantOptionService variantOptionService;
 
-    private final VariantOptionValueRepository productOptionValueRepository;
+    private final VariantOptionCombinationRepository productOptionCombinationRepository;
 
     @GetMapping("")
     @PermitAll
-    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getAllProduct(@RequestParam(name = "page", required = false, defaultValue = "0") int page, @RequestParam(name = "limit", required = false, defaultValue = "10") int limit) {
+    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getAllProduct(@RequestParam(name = "page", required = false, defaultValue = "1") int page, @RequestParam(name = "limit", required = false, defaultValue = "10") int limit) {
         ResponseWithPagination<ProductDTO> data = productService.getAllProduct(page, limit);
         Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
         response.setData(data);
@@ -291,15 +291,29 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Not found",
                     content = @Content(schema = @Schema(implementation = Error.class))),
     })
-    public ResponseEntity<List<ProductOptionValueGetVm>> listProductOptionValueOfProduct(@PathVariable("productId") String productId) {
-        Product product = productRepository
-                .findById(productId)
-                .orElseThrow(() -> new NotFoundException("Not found"));
-        List<ProductOptionValueGetVm> productVariations = productOptionValueRepository
-                .findAllByProduct(product).stream()
-                .map(ProductOptionValueGetVm::fromModel)
-                .toList();
-        return ResponseEntity.ok(productVariations);
+    public ResponseEntity<Response<List<ProductOptionValueGetVm>>> listProductOptionValueOfProduct(@PathVariable("productId") String productId) {
+        List<ProductOptionValueGetVm> result = variantOptionService.getVariantOptionValueByProduct(productId);
+        Response<List<ProductOptionValueGetVm>> response = new Response<>();
+        response.setData(result);
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        response.setMessage("Get successfully");
+        return ResponseEntity.ok().body(response);
+    }
+
+    public ResponseEntity<Response<ResponseWithPagination<ProductDTO>>> getProductWithFilter(
+            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(value = "limit", defaultValue = "5", required = false) int limit,
+            @RequestParam(value = "productName", defaultValue = "", required = false) String productName,
+            @RequestParam(value = "rating", defaultValue = "", required = false) int rating,
+            @RequestParam(value = "startPrice", defaultValue = "", required = false) Double startPrice,
+            @RequestParam(value = "endPrice", defaultValue = "", required = false) Double endPrice
+    ) {
+        ResponseWithPagination<ProductDTO> result = productService.getProductWithFilter(page, limit, productName, rating, startPrice, endPrice);
+        Response<ResponseWithPagination<ProductDTO>> response = new Response<>();
+        response.setData(result);
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        response.setMessage("Get successfully");
+        return ResponseEntity.ok().body(response);
     }
 
     @QueryMapping(value = "product")

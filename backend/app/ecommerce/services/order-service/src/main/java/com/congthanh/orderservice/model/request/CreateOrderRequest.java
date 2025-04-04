@@ -1,11 +1,13 @@
 package com.congthanh.orderservice.model.request;
 
+import com.congthanh.orderservice.model.entity.OrderItem;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,6 +19,6 @@ public class CreateOrderRequest {
 
     private BigDecimal total;
 
-    private long checkout;
+    List<OrderItem> orderItems;
 
 }

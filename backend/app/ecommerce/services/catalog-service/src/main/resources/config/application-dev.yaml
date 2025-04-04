@@ -213,7 +213,7 @@ eureka:
       default-zone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
-#    prefer-ip-address: true
+    prefer-ip-address: true
 
 axon:
   axonserver:
@@ -241,6 +241,10 @@ snowflake:
   datacenter-id: 1
 
 resilience4j:
+  timelimiter:
+    instances:
+      rest-api:
+        timeout-duration: 2000ms
   circuitbreaker:
     instances:
       rest-circuit-breaker:

@@ -34,4 +34,6 @@ public class CartItem {
     @Column(name = "created_at")
     private Instant createdAt;
 
+    @Version
+    private int version;
 }

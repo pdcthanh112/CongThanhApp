@@ -2,9 +2,9 @@ server:
   port: 5006 # ${SERVER_PORT}
   servlet:
     context-path: /api
-  compression:
-    enabled: true
-    min-response-size: 1024
+#  compression:
+#    enabled: true
+#    min-response-size: 1024
 #  ssl:
 #    key-store: classpath:keystore.p12  # Đường dẫn đến keystore
 #    key-store-password: password       # Mật khẩu keystore
@@ -15,18 +15,23 @@ spring:
   application:
     name: congthanhapp-ecommerce-order-service
 
+  config:
+    import: optional:file:.env[.properties]
+    activate:
+      on-profile: dev
+
+  web:
+    cors:
+      allowed-origins: "http://localhost:3000"
+      allowed-methods: GET,POST,PUT,PATCH,DELETE
+      allowed-headers: "*"
+      allow-credentials: true
+
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
     username: postgres
     password: 123456
     driver-class-name: org.postgresql.Driver
-
-
-    mysql:
-      url: jdbc:mysql://localhost:3306/mydream?allowPublicKeyRetrieval=true&useSSL=false
-      username: root
-      password: 123456
-      driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     database: default
@@ -41,14 +46,26 @@ spring:
         use_sql_comments: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-  mongodb:
-    uri: mongodb://localhost:27017/MyDream
-    database: CongThanhApp
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/MyDream
+      database: CongThanhApp
 
+    redis:
+      port: 6379
+      password: your_password_if_any
+      database: 0
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
 
   graphql:
     graphiql:
-      enable: true
+      enabled: true
     cors:
       allowed-origins: "*"
     schema:
@@ -66,79 +83,82 @@ spring:
         tokenPrefix: "Bearer "
         tokenExpirationAfterDays: 30
 
-  main:
-    allow-circular-references: true
-    allow-bean-definition-overriding: true
 
-  mail:
-    host: smtp.example.com
-    port: 587
-    username: myemail@example.com
-    password: emailpassword
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+#  main:
+#    allow-circular-references: true
+#    allow-bean-definition-overriding: true
+#
+#  mail:
+#    host: smtp.example.com
+#    port: 587
+#    username: myemail@example.com
+#    password: emailpassword
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#
+#  cache:
+#    type: caffeine
+#    caffeine:
+#      spec: maximumSize=500,expireAfterAccess=600s
 
-  cache:
-    type: caffeine
-    caffeine:
-      spec: maximumSize=500,expireAfterAccess=600s
-
-#    Cấu hình upload file
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-
-  web:
-    cors:
-      allowed-origins: "http://localhost:3000"
-      allowed-methods: GET,POST,PUT,PATCH,DELETE
-
-  data:
-    redis:
-      port: 6379
-      password: your_password_if_any
-      database: 0
-      timeout: 2000ms
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          min-idle: 0
-          max-wait: -1ms
-
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
 
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
       group-id: my-group
       auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
-#  Cấu hình quốc tế hoá i18n
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  activemq:
+    packages:
+      trust-all: true
+
   messages:
     basename: messages
 
-  ai:
-    ollama:
-      embedding:
-        enabled: false
-    vectorstore:
-      pgvector:
-        index-type: hnsw
-        distance-type: cosine_distance
-        dimensions: 384
+grpc:
+  server:
+    port: 19090 #9090
+    in-process-name: congthanhapp-ecommerce-order-service
+    reflection-service-enabled: true
+
+keycloak:
+  realm: ecommerce-realm
+  auth-server-url: http://keycloak:8080/auth
+  resource: catalog-service
+  bearer-only: true
+  ssl-required: external
+  credentials:
+    secret: your-client-secret
+  autodetect-bearer-only: true
+  cors: true
+
+ai:
+  ollama:
+    embedding:
+    enabled: false
+  vectorstore:
+    pgvector:
+      index-type: hnsw
+      distance-type: cosine_distance
+      dimensions: 384
 
 congthanhapp:
   openapi:
@@ -148,6 +168,7 @@ congthanhapp:
 springdoc:
   swagger-ui:
     tagsSorter: alpha
+    path: /swagger-ui
   enable-spring-security: true
 
 #logging:
@@ -158,12 +179,77 @@ springdoc:
 ##    org.springframework.data.redis.core.RedisTemplate: DEBUG
 #  file:
 #    name: /var/log/myapp.log
+#    name: logs/${spring.application.name}.log
 #  pattern:
 #    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 #    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 
 management:
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      access: unrestricted
+    prometheus:
+      access: unrestricted
+    refresh:
+      access: unrestricted
+    restart:
+      access: unrestricted
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health,metrics,prometheus
+      base-path: /admin
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+#    prefer-ip-address: true
+
+axon:
+  axonserver:
+    servers: localhost:8124
+    enabled: true
+  serializer:
+    events: jackson
+  eventhandling:
+    processors:
+      catalog-service:
+        mode: tracking
+        thread-count: 4
+        initial-segment-count: 1
+        batch-size: 100
+      tag:
+        mode: tracking
+        source: eventStore
+#axoniq:
+#  console:
+#    enabled: true
+#    url: https://console.axoniq.io
+
+snowflake:
+  worker-id: 1
+  datacenter-id: 1
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      rest-circuit-breaker:
+        sliding-window-type: COUNT_BASED
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        permitted-number-of-calls-in-half-open-state: 3
+  retry:
+    instances:
+      rest-api:
+        max-attempts: 3

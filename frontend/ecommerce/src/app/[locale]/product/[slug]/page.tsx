@@ -21,10 +21,6 @@ type PropsType = Promise<{
   pvid?: string;
 }>;
 
-async function getProductDetail(slug: string) {
-  return await getProductDetailBySlug(slug).catch(() => notFound());
-}
-
 // async function getReviewStatisticByProduct(productId: string) {
 //   return await getStatisticFromProduct(productId);
 // }
@@ -61,7 +57,7 @@ const fetchAndSortProductVariations = async (productId: string): Promise<Product
 
 export async function generateMetadata({ params }: { params: PropsType }): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getProductDetail(slug).then((response) => response.data);
+  const product = await getProductDetailBySlug(slug).then((response) => response.data).catch(() => notFound());;
 
   return {
     title: product.name,
@@ -88,7 +84,7 @@ export default async function ProductDetailPage({ params }: { params: PropsType 
   const productOptions: ProductOptions[] = [];
   let productVariant: ProductVariant[] = [];
 
-  const product = await getProductDetail(slug).then((response) => response.data);
+  const product = await getProductDetailBySlug(slug).then((response) => response.data).catch(() => notFound());;
 
   if (product.hasVariant) {
     try {
@@ -131,9 +127,9 @@ export default async function ProductDetailPage({ params }: { params: PropsType 
       {/* <div className="bg-white mt-10 p-5">
         <h2 className="bg-yellow-100 px-2 py-1 rounded-sm">{t('product.product_review').toUpperCase()}</h2>
         <ReviewProduct productId={product.id} reviewStatictis={reviewStatistic} />
-      </div>
+      </div> */}
 
-      <RelatedProduct /> */}
+      <RelatedProduct />
     </React.Fragment>
   );
 }

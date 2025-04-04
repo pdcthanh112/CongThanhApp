@@ -18,6 +18,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { PATH } from '@/utils/constants/path';
 import useAppModalStore from '@/store/useAppModal';
+import { Heart } from 'lucide-react';
 
 type ProductItemProps = {
   product: Product;
@@ -36,11 +37,6 @@ const ProductItemCard = ({ product }: ProductItemProps) => {
   const { data: soldProduct } = useQuery({
     queryKey: ['product-sold', product],
     queryFn: async () => await getSoldByProduct(product.id).then((response) => response.data),
-  });
-
-  const { data: productImage } = useQuery({
-    queryKey: ['product-image', product],
-    queryFn: async () => await getDefaultImageByProductId(product.id).then((response) => response.data),
   });
 
   const { data: wishlist } = useQuery({
@@ -110,14 +106,9 @@ const ProductItemCard = ({ product }: ProductItemProps) => {
     <Card key={product.id} className=" bg-white z-30 p-3 text-sm hover:cursor-pointer">
       <div className="w-full flex items-center justify-center relative group">
         <Box width={220} height={220} position={'relative'}>
-          <Image
-            src={productImage?.imagePath || DefaultImage}
-            alt={productImage?.alt ?? 'Product image'}
-            fill
-            objectFit="fill"
-          />
+          <Image src={product.thumbnail.imagePath || DefaultImage} alt={product.name} fill objectFit="fill" />
         </Box>
-        <ul className="w-full h-36 bg-gray-100 absolute -bottom-36 flex flex-col items-end justify-center gap-2 font-semibold px-2 border-l border-r group-hover:bottom-0 duration-700">
+        {/* <ul className="w-full h-36 bg-gray-100 absolute -bottom-36 flex flex-col items-end justify-center gap-2 font-semibold px-2 border-l border-r group-hover:bottom-0 duration-700">
           <li
             className="text-gray-600 hover:text-black text-sm font-medium border-b-[1px] border-b-gray-400 hover:border-b-gray-700 flex items-center justify-end gap-2 hover:cursor-pointer duration-300 w-full"
             title={t('common.add_to_cart')}
@@ -154,7 +145,7 @@ const ProductItemCard = ({ product }: ProductItemProps) => {
               <Icon component={HeartFull} />
             </li>
           )}
-        </ul>
+        </ul> */}
       </div>
 
       <div className="relative z-50 bg-white">
@@ -181,9 +172,12 @@ const ProductItemCard = ({ product }: ProductItemProps) => {
           {t('product.Sold')}: {soldProduct}
         </span>
 
-        <Button className="w-full bg-yellow-400" onClick={() => handleAddToCart(product.id)}>
-          {t('common.add_to_cart')}
-        </Button>
+        <div className="flex justify-between">
+          <Button className="w-48 bg-yellow-400" onClick={() => handleAddToCart(product.id)}>
+            {t('common.add_to_cart')}
+          </Button>
+          <Heart className="w-8 h-8" color="#e0281b" fill='#e0281b'/>
+        </div>
       </div>
     </Card>
   );

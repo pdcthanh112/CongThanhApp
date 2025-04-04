@@ -7,31 +7,32 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
+import java.time.Instant;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Builder
-@Table(name = "order_item")
-public class OrderItem {
+@Table(name = "order_status_tracking")
+public class OrderStatusTracking {
 
     @Id
     private Long id;
-
-    @Column(name = "product_id", nullable = false)
-    private String product;
-
-    @Column(nullable = false)
-    private int quantity;
-
-    @Column(name = "order_price", nullable = false, updatable = false)
-    private BigDecimal orderPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
+    @Column(name = "step_order", nullable = false)
+    private int stepOrder;
+
+    @Column(nullable = false)
     private OrderStatus status;
+
+    @Column(columnDefinition = "TEXT")
+    private String note;
+
+    @Column(name = "changed_at")
+    private Instant changedAt;
 }

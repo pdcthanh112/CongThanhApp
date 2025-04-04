@@ -43,4 +43,6 @@ public interface ProductService {
 
 //  List<ProductVariantAttributeValueDTO> getVariantAttributeValueByProduct(String productId);
 
+  ResponseWithPagination<ProductDTO> getProductWithFilter(int page, int limit, String keyword, int rating, Double startPrice, Double endPrice);
+
 }

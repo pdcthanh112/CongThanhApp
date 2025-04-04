@@ -11,14 +11,14 @@ import {
 } from '@/models/types';
 import { cacheLife } from 'next/dist/server/use-cache/cache-life';
 
-export const getAllProduct = async (page?: number, limit?: number): Promise<ResponseWithPagination<Product>> => {
+export const getAllProduct = async (pagination: {page?: number, limit?: number}, filter: any): Promise<ResponseWithPagination<Product>> => {
   // 'use cache'
   // cacheLife('getAllProduct')
   const params = new URLSearchParams();
-  page && params.append('page', String(page));
-  limit && params.append('limit', String(limit));
+  pagination.page && params.append('page', String(pagination.page));
+  pagination.limit && params.append('limit', String(pagination.limit));
   return await axiosConfig
-    .get('product/getAll', { params: params })
+    .get('products', { params: params })
     .then((response) => response.data)
     .catch((error) => {
       throw Error(error);
