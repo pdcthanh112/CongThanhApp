@@ -8,6 +8,7 @@ import com.congthanh.catalogservice.model.request.CreateCategoryRequest;
 import com.congthanh.catalogservice.model.request.RequestFilter;
 import com.congthanh.catalogservice.model.request.UpdateCategoryRequest;
 import com.congthanh.catalogservice.model.response.Response;
+import com.congthanh.catalogservice.model.response.ResponseWithPagination;
 import com.congthanh.catalogservice.repository.category.CategoryRepository;
 import com.congthanh.catalogservice.service.CategoryService;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,7 +36,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @GetMapping("/")
+    @GetMapping("")
     //@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     @PermitAll
     public ResponseEntity<Response<Object>> getAllCategory(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer limit) {
@@ -43,6 +44,17 @@ public class CategoryController {
         RequestFilter filter = null;
         Object data = categoryService.getAllCategoryJson(filter);
         Response<Object> response = new Response<>();
+        response.setData(data);
+        response.setMessage("Get all successfully");
+        response.setStatus(ResponseStatus.STATUS_SUCCESS);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/list")
+    @PermitAll
+    public ResponseEntity<Response<ResponseWithPagination<CategoryDTO>>> getAllCategoryList(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "limit", defaultValue = "10") int limit) {
+        ResponseWithPagination<CategoryDTO> data = categoryService.getAllCategory(page, limit);
+        Response<ResponseWithPagination<CategoryDTO>> response = new Response<>();
         response.setData(data);
         response.setMessage("Get all successfully");
         response.setStatus(ResponseStatus.STATUS_SUCCESS);

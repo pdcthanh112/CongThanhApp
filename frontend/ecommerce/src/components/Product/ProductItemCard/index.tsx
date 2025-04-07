@@ -173,7 +173,7 @@ const ProductItemCard = ({ product }: ProductItemProps) => {
         </span>
 
         <div className="flex justify-between">
-          <Button className="w-48 bg-yellow-400" onClick={() => handleAddToCart(product.id)}>
+          <Button className="w-[calc(100% - 8px)] bg-yellow-400" onClick={() => handleAddToCart(product.id)}>
             {t('common.add_to_cart')}
           </Button>
           <Heart className="w-8 h-8" color="#e0281b" fill='#e0281b'/>

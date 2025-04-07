@@ -45,37 +45,28 @@ public class CategoryServiceImpl implements CategoryService {
     private final ModelMapper modelMapper;
 
     @Override
-    public Object getAllCategory(Integer page, Integer limit) {
-        if (page != null && limit != null) {
-            Pageable pageable = PageRequest.of(page, limit);
-            Page<Category> result = categoryRepository.findAll(pageable);
-            ResponseWithPagination<CategoryDTO> response = new ResponseWithPagination<>();
-            List<CategoryDTO> list = new ArrayList<>();
-            if (result.hasContent()) {
-                for (Category category : result.getContent()) {
-                    CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
-                    list.add(categoryDTO);
-                }
-                PaginationInfo paginationInfo = PaginationInfo.builder()
-                        .page(page)
-                        .limit(limit)
-                        .totalPage(result.getTotalPages())
-                        .totalElement(result.getTotalElements())
-                        .build();
-                response.setResponseList(list);
-                response.setPaginationInfo(paginationInfo);
-            } else {
-                throw new RuntimeException("List empty exception");
+    public ResponseWithPagination<CategoryDTO> getAllCategory(Integer page, Integer limit) {
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        Page<Category> result = categoryRepository.findAll(pageable);
+        ResponseWithPagination<CategoryDTO> response = new ResponseWithPagination<>();
+        List<CategoryDTO> list = new ArrayList<>();
+        if (result.hasContent()) {
+            for (Category category : result.getContent()) {
+                CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
+                list.add(categoryDTO);
             }
+            PaginationInfo paginationInfo = PaginationInfo.builder()
+                    .page(page)
+                    .limit(limit)
+                    .totalPage(result.getTotalPages())
+                    .totalElement(result.getTotalElements())
+                    .build();
+            response.setResponseList(list);
+            response.setPaginationInfo(paginationInfo);
+
             return response;
         } else {
-            List<Category> list = categoryRepository.findAll();
-            List<CategoryDTO> result = new ArrayList<>();
-            for (Category item : list) {
-                CategoryDTO categoryDTO = modelMapper.map(item, CategoryDTO.class);
-                result.add(categoryDTO);
-            }
-            return result;
+            throw new RuntimeException("List empty exception");
         }
     }
 

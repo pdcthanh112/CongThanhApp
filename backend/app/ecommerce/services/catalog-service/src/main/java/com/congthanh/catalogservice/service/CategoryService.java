@@ -5,12 +5,13 @@ import com.congthanh.catalogservice.model.request.AddSubcategoryRequest;
 import com.congthanh.catalogservice.model.request.CreateCategoryRequest;
 import com.congthanh.catalogservice.model.request.RequestFilter;
 import com.congthanh.catalogservice.model.request.UpdateCategoryRequest;
+import com.congthanh.catalogservice.model.response.ResponseWithPagination;
 
 import java.util.List;
 
 public interface CategoryService {
 
-  Object getAllCategory(Integer pageNo, Integer pageSize);
+  ResponseWithPagination<CategoryDTO> getAllCategory(Integer page, Integer limit);
   List<CategoryDTO> getAllCategoryJson(RequestFilter filter);
 
   CategoryDTO getCategoryById(String id);

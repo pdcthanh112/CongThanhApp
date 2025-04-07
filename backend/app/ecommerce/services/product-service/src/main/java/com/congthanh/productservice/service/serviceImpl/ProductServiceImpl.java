@@ -68,7 +68,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Cacheable("products")
     public ResponseWithPagination<ProductDTO> getAllProduct(Integer page, Integer limit) {
-
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Product> result = productRepository.findAll(pageable);
 
@@ -356,7 +355,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseWithPagination<ProductDTO> getProductWithFilter(int page, int limit, String keyword, int rating, Double startPrice, Double endPrice) {
+    public ResponseWithPagination<ProductDTO> getProductWithFilter(int page, int limit, String keyword, String category, String brand, int rating, Double startPrice, Double endPrice) {
         return null;
     }
 

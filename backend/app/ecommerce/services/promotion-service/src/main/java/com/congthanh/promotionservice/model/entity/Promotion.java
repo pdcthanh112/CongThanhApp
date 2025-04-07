@@ -51,18 +51,4 @@ public class Promotion {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
-//    @OneToMany(mappedBy = "voucher", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIgnore
-//    private List<Checkout> checkout;
-
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = Instant.now();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = Instant.now();
-    }
-
 }

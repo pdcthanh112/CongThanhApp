@@ -36,6 +36,7 @@ spring:
         format_sql: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        generate_statistics: true
 
   data:
     mongodb:
