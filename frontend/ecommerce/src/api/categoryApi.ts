@@ -6,7 +6,7 @@ export const getAllCategory = async (page?: number, limit?: number): Promise<Res
   page && params.append('page', String(page));
   limit && params.append('limit', String(limit));
   return await axiosConfig
-    .get('categories/', { params: params })
+    .get('categories/list', { params: params })
     .then((response) => response.data)
     .catch((error) => {
       throw Error(error);
@@ -15,7 +15,7 @@ export const getAllCategory = async (page?: number, limit?: number): Promise<Res
 
 export const getAllCategoryJson = async () => {
   return await axiosConfig
-    .get('categories/')
+    .get('categories')
     .then((response) => response.data)
     .catch((error) => {
       throw Error(error);

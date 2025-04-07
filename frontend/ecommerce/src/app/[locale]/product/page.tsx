@@ -4,13 +4,16 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import BreadcrumbComponent from '@/components/Breadcrumb/Breadcrumb';
 import { Breadcrumb } from '@/models/types';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getAllProduct } from '@/api/productApi';
-import { Button, Input } from '@/components/ui';
+import { Button, Checkbox, Input } from '@/components/ui';
 import ShowListProduct from '@/components/Product/ShowListProduct';
 import ProductItemCardSkeleton from '@/components/Product/ProductItemCard/ProductItemCardSkeleton';
 import { Rate } from 'antd';
 import useDebounce from '@/hooks/useDebounce';
+import { CATEGORY_KEY } from '@/utils/constants/queryKey';
+import request from 'graphql-request'
+import { gql} from "@apollo/client"
 
 const crumb: Breadcrumb[] = [
   { pageName: 'Home', url: '/home' },
@@ -59,6 +62,22 @@ export default function ProductPage() {
 
     return params;
   };
+
+  const { data: categoryList } = useQuery<{id: string, name: string}[]>({
+    queryKey: [CATEGORY_KEY, 'graphql'],
+    // queryFn: async () => await getAllCategory().then((response) => response.data.responseList),
+    queryFn: async () => await request('localhost:8080/api/ecommerce/categories/graphql', gql`
+      query {
+        categories {
+          id
+          name
+          slug
+        }
+      }
+    `),
+  });
+
+  console.log('tttttttttttttttttttt', categoryList)
 
   // const [pagination, setPagination] = useState<PaginationParams>({ page: 0, limit: 10 });
   const initialPagination = useMemo(() => ({ page: 1, limit: 10 }), []);
@@ -252,6 +271,14 @@ export default function ProductPage() {
             placeholder="Search products..."
             onChange={(e) => setSearchKeyword(e.target.value)}
           />
+          <div>
+            {categoryList?.map((item) => (
+              <div key={item.id}>
+                <Checkbox className='mr-2' value={item.name} onCheckedChange={() => handleCategoryFilter(item.name)}/>
+                {item.name}
+                </div>
+            ))}
+          </div>
           <div className="mb-4">
             <span className="block mb-2">Rating</span>
             {[5, 4, 3, 2, 1].map((star) => (

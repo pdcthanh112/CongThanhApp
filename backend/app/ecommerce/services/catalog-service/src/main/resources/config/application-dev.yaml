@@ -71,7 +71,7 @@ spring:
     schema:
       printer:
         enabled: true
-    path: /graphql
+    path: ecommerce/categories/graphql
 
   security:
     user:
