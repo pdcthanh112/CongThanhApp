@@ -1,4 +1,4 @@
-package com.congthanh.productservice.config;
+package com.congthanh.inventoryservice.config;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;

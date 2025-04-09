@@ -3,10 +3,18 @@ package com.congthanh.cartservice.config;
 //import io.grpc.ManagedChannel;
 //import io.grpc.ManagedChannelBuilder;
 //import org.springframework.context.annotation.Bean;
+import net.devh.boot.grpc.server.security.authentication.BasicGrpcAuthenticationReader;
+import net.devh.boot.grpc.server.security.authentication.GrpcAuthenticationReader;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 //
 @Configuration
 public class GrpcConfig {
+
+    @Bean
+    public GrpcAuthenticationReader grpcAuthenticationReader() {
+        return new BasicGrpcAuthenticationReader();
+    }
 //
 //    @Bean
 //    public ManagedChannel productServiceChannel() {

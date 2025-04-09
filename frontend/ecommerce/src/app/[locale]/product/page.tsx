@@ -66,7 +66,7 @@ export default function ProductPage() {
   const { data: categoryList } = useQuery<{id: string, name: string}[]>({
     queryKey: [CATEGORY_KEY, 'graphql'],
     // queryFn: async () => await getAllCategory().then((response) => response.data.responseList),
-    queryFn: async () => await request('localhost:8080/api/ecommerce/categories/graphql', gql`
+    queryFn: async () => await request('http://localhost:8080/api/ecommerce/categories/graphql', gql`
       query {
         categories {
           id
