@@ -31,6 +31,9 @@ public class OrderStatusTracking {
     private OrderStatus status;
 
     @Column(columnDefinition = "TEXT")
+    private String description;
+
+    @Column(columnDefinition = "TEXT")
     private String note;
 
     @Column(name = "changed_at")

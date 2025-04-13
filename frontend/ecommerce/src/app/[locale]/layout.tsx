@@ -61,6 +61,9 @@ export default async function Layout({ children, params: { locale } }: Readonly<
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body className={inter.className}>
         <Providers>
           <NextIntlClientProvider messages={messages}>

@@ -36,27 +36,27 @@ public class OrderItemServiceImpl implements OrderItemService {
         return OrderDetailMapper.mapOrderDetailEntityToDTO(result);
     }
 
-    @Override
-    public ResponseWithPagination<OrderItemDTO> getOrderDetailByStatus(String status, int page, int limit) {
-        PageRequest pageRequest = PageRequest.of(page, limit);
-        Page<OrderItem> result = orderDetailRepository.findByStatus(status, pageRequest);
-        if(result.hasContent()) {
-            ResponseWithPagination<OrderItemDTO> response = new ResponseWithPagination<>();
-            List<OrderItemDTO> list = new ArrayList<>();
-            for(OrderItem item: result) {
-                OrderItemDTO orderDTO = OrderDetailMapper.mapOrderDetailEntityToDTO(item);
-                list.add(orderDTO);
-            }
-            PaginationInfo paginationInfo = PaginationInfo.builder()
-                    .page(page)
-                    .limit(limit)
-                    .totalPage(result.getTotalPages())
-                    .totalElement(result.getTotalElements())
-                    .build();
-            response.setResponseList(list);
-            response.setPaginationInfo(paginationInfo);
-            return response;
-        }
-        return null;
-    }
+//    @Override
+//    public ResponseWithPagination<OrderItemDTO> getOrderDetailByStatus(String status, int page, int limit) {
+//        PageRequest pageRequest = PageRequest.of(page, limit);
+//        Page<OrderItem> result = orderDetailRepository.findByStatus(status, pageRequest);
+//        if(result.hasContent()) {
+//            ResponseWithPagination<OrderItemDTO> response = new ResponseWithPagination<>();
+//            List<OrderItemDTO> list = new ArrayList<>();
+//            for(OrderItem item: result) {
+//                OrderItemDTO orderDTO = OrderDetailMapper.mapOrderDetailEntityToDTO(item);
+//                list.add(orderDTO);
+//            }
+//            PaginationInfo paginationInfo = PaginationInfo.builder()
+//                    .page(page)
+//                    .limit(limit)
+//                    .totalPage(result.getTotalPages())
+//                    .totalElement(result.getTotalElements())
+//                    .build();
+//            response.setResponseList(list);
+//            response.setPaginationInfo(paginationInfo);
+//            return response;
+//        }
+//        return null;
+//    }
 }

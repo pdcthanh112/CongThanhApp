@@ -31,5 +31,6 @@ public class PromotionUsage {
     @Column(name = "order_id", nullable = false)
     private Long order;
 
+    @Column(name = "used_at", nullable = false)
     private Instant usedAt;
 }

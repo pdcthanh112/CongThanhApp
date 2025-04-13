@@ -1,6 +1,7 @@
 package com.congthanh.orderservice.model.request;
 
 import com.congthanh.orderservice.model.entity.OrderItem;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,10 +16,13 @@ import java.util.List;
 @Builder
 public class CreateOrderRequest {
 
+    @NotNull
     private String customer;
 
     private BigDecimal total;
 
-    List<OrderItem> orderItems;
+    private String promotionCode;
+
+    private List<OrderItem> orderItems;
 
 }

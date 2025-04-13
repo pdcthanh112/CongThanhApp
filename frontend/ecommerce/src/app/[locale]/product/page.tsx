@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import BreadcrumbComponent from '@/components/Breadcrumb/Breadcrumb';
-import { Breadcrumb } from '@/models/types';
+import { Breadcrumb, ProductFilter } from '@/models/types';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getAllProduct } from '@/api/productApi';
 import { Button, Checkbox, Input } from '@/components/ui';
@@ -12,8 +12,8 @@ import ProductItemCardSkeleton from '@/components/Product/ProductItemCard/Produc
 import { Rate } from 'antd';
 import useDebounce from '@/hooks/useDebounce';
 import { CATEGORY_KEY } from '@/utils/constants/queryKey';
-import request from 'graphql-request'
-import { gql} from "@apollo/client"
+import request from 'graphql-request';
+import { gql } from '@apollo/client';
 
 const crumb: Breadcrumb[] = [
   { pageName: 'Home', url: '/home' },
@@ -24,14 +24,8 @@ export default function ProductPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  type ProductFilter = {
-    keyword?: string;
-    category?: string[];
-    brand?: string[];
-    rating?: number;
-    startPrice?: number;
-    endPrice?: number;
-  };
+  const [showAllCategory, setShowAllCategory] = useState<boolean>(false);
+  const [showAllBrand, setShowAllBrand] = useState<boolean>(false);
 
   const initFiltersFromUrl = (): ProductFilter => {
     const params: ProductFilter = {};
@@ -63,23 +57,50 @@ export default function ProductPage() {
     return params;
   };
 
-  const { data: categoryList } = useQuery<{id: string, name: string}[]>({
+  const { data: categoryList } = useQuery<{ id: string; name: string; slug: string }[]>({
     queryKey: [CATEGORY_KEY, 'graphql'],
-    // queryFn: async () => await getAllCategory().then((response) => response.data.responseList),
-    queryFn: async () => await request('http://localhost:8080/api/ecommerce/categories/graphql', gql`
-      query {
-        categories {
-          id
-          name
-          slug
+    queryFn: async () =>
+      await request<{ categories: { id: string; name: string; slug: string }[] }>(
+        'http://localhost:5002/api/ecommerce/categories/graphql',
+        gql`
+          query {
+            categories {
+              id
+              name
+              slug
+            }
+          }
+        `,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-      }
-    `),
+      ).then((response) => response.categories),
   });
 
-  console.log('tttttttttttttttttttt', categoryList)
+  const { data: brandList } = useQuery<{ id: string; name: string; slug: string }[]>({
+    queryKey: ['brand', 'graphql'],
+    queryFn: async () =>
+      await request<{ brands: { id: string; name: string; slug: string }[] }>(
+        'http://localhost:5002/api/ecommerce/categories/graphql',
+        gql`
+          query {
+            brands {
+              id
+              name
+              slug
+            }
+          }
+        `,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      ).then((response) => response.brands),
+  });
 
-  // const [pagination, setPagination] = useState<PaginationParams>({ page: 0, limit: 10 });
   const initialPagination = useMemo(() => ({ page: 1, limit: 10 }), []);
   const [filters, setFilters] = useState<ProductFilter>(initFiltersFromUrl());
 
@@ -93,21 +114,9 @@ export default function ProductPage() {
   const debouncedStartPrice = useDebounce(priceRange.startPrice, 500);
   const debouncedEndPrice = useDebounce(priceRange.endPrice, 500);
 
-  // Cập nhật URL khi filters thay đổi
   const updateUrlWithFilters = (newFilters: ProductFilter) => {
-    // Tạo URLSearchParams object từ các filters hiện tại
     const params = new URLSearchParams();
 
-    // // Thêm các tham số không rỗng vào URL
-    // Object.entries(newFilters).forEach(([key, value]) => {
-    //   if (value !== undefined && value !== '') {
-    //     params.set(key, String(value));
-    //   }
-    // });
-
-    // // Tạo URL mới với pathname hiện tại và params mới
-    // const newUrl = `/product?${params.toString()}`;
-    // router.push(newUrl);
     Object.entries(newFilters).forEach(([key, value]) => {
       if (value !== undefined && value !== '') {
         if (Array.isArray(value)) {
@@ -123,6 +132,7 @@ export default function ProductPage() {
 
     const newUrl = `/product?${params.toString()}`;
     router.push(newUrl);
+    // window.history.pushState({}, '', newUrl);
   };
 
   // Effect để cập nhật filters từ các giá trị debounced
@@ -190,23 +200,16 @@ export default function ProductPage() {
     updateUrlWithFilters(newFilters);
   };
 
-  // Xử lý khi người dùng chọn category
   const handleCategoryFilter = (category: string) => {
-    // const newFilters = { ...filters, category };
-    // setFilters(newFilters);
-    // updateUrlWithFilters(newFilters);
     const currentCategories = filters.category || [];
     let newCategories: string[];
 
-    // Nếu category đã được chọn, loại bỏ nó (toggle)
     if (currentCategories.includes(category)) {
       newCategories = currentCategories.filter((item) => item !== category);
     } else {
-      // Nếu category chưa được chọn, thêm vào
       newCategories = [...currentCategories, category];
     }
 
-    // Cập nhật filters với mảng category mới
     const newFilters = {
       ...filters,
       category: newCategories.length > 0 ? newCategories : undefined,
@@ -216,23 +219,16 @@ export default function ProductPage() {
     updateUrlWithFilters(newFilters);
   };
 
-  // Xử lý khi người dùng chọn brand
   const handleBrandFilter = (brand: string) => {
-    // const newFilters = { ...filters, brand };
-    // setFilters(newFilters);
-    // updateUrlWithFilters(newFilters);
     const currentBrands = filters.brand || [];
     let newBrands: string[];
 
-    // Nếu brand đã được chọn, loại bỏ nó (toggle)
     if (currentBrands.includes(brand)) {
       newBrands = currentBrands.filter((item) => item !== brand);
     } else {
-      // Nếu brand chưa được chọn, thêm vào
       newBrands = [...currentBrands, brand];
     }
 
-    // Cập nhật filters với mảng brand mới
     const newFilters = {
       ...filters,
       brand: newBrands.length > 0 ? newBrands : undefined,
@@ -242,7 +238,6 @@ export default function ProductPage() {
     updateUrlWithFilters(newFilters);
   };
 
-  // Xử lý clear filter
   const handleClearFilter = () => {
     setFilters({});
     setSearchKeyword('');
@@ -272,12 +267,38 @@ export default function ProductPage() {
             onChange={(e) => setSearchKeyword(e.target.value)}
           />
           <div>
-            {categoryList?.map((item) => (
+            <div className="font-semibold">Category</div>
+            {categoryList?.slice(0, showAllCategory ? -1 : 10).map((item) => (
               <div key={item.id}>
-                <Checkbox className='mr-2' value={item.name} onCheckedChange={() => handleCategoryFilter(item.name)}/>
+                <Checkbox className="mr-2" value={item.name} onCheckedChange={() => handleCategoryFilter(item.slug)} />
                 {item.name}
-                </div>
+              </div>
             ))}
+            <div className="flex justify-end">
+              <span
+                className="hover:cursor-pointer hover:underline italic"
+                onClick={() => setShowAllCategory(!showAllCategory)}
+              >
+                {showAllCategory ? 'Show less' : 'Show more'}
+              </span>
+            </div>
+          </div>
+          <div>
+            <div className="font-semibold">Brand</div>
+            {brandList?.slice(0, showAllBrand ? -1 : 10).map((item) => (
+              <div key={item.id}>
+                <Checkbox className="mr-2" value={item.name} onCheckedChange={() => handleBrandFilter(item.slug)} />
+                {item.name}
+              </div>
+            ))}
+            <div className="flex justify-end">
+              <span
+                className="hover:cursor-pointer hover:underline italic"
+                onClick={() => setShowAllBrand(!showAllBrand)}
+              >
+                {showAllBrand ? 'Show less' : 'Show more'}
+              </span>
+            </div>
           </div>
           <div className="mb-4">
             <span className="block mb-2">Rating</span>
@@ -288,7 +309,7 @@ export default function ProductPage() {
                 onClick={() => handleRatingFilter(star)}
               >
                 <Rate value={star} disabled />
-                <span className="ml-2">{star} stars & above</span>
+                <span className="ml-2">{star} stars</span>
               </div>
             ))}
           </div>

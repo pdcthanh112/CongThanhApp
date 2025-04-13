@@ -92,3 +92,12 @@ export type ProductOptionValueDisplay = {
   displayOrder?: number;
   productOptionName: string;
 };
+
+export type ProductFilter = {
+  keyword?: string;
+  category?: string[];
+  brand?: string[];
+  rating?: number;
+  startPrice?: number;
+  endPrice?: number;
+};

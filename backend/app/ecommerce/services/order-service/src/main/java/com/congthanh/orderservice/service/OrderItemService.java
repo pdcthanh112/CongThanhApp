@@ -8,6 +8,6 @@ public interface OrderItemService {
 
     OrderItemDTO createOrderDetail(CreateOrderDetailRequest createOrderDetailRequest);
 
-    ResponseWithPagination<OrderItemDTO> getOrderDetailByStatus(String status, int page, int limit);
+//    ResponseWithPagination<OrderItemDTO> getOrderDetailByStatus(String status, int page, int limit);
 
 }

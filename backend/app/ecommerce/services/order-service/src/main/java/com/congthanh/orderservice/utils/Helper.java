@@ -1,19 +1,24 @@
 package com.congthanh.orderservice.utils;
 
-import java.text.Normalizer;
-import java.util.regex.Pattern;
+import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Helper {
 
-  public String generateSlug(String productName) {
-    String normalizedString = Normalizer.normalize(productName, Normalizer.Form.NFD);
-    Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-    String slug = pattern.matcher(normalizedString)
-            .replaceAll("")
-            .replaceAll("\\s+", "-")
-            .replaceAll("[^a-zA-Z0-9-]", "")
-            .toLowerCase();
+  private static final SecureRandom random = new SecureRandom();
+  private static final String CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-    return slug;
+  public static String generateOrderNumber() {
+    String datePart = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
+
+    int sequencePart = 100 + random.nextInt(900);
+
+    StringBuilder suffix = new StringBuilder();
+    for (int i = 0; i < 9; i++) {
+      suffix.append(CHARSET.charAt(random.nextInt(CHARSET.length())));
+    }
+
+    return datePart + sequencePart + suffix.toString();
   }
 }

@@ -11,16 +11,16 @@ export default function History(): React.ReactElement {
   const [status, setStatus] = useState('ALL');
   const [pagination, setPagination] = useState<PaginationParams>({ page: 1, limit: 10, totalPage: 0 });
 
-  const { data: listOrder, isLoading } = useQuery(
-    ['history', status, pagination],
-    async () =>
+  const { data: listOrder, isLoading } = useQuery({
+    queryKey: ['history', status, pagination],
+    queryFn: async () =>
       await getOrderByStatus(status, pagination.page - 1, pagination.limit).then((response) => {
         if (response && response.data) {
           setPagination({ ...pagination, totalPage: response.data.totalPage });
           return response.data.responseList;
         }
       }),
-  );
+});
   console.log('CCCCCCCCCCCCCCCcc', listOrder);
   const statusData = [
     { label: 'All', value: 'ALL' },

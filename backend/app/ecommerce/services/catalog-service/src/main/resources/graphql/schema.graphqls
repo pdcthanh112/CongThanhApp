@@ -1,6 +1,7 @@
 type Query {
     countries: [Country]
     categories: [Category]
+    brands: [Brand]
 }
 
 type Country {
@@ -21,4 +22,11 @@ type Category {
     id: ID!
     name: String!
     slug: String!
+}
+
+type Brand {
+    id: ID!
+    name: String!
+    slug: String!
+    image: String
 }

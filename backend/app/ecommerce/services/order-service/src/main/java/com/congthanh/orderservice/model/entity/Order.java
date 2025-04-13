@@ -4,7 +4,6 @@ import com.congthanh.orderservice.constant.enums.OrderStatus;
 import com.congthanh.orderservice.constant.enums.PaymentStatus;
 import com.congthanh.orderservice.constant.enums.ShippingStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -26,6 +25,9 @@ public class Order extends AbstractAuditEntity{
   @Id
   private Long id;
 
+  @Column(name = "order_code", nullable = false, unique = true)
+  private String orderCode;
+
   @Column(name = "customer_id", nullable = false)
   private String customer;
 
@@ -34,6 +36,9 @@ public class Order extends AbstractAuditEntity{
 
   @Column(name = "billing_address_id", nullable = false)
   private Long billingAddress;
+
+  @Column(name = "currency_code", nullable = false, updatable = false)
+  private String currencyCode;
 
   @Column(columnDefinition = "text")
   private String note;
@@ -54,11 +59,6 @@ public class Order extends AbstractAuditEntity{
   @Column(name = "shipping_status")
   @Enumerated(EnumType.STRING)
   private ShippingStatus shippingStatus;
-
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "checkout", nullable = false, referencedColumnName = "id")
-  @JsonManagedReference
-  private Checkout checkout;
 
   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonIgnore
