@@ -1,8 +1,8 @@
-import axiosConfig from '@/config/axiosConfig';
+import axiosInstance from '@/config/axiosConfig';
 import { CheckoutForm } from '@/models/types';
 
 export const checkout = async (data: CheckoutForm) => {
-  return await axiosConfig
+  return await axiosInstance
     .post('/checkout/', {
         customer: data.customer,
         cartId: data.cart,

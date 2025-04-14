@@ -1,7 +1,7 @@
-import axiosConfig from '@/config/axiosConfig';
+import axiosInstance from '@/config/axiosConfig';
 
 export const executePaypalPayment = async (paymentId: string, payerId: string) => {
-  await axiosConfig
+  await axiosInstance
     .post('/payment/paypal/execute', {
       paymentId,
       payerId,
@@ -13,7 +13,7 @@ export const executePaypalPayment = async (paymentId: string, payerId: string) =
 };
 
 export const addPaymentCard = async () => {
-  return await axiosConfig
+  return await axiosInstance
     .post('/payments/card')
     .then((response) => response.data)
     .catch((error) => {

@@ -1,7 +1,7 @@
-import axiosConfig from '@/config/axiosConfig';
+import axiosInstance from '@/config/axiosConfig';
 
 export const getSearchHistory = async () => {
-  return await axiosConfig
+  return await axiosInstance
     .get('/search/history')
     .then((response) => response.data)
     .catch((error) => {
@@ -10,7 +10,7 @@ export const getSearchHistory = async () => {
 };
 
 export const addSearchHistoryItem = async (customerId: string, value: string) => {
-  return axiosConfig
+  return axiosInstance
     .post('/search/history')
     .then((response) => response.data)
     .catch((error) => {
@@ -19,7 +19,7 @@ export const addSearchHistoryItem = async (customerId: string, value: string) =>
 };
 
 export const removeSearchHistoryItem = async (id: number) => {
-  return axiosConfig
+  return axiosInstance
     .delete('/search/history')
     .then((response) => response.data)
     .catch((error) => {
@@ -28,7 +28,7 @@ export const removeSearchHistoryItem = async (id: number) => {
 };
 
 export const getSearchTrending = async () => {
-  return await axiosConfig
+  return await axiosInstance
     .get('/search/trending')
     .then((response) => response.data)
     .catch((error) => {
@@ -37,7 +37,7 @@ export const getSearchTrending = async () => {
 };
 
 export const getSearchRecommend = async (keyword: string) => {
-  return await axiosConfig
+  return await axiosInstance
     .get(`/search/recommend?keyword=${keyword}`)
     .then((response) => response.data)
     .catch((error) => {

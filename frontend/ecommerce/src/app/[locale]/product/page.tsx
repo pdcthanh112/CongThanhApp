@@ -124,6 +124,7 @@ export default function ProductPage() {
           value.forEach((item) => {
             params.append(key, item);
           });
+          //chỗ này xử lý attribute
         } else {
           params.set(key, String(value));
         }

@@ -1,8 +1,8 @@
-import axiosConfig from '@/config/axiosConfig';
+import axiosInstance from '@/config/axiosConfig';
 import { CreateAddressForm, UpdateAddressForm } from '@/models/form';
 
 export const getAddressById = async (addressId: number) => {
-  return await axiosConfig
+  return await axiosInstance
     .get(`address/${addressId}`)
     .then((response) => response.data)
     .catch((error) => {
@@ -11,7 +11,7 @@ export const getAddressById = async (addressId: number) => {
 };
 
 export const getAddressByCustomer = async (customerId: string) => {
-  return await axiosConfig
+  return await axiosInstance
     .get(`customer/${customerId}/address`)
     .then((response) => response.data)
     .catch((error) => {
@@ -20,7 +20,7 @@ export const getAddressByCustomer = async (customerId: string) => {
 };
 
 export const createAddress = async (data: CreateAddressForm) => {
-  return await axiosConfig
+  return await axiosInstance
     .post('address', {
       customer: data.customer,
       phone: data.phone,
@@ -39,7 +39,7 @@ export const createAddress = async (data: CreateAddressForm) => {
 };
 
 export const updateAddress = async (addressId: number, data: UpdateAddressForm) => {
-  return await axiosConfig
+  return await axiosInstance
     .put(`address/${addressId}`, {
       phone: data.phone,
       country: data.country,
@@ -56,7 +56,7 @@ export const updateAddress = async (addressId: number, data: UpdateAddressForm) 
 };
 
 export const deleteAddress = async (addressId: number) => {
-  return await axiosConfig
+  return await axiosInstance
     .delete(`address/${addressId}`)
     .then((response) => response.data)
     .catch((error) => {
@@ -65,7 +65,7 @@ export const deleteAddress = async (addressId: number) => {
 };
 
 export const getDefaultAddressOfCustomer = async (customerId: string) => {
-  return await axiosConfig
+  return await axiosInstance
     .get(`customer/${customerId}/address/default`)
     .then((response) => response.data)
     .catch((error) => {

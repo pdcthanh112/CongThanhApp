@@ -97,6 +97,11 @@ export type ProductFilter = {
   keyword?: string;
   category?: string[];
   brand?: string[];
+  // attribute?: {
+  //   [key: string]: {
+  //     [key: string]: string[];
+  //   };
+  // }[]
   rating?: number;
   startPrice?: number;
   endPrice?: number;

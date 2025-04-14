@@ -11,7 +11,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { createLoginSchema, LoginSchemaType } from '@/models/schema/authSchema';
 import Link from 'next/link';
 import { ClientSafeProvider, LiteralUnion } from 'next-auth/react';
-import { signIn } from 'next-auth/react';
+import { signIn } from '@/auth';
 import { BuiltInProviderType } from 'next-auth/providers/index';
 import { AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '@/assets/icons/socialLoginIcon';
 import { useTranslations } from 'next-intl';
@@ -129,7 +129,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
                 onClick={() =>
                   signIn(provider.id, { callbackUrl: '/home', redirect: false })
                     .then(async () => await syncData())
-                    .catch((err) => console.error('Sign in error:', err))
+                    .catch(() => console.error('Sign in error:'))
                 }
               >
                 <Icon component={providerIcons[provider.id].icon} className="h-2" />

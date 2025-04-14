@@ -10,7 +10,7 @@ import { Edit, Email } from '@mui/icons-material';
 import { useTranslations } from 'next-intl';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { updateProfileSchema } from '@/models/schema/userSchema';
-import axiosConfig from '@/config/axiosConfig';
+import axiosInstance from '@/config/axiosConfig';
 import { useQuery } from '@tanstack/react-query';
 
 export default function EditProfile({ userInfo }: { userInfo: any }) {
@@ -23,7 +23,7 @@ export default function EditProfile({ userInfo }: { userInfo: any }) {
   const { data: countries } = useQuery<{ id: number; countryName: string }[]>({
     queryKey: ['get-country'],
     queryFn: async () =>
-      await axiosConfig
+      await axiosInstance
         .post('http://localhost:5002/api/graphql', {
           // const response = await axiosConfig.post('http://localhost:8080/api/ecommerce/catalog/graphql', {
           query: '{ countries { id countryName countryNameOrigin } }',

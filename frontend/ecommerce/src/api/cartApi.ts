@@ -1,9 +1,9 @@
-import axiosConfig from '@/config/axiosConfig';
+import axiosInstance from '@/config/axiosConfig';
 import { CreateCartForm } from '@/models/form';
 import { Cart, Response } from '@/models/types';
 
 export const createNewCart = async (data: CreateCartForm) => {
-  return await axiosConfig
+  return await axiosInstance
     .post('cart/create', {
       name: data.name,
       customer: data.customer,
@@ -16,7 +16,7 @@ export const createNewCart = async (data: CreateCartForm) => {
 };
 
 export const deleteCart = async (cartId: number) => {
-  return await axiosConfig
+  return await axiosInstance
     .delete(`carts/${cartId}`)
     .then((response) => response)
     .catch((error) => {
@@ -25,7 +25,7 @@ export const deleteCart = async (cartId: number) => {
 };
 
 export const getCartById = async (id: number): Promise<Response<Cart>> => {
-  return await axiosConfig
+  return await axiosInstance
     .get(`carts/${id}`)
     .then((response) => response.data)
     .catch((error) => {
@@ -34,7 +34,7 @@ export const getCartById = async (id: number): Promise<Response<Cart>> => {
 };
 
 export const getCartByCustomerId = async (customerId: string): Promise<Response<Cart[]>> => {
-  return await axiosConfig
+  return await axiosInstance
     .get(`carts/customer/${customerId}`)
     .then((response) => response.data)
     .catch((error) => {
@@ -51,7 +51,7 @@ export const addProductToCart = async ({
   quantity: number;
   cartId: string;
 }) => {
-  return await axiosConfig
+  return await axiosInstance
     .post(`cart-item/addToCart?productId=${productId}&quantity=${quantity}&cartId=${cartId}`)
     .then((response) => response)
     .catch((error) => {
@@ -60,7 +60,7 @@ export const addProductToCart = async ({
 };
 
 export const updateCartItem = async ({ cartItemId, quantity }: { cartItemId: number; quantity: number }) => {
-  return await axiosConfig
+  return await axiosInstance
     .put(`cart-item/update?cartItemId=${cartItemId}&quantity=${quantity}`)
     .then((response) => response)
     .catch((error) => {
@@ -69,7 +69,7 @@ export const updateCartItem = async ({ cartItemId, quantity }: { cartItemId: num
 };
 
 export const deleteCartItem = async (itemId: string) => {
-  return await axiosConfig
+  return await axiosInstance
     .delete(`carts/items/${itemId}`)
     .then((response) => response.data)
     .catch((error) => {
@@ -78,7 +78,7 @@ export const deleteCartItem = async (itemId: string) => {
 };
 
 export const getItemDetail = async ({ cartId, itemId }: { cartId: number; itemId: number }) => {
-  return await axiosConfig
+  return await axiosInstance
     .get(`carts/${cartId}/items/${itemId}/detail`)
     .then((response) => response.data)
     .catch((error) => {

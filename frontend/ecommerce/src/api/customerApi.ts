@@ -1,4 +1,4 @@
-import axiosConfig from '@/config/axiosConfig';
+import axiosInstance from '@/config/axiosConfig';
 import { ChangePasswordForm, ResetPasswordForm } from '@/models/form';
 import axios from 'axios';
 
@@ -80,7 +80,7 @@ export const verifyOTP = async (data: any) => {
 };
 
 export const getCustomerInfo = async (email: string) => {
-  return await axiosConfig
+  return await axiosInstance
     .get(`http://localhost:8000/ecommerce/customer/${email}/info`)
     .then((response) => response.data)
     .catch((error) => {

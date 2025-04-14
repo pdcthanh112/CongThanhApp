@@ -1,21 +1,24 @@
 import axios, { AxiosResponse } from 'axios';
 import { useSession } from 'next-auth/react';
 
-const axiosConfig = axios.create({
+const axiosInstance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URL}/ecommerce/`,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-axiosConfig.interceptors.request.use(
-  (config) => {
-    // const { data: session } = useSession();
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    const { data: session } = useSession();
+
     if (config.headers) {
       if (!config.headers.Authorization) {
-        // config.headers['Authorization'] = `Bearer ${session?.user?.accessToken}`;
+        config.headers['Authorization'] = `Bearer ${session?.token?.accessToken}`;
+        // config.headers['Authorization'] = `Bearer ${token}`;
       }
     }
+
     return config;
   },
   (error) => {
@@ -23,7 +26,7 @@ axiosConfig.interceptors.request.use(
   }
 );
 
-axiosConfig.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
   },
@@ -32,4 +35,4 @@ axiosConfig.interceptors.response.use(
   }
 );
 
-export default axiosConfig;
+export default axiosInstance;
