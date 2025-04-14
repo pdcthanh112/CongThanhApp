@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 public record OrderVm(
         Long id,
-        String orderNumber,
+        String orderCode,
         String customer,
         String note,
         OrderStatus status,
