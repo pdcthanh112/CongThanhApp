@@ -1,19 +1,20 @@
 import axiosConfig from '@/config/axiosConfig';
+import { OrderDetail } from '@/models/types';
 
 export const getOrderByStatus = async (status: string, page: number, limit: number) => {
   return await axiosConfig
-    .get(`order/getByStatus?status=${status}&page=${page}&limit=${limit}`)
+    .get(`orders/getByStatus?status=${status}&page=${page}&limit=${limit}`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
     });
 };
 
-// export const getHistoryByCustomer = async (customerId: string) => {
-//   return await axiosConfig
-//     .get(`purchasing/history?customerId=${customerId}`)
-//     .then((response) => response.data)
-//     .catch((error) => {
-//       throw error;
-//     });
-// };
+export const getOrderDetail = async (orderCode: string): Promise<OrderDetail> => {
+  return await axiosConfig
+    .get(`orders/detail/${orderCode}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+}

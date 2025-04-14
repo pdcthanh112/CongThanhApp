@@ -2,6 +2,12 @@ package com.congthanh.productservice.config;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.OAuthFlow;
+import io.swagger.v3.oas.annotations.security.OAuthFlows;
+import io.swagger.v3.oas.annotations.security.OAuthScope;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +21,24 @@ import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.servers.Server;
 
 @Configuration
+@OpenAPIDefinition(
+        info = @io.swagger.v3.oas.annotations.info.Info(
+                title = "Product Service API",
+                description = "Product API documentation",
+                version = "1.0"
+        ),
+        security = @SecurityRequirement(name = "oauth2_bearer"),
+        servers = {
+                @io.swagger.v3.oas.annotations.servers.Server(url = "${server.servlet.context-path}",
+                        description = "Default Server URL")
+        })
+@io.swagger.v3.oas.annotations.security.SecurityScheme(name = "oauth2_bearer", type = SecuritySchemeType.OAUTH2,
+        flows = @OAuthFlows(
+                authorizationCode = @OAuthFlow(
+                        authorizationUrl = "${springdoc.oauthflow.authorization-url}",
+                        tokenUrl = "${springdoc.oauthflow.token-url}",
+                        scopes = {@OAuthScope(name = "openid", description = "openid")
+                        })))
 public class SwaggerConfig {
 
     @Value("${congthanhapp.openapi.dev-url}")

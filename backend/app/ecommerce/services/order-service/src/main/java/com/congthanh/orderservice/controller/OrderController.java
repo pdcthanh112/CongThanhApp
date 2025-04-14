@@ -1,7 +1,10 @@
 package com.congthanh.orderservice.controller;
 
 import com.congthanh.orderservice.constant.common.ResponseStatus;
+import com.congthanh.orderservice.model.dto.OrderDTO;
+import com.congthanh.orderservice.model.request.CreateOrderRequest;
 import com.congthanh.orderservice.model.response.Response;
+import com.congthanh.orderservice.model.viewmodel.OrderDetailVm;
 import com.congthanh.orderservice.service.OrderItemService;
 import com.congthanh.orderservice.service.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,23 +24,23 @@ public class OrderController {
 
   private final OrderItemService orderItemService;
 
-//  @GetMapping("/getByStatus")
-//  public ResponseEntity<Response<ResponseWithPagination<OrderItemDTO>>> getOrderByStatus(@RequestParam("status") String status, @RequestParam("page") int page, @RequestParam("limit") int limit) {
-//    ResponseWithPagination<OrderItemDTO> data = orderItemService.getOrderDetailByStatus(status, page, limit);
-//    Response<ResponseWithPagination<OrderItemDTO>> response = new Response<>();
-//    response.setData(data);
-//    response.setStatus(ResponseStatus.STATUS_SUCCESS);
-//    response.setMessage("Get all successfully");
-//    return ResponseEntity.ok().body(response);
-//  }
-
-  @GetMapping("/history")
-  public ResponseEntity<Response<List<CheckoutDTO>>> getHistoryByCustomer(@RequestParam String customerId) {
-    List<CheckoutDTO> data = orderService.getHistoryByCustomer(customerId);
-    Response<List<CheckoutDTO>> response = new Response<>();
+  @PostMapping("")
+  public ResponseEntity<Response<OrderDTO>> createOrder(@RequestParam CreateOrderRequest request) {
+    OrderDTO data = orderService.createOrder(request);
+    Response<OrderDTO> response = new Response<>();
     response.setData(data);
     response.setStatus(ResponseStatus.STATUS_SUCCESS);
     response.setMessage("Get all successfully");
+    return ResponseEntity.ok().body(response);
+  }
+
+  @GetMapping("/detail/{orderCode}")
+  public ResponseEntity<Response<OrderDetailVm>> getOrderDetail(@PathVariable("orderCode") String orderCode) {
+    OrderDetailVm data = orderService.getOrderDetailByCode(orderCode);
+    Response<OrderDetailVm> response = new Response<>();
+    response.setData(data);
+    response.setStatus(ResponseStatus.STATUS_SUCCESS);
+    response.setMessage("Get successfully");
     return ResponseEntity.ok().body(response);
   }
 }

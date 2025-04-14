@@ -3,7 +3,11 @@ package com.congthanh.orderservice.service.serviceImpl;
 import com.congthanh.orderservice.constant.enums.PromotionType;
 import com.congthanh.orderservice.exception.NotFoundException;
 import com.congthanh.orderservice.grpc.client.PromotionGrpcClient;
+import com.congthanh.orderservice.model.entity.OrderStatusTracking;
+import com.congthanh.orderservice.model.viewmodel.OrderDetailVm;
+import com.congthanh.orderservice.model.viewmodel.OrderStatusTrackingVm;
 import com.congthanh.orderservice.model.viewmodel.OrderVm;
+import com.congthanh.orderservice.repository.orderStatusTracking.OrderStatusTrackingRepository;
 import com.congthanh.orderservice.saga.OrderSagaOrchestrator;
 import com.congthanh.orderservice.model.dto.OrderDTO;
 import com.congthanh.orderservice.model.entity.Order;
@@ -28,6 +32,8 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+
+    private final OrderStatusTrackingRepository orderStatusTrackingRepository;
 
     private final OrderSagaOrchestrator sagaOrchestrator;
 
@@ -60,9 +66,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderVm getOrderByCode(String orderCode) {
+    public OrderDetailVm getOrderDetailByCode(String orderCode) {
         Order order = orderRepository.findByOrderCode(orderCode).orElseThrow(() -> new NotFoundException("Order not found"));
-        return OrderVm.builder()
+
+        List<OrderStatusTracking> statusTracking = orderStatusTrackingRepository.getStatusTrackingByOrderCode(orderCode);
+
+        List<OrderStatusTrackingVm> statusTrackingVms = statusTracking.stream().map(item -> OrderStatusTrackingVm.builder()
+                .id(item.getId())
+                .status(item.getStatus())
+                .stepOrder(item.getStepOrder())
+                .description(item.getDescription())
+                .changedAt(item.getChangedAt())
+                .build()).toList();
+
+        return OrderDetailVm.builder()
                 .id(order.getId())
                 .orderNumber(order.getOrderCode())
                 .customer(order.getCustomer())
@@ -70,6 +87,7 @@ public class OrderServiceImpl implements OrderService {
                 .status(order.getStatus())
                 .paymentStatus(order.getPaymentStatus())
                 .shippingStatus(order.getShippingStatus())
+                .orderStatusTracking(statusTrackingVms)
                 .build();
     }
 

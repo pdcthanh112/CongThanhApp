@@ -3,7 +3,7 @@ import { getOrderByStatus } from '@/api/orderApi';
 import { Customer } from '@/models/types/CustomerModel';
 import { useAppSelector } from '@/redux/store';
 import { useQuery } from '@tanstack/react-query';
-import { OrderDetail, PaginationParams } from '@/models/types';
+import { OrderItem, PaginationParams } from '@/models/types';
 
 
 export default function History(): React.ReactElement {

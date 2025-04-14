@@ -22,3 +22,14 @@ export enum GENDER {
 }
 
 export type CardType = 'visa' | 'mastercard' | 'amex' | 'discover' | 'jcb' | 'unionpay' | 'unknown';
+
+export enum OrderStatus {
+  PLACED = 'PLACED',
+  PREPARING = 'PREPARING',
+  SHIPPING = 'SHIPPING',
+  DELIVERED = 'DELIVERED',
+  CANCELLED = 'CANCELLED',
+  RETURNED = 'RETURNED',
+  FAILED = 'FAILED',
+  COMPLETED = 'COMPLETED',
+}

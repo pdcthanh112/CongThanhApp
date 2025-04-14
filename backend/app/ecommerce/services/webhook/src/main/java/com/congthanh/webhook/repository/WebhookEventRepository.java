@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WebhookEventRepository extends JpaRepository<WebhookEvent, Long> {
+
+    void deleteByWebhookId(Long webhookId);
 }

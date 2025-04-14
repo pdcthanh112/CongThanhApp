@@ -1,4 +1,4 @@
-import { Checkout, Product } from '@models/type';
+import { Product } from '@/models/types';
 
 export type Order = {
   id: number;
@@ -6,13 +6,32 @@ export type Order = {
   total: number;
   note?: string;
   orderDate: number;
-  checkout: Checkout | string;
   status: string;
 };
 
 export type OrderDetail = {
   id: number;
+  customer: string;
+  total: number;
+  note?: string;
+  orderDate: number;
+  status: string;
+  orderCode: string;
+  orderItems: OrderItem[];
+  shippingAddress: string;
+  statusTracking: OrderStatusTracking[];
+};
+
+export type OrderItem = {
+  id: number;
   quantity: number;
   product: Product;
   status: string;
+};
+
+export type OrderStatusTracking = {
+  id: number;
+  status: string;
+  description: string;
+  changedAt: Date;
 };

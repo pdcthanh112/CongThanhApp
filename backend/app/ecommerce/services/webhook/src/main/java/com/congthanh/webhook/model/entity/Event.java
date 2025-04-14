@@ -20,11 +20,9 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Enumerated(EnumType.STRING)
     private EventName name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
-    private List<Webhook> webhooks;
-
+    private List<WebhookEvent> webhookEvents;
 }
