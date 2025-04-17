@@ -8,13 +8,35 @@ import {
   ProductOptionValueGet,
   ProductVariant,
   ProductOptionValueDisplay,
+  ProductFilter,
+  PaginationParams,
 } from '@/models/types';
-import { cacheLife } from 'next/dist/server/use-cache/cache-life';
+// import { cacheLife } from 'next/dist/server/use-cache/cache-life';
 
-export const getAllProduct = async (pagination: {page?: number, limit?: number}, filter: any): Promise<ResponseWithPagination<Product>> => {
+export const getAllProduct = async (
+  pagination: PaginationParams,
+  filter: ProductFilter
+): Promise<ResponseWithPagination<Product>> => {
   // 'use cache'
   // cacheLife('getAllProduct')
   const params = new URLSearchParams();
+
+  if (filter.category)
+    params.append(
+      'category',
+      filter.category.reduce((item) => item + ',')
+    );
+  if (filter.brand)
+    params.append(
+      'brand',
+      filter.brand.reduce((item) => item + ',')
+    );
+  if (filter.category)
+    params.append(
+      'category',
+      filter.category.reduce((item) => item + ',')
+    );
+
   pagination.page && params.append('page', String(pagination.page));
   pagination.limit && params.append('limit', String(pagination.limit));
   return await axiosInstance
@@ -71,14 +93,14 @@ export const getAttributeByProductId = async (productId: string) => {
     });
 };
 
-export const getDefaultImageByProductId = async (productId: string): Promise<Response<ProductImage>> => {
-  return await axiosInstance
-    .get(`product-image/getDefaultImage?product=${productId}`)
-    .then((response) => response.data)
-    .catch((error) => {
-      throw Error(error);
-    });
-};
+// export const getDefaultImageByProductId = async (productId: string): Promise<Response<ProductImage>> => {
+//   return await axiosInstance
+//     .get(`product-image/getDefaultImage?product=${productId}`)
+//     .then((response) => response.data)
+//     .catch((error) => {
+//       throw Error(error);
+//     });
+// };
 
 export const getImageByProductId = async (productId: string) => {
   return await axiosInstance

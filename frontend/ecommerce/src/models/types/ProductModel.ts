@@ -7,6 +7,7 @@ export type Product = {
   supplier: string;
   thumbnail: ProductImage;
   image: ProductImage[];
+  parent: string;
   hasVariant: boolean;
   brand: string;
   status: string;

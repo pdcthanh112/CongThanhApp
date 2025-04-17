@@ -1,8 +1,7 @@
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { CartItem, ProductImage } from '@/models/types';
 import { useRouter } from 'next/navigation';
-import { getDefaultImageByProductId } from '@/api/productApi';
 import DefaultImage from '@/assets/images/default-image.jpg';
 
 type PropsType = {
@@ -12,19 +11,6 @@ type PropsType = {
 const ShowCartItem = ({ item }: PropsType) => {
   const router = useRouter();
 
-  const [productImage, setProductImage] = useState<ProductImage>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await getDefaultImageByProductId(item.product.id).then(response => {
-        if (response && response.data) {
-          setProductImage(response.data);
-        }
-      });
-    };
-    fetchData();
-  }, []);
-
   return (
     <div
       key={item.id}
@@ -32,7 +18,7 @@ const ShowCartItem = ({ item }: PropsType) => {
       title={item.product.name}
       onClick={() => router.push(`product/${item.product.id}`)}>
       <span className="flex items-center">
-        <Image src={productImage?.imagePath || DefaultImage} alt={productImage?.alt || ""} width={40} height={40} className="border border-gray-300" />
+        <Image src={item.product.thumbnail.imagePath || DefaultImage} alt={item.product.name ?? ""} width={40} height={40} className="border border-gray-300" />
         <h4 className="truncate ml-2 w-56 text-sm">{item.product.name}</h4>
       </span>
       <span className="text-yellow-500">${item.product.price}</span>

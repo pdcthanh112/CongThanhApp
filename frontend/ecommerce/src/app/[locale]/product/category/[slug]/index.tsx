@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { getProductByCategory } from 'api/productApi';
+import { getProductByCategory } from '@/api/productApi';
 import { PaginationParams } from '@/models/types/Request';
 import ShowListProduct from '@/components/Product/ShowListProduct';
 import NotFound from './not-found';
@@ -18,7 +18,7 @@ export default function ProductByCategory() {
   });
 
   const { data: listProduct, isLoading } = useQuery({
-    queryKey: ['todos', slug, pagination],
+    queryKey: ['product', slug, pagination],
     queryFn: async () =>
       await getProductByCategory(slug, pagination.page - 1, pagination.limit).then((result) => {
         setPagination({ ...pagination, totalPage: result.data.totalPage });

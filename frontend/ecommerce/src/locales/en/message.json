@@ -4,6 +4,7 @@
     "description": "CongThanhApp - Ecommerce"
   },
   "common": {
+    "home": "Trang chủ",
     "title": "CongThanh Ecommerce",
     "hello": "Hello",
     "welcome": "Welcome to",
@@ -16,8 +17,6 @@
     "manage_profile": "Manage profile",
     "category": "category",
     "Category": "Category",
-    "subcategory": "subcategory",
-    "Subcategory": "Subcategory",
     "available": "available",
     "sold_out": "Sold out",
     "checkout": "Checkout",
@@ -45,7 +44,8 @@
     "country": "Country",
     "dob": "Date of birth",
     "edit": "Edit",
-    "save": "Save"
+    "save": "Save",
+    "product": "Sản phẩm"
   },
   "manage": {
     "profile": "Profile"

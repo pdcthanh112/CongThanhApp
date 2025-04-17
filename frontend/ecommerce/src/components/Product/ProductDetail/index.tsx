@@ -13,7 +13,6 @@ import { AddToCartIcon, HeartEmpty, HeartFull } from '@/assets/icons';
 import { toast } from 'react-toastify';
 import { useAddProductToCart } from '@/hooks/cart/cartHook';
 import {
-  Breadcrumb,
   Product,
   ProductAttribute,
   ProductImage,
@@ -336,21 +335,6 @@ export default function ProductDetail({
     },
   ];
 
-  const crumb: Breadcrumb[] = [
-    {
-      pageName: 'Home',
-      url: '/',
-    },
-    {
-      pageName: 'Product',
-      url: '/product',
-    },
-    {
-      pageName: product.name,
-      url: '',
-    },
-  ];
-
   const handleSelectOption = (optionId: number, optionValue: string) => {
     if (productOption && productOption.length > 0 && productVariant && productVariant.length > 0) {
       if (currentSelectedOption[+optionId] === optionValue) {
@@ -369,10 +353,16 @@ export default function ProductDetail({
       }
     }
   };
-console.log('TTTTTTTTTTTTTT', productOption, '\nBBBBBBBBBBBBBBBBBBBBBBBBBB', productVariant, '\nVVVVVVVVVVVVVVVVVVVVVVV', productOptionValueGet)
+  console.log(
+    'TTTTTTTTTTTTTT',
+    productOption,
+    '\nBBBBBBBBBBBBBBBBBBBBBBBBBB',
+    productVariant,
+    '\nVVVVVVVVVVVVVVVVVVVVVVV',
+    productOptionValueGet
+  );
   return (
     <div className="w-[80%] mx-auto my-3">
-      <BreadcrumbComponent items={crumb} />
       <div className="bg-white flex px-3 py-2">
         <div className="w-[40%] py-3">
           <div
@@ -517,23 +507,24 @@ console.log('TTTTTTTTTTTTTT', productOption, '\nBBBBBBBBBBBBBBBBBBBBBBBBBB', pro
             </div>
           </div>
           <div className="font-semibold text-3xl text-yellow-400">{formatCurrency(10000000000000, 'vi', 'VND')}</div>
-          
           ===========================================
           {/* product options */}
           {(productOption || []).map((productOption) => {
-            console.log('PPPPPPPPPP', productOption)
-            const productOptionPost = productOptionValueGet?.find((productOptionPost) => productOptionPost.productOptionId === productOption.id);
+            console.log('PPPPPPPPPP', productOption);
+            const productOptionPost = productOptionValueGet?.find(
+              (productOptionPost) => productOptionPost.productOptionId === productOption.id
+            );
             const parsedValue = productOptionPost?.productOptionValue
-          //   ? (() => {
-          //     try {
-          //       return JSON.parse(productOptionPost.productOptionValue);
-          //     } catch (error) {
-          //       console.error("JSON parse error:", error);
-          //       return { [productOptionPost.productOptionValue]: productOptionPost.productOptionValue };
-          //     }
-          //   })()
-          // : [];
-              ? JSON.parse(productOptionPost.productOptionValue)
+              ? //   ? (() => {
+                //     try {
+                //       return JSON.parse(productOptionPost.productOptionValue);
+                //     } catch (error) {
+                //       console.error("JSON parse error:", error);
+                //       return { [productOptionPost.productOptionValue]: productOptionPost.productOptionValue };
+                //     }
+                //   })()
+                // : [];
+                JSON.parse(productOptionPost.productOptionValue)
               : [];
             return productOptionPost ? (
               <div className="mb-3" key={productOption.name}>

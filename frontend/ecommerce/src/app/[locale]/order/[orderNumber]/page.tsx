@@ -4,6 +4,8 @@ import { Steps } from 'antd';
 import Link from 'next/link';
 import { PackageCheck, PackageOpen, Truck, CheckCircle, XCircle, RotateCcw, AlertCircle, Clock } from 'lucide-react';
 import { OrderStatus } from '@/utils/constants/enum';
+import { useSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
 
 const orderStatusIconMap: Record<OrderStatus, React.ReactElement> = {
   [OrderStatus.PLACED]: <PackageOpen className="text-blue-500" />,
@@ -19,6 +21,8 @@ const orderStatusIconMap: Record<OrderStatus, React.ReactElement> = {
 export default async function OrderDetailPage({ params }: { params: { orderCode: string } }) {
   const { orderCode } = params;
 
+  const session = await getServerSession()
+console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa",session)
   // const orderDetail =  await getOrderDetail(orderCode).then((result) => result);
   const orderDetail = {
     id: 1,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import {
   getProductDetailBySlug,
   getProductOptionValueByProductId,
@@ -10,16 +10,25 @@ import {
 import ProductDetail from '@/components/Product/ProductDetail';
 import { getStatisticFromProduct } from '@/api/reviewApi';
 import { getSupplierById } from '@/api/supplierApi';
-import { ProductOptions, ProductVariant } from '@/models/types';
+import { Breadcrumb, ProductOptions, ProductVariant } from '@/models/types';
 import { ReviewStatistic } from '@/models/types/Review';
 import RelatedProduct from '@/components/Product/RelatedProduct';
 import ReviewProduct from '@/components/Product/ProductDetail/ReviewProduct';
 import { getTranslations } from 'next-intl/server';
+import BreadcrumbComponent from '@/components/Breadcrumb/Breadcrumb';
 
-type PropsType = Promise<{
-  slug: string;
-  pvid?: string;
-}>;
+const fetchProduct = async (slug: string) => {
+  const product = await getProductDetailBySlug(slug).then((response) => response.data);
+  if (product.parent) redirect(`/product/${product.parent}?pvid=${product.id}`);
+  return product;
+};
+
+// type PropsType = Promise<{
+//   slug: string;
+//   pvid?: string;
+// }>;
+type Params = Promise<{ slug: string }>;
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 // async function getReviewStatisticByProduct(productId: string) {
 //   return await getStatisticFromProduct(productId);
@@ -30,34 +39,36 @@ type PropsType = Promise<{
 // }
 
 const MOCK_REVIEW_STATISTIC: ReviewStatistic = {
-    totalReview: 4646,
-    averageRating: 4.7,
-    reviewRating5Star: 868,
-    reviewRating4Star: 615,
-    reviewRating3Star: 486,
-    reviewRating2Star: 15,
-    reviewRating1Star: 49,
-    reviewWithMedia: 1684,
+  totalReview: 4646,
+  averageRating: 4.7,
+  reviewRating5Star: 868,
+  reviewRating4Star: 615,
+  reviewRating3Star: 486,
+  reviewRating2Star: 15,
+  reviewRating1Star: 49,
+  reviewWithMedia: 1684,
 };
 
 const fetchAndSortProductVariations = async (productId: string): Promise<ProductVariant[]> => {
-    try {
-        let productVariations = await getProductVariationsByParentId(productId);
-        if (productVariations && productVariations.length > 0) {
-            productVariations = productVariations.sort((a, b) => {
-                return Object.keys(a.options).length - Object.keys(b.options).length;
-            });
-        }
-        return productVariations;
-    } catch (error) {
-        console.error(error);
-        return [];
+  try {
+    let productVariations = await getProductVariationsByParentId(productId);
+    if (productVariations && productVariations.length > 0) {
+      productVariations = productVariations.sort((a, b) => {
+        return Object.keys(a.options).length - Object.keys(b.options).length;
+      });
     }
+    return productVariations;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };
 
-export async function generateMetadata({ params }: { params: PropsType }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Params; searchParams: SearchParams }): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getProductDetailBySlug(slug).then((response) => response.data).catch(() => notFound());;
+  const product = await fetchProduct(slug)
+    .then((response) => response)
+    .catch(() => notFound());
 
   return {
     title: product.name,
@@ -77,14 +88,24 @@ export async function generateMetadata({ params }: { params: PropsType }): Promi
   };
 }
 
-export default async function ProductDetailPage({ params }: { params: PropsType }) {
-  const { slug, pvid } = await params;
+export default async function ProductDetailPage({
+  params,
+  searchParams,
+}: {
+  params: Params;
+  searchParams: SearchParams;
+}) {
+  const { slug } = await params;
+  const { pvid } = await searchParams;
+
   const t = await getTranslations();
 
   const productOptions: ProductOptions[] = [];
   let productVariant: ProductVariant[] = [];
 
-  const product = await getProductDetailBySlug(slug).then((response) => response.data).catch(() => notFound());;
+  const product = await fetchProduct(slug)
+    .then((response) => response)
+    .catch(() => notFound());
 
   if (product.hasVariant) {
     try {
@@ -113,11 +134,27 @@ export default async function ProductDetailPage({ params }: { params: PropsType 
 
   const productOptionValue = await getProductOptionValueByProductId(product.id);
 
+  const crumb: Breadcrumb[] = [
+    {
+      pageName: t('common.home'),
+      url: '/',
+    },
+    {
+      pageName: t('common.product'),
+      url: '/product',
+    },
+    {
+      pageName: product.name,
+      url: '',
+    },
+  ];
+
   return (
     <React.Fragment>
+      <BreadcrumbComponent items={crumb} />
       <ProductDetail
         product={product}
-        pvid={pvid !== undefined ? pvid : null}
+        pvid={pvid !== undefined ? pvid as string : null}
         reviewStatistic={reviewStatistic}
         productOption={productOptions}
         productVariant={productVariant}
