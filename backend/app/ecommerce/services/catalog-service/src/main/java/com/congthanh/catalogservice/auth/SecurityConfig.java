@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -35,12 +36,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers(HttpMethod.POST, "ecommerce/product/create").hasAuthority("SUPPLIER")
-//                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-//                        .requestMatchers("/api/user/**").authenticated()
-//                        .requestMatchers(HttpMethod.POST, "/product/**").hasAuthority("ADMIN")
-//                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/**", "/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/carts").hasAuthority("SUPPLIER")
+                        .requestMatchers(HttpMethod.GET, "/ecommerce/carts/**").hasAuthority("ADMIN")
+                        // Các endpoint công khai (không yêu cầu xác thực)
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+//                        .requestMatchers("/**", "/auth/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .authenticationManager(authenticationManager)

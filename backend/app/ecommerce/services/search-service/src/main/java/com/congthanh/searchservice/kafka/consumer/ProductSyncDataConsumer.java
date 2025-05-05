@@ -1,11 +1,26 @@
 package com.congthanh.searchservice.kafka.consumer;
 
+import com.congthanh.searchservice.kafka.cdc.BaseCdcConsumer;
+import com.congthanh.searchservice.kafka.cdc.RetrySupportDql;
+import com.congthanh.searchservice.kafka.cdc.message.ProductCdcMessage;
+import com.congthanh.searchservice.kafka.cdc.message.ProductMsgKey;
+import com.congthanh.searchservice.service.ProductSyncDataService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Headers;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
+
+import static com.congthanh.searchservice.kafka.cdc.message.Operation.DELETE;
+import static com.congthanh.searchservice.kafka.config.ProductCdcKafkaListenerConfig.PRODUCT_CDC_LISTENER_CONTAINER_FACTORY;
 
 @Service
 @Slf4j
-public class ProductSyncDataConsumer extends BaseCdcConsumer<ProductMsgKey, ProductCdcMessage>{
+public class ProductSyncDataConsumer extends BaseCdcConsumer<ProductMsgKey, ProductCdcMessage> {
 
     private final ProductSyncDataService productSyncDataService;
 

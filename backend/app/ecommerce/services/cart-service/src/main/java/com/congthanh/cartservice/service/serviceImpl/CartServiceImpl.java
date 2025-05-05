@@ -58,7 +58,7 @@ public class CartServiceImpl implements CartService {
         result.setStatus(cart.getStatus());
 
         List<CartItem> listCartItem = cartItemRepository.getAllCartItemByCartId(cart.getId());
-        if (listCartItem.size() > 0) {
+        if (!listCartItem.isEmpty()) {
             Set<CartItemDTO> cartItems = new HashSet<>();
             for (CartItem cartItemItem : listCartItem) {
                 CartItemDTO cartItemTmp = new CartItemDTO();

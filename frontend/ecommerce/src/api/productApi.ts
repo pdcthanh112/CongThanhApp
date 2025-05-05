@@ -2,7 +2,6 @@ import axiosInstance from '@/config/axiosConfig';
 import {
   ProductVariantAttribute,
   Product,
-  ProductImage,
   Response,
   ResponseWithPagination,
   ProductOptionValueGet,
@@ -37,8 +36,8 @@ export const getAllProduct = async (
       filter.category.reduce((item) => item + ',')
     );
 
-  pagination.page && params.append('page', String(pagination.page));
-  pagination.limit && params.append('limit', String(pagination.limit));
+  params.append('page', String(pagination.page));
+  params.append('limit', String(pagination.limit));
   return await axiosInstance
     .get('products', { params: params })
     .then((response) => response.data)

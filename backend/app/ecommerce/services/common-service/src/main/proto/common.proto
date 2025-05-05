@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.congthanh.commonservice.grpc";
+
+message Query {
+  repeated string attributes = 1;
+  string where = 2;
+  string order = 3;
+  int32 offset = 4;
+  int32 limit = 5;
+}
+
+message Count {
+  int32 count = 1;
+}

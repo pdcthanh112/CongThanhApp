@@ -15,11 +15,13 @@ import com.congthanh.cartservice.service.CartService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +40,8 @@ public class CartController {
     private final CartItemService cartItemService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response<CartDTO>> getCartById(@PathVariable("id") @NotBlank(message = "Input must not be blank") @Valid final Long id) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Response<CartDTO>> getCartById(@PathVariable("id") Long id) {
         CartDTO result = cartService.getCartById(id);
         Response<CartDTO> response = new Response<>();
         response.setData(result);

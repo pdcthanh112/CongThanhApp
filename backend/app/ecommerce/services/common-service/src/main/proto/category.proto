@@ -10,6 +10,7 @@ service CategoryService {
   rpc getListCategoryByIds (ListCategoryRequest) returns (ListCategoryResponse);
   rpc getCategoryBySlug (CategorySlugRequest) returns (CategoryResponse);
   rpc validateCategories(ValidateCategoriesRequest) returns (ValidateCategoriesResponse);
+//  rpc destroy (common.Query) returns (common.Count) {}
 }
 
 message CategoryRequest {
@@ -48,3 +49,4 @@ message ListCategoryRequest {
 message ListCategoryResponse {
   repeated CategoryResponse response = 1;
 }
+

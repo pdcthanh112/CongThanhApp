@@ -79,7 +79,7 @@ spring:
       password: password # Mật khẩu mặc định
     jwt:
       token:
-        secretKey: ${JWT_SECRET_KEY}
+        secretKey: 'congthanhapp-ecommerce-secret-key'
         tokenPrefix: "Bearer "
         tokenExpirationAfterDays: 30
 

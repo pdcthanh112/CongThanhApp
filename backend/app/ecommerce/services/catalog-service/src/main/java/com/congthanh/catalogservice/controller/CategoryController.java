@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("")
-    //@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     @PermitAll
     public ResponseEntity<Response<Object>> getAllCategory(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer limit) {
 //        Object data = categoryService.getAllCategory(page, limit);

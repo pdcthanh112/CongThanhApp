@@ -1,5 +1,7 @@
 server:
   port: 8080
+  shutdown: graceful
+
 spring:
   application:
     name: congthanhapp-ecommerce-api-gateway
@@ -135,6 +137,11 @@ spring:
           predicates:
             - Path=/api/ecommerce/warehouse/**, /api/graphql
 
+springdoc:
+  swagger-ui:
+    use-root-path: true
+  api-docs:
+    enabled: true
 eureka:
   client:
     service-url:
