@@ -5,6 +5,7 @@ import com.congthanh.orderservice.exception.NotFoundException;
 import com.congthanh.orderservice.grpc.client.ProductGrpcClient;
 import com.congthanh.orderservice.grpc.client.PromotionGrpcClient;
 import com.congthanh.orderservice.model.entity.OrderStatusTracking;
+import com.congthanh.orderservice.model.request.OrderSagaRequest;
 import com.congthanh.orderservice.model.viewmodel.*;
 import com.congthanh.orderservice.repository.orderStatusTracking.OrderStatusTrackingRepository;
 import com.congthanh.orderservice.saga.OrderSagaOrchestrator;
@@ -66,7 +67,11 @@ public class OrderServiceImpl implements OrderService {
                 .build();
         Order result = orderRepository.save(order);
 
-        sagaOrchestrator.startOrderSaga(request);
+        sagaOrchestrator.startOrderSaga(OrderSagaRequest.builder()
+                .orderId(result.getId())
+                .totalAmount(orderTotal)
+                .customer(request.getCustomer())
+                .build());
 
         return OrderMapper.mapOrderEntityToDTO(result);
     }

@@ -7,11 +7,17 @@ import com.congthanh.inventoryservice.model.entity.Inventory;
 import com.congthanh.inventoryservice.exception.ecommerce.NotFoundException;
 import com.congthanh.inventoryservice.repository.InventoryRepository;
 import com.congthanh.inventoryservice.service.InventoryService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -140,7 +146,6 @@ public class InventoryServiceImpl implements InventoryService {
         }
     }
 
-    // Xử lý khôi phục inventory khi có lỗi xảy ra ở các bước sau
     @KafkaListener(topics = "delivery-failed")
     @Transactional
     public void rollbackInventory(InventoryRollbackEvent event) {
@@ -171,4 +176,8 @@ public class InventoryServiceImpl implements InventoryService {
         }
     }
 
+    private record InventoryChange( Inventory inventory,  int reduceBy) { }
+
 }
+
+

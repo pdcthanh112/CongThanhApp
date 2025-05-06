@@ -11,6 +11,8 @@ import java.time.Instant;
 public abstract class SagaEvent implements Serializable {
 
     private String sagaId;
+
     private Instant createdAt;
+
     private SagaStatus status;
 }

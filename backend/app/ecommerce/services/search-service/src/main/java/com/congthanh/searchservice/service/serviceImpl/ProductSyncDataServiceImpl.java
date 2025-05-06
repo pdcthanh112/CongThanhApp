@@ -1,5 +1,8 @@
 package com.congthanh.searchservice.service.serviceImpl;
 
+import com.congthanh.searchservice.exception.ecommerce.NotFoundException;
+import com.congthanh.searchservice.model.document.Product;
+import com.congthanh.searchservice.model.viewmodel.ProductEsDetailVm;
 import com.congthanh.searchservice.repository.ProductRepository;
 import com.congthanh.searchservice.service.ProductSyncDataService;
 import lombok.RequiredArgsConstructor;
@@ -32,19 +35,12 @@ public class ProductSyncDataServiceImpl implements ProductSyncDataService {
     @Override
     public void updateProduct(String id) {
         ProductEsDetailVm productEsDetailVm = getProductEsDetailById(id);
-        Product product = productRepository.findById(id).orElseThrow(()
-                -> new NotFoundException(MessageCode.PRODUCT_NOT_FOUND, id));
-
-        if (!productEsDetailVm.isPublished()) {
-            productRepository.deleteById(id);
-            return;
-        }
+        Product product = productRepository.findById(id).orElseThrow(() -> new NotFoundException("PRODUCT_NOT_FOUND"));
 
         product.setName(productEsDetailVm.name());
         product.setSlug(productEsDetailVm.slug());
         product.setPrice(productEsDetailVm.price());
         product.setIsPublished(true);
-        product.setIsVisibleIndividually(productEsDetailVm.isVisibleIndividually());
         product.setIsAllowedToOrder(productEsDetailVm.isAllowedToOrder());
         product.setIsFeatured(productEsDetailVm.isFeatured());
         product.setThumbnailMediaId(productEsDetailVm.thumbnailMediaId());
@@ -64,7 +60,6 @@ public class ProductSyncDataServiceImpl implements ProductSyncDataService {
                 .slug(productEsDetailVm.slug())
                 .price(productEsDetailVm.price())
                 .isPublished(productEsDetailVm.isPublished())
-                .isVisibleIndividually(productEsDetailVm.isVisibleIndividually())
                 .isAllowedToOrder(productEsDetailVm.isAllowedToOrder())
                 .isFeatured(productEsDetailVm.isFeatured())
                 .thumbnailMediaId(productEsDetailVm.thumbnailMediaId())

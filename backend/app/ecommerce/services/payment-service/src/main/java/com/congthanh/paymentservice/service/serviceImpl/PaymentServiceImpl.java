@@ -1,8 +1,10 @@
 package com.congthanh.paymentservice.service.serviceImpl;
 
 import com.congthanh.paymentservice.constant.enums.PaymentMethod;
+import com.congthanh.paymentservice.model.entity.Payment;
 import com.congthanh.paymentservice.model.request.PaymentRequest;
 import com.congthanh.paymentservice.model.response.PaymentResponse;
+import com.congthanh.paymentservice.repository.payment.PaymentRepository;
 import com.congthanh.paymentservice.service.PaymentService;
 import com.congthanh.paymentservice.service.factory.PaymentStrategyFactory;
 import com.congthanh.paymentservice.service.strategy.PaymentStrategy;
@@ -20,6 +22,8 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentStrategyFactory strategyFactory;
 
     private KafkaTemplate<String, Object> kafkaTemplate;
+
+    private final PaymentRepository paymentRepository;
 
     private static final String PAYMENT_PROCESSED_TOPIC = "payment-processed";
     private static final String PAYMENT_FAILED_TOPIC = "payment-failed";

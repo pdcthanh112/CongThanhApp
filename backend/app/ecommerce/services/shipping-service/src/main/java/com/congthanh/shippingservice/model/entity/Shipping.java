@@ -4,11 +4,13 @@ import com.congthanh.shippingservice.constant.enums.ShippingStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -30,5 +32,8 @@ public class Shipping {
     private Instant createdAt;
 
     private Instant updatedAt;
+
+    @Column(name = "delivered_at")
+    private Instant deliveredAt;
 
 }

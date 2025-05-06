@@ -33,9 +33,10 @@ public class Product {
     @Field(type = FieldType.Double)
     private BigDecimal price;
 
+    private List<String> categories;
+
     private Boolean isPublished;
 
-    private Boolean isVisibleIndividually;
 
     private Boolean isAllowedToOrder;
 

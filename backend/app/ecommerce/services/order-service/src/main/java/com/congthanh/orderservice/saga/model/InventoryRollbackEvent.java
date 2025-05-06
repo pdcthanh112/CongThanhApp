@@ -1,6 +1,16 @@
 package com.congthanh.orderservice.saga.model;
 
-public class InventoryRollbackEvent {
+import com.congthanh.orderservice.model.entity.OrderItem;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
+public class InventoryRollbackEvent extends SagaEvent {
 
     private Long orderId;
+
+    private List<OrderItem> items;
 }

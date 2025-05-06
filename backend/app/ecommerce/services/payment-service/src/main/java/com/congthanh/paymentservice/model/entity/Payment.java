@@ -51,10 +51,8 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
 
-//    @OneToOne(mappedBy = "payment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JsonBackReference
-//    @JsonIgnore
-    private Long checkout;
+    @Column(name = "order_id")
+    private Long orderId;
 
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
     private List<PaymentTransaction> transactions;

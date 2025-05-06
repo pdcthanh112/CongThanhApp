@@ -1,6 +1,6 @@
 package com.congthanh.orderservice.saga.model;
 
-import com.congthanh.orderservice.model.request.CreateOrderRequest;
+import com.congthanh.orderservice.model.request.OrderSagaRequest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,5 +8,5 @@ import lombok.Setter;
 @Setter
 public class OrderCreatedEvent extends SagaEvent{
 
-    private CreateOrderRequest request;
+    private OrderSagaRequest request;
 }
