@@ -6,7 +6,7 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 
 @Component
-public class CODValidationUtils {
+public class CodValidationUtils {
     private static final BigDecimal MAX_COD_AMOUNT = new BigDecimal("1000");
 
     public static ValidationResult validateShippingAddress(String address) {

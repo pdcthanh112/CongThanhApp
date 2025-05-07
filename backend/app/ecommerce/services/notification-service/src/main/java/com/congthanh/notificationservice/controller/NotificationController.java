@@ -2,6 +2,8 @@ package com.congthanh.notificationservice.controller;
 
 import com.congthanh.notificationservice.constant.common.ResponseStatus;
 import com.congthanh.notificationservice.model.dto.NotificationDTO;
+import com.congthanh.notificationservice.model.request.FCMSubscriptionRequest;
+import com.congthanh.notificationservice.model.request.WebPushSubscriptionRequest;
 import com.congthanh.notificationservice.model.response.Response;
 import com.congthanh.notificationservice.service.NotificationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -48,5 +50,17 @@ public class NotificationController {
     response.setStatus(ResponseStatus.STATUS_SUCCESS);
     response.setMessage("Change reading successfully");
     return ResponseEntity.ok().body(response);
+  }
+
+  @PostMapping("/subscribe")
+  public ResponseEntity saveFCMToken(@RequestBody FCMSubscriptionRequest request) {
+    notificationService.saveFCMSubscription(request.userId(), request.deviceToken());
+    return ResponseEntity.ok().build();
+  }
+
+  @PostMapping("/subscribe-webpush")
+  public ResponseEntity saveWebPushSubscription(@RequestBody WebPushSubscriptionRequest request) {
+    notificationService.saveWebPushSubscription(request.userId(), request.subscription());
+    return ResponseEntity.ok().build();
   }
 }

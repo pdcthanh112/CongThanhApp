@@ -79,13 +79,13 @@ public class PaymentValidator {
     private ValidationResult validateCOD(PaymentRequest request) {
         Map<String, String> data = request.getAdditionalInfo();
 
-        ValidationResult address = CODValidationUtils.validateShippingAddress(data.get("shippingAddress"));
+        ValidationResult address = CodValidationUtils.validateShippingAddress(data.get("shippingAddress"));
         if (!address.isValid()) return address;
 
-        ValidationResult amount = CODValidationUtils.validateCODAmount(request.getAmount());
+        ValidationResult amount = CodValidationUtils.validateCODAmount(request.getAmount());
         if (!amount.isValid()) return amount;
 
-        return CODValidationUtils.validatePhoneNumber(data.get("phoneNumber"));
+        return CodValidationUtils.validatePhoneNumber(data.get("phoneNumber"));
     }
 
 }

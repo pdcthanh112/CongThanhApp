@@ -37,4 +37,6 @@ public class NotificationRequest {
 
     private Map<String, String> additionalInfo;
 
+    private String status;
+
 }

@@ -1,4 +1,4 @@
-package com.congthanh.notificationservice.repository;
+package com.congthanh.notificationservice.repository.notification;
 
 import com.congthanh.notificationservice.model.entity.Notification;
 import jakarta.transaction.Transactional;

@@ -1,4 +1,4 @@
-package com.congthanh.notificationservice.repository;
+package com.congthanh.notificationservice.repository.notification;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;

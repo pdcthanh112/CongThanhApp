@@ -1,6 +1,10 @@
 package com.congthanh.notificationservice.service.strategy;
 
+import com.congthanh.notificationservice.constant.enums.NotificationMethod;
 import com.congthanh.notificationservice.model.request.NotificationRequest;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -13,7 +17,12 @@ public class FCMNotificationStrategy implements NotificationStrategy {
     private final FirebaseMessaging firebaseMessaging;
 
     @Override
-    public boolean send(NotificationRequest request) {
+    public NotificationMethod getMethod() {
+        return NotificationMethod.FCM;
+    }
+
+    @Override
+    public void send(NotificationRequest request) {
         try {
             Message message = Message.builder()
                     .setToken(request.getDeviceToken())
@@ -26,10 +35,14 @@ public class FCMNotificationStrategy implements NotificationStrategy {
                     .build();
 
             String response = firebaseMessaging.send(message);
-            return true;
+            if (response != null) {
+                request.setStatus("SENT");
+            } else {
+                request.setStatus("FAILED");
+            }
         } catch (Exception e) {
-            log.error("FCM notification failed", e);
-            return false;
+            request.setStatus("FAILED");
+            throw new RuntimeException("Failed to send FCM notification: " + e.getMessage());
         }
     }
 

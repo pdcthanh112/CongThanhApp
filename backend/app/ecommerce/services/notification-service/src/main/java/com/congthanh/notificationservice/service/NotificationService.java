@@ -12,4 +12,7 @@ public interface NotificationService {
 
   boolean changeNotificationReadStatus(Long notificationId, boolean status);
 
+  void saveFCMSubscription(String userId, String deviceToken);
+
+  void saveWebPushSubscription(String userId, Object subscription);
 }

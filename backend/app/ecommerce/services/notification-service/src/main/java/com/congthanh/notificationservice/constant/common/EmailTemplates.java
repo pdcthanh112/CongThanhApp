@@ -1,4 +1,4 @@
-package com.congthanh.notificationservice.service.email;
+package com.congthanh.notificationservice.constant.common;
 
 import lombok.Getter;
 
@@ -16,5 +16,4 @@ public enum EmailTemplates {
         this.template = template;
         this.subject = subject;
     }
-
 }

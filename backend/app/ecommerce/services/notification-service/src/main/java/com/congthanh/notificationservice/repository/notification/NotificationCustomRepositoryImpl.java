@@ -1,4 +1,4 @@
-package com.congthanh.notificationservice.repository;
+package com.congthanh.notificationservice.repository.notification;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

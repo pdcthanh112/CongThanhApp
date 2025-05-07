@@ -1,7 +1,8 @@
 package com.congthanh.notificationservice.service.strategy;
 
+import com.congthanh.notificationservice.constant.common.EmailTemplates;
+import com.congthanh.notificationservice.constant.enums.NotificationMethod;
 import com.congthanh.notificationservice.model.request.NotificationRequest;
-import com.congthanh.notificationservice.service.email.EmailTemplates;
 import com.congthanh.notificationservice.service.validator.EmailValidatorUtils;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -26,21 +27,12 @@ public class EmailNotificationStrategy implements NotificationStrategy {
     private final SpringTemplateEngine templateEngine;
 
     @Override
-    public boolean send(NotificationRequest request) throws MessagingException {
-//        try {
-//            MimeMessage message = mailSender.createMimeMessage();
-//            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//
-//            helper.setTo(request.getRecipient());
-//            helper.setSubject(request.getSubject());
-//            helper.setText(request.getContent(), true);
-//
-//            mailSender.send(message);
-//            return true;
-//        } catch (Exception e) {
-//            log.error("Email sending failed", e);
-//            return false;
-//        }
+    public NotificationMethod getMethod() {
+        return NotificationMethod.EMAIL;
+    }
+
+    @Override
+    public void send(NotificationRequest request) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
         messageHelper.setFrom("contact@aliboucoding.com");
@@ -68,10 +60,10 @@ public class EmailNotificationStrategy implements NotificationStrategy {
             messageHelper.setTo(destinationEmail);
             mailSender.send(mimeMessage);
             log.info(String.format("INFO - Email successfully sent to %s with template %s ", destinationEmail, templateName));
-            return true;
+
         } catch (MessagingException e) {
             log.warn("WARNING - Cannot send Email to {} ", destinationEmail);
-            return false;
+
         }
     }
 

@@ -2,11 +2,17 @@ package com.congthanh.notificationservice.service.serviceImpl;
 
 import com.congthanh.notificationservice.constant.enums.NotificationStatus;
 import com.congthanh.notificationservice.model.dto.NotificationDTO;
+import com.congthanh.notificationservice.model.entity.FCMSubscription;
 import com.congthanh.notificationservice.model.entity.Notification;
 import com.congthanh.notificationservice.exception.NotFoundException;
+import com.congthanh.notificationservice.model.entity.WebpushSubscription;
 import com.congthanh.notificationservice.model.mapper.NotificationMapper;
-import com.congthanh.notificationservice.repository.NotificationRepository;
+import com.congthanh.notificationservice.repository.FCMSubscriptions.FCMSubscriptionsRepository;
+import com.congthanh.notificationservice.repository.notification.NotificationRepository;
+import com.congthanh.notificationservice.repository.webpushSubscription.WebpushSubscriptionRepository;
 import com.congthanh.notificationservice.service.NotificationService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -21,6 +27,12 @@ import java.util.List;
 public class NotificationServiceImpl implements NotificationService {
 
   private final NotificationRepository notificationRepository;
+
+  private final FCMSubscriptionsRepository fcmSubscriptionRepository;
+
+  private final WebpushSubscriptionRepository webpushSubscriptionRepository;
+
+  private final ObjectMapper objectMapper;
 
   @Override
   public List<NotificationDTO> getNotificationByCustomer(String customerId) {
@@ -57,6 +69,35 @@ public class NotificationServiceImpl implements NotificationService {
       return result;
     } else {
       throw new RuntimeException("Error");
+    }
+  }
+
+  @Override
+  @Transactional
+  public void saveFCMSubscription(String userId, String deviceToken) {
+    FCMSubscription subscription = fcmSubscriptionRepository.findByUserId(userId);
+    subscription.setUserId(userId);
+    subscription.setDeviceToken(deviceToken);
+    fcmSubscriptionRepository.save(subscription);
+  }
+
+  @Override
+  @Transactional
+  public void saveWebPushSubscription(String userId, Object subscription) {
+    try {
+      // Chuyển subscription thành JSON string
+      String subscriptionJson = objectMapper.writeValueAsString(subscription);
+
+      WebpushSubscription webPushSubscription = webpushSubscriptionRepository.findByUserId(userId);
+      if (webPushSubscription == null) {
+        webPushSubscription = new WebpushSubscription();
+        webPushSubscription.setId(System.currentTimeMillis()); // Tạo ID đơn giản, có thể dùng Sequence
+        webPushSubscription.setUserId(userId);
+      }
+      webPushSubscription.setSubscription(subscriptionJson);
+      webpushSubscriptionRepository.save(webPushSubscription);
+    } catch (Exception e) {
+      throw new RuntimeException("Failed to save Web Push subscription: " + e.getMessage());
     }
   }
 

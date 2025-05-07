@@ -53,9 +53,9 @@ public class PaymentRetryService {
 
     private BackOffPolicy createExponentialBackoffPolicy() {
         return new ExponentialBackOffPolicy() {{
-            setInitialInterval(1000); // 1 giây
+            setInitialInterval(1000);
             setMultiplier(2.0);
-            setMaxInterval(30000); // 30 giây
+            setMaxInterval(30000);
         }};
     }
 
