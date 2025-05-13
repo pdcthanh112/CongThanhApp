@@ -116,13 +116,15 @@ services:
     ports:
       - "9090:9090"
     # volumes:
-    #   - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     # depends_on:
       # - product-service
       # - order-service
       # - inventory-service
       # - notification-service
-
+    networks:
+      - congthanhapp-network
+  
   grafana:
     container_name: grafana
     image: grafana/grafana-oss:latest
@@ -136,6 +138,8 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=password
+    networks:
+      - congthanhapp-network
 
   elasticsearch:
     image: elasticsearch:8.16.1

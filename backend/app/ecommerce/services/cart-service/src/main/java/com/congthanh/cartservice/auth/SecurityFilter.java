@@ -10,6 +10,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,11 +25,11 @@ import java.util.stream.Collectors;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
-//    @Value("${spring.security.jwt.token.secretKey}")
-    private String JWT_SECRET = "secretKey";
+    @Value("${spring.security.jwt.token.secretKey}")
+    private String JWT_SECRET;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
         String token = this.extractToken(request);
         if (token != null) {
             try {
