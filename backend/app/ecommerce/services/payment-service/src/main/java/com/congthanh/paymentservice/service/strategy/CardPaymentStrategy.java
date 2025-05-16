@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CreditCardPaymentStrategy implements PaymentStrategy {
+public class CardPaymentStrategy implements PaymentStrategy {
 
 //    private final CreditCardGateway gateway;
 

@@ -13,7 +13,7 @@ import { getWishlistByCustomer } from '@/api/wishlistApi';
 import { WISHLIST_KEY } from '@/utils/constants/queryKey';
 import { getStatisticFromProduct } from '@/api/reviewApi';
 import { Button } from '@/components/ui';
-import { formatCurrency, roundNumber } from '@/utils/helper';
+import { formatCurrency, formatNumber } from '@/utils/helper';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { PATH } from '@/utils/constants/path';
@@ -164,7 +164,7 @@ const ProductItemCard = ({ product }: ProductItemProps) => {
           </span>
 
           <span className="mr-1">
-            {roundNumber(Number(reviewStatistic?.totalReview))} {t('product.rating')}
+            {formatNumber(Number(reviewStatistic?.totalReview))} {t('product.rating')}
           </span>
         </div>
 

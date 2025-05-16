@@ -228,3 +228,10 @@ stripe:
 payment:
   encryption:
     iv: 123456789abcdef
+
+momo:
+  partnerCode: YOUR_PARTNER_CODE
+  accessKey: YOUR_ACCESS_KEY
+  secretKey: YOUR_SECRET_KEY
+  redirectUrl: https://your-frontend.com/payment/success
+  ipnUrl: https://your-backend.com/api/payment/ipn

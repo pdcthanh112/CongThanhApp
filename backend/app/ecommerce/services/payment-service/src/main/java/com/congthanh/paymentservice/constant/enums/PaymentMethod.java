@@ -11,5 +11,7 @@ public enum PaymentMethod {
     PAYPAL,
     STRIPE,
     BITCOIN,
+    MOMO,
+    VN_PAY
 }
 

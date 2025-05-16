@@ -181,5 +181,5 @@ notification:
       auth-token: ${TWILIO_AUTH_TOKEN}
       from-number: +1234567890
 
-  fcm:
-    credentials-path: classpath:firebase-credentials.json
+  firebase:
+    credentials-path: classpath:firebase/service-account.json

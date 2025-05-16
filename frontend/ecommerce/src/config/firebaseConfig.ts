@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getMessaging } from 'firebase/messaging';
+
+// import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCt_DDyVvOOKBvfux9mLa5icTISruKznCA",
@@ -12,4 +14,5 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export const messaging = getMessaging(app);
+// const analytics = getAnalytics(app);
