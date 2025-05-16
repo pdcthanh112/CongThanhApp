@@ -6,7 +6,7 @@ import { Rating, Icon, Avatar, TableContainer, Table, TableBody, TableRow, Table
 import { Storefront, ForumOutlined, KeyboardArrowDown } from '@mui/icons-material';
 import Image from 'next/image';
 import DefaultImage from '@/assets/images/default-image.jpg';
-import { formatCurrency, roundNumber } from '@/utils/helper';
+import { formatCurrency, formatNumber } from '@/utils/helper';
 import { useTranslations } from 'next-intl';
 import { useAddProductToWishlist, useRemoveProductFromWishlist } from '@/hooks/wishlist/wishlistHook';
 import { AddToCartIcon, HeartEmpty, HeartFull } from '@/assets/icons';
@@ -55,7 +55,7 @@ export default function ProductDetail({
 }: ProductDetailProps) {
   const { data: user } = useSession();
   const router = useRouter();
-
+console.log('VVVVVVVVVVVVVVVVVVVVVVVVVv', productVariant)
   const t = useTranslations();
 
   const [quantity, setQuantity] = useState(1);
@@ -100,6 +100,7 @@ export default function ProductDetail({
   }, [productOption, productVariant, pvid]);
 
   const [currentSelectedOption, setCurrentSelectedOption] = useState<CurrentSelectedOption>(initCurrentSelectedOption);
+  console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYY', currentSelectedOption)
   const [optionSelected, setOptionSelected] = useState<CurrentSelectedOption>({});
   const [isUnchecking, setIsUnchecking] = useState<boolean>(false);
   const [currentProduct, setCurrentProduct] = useState<Product | ProductVariant>(product);
@@ -131,6 +132,7 @@ export default function ProductDetail({
     const findProductVariationMatchAllOptions = () => {
       return productVariant?.find((item) => {
         const optionKeys = Object.keys(item.options);
+        console.log('KKKKKKKKKKKKKKKKKKKK', optionKeys)
         return (
           optionKeys.length === Object.keys(currentSelectedOption).length &&
           areAllOptionsSelected(optionKeys, currentSelectedOption, item)
@@ -166,6 +168,7 @@ export default function ProductDetail({
 
     if (productOption?.length && productVariant?.length) {
       const productVariationMatchAllOptions = findProductVariationMatchAllOptions();
+      console.log('FFFFFFFFFFFFFFFFFFFFFFFFF', productVariationMatchAllOptions)
       if (productVariationMatchAllOptions) {
         updateListImagesByProductVariationMatchAllOptions(productVariationMatchAllOptions);
       } else if (!isUnchecking) {
@@ -353,14 +356,7 @@ export default function ProductDetail({
       }
     }
   };
-  console.log(
-    'TTTTTTTTTTTTTT',
-    productOption,
-    '\nBBBBBBBBBBBBBBBBBBBBBBBBBB',
-    productVariant,
-    '\nVVVVVVVVVVVVVVVVVVVVVVV',
-    productOptionValueGet
-  );
+
   return (
     <div className="w-[80%] mx-auto my-3">
       <div className="bg-white flex px-3 py-2">
@@ -443,7 +439,7 @@ export default function ProductDetail({
                 </div>
                 <span className="opacity-80 mx-2">|</span>
                 <span>
-                  {roundNumber(reviewStatistic.totalReview)} {t('product.rating')}
+                  {formatNumber(reviewStatistic.totalReview)} {t('product.rating')}
                 </span>
                 <span className="opacity-80 mx-2">|</span>
                 <span>
@@ -507,71 +503,37 @@ export default function ProductDetail({
             </div>
           </div>
           <div className="font-semibold text-3xl text-yellow-400">{formatCurrency(10000000000000, 'vi', 'VND')}</div>
-          ===========================================
+          ============
           {/* product options */}
           {(productOption || []).map((productOption) => {
-            console.log('PPPPPPPPPP', productOption);
-            const productOptionPost = productOptionValueGet?.find(
-              (productOptionPost) => productOptionPost.productOptionId === productOption.id
-            );
-            const parsedValue = productOptionPost?.productOptionValue
-              ? //   ? (() => {
-                //     try {
-                //       return JSON.parse(productOptionPost.productOptionValue);
-                //     } catch (error) {
-                //       console.error("JSON parse error:", error);
-                //       return { [productOptionPost.productOptionValue]: productOptionPost.productOptionValue };
-                //     }
-                //   })()
-                // : [];
-                JSON.parse(productOptionPost.productOptionValue)
-              : [];
-            return productOptionPost ? (
+            const optionValues =
+              productOptionValueGet?.filter((post) => post.productOptionId === productOption.id) || [];
+
+            return (
               <div className="mb-3" key={productOption.name}>
                 <h5 className="mb-2 fs-6">{productOption.name}:</h5>
-                {productOptionPost.displayType === 'color' ? (
-                  <div className="d-flex">
-                    {Object.entries(parsedValue).map(([key, value]: any, id: any) => (
-                      <Button
-                        key={key}
-                        className={`color-swatch me-2 py-1 px-2 ${
-                          currentSelectedOption[productOptionPost.productOptionId] === key
-                            ? 'border border-2 border-primary opacity-100'
-                            : 'btn-outline-primary opacity-25'
-                        }`}
-                        style={{
-                          backgroundColor: value,
-                          width: '30px',
-                          height: '30px',
-                          borderRadius: '50%',
-                        }}
-                        onClick={() => handleSelectOption(productOptionPost.productOptionId, key)}
-                        aria-label={`Color option ${value}`}
-                      ></Button>
-                    ))}
-                  </div>
-                ) : (
+                {optionValues.length > 0 ? (
                   <div className="d-flex gap-2">
-                    {Object.entries(parsedValue).map(([key, value]: any, id: any) => (
+                    {optionValues.map((post) => (
                       <Button
-                        key={key}
+                        key={post.productOptionValue}
                         className={`${
-                          currentSelectedOption[productOptionPost.productOptionId] === key
-                            ? 'btn btn-primary text-white'
+                          currentSelectedOption[productOption.id] === post.productOptionValue
+                            ? 'btn btn-primary bg-amber-200'
                             : 'text-dark btn-outline-primary'
                         }`}
-                        onClick={() => handleSelectOption(productOptionPost.productOptionId, key)}
-                        aria-label={`Color option ${value}`}
-                        variant="outline-secondary"
+                        onClick={() => handleSelectOption(productOption.id, post.productOptionValue)}
+                        aria-label={`Select ${productOption.name} ${post.productOptionValue}`}
+                        variant="outline"
                       >
-                        {key}
+                        {post.productOptionValue}
                       </Button>
                     ))}
                   </div>
+                ) : (
+                  <div>{productOption.name}</div>
                 )}
               </div>
-            ) : (
-              productOption.name
             );
           })}
           ===================================

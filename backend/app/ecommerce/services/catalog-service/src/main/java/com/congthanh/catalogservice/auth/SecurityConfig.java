@@ -41,7 +41,6 @@ public class SecurityConfig {
                                 // Các endpoint công khai (không yêu cầu xác thực)
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-//                        .requestMatchers("/**", "/auth/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .authenticationManager(authenticationManager)

@@ -110,6 +110,7 @@ export default async function ProductDetailPage({
   if (product.hasVariant) {
     try {
       const productOptionValues = await getProductOptionValues(product.id);
+  
       for (const optionValue of productOptionValues) {
         const index = productOptions.findIndex((productOption) => productOption.name === optionValue.productOptionName);
         if (index > -1) {

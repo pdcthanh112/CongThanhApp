@@ -239,20 +239,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductVariantVm> getProductVariationsByParentId(String parentId) {
-        System.out.println("Co vooooooooooooooooooooooooooooooo");
         Product parentProduct = productRepository.findById(parentId).orElseThrow(() -> new NotFoundException("Product not found"));
-        System.out.println("IIIIIIIIIIIIIIIIIIIIIUUUUUUUUUUU"+parentProduct);
         if (Boolean.TRUE.equals(parentProduct.isHasVariant())) {
             List<Product> productVariations = parentProduct.getVariant().stream().filter(item -> item.getStatus().equals(ProductStatus.ACTIVE)).toList();
-            System.out.println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"+productVariations);
+
             return productVariations.stream().map(product -> {
-                List<VariantOptionCombination> productOptionCombinations =
-                        variantOptionCombinationRepository.findAllByProduct(product);
-                Map<Long, String> options = productOptionCombinations.stream().collect(Collectors.toMap(
+                List<VariantOptionCombination> productOptionCombinations = variantOptionCombinationRepository.findAllByProduct(product);
+
+                System.out.println("VVVVVVVVVVVVVVVVVVVVVVVV"+productOptionCombinations);
+                Map<Long, String> options = productOptionCombinations.stream()
+                        .collect(Collectors.toMap(
                         productOptionCombination -> productOptionCombination.getVariantOption().getId(),
                         VariantOptionCombination::getValue
                 ));
 
+                System.out.println("CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK" + options);
                 ProductImage thumbnail = productImageRepository.findById(product.getThumbnail()).orElseThrow(() -> new NotFoundException("Product image not found"));
                 ProductImageVm thumbnailVm = new ProductImageVm(thumbnail.getId(), thumbnail.getImagePath());
 //
@@ -264,8 +265,7 @@ public class ProductServiceImpl implements ProductService {
                         product.getGtin(),
                         product.getPrice(),
                         thumbnailVm,
-                        product.getImage().stream()
-                                .map(productImage -> new ProductImageVm(productImage.getId(), productImage.getImagePath())).toList(),
+                        product.getImage().stream().map(productImage -> new ProductImageVm(productImage.getId(), productImage.getImagePath())).toList(),
                         options
                 );
             }).toList();

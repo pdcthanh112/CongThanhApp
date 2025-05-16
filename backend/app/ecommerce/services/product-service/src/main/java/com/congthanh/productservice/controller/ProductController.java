@@ -218,9 +218,9 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Not found",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
     })
-    @GetMapping({"/storefront/product-variations/{id}", "/backoffice/product-variations/{id}"})
-    public ResponseEntity<List<ProductVariantVm>> getProductVariationsByParentId(@PathVariable String id) {
-        return ResponseEntity.ok(productService.getProductVariationsByParentId(id));
+    @GetMapping({"/storefront/product-variations/{parentId}", "/backoffice/product-variations/{parentId}"})
+    public ResponseEntity<List<ProductVariantVm>> getProductVariationsByParentId(@PathVariable("parentId") String parentId) {
+        return ResponseEntity.ok(productService.getProductVariationsByParentId(parentId));
     }
 
     @GetMapping("/{id}/variants/attributes/detail")

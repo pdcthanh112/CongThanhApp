@@ -142,7 +142,7 @@ export const getVariantValueDetail = async (productId: string) => {
 export async function getProductOptionValues(productId: string): Promise<ProductOptionValueGet[]> {
   return await axiosInstance
     .get(`/products/storefront/product-option-combinations/${productId}/values`)
-    .then((response) => response.data)
+    .then((response) => response.data.data)
     .catch((error) => {
       throw Error(error);
     });
@@ -160,7 +160,7 @@ export async function getProductVariationsByParentId(parentId: string): Promise<
 export async function getProductOptionValueByProductId(productId: string): Promise<ProductOptionValueDisplay[]> {
   return await axiosInstance
     .get(`/products/storefront/product-option-values/${productId}`)
-    .then((response) => response.data)
+    .then((response) => response.data.data)
     .catch((error) => {
       throw Error(error);
     });
