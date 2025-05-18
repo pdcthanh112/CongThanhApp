@@ -15,18 +15,18 @@ public class BankTransferController {
 
     private final PaymentService paymentService;
 
-    @GetMapping("/banks")
-    public ResponseEntity<List<BankInfo>> getSupportedBanks() {
-        return ResponseEntity.ok(bankTransferService.getSupportedBanks());
-    }
-
-    @PostMapping("/virtual-account")
-    public ResponseEntity<VirtualAccountResponse> createVirtualAccount(
-            @Valid @RequestBody VirtualAccountRequest request
-    ) {
-        return ResponseEntity.ok(
-                bankTransferService.createVirtualAccount(request)
-        );
-    }
+//    @GetMapping("/banks")
+//    public ResponseEntity<List<BankInfo>> getSupportedBanks() {
+//        return ResponseEntity.ok(bankTransferService.getSupportedBanks());
+//    }
+//
+//    @PostMapping("/virtual-account")
+//    public ResponseEntity<VirtualAccountResponse> createVirtualAccount(
+//            @Valid @RequestBody VirtualAccountRequest request
+//    ) {
+//        return ResponseEntity.ok(
+//                bankTransferService.createVirtualAccount(request)
+//        );
+//    }
 
 }

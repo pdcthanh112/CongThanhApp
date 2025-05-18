@@ -19,10 +19,10 @@ public class CardPaymentController {
 
     private final PaymentService paymentService;
 
-    @PostMapping("/tokenize")
-    public ResponseEntity<TokenizeResponse> tokenizeCard(@RequestBody @Valid CardTokenizeRequest request) {
-        return ResponseEntity.ok(cardPaymentService.tokenizeCard(request));
-    }
+//    @PostMapping("/tokenize")
+//    public ResponseEntity<TokenizeResponse> tokenizeCard(@RequestBody @Valid CardTokenizeRequest request) {
+//        return ResponseEntity.ok(cardPaymentService.tokenizeCard(request));
+//    }
 
 
 }

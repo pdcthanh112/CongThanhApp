@@ -224,14 +224,22 @@ paypal:
 stripe:
   api:
     key: sk_test_51QJqCNAhMlLU3M6EMdkbkBq81BwIaEbZBfGNArb3lbSFx0GBG9aU2hV9685sd5Rd8PrjMbkja5Dm9qF5JMwGnjBi00vfPWhtdL
+  secret:
+    key: sk_test_51QJqCNAhMlLU3M6EMdkbkBq81BwIaEbZBfGNArb3lbSFx0GBG9aU2hV9685sd5Rd8PrjMbkja5Dm9qF5JMwGnjBi00vfPWhtdL
 
 payment:
   encryption:
     iv: 123456789abcdef
 
-momo:
-  partnerCode: YOUR_PARTNER_CODE
-  accessKey: YOUR_ACCESS_KEY
-  secretKey: YOUR_SECRET_KEY
-  redirectUrl: https://your-frontend.com/payment/success
-  ipnUrl: https://your-backend.com/api/payment/ipn
+  momo:
+    partnerCode: YOUR_PARTNER_CODE
+    accessKey: YOUR_ACCESS_KEY
+    secretKey: YOUR_SECRET_KEY
+    redirectUrl: https://your-frontend.com/payment/success
+    ipnUrl: https://your-backend.com/api/payment/ipn
+
+  vnpay:
+    tmnCode: NYN1JND3
+    hashSecret: EL1DJ219PW3P2N8WJPPHMN5RU20PWLM6
+    payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+    returnUrl: http://localhost:3000/payment/callback

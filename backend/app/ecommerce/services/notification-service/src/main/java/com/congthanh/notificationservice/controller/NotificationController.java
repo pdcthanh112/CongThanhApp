@@ -72,7 +72,7 @@ public class NotificationController {
 
 
     @PostMapping("/test/{token}")
-    public ResponseEntity test(@RequestParam String token) {
+    public ResponseEntity test(@RequestParam String token) {//cáinàyđểtest,nhớxoá
         Message msg = Message.builder()
                 .setToken(token)
                 .setNotification(Notification.builder()

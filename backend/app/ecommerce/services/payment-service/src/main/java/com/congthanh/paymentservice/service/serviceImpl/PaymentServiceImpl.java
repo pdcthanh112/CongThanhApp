@@ -53,87 +53,87 @@ public class PaymentServiceImpl implements PaymentService {
         return result;
     }
 
-    @KafkaListener(topics = "order-created")
-    public void processPayment(OrderCreatedEvent event) {
-        try {
-            // Ghi log
-            log.info("Processing payment for order: {}", event.getOrderDTO().getOrderId());
-
-            // Thực hiện thanh toán với payment gateway
-            PaymentGatewayResponse gatewayResponse = processPaymentWithGateway(event.getOrderDTO());
-
-            // Lưu thông tin thanh toán
-            Payment payment = new Payment();
-            payment.setOrderId(event.getOrderDTO().getOrderId());
-            payment.setAmount(event.getOrderDTO().getTotalAmount());
-            payment.setTransactionId(gatewayResponse.getTransactionId());
-
-            if (gatewayResponse.isSuccess()) {
-                payment.setStatus(PaymentStatus.COMPLETED);
-                paymentRepository.save(payment);
-
-                // Gửi sự kiện thanh toán thành công
-                PaymentProcessedEvent processedEvent = new PaymentProcessedEvent();
-                processedEvent.setSagaId(event.getSagaId());
-                processedEvent.setOrderDTO(event.getOrderDTO());
-                processedEvent.setTransactionId(gatewayResponse.getTransactionId());
-
-                kafkaTemplate.send(PAYMENT_PROCESSED_TOPIC, processedEvent);
-
-                log.info("Payment successful for order: {}", event.getOrderDTO().getOrderId());
-            } else {
-                payment.setStatus(PaymentStatus.FAILED);
-                payment.setFailureReason(gatewayResponse.getErrorMessage());
-                paymentRepository.save(payment);
-
-                // Gửi sự kiện thanh toán thất bại
-                PaymentFailedEvent failedEvent = new PaymentFailedEvent();
-                failedEvent.setSagaId(event.getSagaId());
-                failedEvent.setOrderDTO(event.getOrderDTO());
-                failedEvent.setReason(gatewayResponse.getErrorMessage());
-
-                kafkaTemplate.send(PAYMENT_FAILED_TOPIC, failedEvent);
-
-                log.error("Payment failed for order: {}", event.getOrderDTO().getOrderId());
-            }
-        } catch (Exception e) {
-            log.error("Error processing payment for order {}: {}", event.getOrderDTO().getOrderId(), e.getMessage());
-
-            // Gửi sự kiện thanh toán thất bại
-            PaymentFailedEvent failedEvent = new PaymentFailedEvent();
-            failedEvent.setSagaId(event.getSagaId());
-            failedEvent.setOrderDTO(event.getOrderDTO());
-            failedEvent.setReason("System error: " + e.getMessage());
-
-            kafkaTemplate.send(PAYMENT_FAILED_TOPIC, failedEvent);
-        }
-    }
-
-    // Xử lý yêu cầu hoàn tiền
-    @KafkaListener(topics = {"inventory-failed", "delivery-failed"})
-    public void processRefund(PaymentRefundEvent event) {
-        try {
-            // Tìm giao dịch thanh toán
-            Payment payment = paymentRepository.findByOrderId(event.getOrderId())
-                    .orElseThrow(() -> new PaymentNotFoundException("Payment not found for order: " + event.getOrderId()));
-
-            // Thực hiện hoàn tiền với payment gateway
-            RefundGatewayResponse gatewayResponse = processRefundWithGateway(payment.getTransactionId(), event.getAmount());
-
-            if (gatewayResponse.isSuccess()) {
-                // Cập nhật trạng thái thanh toán
-                payment.setStatus(PaymentStatus.REFUNDED);
-                payment.setRefundTransactionId(gatewayResponse.getRefundTransactionId());
-                paymentRepository.save(payment);
-
-                log.info("Payment refunded for order: {}", event.getOrderId());
-            } else {
-                log.error("Refund failed for order {}: {}", event.getOrderId(), gatewayResponse.getErrorMessage());
-            }
-        } catch (Exception e) {
-            log.error("Error processing refund for order {}: {}", event.getOrderId(), e.getMessage());
-        }
-    }
+//    @KafkaListener(topics = "order-created")
+//    public void processPayment(OrderCreatedEvent event) {
+//        try {
+//            // Ghi log
+//            log.info("Processing payment for order: {}", event.getOrderDTO().getOrderId());
+//
+//            // Thực hiện thanh toán với payment gateway
+//            PaymentGatewayResponse gatewayResponse = processPaymentWithGateway(event.getOrderDTO());
+//
+//            // Lưu thông tin thanh toán
+//            Payment payment = new Payment();
+//            payment.setOrderId(event.getOrderDTO().getOrderId());
+//            payment.setAmount(event.getOrderDTO().getTotalAmount());
+//            payment.setTransactionId(gatewayResponse.getTransactionId());
+//
+//            if (gatewayResponse.isSuccess()) {
+//                payment.setStatus(PaymentStatus.COMPLETED);
+//                paymentRepository.save(payment);
+//
+//                // Gửi sự kiện thanh toán thành công
+//                PaymentProcessedEvent processedEvent = new PaymentProcessedEvent();
+//                processedEvent.setSagaId(event.getSagaId());
+//                processedEvent.setOrderDTO(event.getOrderDTO());
+//                processedEvent.setTransactionId(gatewayResponse.getTransactionId());
+//
+//                kafkaTemplate.send(PAYMENT_PROCESSED_TOPIC, processedEvent);
+//
+//                log.info("Payment successful for order: {}", event.getOrderDTO().getOrderId());
+//            } else {
+//                payment.setStatus(PaymentStatus.FAILED);
+//                payment.setFailureReason(gatewayResponse.getErrorMessage());
+//                paymentRepository.save(payment);
+//
+//                // Gửi sự kiện thanh toán thất bại
+//                PaymentFailedEvent failedEvent = new PaymentFailedEvent();
+//                failedEvent.setSagaId(event.getSagaId());
+//                failedEvent.setOrderDTO(event.getOrderDTO());
+//                failedEvent.setReason(gatewayResponse.getErrorMessage());
+//
+//                kafkaTemplate.send(PAYMENT_FAILED_TOPIC, failedEvent);
+//
+//                log.error("Payment failed for order: {}", event.getOrderDTO().getOrderId());
+//            }
+//        } catch (Exception e) {
+//            log.error("Error processing payment for order {}: {}", event.getOrderDTO().getOrderId(), e.getMessage());
+//
+//            // Gửi sự kiện thanh toán thất bại
+//            PaymentFailedEvent failedEvent = new PaymentFailedEvent();
+//            failedEvent.setSagaId(event.getSagaId());
+//            failedEvent.setOrderDTO(event.getOrderDTO());
+//            failedEvent.setReason("System error: " + e.getMessage());
+//
+//            kafkaTemplate.send(PAYMENT_FAILED_TOPIC, failedEvent);
+//        }
+//    }
+//
+//    // Xử lý yêu cầu hoàn tiền
+//    @KafkaListener(topics = {"inventory-failed", "delivery-failed"})
+//    public void processRefund(PaymentRefundEvent event) {
+//        try {
+//            // Tìm giao dịch thanh toán
+//            Payment payment = paymentRepository.findByOrderId(event.getOrderId())
+//                    .orElseThrow(() -> new PaymentNotFoundException("Payment not found for order: " + event.getOrderId()));
+//
+//            // Thực hiện hoàn tiền với payment gateway
+//            RefundGatewayResponse gatewayResponse = processRefundWithGateway(payment.getTransactionId(), event.getAmount());
+//
+//            if (gatewayResponse.isSuccess()) {
+//                // Cập nhật trạng thái thanh toán
+//                payment.setStatus(PaymentStatus.REFUNDED);
+//                payment.setRefundTransactionId(gatewayResponse.getRefundTransactionId());
+//                paymentRepository.save(payment);
+//
+//                log.info("Payment refunded for order: {}", event.getOrderId());
+//            } else {
+//                log.error("Refund failed for order {}: {}", event.getOrderId(), gatewayResponse.getErrorMessage());
+//            }
+//        } catch (Exception e) {
+//            log.error("Error processing refund for order {}: {}", event.getOrderId(), e.getMessage());
+//        }
+//    }
 
 
 }

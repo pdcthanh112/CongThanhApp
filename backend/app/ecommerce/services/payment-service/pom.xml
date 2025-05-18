@@ -318,9 +318,25 @@
 			<artifactId>logstash-logback-encoder</artifactId>
 			<version>8.0</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>io.github.resilience4j</groupId>-->
+<!--			<artifactId>resilience4j-spring-boot3</artifactId>-->
+<!--		</dependency>-->
+		<!-- https://mvnrepository.com/artifact/com.stripe/stripe-java -->
 		<dependency>
-			<groupId>io.github.resilience4j</groupId>
-			<artifactId>resilience4j-spring-boot3</artifactId>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>29.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.paypal.sdk</groupId>
+			<artifactId>paypal-core</artifactId>
+			<version>1.7.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.paypal.sdk</groupId>
+			<artifactId>rest-api-sdk</artifactId>
+			<version>1.14.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.congthanh</groupId>
