@@ -55,7 +55,7 @@ export default function ProductDetail({
 }: ProductDetailProps) {
   const { data: user } = useSession();
   const router = useRouter();
-console.log('VVVVVVVVVVVVVVVVVVVVVVVVVv', productVariant)
+  console.log('VVVVVVVVVVVVVVVVVVVVVVVVVv', productVariant);
   const t = useTranslations();
 
   const [quantity, setQuantity] = useState(1);
@@ -100,7 +100,7 @@ console.log('VVVVVVVVVVVVVVVVVVVVVVVVVv', productVariant)
   }, [productOption, productVariant, pvid]);
 
   const [currentSelectedOption, setCurrentSelectedOption] = useState<CurrentSelectedOption>(initCurrentSelectedOption);
-  console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYY', currentSelectedOption)
+  console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYY', currentSelectedOption);
   const [optionSelected, setOptionSelected] = useState<CurrentSelectedOption>({});
   const [isUnchecking, setIsUnchecking] = useState<boolean>(false);
   const [currentProduct, setCurrentProduct] = useState<Product | ProductVariant>(product);
@@ -132,7 +132,7 @@ console.log('VVVVVVVVVVVVVVVVVVVVVVVVVv', productVariant)
     const findProductVariationMatchAllOptions = () => {
       return productVariant?.find((item) => {
         const optionKeys = Object.keys(item.options);
-        console.log('KKKKKKKKKKKKKKKKKKKK', optionKeys)
+        console.log('KKKKKKKKKKKKKKKKKKKK', optionKeys);
         return (
           optionKeys.length === Object.keys(currentSelectedOption).length &&
           areAllOptionsSelected(optionKeys, currentSelectedOption, item)
@@ -168,7 +168,7 @@ console.log('VVVVVVVVVVVVVVVVVVVVVVVVVv', productVariant)
 
     if (productOption?.length && productVariant?.length) {
       const productVariationMatchAllOptions = findProductVariationMatchAllOptions();
-      console.log('FFFFFFFFFFFFFFFFFFFFFFFFF', productVariationMatchAllOptions)
+      console.log('FFFFFFFFFFFFFFFFFFFFFFFFF', productVariationMatchAllOptions);
       if (productVariationMatchAllOptions) {
         updateListImagesByProductVariationMatchAllOptions(productVariationMatchAllOptions);
       } else if (!isUnchecking) {

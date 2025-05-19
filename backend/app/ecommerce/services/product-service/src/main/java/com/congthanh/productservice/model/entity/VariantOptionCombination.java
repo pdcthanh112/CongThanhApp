@@ -23,8 +23,8 @@ public class VariantOptionCombination {
 
     @ManyToOne
     @JoinColumn(name = "variant_option_id", nullable = false)
-    private VariantOption variantOption;
-
+    private VariantOption variantOption; //chỗ này đáng ra phải nối với VariantOptionValue, nhớ đọc và sửa lại
+                                        // và không có trường "value"
     @Column(name = "display_order")
     private int displayOrder;
 
