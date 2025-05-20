@@ -1,5 +1,4 @@
 export type Customer = {
-  userInfo: {
     id: number;
     email: string;
     password: string;
@@ -10,10 +9,6 @@ export type Customer = {
     gender: string;
     dob: Date;
     image: string;
-  };
-  tokenData: {
-    token: string;
-    expiresIn: number;
-  };
+    role: string
 };
 

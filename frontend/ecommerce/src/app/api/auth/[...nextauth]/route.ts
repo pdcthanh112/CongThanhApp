@@ -72,7 +72,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         try {
-          const res = await fetch('http://localhost:8000/auth/login', {
+          const res = await fetch('/api/auth/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -193,11 +193,11 @@ export { handlers as GET, handlers as POST };
 
 async function refreshAccessToken(token: JWT): Promise<JWT> {
   try {
-    const response = await fetch(`${process.env.API_SERVER_BASE_URL}/api/auth/refresh`, {
+    const response = await fetch(`/api/auth/refresh`, {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token.refreshToken}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${token.refreshToken}`,
+      // },
       body: JSON.stringify({
         refresh_token: token.refreshToken,
       }),
