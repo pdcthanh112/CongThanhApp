@@ -82,12 +82,12 @@ public class LoggingServiceImpl implements LoggingService {
         return map;
     }
 
-    private Map<String, String> buildHeadersMap(HttpServletResponse response) {
+    private Map<String, String> buildHeadersMap(HttpServletResponse apiResponse) {
         Map<String, String> map = new HashMap<>();
 
-        Collection<String> headerNames = response.getHeaderNames();
+        Collection<String> headerNames = apiResponse.getHeaderNames();
         for (String header : headerNames) {
-            map.put(header, response.getHeader(header));
+            map.put(header, apiResponse.getHeader(header));
         }
 
         return map;

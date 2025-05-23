@@ -1,9 +1,23 @@
 import { Customer } from '@/models/types';
 
+const checkLocalStorageSupport = () => {
+  if (typeof window !== 'undefined' && typeof localStorage === 'undefined') {
+    throw new Error('local storage does not support');
+  }
+  return true;
+};
+
 export const LocalStorageEventTarget = new EventTarget();
 
 export const setAccessTokenToLocalStorage = (access_token: string) => {
-  localStorage.setItem('access_token', access_token);
+  checkLocalStorageSupport();
+  try {
+    localStorage.setItem('access_token', access_token);
+  } catch (error) {
+    if (error.name === 'QuotaExceededError') {
+      console.log('LocalStorage is full');
+    }
+  }
 };
 
 export const clearLocalStorage = () => {

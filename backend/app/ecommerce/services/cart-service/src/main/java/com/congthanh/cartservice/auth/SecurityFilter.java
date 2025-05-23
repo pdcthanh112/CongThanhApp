@@ -1,11 +1,8 @@
 package com.congthanh.cartservice.auth;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.auth0.jwt.interfaces.DecodedJWT;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.crypto.SecretKey;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,25 +27,37 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Value("${spring.security.jwt.token.secretKey}")
     private String JWT_SECRET;
 
+    private static final List<String> PUBLIC_ENDPOINTS = List.of(
+            "/api/auth/",
+            "/oauth2/",
+            "/login/oauth2/",
+            "/swagger-ui/",
+            "/v3/api-docs/"
+    );
+
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
+
+        String requestPath = request.getRequestURI();
+
+        // Bỏ qua các endpoint công khai
+        if (PUBLIC_ENDPOINTS.stream().anyMatch(requestPath::startsWith)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String token = this.extractToken(request);
         if (token != null) {
             try {
-                DecodedJWT decodedJWT = this.validateToken(token);
-                List<SimpleGrantedAuthority> authorities = this.extractAuthorities(decodedJWT);
+                Claims claims = this.validateToken(token);
+                List<SimpleGrantedAuthority> authorities = this.extractAuthorities(claims);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        decodedJWT.getSubject(), null, authorities);
+                        claims.getSubject(), null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            } catch (TokenExpiredException e) {
+            } catch (JwtException e) {
                 SecurityContextHolder.clearContext();
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Token has expired");
-                return;
-            } catch (Exception e) {
-                SecurityContextHolder.clearContext();
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Invalid token");
+                response.getWriter().write(e.getMessage());
                 return;
             }
         }
@@ -61,21 +72,36 @@ public class SecurityFilter extends OncePerRequestFilter {
         return null;
     }
 
-    private DecodedJWT validateToken(String token) {
+    private Claims validateToken(String token) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256(JWT_SECRET);
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .build();
-            return verifier.verify(token);
-        } catch (TokenExpiredException exception) {
-            throw new TokenExpiredException("The token has expired", exception.getExpiredOn());
-        } catch (JWTVerificationException exception) {
-            throw new JWTVerificationException("Error while validating token", exception);
+            // Kiểm tra độ dài khóa bí mật
+            byte[] secretBytes = JWT_SECRET.getBytes(StandardCharsets.UTF_8);
+            if (secretBytes.length < 32) {
+                throw new IllegalArgumentException("JWT_SECRET must be at least 32 bytes long for HS256");
+            }
+
+            SecretKey signingKey = Keys.hmacShaKeyFor(secretBytes);
+
+            return Jwts.parser()
+                    .setSigningKey(signingKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            throw new RuntimeException("Token has expired", e); // Token đã hết hạn
+        } catch (SignatureException e) {
+            throw new RuntimeException("Invalid token signature", e);  // Chữ ký không hợp lệ
+        } catch (MalformedJwtException e) {
+            throw new RuntimeException("Invalid token format", e);  // Token không đúng định dạng
+        } catch (UnsupportedJwtException e) {
+            throw new RuntimeException("Unsupported token", e);  // Token không được hỗ trợ
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid token or secret key", e);   // Token hoặc khóa không hợp lệ
         }
     }
 
-    private List<SimpleGrantedAuthority> extractAuthorities(DecodedJWT decodedJWT) {
-        List<String> roles = decodedJWT.getClaim("role").asList(String.class);
+    private List<SimpleGrantedAuthority> extractAuthorities(Claims claims) {
+        List<String> roles = claims.get("role", List.class);
         return roles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());

@@ -40,7 +40,7 @@ public class CartController {
     private final CartItemService cartItemService;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Response<CartDTO>> getCartById(@PathVariable("id") Long id) {
         CartDTO result = cartService.getCartById(id);
         Response<CartDTO> response = new Response<>();

@@ -1,81 +1,28 @@
-// export const getRequestURL = (url: string) => {
-//   if (!url.startsWith('/')) {
-//     url = `/${url}`;
-//   }
-//   return `${process.env.NEXT_APP_API_URL}${url}`;
-// };
-
-// const getAccessToken = async () => {
-//   const res = await fetch('/api/auth/token');
-//   if (res.ok) {
-//     return await res.json();
-//   } else if (res.status === 401) {
-//     const res = await fetch('/api/refresh');
-//     if (res.ok) {
-//       const { accessToken } = await res.json();
-//       return accessToken;
-//     }
-//   }
-//   return '';
-// };
-
-// const httpRequest = async <Response>(
-//   url: string,
-//   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
-//   data: TEntity,
-//   options: RequestInit = {}
-// ) => {
-//   let request_body = data;
-//   const token = await getAccessToken();
-//   if (!options.headers && method !== 'GET') {
-//     options.headers = {
-//       'Content-Type': 'application/json',
-//     };
-//     request_body = JSON.stringify(data);
-//   }
-//   options.headers = {
-//     Accept: 'application/json',
-//     ...options.headers,
-//     ...{
-//       Authorization: `Bearer ${token}`,
-//     },
-//   };
-//   const requestOptions: RequestInit = {
-//     method,
-//     ...(method !== 'GET' && { cache: 'no-store' }),
-//     body: request_body as any,
-//     ...options,
-//   };
-
-//   const res = await fetch(getRequestURL(url), requestOptions);
-
-//   if (!res.ok) {
-//     if (res.status >= 500) throw new Error(`Error occured when calling API: ${url}`);
-//     const body = await res.json();
-//     throw new Error(body.detail);
-//   }
-//   const body = await res.json();
-//   return body;
-// };
-
-// export const http = {
-//   get: (url: string, options?: RequestInit) => httpRequest<Response>(url, 'GET', undefined, options),
-//   post: <TEntity>(url: string, data: TEntity, options?: RequestInit) =>
-//     httpRequest<Response>(url, 'POST', data, options),
-//   put: <TEntity>(url: string, data: TEntity, options?: RequestInit) => httpRequest<Response>(url, 'PUT', data, options),
-//   patch: <TEntity>(url: string, data: TEntity, options?: RequestInit) =>
-//     httpRequest<Response>(url, 'PATCH', data, options),
-//   delete: (url: string, options?: RequestInit) => httpRequest<Response>(url, 'DELETE', undefined, options),
-// };
-
 import { cookies } from 'next/headers';
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/utils/constants/cookies';
+import { ACCESS_TOKEN_KEY } from '@/utils/constants/cookies';
 
-export const getRequestURL = (url: string): string => {
+export const isClient = () => typeof window !== 'undefined';
+
+const getRequestURL = (url: string): string => {
   if (!url.startsWith('/')) {
     url = `/${url}`;
   }
-  return `${process.env.NEXT_APP_API_URL}${url}`;
+  return `${process.env.NEXT_PUBLIC_APP_API_URL || process.env.NEXT_APP_API_URL}${url}`;
+};
+
+const refreshAccessToken = async (): Promise<string> => {
+  const res = await fetch('/api/auth/refresh-token', {
+    method: 'POST',
+    credentials: 'include', // Bắt buộc để browser gửi cookie kèm request (cho phía client side)
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to refresh token');
+  }
+
+  const data = await res.json();
+  return data.accessToken;
 };
 
 let isRefreshing = false;
@@ -89,15 +36,26 @@ interface ResponseData {
   [key: string]: unknown;
 }
 
+const getAccessToken = async (): Promise<string | null> => {
+  if (!isClient()) {
+    const cookieStore = await cookies();
+    return cookieStore.get(ACCESS_TOKEN_KEY)?.value || null;
+  } else {
+    const res = await fetch('/api/auth/token');
+    if (!res.ok) {
+      return null;
+    }
+    const { accessToken } = await res.json();
+    return accessToken;
+  }
+};
+
 const httpRequest = async <TResponse extends ResponseData>(
   url: string,
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
   data?: RequestData,
   options: RequestInit = {}
 ): Promise<TResponse> => {
-  const cookieStore = await cookies();
-  let accessToken = cookieStore.get(ACCESS_TOKEN_KEY)?.value;
-
   let headers: Record<string, string> = {};
 
   if (options.headers) {
@@ -109,6 +67,8 @@ const httpRequest = async <TResponse extends ResponseData>(
       headers = options.headers as Record<string, string>;
     }
   }
+
+  const accessToken = await getAccessToken();
 
   if (accessToken) {
     headers = {
@@ -144,30 +104,9 @@ const httpRequest = async <TResponse extends ResponseData>(
     const errorText = await res.text();
     if (res.status === 401 && accessToken && !isRefreshing) {
       isRefreshing = true;
-      const refreshToken = cookieStore.get(REFRESH_TOKEN_KEY)?.value;
 
-      if (!refreshToken) {
-        throw new Error('No refresh token available');
-      }
-
-      refreshPromise = fetch('/api/auth/refresh', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refreshToken }),
-      })
-        .then((res) => {
-          if (!res.ok) throw new Error('Refresh failed');
-          return res.json();
-        })
-        .then((data) => {
-          const newAccessToken = (data as { accessToken: string }).accessToken;
-          cookieStore.set('accessToken', newAccessToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            path: '/',
-            maxAge: 15 * 60, // 15 phút
-          });
+      refreshPromise = refreshAccessToken()
+        .then((newAccessToken) => {
           isRefreshing = false;
           refreshPromise = null;
           return newAccessToken;
@@ -178,8 +117,8 @@ const httpRequest = async <TResponse extends ResponseData>(
           throw err;
         });
 
-      accessToken = await refreshPromise;
-      headers.Authorization = `Bearer ${accessToken}`;
+      const newAccessToken = await refreshPromise;
+      headers.Authorization = `Bearer ${newAccessToken}`;
       return httpRequest(url, method, data, { ...options, headers });
     }
 

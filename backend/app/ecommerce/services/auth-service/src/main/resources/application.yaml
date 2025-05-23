@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: congthanhapp-ecommerce-auth-service
+
+  config:
+    import:
+      - optional:file:./.env
+      - configserver:http://localhost:8888/
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+
+  profiles:
+    active: dev

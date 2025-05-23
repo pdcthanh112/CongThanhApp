@@ -1,0 +1,13 @@
+version: '3'
+services:
+  catalog-service:
+    build: ./catalog-service
+    ports:
+      - "5002:5002"
+    networks:
+      - app-network
+    depends_on:
+      - axonserver
+    env_file:
+      - .env
+      - .env.dev

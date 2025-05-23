@@ -10,7 +10,7 @@ export async function POST() {
     return NextResponse.json({ error: 'Refresh token missing' }, { status: 401 });
   }
 
-  const response = await fetch('/api/auth/refresh', {
+  const response = await fetch(`${process.env.NEXT_APP_API_URL}/auth/refresh-token`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ refreshToken }),
@@ -20,7 +20,7 @@ export async function POST() {
     return NextResponse.json({ error: 'Failed to refresh token' }, { status: 401 });
   }
 
-  const { accessToken: newAccessToken, refreshToken: newRefreshToken } = await response.json();
+  const { accessToken: newAccessToken } = await response.json();
 
   cookieStore.set(ACCESS_TOKEN_KEY, newAccessToken, {
     httpOnly: true,
@@ -29,16 +29,6 @@ export async function POST() {
     path: '/',
     maxAge: 15 * 60,
   });
-
-  if (newRefreshToken) {
-    cookieStore.set(REFRESH_TOKEN_KEY, newRefreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      path: '/',
-      maxAge: 7 * 24 * 60 * 60,
-    });
-  }
 
   return NextResponse.json({ accessToken: newAccessToken });
 }

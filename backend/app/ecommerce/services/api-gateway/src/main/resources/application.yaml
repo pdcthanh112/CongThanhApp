@@ -53,6 +53,11 @@ spring:
         - id: cart-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-CART-SERVICE
           predicates:
+            - Path=/api/ecommerce/auth/**
+
+        - id: cart-service
+          uri: lb://CONGTHANHAPP-ECOMMERCE-CART-SERVICE
+          predicates:
             - Path=/api/ecommerce/carts/**, /api/graphql
 
         - id: catalog-service

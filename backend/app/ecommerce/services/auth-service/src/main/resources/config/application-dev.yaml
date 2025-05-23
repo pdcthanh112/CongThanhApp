@@ -1,0 +1,292 @@
+server:
+  port: ${SERVER_PORT:5001}
+  servlet:
+    context-path: /api
+#  compression:
+#    enabled: true
+#    min-response-size: 1024
+#  ssl:
+#    key-store: classpath:keystore.p12  # Đường dẫn đến keystore
+#    key-store-password: password       # Mật khẩu keystore
+#    key-store-type: PKCS12             # Loại keystore
+#    key-alias: tomcat                  # Alias của key
+
+spring:
+  application:
+    name: congthanhapp-ecommerce-auth-service
+
+  config:
+    import: optional:file:.env[.properties]
+    activate:
+      on-profile: dev
+
+  web:
+    cors:
+      allowed-origins: "http://localhost:3000"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 50
+      connection-timeout: 30000
+
+  jpa:
+    database: default
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          time-zone: UTC
+        format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/CongThanhApp-Ecommerce
+      database: CongThanhApp-Ecommerce
+
+    redis:
+      port: 6379
+      password: your_password_if_any
+      database: 0
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
+  graphql:
+    graphiql:
+      enabled: true
+    cors:
+      allowed-origins: "*"
+    schema:
+      printer:
+        enabled: true
+    path: ecommerce/categories/graphql
+
+  security:
+    user:
+      name: user # Tên người dùng mặc định
+      password: password # Mật khẩu mặc định
+    jwt:
+      token:
+        secretKey: "congthanhapp-ecommerce-secret-key" # ${JWT_SECRET_KEY}
+        tokenPrefix: "Bearer "
+        expiration: 86400000 # 24 hours
+      refresh-token:
+        secret-key: ""
+        expiration: 604800000 # 7 days
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: github-client-id
+            client-secret: github-client-secret
+            redirect-uri: "${GOOGLE_REDIRECT_URI:http://localhost:3000/auth/google/callback}"
+            scope:
+              - email
+          facebook:
+            client-id: "fdjkjaslf"
+            client-secret: "fdjkjaslf"
+            scope:
+              - email
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://www.googleapis.com/oauth2/v4/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: email
+          facebook:
+            authorization-uri: https://www.facebook.com/v12.0/dialog/oauth
+            token-uri: https://graph.facebook.com/v12.0/oauth/access_token
+            user-info-uri: https://graph.facebook.com/me?fields=id,name,email
+            user-name-attribute: email
+  #  main:
+#    allow-circular-references: true
+#    allow-bean-definition-overriding: true
+
+#  mail:
+#    host: smtp.example.com
+#    port: 587
+#    username: myemail@example.com
+#    password: emailpassword
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#
+#  cache:
+#    type: caffeine
+#    caffeine:
+#      spec: maximumSize=500,expireAfterAccess=600s
+
+#    Cấu hình upload file
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: catalog-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: congthanh
+    password: 123456
+  activemq:
+    packages:
+      trust-all: true
+
+  messages:
+    basename: messages
+
+grpc:
+  server:
+    port: 19090 #9090
+    in-process-name: congthanhapp-ecommerce-catalog-service
+    reflection-service-enabled: true
+
+keycloak:
+  realm: ecommerce-realm
+  auth-server-url: http://keycloak:8080/auth
+  resource: catalog-service
+  bearer-only: true
+  ssl-required: external
+  credentials:
+    secret: your-client-secret
+  autodetect-bearer-only: true
+  cors: true
+
+ai:
+  ollama:
+    embedding:
+    enabled: false
+  vectorstore:
+    pgvector:
+      index-type: hnsw
+      distance-type: cosine_distance
+      dimensions: 384
+
+congthanhapp:
+  openapi:
+    dev-url: http://localhost:5000 #http://localhost:${SERVER_PORT}
+    prod-url: https://congthanhapp-api.com
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    tagsSorter: alpha
+    path: /swagger-ui
+  enable-spring-security: true
+
+#logging:
+#  level:
+#    root: INFO
+##    com.yourpackage: DEBUG # Thiết lập mức log cho package cụ thể
+##  org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+##    org.springframework.data.redis.core.RedisTemplate: DEBUG
+#  file:
+#    name: /var/log/myapp.log
+#    name: logs/${spring.application.name}.log
+#  pattern:
+#    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+#    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      access: unrestricted
+    prometheus:
+      access: unrestricted
+    refresh:
+      access: unrestricted
+    restart:
+      access: unrestricted
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+      base-path: /admin
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+
+axon:
+  axonserver:
+    servers: localhost:8124
+    enabled: true
+  serializer:
+    events: jackson
+  eventhandling:
+    processors:
+      catalog-service:
+        mode: tracking
+        thread-count: 4
+        initial-segment-count: 1
+        batch-size: 100
+      tag:
+        mode: tracking
+        source: eventStore
+#axoniq:
+#  console:
+#    enabled: true
+#    url: https://console.axoniq.io
+
+snowflake:
+  worker-id: 1
+  datacenter-id: 1
+
+resilience4j:
+  timelimiter:
+    instances:
+      rest-api:
+        timeout-duration: 2000ms
+  circuitbreaker:
+    instances:
+      rest-circuit-breaker:
+        sliding-window-type: COUNT_BASED
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        permitted-number-of-calls-in-half-open-state: 3
+  retry:
+    instances:
+      rest-api:
+        max-attempts: 3
