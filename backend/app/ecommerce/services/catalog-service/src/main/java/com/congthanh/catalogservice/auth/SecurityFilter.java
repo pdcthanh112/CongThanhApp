@@ -57,7 +57,6 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     private Claims validateToken(String token) {
         try {
-            // Kiểm tra độ dài khóa bí mật
             byte[] secretBytes = JWT_SECRET.getBytes(StandardCharsets.UTF_8);
             if (secretBytes.length < 32) {
                 throw new IllegalArgumentException("JWT_SECRET must be at least 32 bytes long for HS256");
@@ -65,7 +64,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             SecretKey signingKey = Keys.hmacShaKeyFor(secretBytes);
 
-            return Jwts.parserBuilder()
+            return Jwts.parser()
                     .setSigningKey(signingKey)
                     .build()
                     .parseClaimsJws(token)

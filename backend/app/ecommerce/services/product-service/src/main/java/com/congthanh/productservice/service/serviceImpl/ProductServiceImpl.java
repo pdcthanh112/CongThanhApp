@@ -28,10 +28,11 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
-import org.springframework.cache.annotation.Cacheable;
+//import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
     private final VariantOptionCombinationRepository variantOptionCombinationRepository;
 
     @Override
-    @Cacheable("products")
+//    @Cacheable("products")
     public ResponseWithPagination<ProductDTO> getAllProduct(Integer page, Integer limit) {
         Pageable pageable = PageRequest.of(page - 1, limit);
         Page<Product> result = productRepository.findAll(pageable);
@@ -94,7 +95,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Cacheable(cacheNames = "products", key = "product-#id")
+//    @Cacheable(cacheNames = "products", key = "product-#id")
     public ProductDTO getProductById(String id) {
         ProductDocument data = queryGateway.query(new GetProductByIdQuery(id), ResponseTypes.instanceOf(ProductDocument.class)).join();
         return ProductDTO.builder()

@@ -14,6 +14,7 @@ import useDebounce from '@/hooks/useDebounce';
 import { CATEGORY_KEY } from '@/utils/constants/queryKey';
 import request from 'graphql-request';
 import { gql } from '@apollo/client';
+import qs from 'query-string'
 
 const crumb: Breadcrumb[] = [
   { pageName: 'Home', url: '/home' },
@@ -31,12 +32,12 @@ export default function ProductPage() {
     const params: ProductFilter = {};
 
     if (searchParams.has('keyword')) params.keyword = searchParams.get('keyword') || undefined;
-    // if (searchParams.has('category')) params.category = searchParams.get('category') || undefined;
+
     if (searchParams.has('category')) {
       const categoryValues = searchParams.getAll('category');
       params.category = categoryValues.length > 0 ? categoryValues : undefined;
     }
-    // if (searchParams.has('brand')) params.brand = searchParams.get('brand') || undefined;
+
     if (searchParams.has('brand')) {
       const brandValues = searchParams.getAll('brand');
       params.brand = brandValues.length > 0 ? brandValues : undefined;
@@ -45,12 +46,12 @@ export default function ProductPage() {
       const ratingParam = searchParams.get('rating');
       params.rating = ratingParam ? Number(ratingParam) : undefined;
     }
-    if (searchParams.has('startPrice')) {
-      const startPriceParam = searchParams.get('startPrice');
+    if (searchParams.has('start_price')) {
+      const startPriceParam = searchParams.get('start_price');
       params.startPrice = startPriceParam ? Number(startPriceParam) : undefined;
     }
-    if (searchParams.has('endPrice')) {
-      const endPriceParam = searchParams.get('endPrice');
+    if (searchParams.has('end_price')) {
+      const endPriceParam = searchParams.get('end_price');
       params.endPrice = endPriceParam ? Number(endPriceParam) : undefined;
     }
 
@@ -103,7 +104,7 @@ export default function ProductPage() {
 
   const initialPagination = useMemo(() => ({ page: 1, limit: 10 }), []);
   const [filters, setFilters] = useState<ProductFilter>(initFiltersFromUrl());
-
+console.log('FFFFFFFFFFFFFFFFFFF', filters)
   const [searchKeyword, setSearchKeyword] = useState<string>(filters.keyword || '');
   const [priceRange, setPriceRange] = useState({
     startPrice: filters.startPrice || '',
@@ -167,22 +168,22 @@ export default function ProductPage() {
     }
   }, [debouncedStartPrice, debouncedEndPrice]);
 
-  const {
-    data: listProduct,
-    isLoading,
-    fetchNextPage,
-    isFetchingNextPage,
-    hasNextPage,
-  } = useInfiniteQuery({
-    queryKey: ['product', filters],
-    queryFn: async ({ pageParam = 1 }) => {
-      return await getAllProduct({ ...initialPagination, page: pageParam }, filters).then(
-        (response) => response.data.responseList
-      );
-    },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, pages) => (lastPage.length > 0 ? pages.length + 1 : undefined),
-  });
+  // const {
+  //   data: listProduct,
+  //   isLoading,
+  //   fetchNextPage,
+  //   isFetchingNextPage,
+  //   hasNextPage,
+  // } = useInfiniteQuery({
+  //   queryKey: ['product', filters],
+  //   queryFn: async ({ pageParam = 1 }) => {
+  //     return await getAllProduct({ ...initialPagination, page: pageParam }, filters).then(
+  //       (response) => response.data.responseList
+  //     );
+  //   },
+  //   initialPageParam: 1,
+  //   getNextPageParam: (lastPage, pages) => (lastPage.length > 0 ? pages.length + 1 : undefined),
+  // });
 
   // const handleFilter = (key: string, value: string | number) => {
   //   // setPagination({...pagination, page: 0})
@@ -246,15 +247,15 @@ export default function ProductPage() {
     router.push('/product');
   };
 
-  const handleLoadMore = useCallback(() => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  // const handleLoadMore = useCallback(() => {
+  //   if (hasNextPage && !isFetchingNextPage) {
+  //     fetchNextPage();
+  //   }
+  // }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  if (isLoading || !listProduct) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading || !listProduct) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <React.Fragment>
@@ -336,7 +337,7 @@ export default function ProductPage() {
           </Button>
         </div>
 
-        <div className="col-span-10">
+        {/* <div className="col-span-10">
           {listProduct.pages.map((products, idx) => (
             <ShowListProduct listProduct={products} loading={isLoading} key={idx} />
           ))}
@@ -352,7 +353,7 @@ export default function ProductPage() {
           <Button onClick={handleLoadMore} className="w-full mt-5" disabled={!hasNextPage || isFetchingNextPage}>
             {isFetchingNextPage ? 'Loading more...' : 'Load More'}
           </Button>
-        </div>
+        </div> */}
       </div>
     </React.Fragment>
   );
