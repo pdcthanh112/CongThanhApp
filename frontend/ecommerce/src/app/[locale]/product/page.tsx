@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import BreadcrumbComponent from '@/components/Breadcrumb/Breadcrumb';
 import { Breadcrumb, ProductFilter } from '@/models/types';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
@@ -14,7 +14,7 @@ import useDebounce from '@/hooks/useDebounce';
 import { CATEGORY_KEY } from '@/utils/constants/queryKey';
 import request from 'graphql-request';
 import { gql } from '@apollo/client';
-import qs from 'query-string'
+import queryString from 'query-string';
 
 const crumb: Breadcrumb[] = [
   { pageName: 'Home', url: '/home' },
@@ -23,39 +23,25 @@ const crumb: Breadcrumb[] = [
 
 export default function ProductPage() {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const [showAllCategory, setShowAllCategory] = useState<boolean>(false);
   const [showAllBrand, setShowAllBrand] = useState<boolean>(false);
 
   const initFiltersFromUrl = (): ProductFilter => {
-    const params: ProductFilter = {};
+    const params = queryString.parse(searchParams.toString());
 
-    if (searchParams.has('keyword')) params.keyword = searchParams.get('keyword') || undefined;
+    const filters: ProductFilter = {};
 
-    if (searchParams.has('category')) {
-      const categoryValues = searchParams.getAll('category');
-      params.category = categoryValues.length > 0 ? categoryValues : undefined;
-    }
+    if (params.keyword) filters.keyword = params.keyword as string;
+    if (params.category) filters.category = (params.category as string).split(',');
+    if (params.brand) filters.brand = (params.brand as string).split(',');
+    if (params.rating) filters.rating = Number(params.rating);
+    if (params.startPrice) filters.startPrice = Number(params.startPrice);
+    if (params.endPrice) filters.endPrice = Number(params.endPrice);
 
-    if (searchParams.has('brand')) {
-      const brandValues = searchParams.getAll('brand');
-      params.brand = brandValues.length > 0 ? brandValues : undefined;
-    }
-    if (searchParams.has('rating')) {
-      const ratingParam = searchParams.get('rating');
-      params.rating = ratingParam ? Number(ratingParam) : undefined;
-    }
-    if (searchParams.has('start_price')) {
-      const startPriceParam = searchParams.get('start_price');
-      params.startPrice = startPriceParam ? Number(startPriceParam) : undefined;
-    }
-    if (searchParams.has('end_price')) {
-      const endPriceParam = searchParams.get('end_price');
-      params.endPrice = endPriceParam ? Number(endPriceParam) : undefined;
-    }
-
-    return params;
+    return filters;
   };
 
   const { data: categoryList } = useQuery<{ id: string; name: string; slug: string }[]>({
@@ -104,7 +90,7 @@ export default function ProductPage() {
 
   const initialPagination = useMemo(() => ({ page: 1, limit: 10 }), []);
   const [filters, setFilters] = useState<ProductFilter>(initFiltersFromUrl());
-console.log('FFFFFFFFFFFFFFFFFFF', filters)
+
   const [searchKeyword, setSearchKeyword] = useState<string>(filters.keyword || '');
   const [priceRange, setPriceRange] = useState({
     startPrice: filters.startPrice || '',
@@ -116,28 +102,20 @@ console.log('FFFFFFFFFFFFFFFFFFF', filters)
   const debouncedEndPrice = useDebounce(priceRange.endPrice, 500);
 
   const updateUrlWithFilters = (newFilters: ProductFilter) => {
-    const params = new URLSearchParams();
+    const params: Record<string, string | string[] | number> = {};
 
     Object.entries(newFilters).forEach(([key, value]) => {
-      if (value !== undefined && value !== '') {
-        if (Array.isArray(value)) {
-          // Nếu giá trị là mảng (category hoặc brand)
-          value.forEach((item) => {
-            params.append(key, item);
-          });
-          //chỗ này xử lý attribute
-        } else {
-          params.set(key, String(value));
-        }
+      if (value !== undefined && value !== '' && !(Array.isArray(value) && value.length === 0)) {
+        params[key] = value;
       }
     });
 
-    const newUrl = `/product?${params.toString()}`;
-    router.push(newUrl);
-    // window.history.pushState({}, '', newUrl);
+    const newUrl = `${pathname}?${queryString.stringify(params, {
+      arrayFormat: 'comma', // Sử dụng dấu phẩy để nối mảng, ví dụ: ?category=electronics,clothing
+    })}`;
+    router.push(newUrl, { scroll: false });
   };
 
-  // Effect để cập nhật filters từ các giá trị debounced
   useEffect(() => {
     const newFilters = { ...filters };
 
@@ -168,22 +146,22 @@ console.log('FFFFFFFFFFFFFFFFFFF', filters)
     }
   }, [debouncedStartPrice, debouncedEndPrice]);
 
-  // const {
-  //   data: listProduct,
-  //   isLoading,
-  //   fetchNextPage,
-  //   isFetchingNextPage,
-  //   hasNextPage,
-  // } = useInfiniteQuery({
-  //   queryKey: ['product', filters],
-  //   queryFn: async ({ pageParam = 1 }) => {
-  //     return await getAllProduct({ ...initialPagination, page: pageParam }, filters).then(
-  //       (response) => response.data.responseList
-  //     );
-  //   },
-  //   initialPageParam: 1,
-  //   getNextPageParam: (lastPage, pages) => (lastPage.length > 0 ? pages.length + 1 : undefined),
-  // });
+  const {
+    data: listProduct,
+    isLoading,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['product', filters],
+    queryFn: async ({ pageParam = 1 }) => {
+      return await getAllProduct({ ...initialPagination, page: pageParam }, filters).then(
+        (response) => response.data.responseList
+      );
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => (lastPage.length > 0 ? pages.length + 1 : undefined),
+  });
 
   // const handleFilter = (key: string, value: string | number) => {
   //   // setPagination({...pagination, page: 0})
@@ -199,6 +177,12 @@ console.log('FFFFFFFFFFFFFFFFFFF', filters)
   const handleRatingFilter = (rating: number) => {
     const newFilters = { ...filters, rating };
     setFilters(newFilters);
+    updateUrlWithFilters(newFilters);
+  };
+
+  const handleRemoveRating = () => {
+    setFilters({ ...filters, rating: undefined });
+    const newFilters = { ...filters, rating: undefined };
     updateUrlWithFilters(newFilters);
   };
 
@@ -247,15 +231,15 @@ console.log('FFFFFFFFFFFFFFFFFFF', filters)
     router.push('/product');
   };
 
-  // const handleLoadMore = useCallback(() => {
-  //   if (hasNextPage && !isFetchingNextPage) {
-  //     fetchNextPage();
-  //   }
-  // }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  const handleLoadMore = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  // if (isLoading || !listProduct) {
-  //   return <div>Loading...</div>;
-  // }
+  if (isLoading || !listProduct) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <React.Fragment>
@@ -272,7 +256,12 @@ console.log('FFFFFFFFFFFFFFFFFFF', filters)
             <div className="font-semibold">Category</div>
             {categoryList?.slice(0, showAllCategory ? -1 : 10).map((item) => (
               <div key={item.id}>
-                <Checkbox className="mr-2" value={item.name} onCheckedChange={() => handleCategoryFilter(item.slug)} />
+                <Checkbox
+                  className="mr-2"
+                  value={item.name}
+                  checked={filters.category?.includes(item.slug) || false}
+                  onCheckedChange={() => handleCategoryFilter(item.slug)}
+                />
                 {item.name}
               </div>
             ))}
@@ -289,7 +278,12 @@ console.log('FFFFFFFFFFFFFFFFFFF', filters)
             <div className="font-semibold">Brand</div>
             {brandList?.slice(0, showAllBrand ? -1 : 10).map((item) => (
               <div key={item.id}>
-                <Checkbox className="mr-2" value={item.name} onCheckedChange={() => handleBrandFilter(item.slug)} />
+                <Checkbox
+                  className="mr-2"
+                  value={item.name}
+                  checked={filters.brand?.includes(item.slug) || false}
+                  onCheckedChange={() => handleBrandFilter(item.slug)}
+                />
                 {item.name}
               </div>
             ))}
@@ -307,8 +301,8 @@ console.log('FFFFFFFFFFFFFFFFFFF', filters)
             {[5, 4, 3, 2, 1].map((star) => (
               <div
                 key={star}
-                className={`cursor-pointer mb-1 ${filters.rating === star ? 'bg-gray-100 rounded p-1' : ''}`}
-                onClick={() => handleRatingFilter(star)}
+                className={`cursor-pointer p-0.5 ${filters.rating === star ? 'bg-gray-200 rounded-xl' : ''}`}
+                onClick={() => (filters.rating ? handleRemoveRating() : handleRatingFilter(star))}
               >
                 <Rate value={star} disabled />
                 <span className="ml-2">{star} stars</span>
@@ -321,7 +315,7 @@ console.log('FFFFFFFFFFFFFFFFFFF', filters)
               placeholder="From"
               type="number"
               className="w-full mb-2"
-              value={priceRange.startPrice}
+              defaultValue={priceRange.startPrice}
               onChange={(e) => setPriceRange({ ...priceRange, startPrice: e.target.value })}
             />
             <Input
@@ -337,7 +331,7 @@ console.log('FFFFFFFFFFFFFFFFFFF', filters)
           </Button>
         </div>
 
-        {/* <div className="col-span-10">
+        <div className="col-span-10">
           {listProduct.pages.map((products, idx) => (
             <ShowListProduct listProduct={products} loading={isLoading} key={idx} />
           ))}
@@ -353,7 +347,7 @@ console.log('FFFFFFFFFFFFFFFFFFF', filters)
           <Button onClick={handleLoadMore} className="w-full mt-5" disabled={!hasNextPage || isFetchingNextPage}>
             {isFetchingNextPage ? 'Loading more...' : 'Load More'}
           </Button>
-        </div> */}
+        </div>
       </div>
     </React.Fragment>
   );
