@@ -69,6 +69,8 @@
     "react-number-format": "^5.4.4",
     "react-redux": "^9.2.0",
     "react-toastify": "^11.0.5",
+    "react-virtualized": "^9.22.6",
+    "react-window": "^1.8.11",
     "recharts": "^2.15.1",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",

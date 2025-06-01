@@ -15,7 +15,7 @@ import { ReviewStatistic } from '@/models/types/Review';
 import RelatedProduct from '@/components/Product/RelatedProduct';
 import ReviewProduct from '@/components/Product/ProductDetail/ReviewProduct';
 import { getTranslations } from 'next-intl/server';
-import BreadcrumbComponent from '@/components/Breadcrumb/Breadcrumb';
+import BreadcrumbComponent from '@/components/breadcrumb/Breadcrumb';
 
 const fetchProduct = async (slug: string) => {
   const product = await getProductDetailBySlug(slug).then((response) => response.data);

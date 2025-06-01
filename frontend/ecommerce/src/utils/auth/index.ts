@@ -14,7 +14,7 @@ export const setAccessTokenToLocalStorage = (access_token: string) => {
   try {
     localStorage.setItem('access_token', access_token);
   } catch (error) {
-    if (error.name === 'QuotaExceededError') {
+    if (error === 'QuotaExceededError') {
       console.log('LocalStorage is full');
     }
   }

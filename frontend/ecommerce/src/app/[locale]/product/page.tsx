@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import BreadcrumbComponent from '@/components/Breadcrumb/Breadcrumb';
+import BreadcrumbComponent from '@/components/breadcrumb/Breadcrumb';
 import { Breadcrumb, ProductFilter } from '@/models/types';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getAllProduct } from '@/api/productApi';

@@ -5,7 +5,7 @@ import { ManagementLayout } from '@/layout';
 import { Icon } from '@mui/material';
 import { DoneAll, Lock, Password, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslations } from 'next-intl';
-import ValidatePassword from '@/components/ValidatePassword/ValidatePassword';
+import ValidatePassword from '@/components/validate-password/ValidatePassword';
 import { Spin, Tooltip } from 'antd';
 import { changePassword } from '@/api/customerApi';
 import ChangePasswordForm from './ChangePasswordForm';

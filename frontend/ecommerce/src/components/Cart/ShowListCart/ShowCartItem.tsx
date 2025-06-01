@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { CartItem, CartItemDetail } from '@/models/types';
 import { useQuery } from '@tanstack/react-query';
 import { IMAGE } from '@/utils/constants/path';
-import QuantitySelector from '@/components/QuantitySelector';
+import QuantitySelector from '@/components/quantity-selector';
 import { formatCurrency } from '@/utils/helper';
 import { getItemDetail } from '@/api/cartApi';
 import Link from 'next/link';

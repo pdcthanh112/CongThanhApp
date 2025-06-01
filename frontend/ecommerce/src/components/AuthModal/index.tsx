@@ -1,4 +1,5 @@
 'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Modal, Box } from '@mui/material';
@@ -16,12 +17,7 @@ const AuthModal = () => {
   const { isOpenModalAuth, closeModalAuth } = useAppModalStore((state) => state);
 
   return (
-    <Modal
-      open={isOpenModalAuth}
-      onClose={() => {
-        closeModalAuth();
-      }}
-    >
+    <Modal open={isOpenModalAuth} onClose={() => { closeModalAuth() }}>
       <Box
         sx={{
           position: 'absolute',

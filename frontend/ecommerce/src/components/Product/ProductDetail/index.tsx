@@ -20,7 +20,7 @@ import {
   ProductOptionValueDisplay,
   ProductVariant,
 } from '@/models/types';
-import QuantitySelector from '@/components/QuantitySelector/QuantitySelector';
+import QuantitySelector from '@/components/quantity-selector/QuantitySelector';
 import { PRODUCT_KEY, WISHLIST_KEY } from '@/utils/constants/queryKey';
 import ProductDetailSkeleton from '../ProductDetailSkeleton';
 import { ReviewStatistic } from '@/models/types/Review';
@@ -30,7 +30,7 @@ import { PATH } from '@/utils/constants/path';
 import { useSession } from 'next-auth/react';
 import useAppModalStore from '@/store/useAppModal';
 import { useWishlistStore } from '@/store/wishlistStore';
-import BreadcrumbComponent from '@/components/Breadcrumb/Breadcrumb';
+import BreadcrumbComponent from '@/components/breadcrumb/Breadcrumb';
 
 type ProductDetailProps = {
   product: Product;

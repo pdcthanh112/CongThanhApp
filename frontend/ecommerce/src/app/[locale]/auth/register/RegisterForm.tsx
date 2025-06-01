@@ -9,7 +9,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { DatePicker, Divider, Spin, Tooltip } from 'antd';
 import { signIn } from 'next-auth/react';
 import { AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '@/assets/icons/socialLoginIcon';
-import ValidatePassword from '@/components/ValidatePassword/ValidatePassword';
+import ValidatePassword from '@/components/validate-password/ValidatePassword';
 import { CheckCheck, LockKeyhole, Mail, Phone, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
