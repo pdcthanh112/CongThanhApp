@@ -1,3 +1,5 @@
+"use client"
+
 import { forwardRef, InputHTMLAttributes, useCallback, useState } from 'react';
 
 export interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {

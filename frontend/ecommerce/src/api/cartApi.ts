@@ -68,7 +68,7 @@ export const updateCartItem = async ({ cartItemId, quantity }: { cartItemId: num
     });
 };
 
-export const deleteCartItem = async (itemId: string) => {
+export const deleteCartItem = async (itemId: number) => {
   return await axiosInstance
     .delete(`carts/items/${itemId}`)
     .then((response) => response.data)

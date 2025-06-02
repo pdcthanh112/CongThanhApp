@@ -52,7 +52,7 @@ export const useDeleteCartItem = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: [CART_KEY],
-    mutationFn: async (itemId: string) => await deleteCartItem(itemId),
+    mutationFn: async (itemId: number) => await deleteCartItem(itemId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
     },

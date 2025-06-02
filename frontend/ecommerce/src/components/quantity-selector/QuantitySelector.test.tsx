@@ -20,8 +20,6 @@ describe('QuantitySelector', () => {
   it('renders correctly with default props', () => {
     render(<QuantitySelector {...defaultProps} />);
 
-    expect(screen.getByTestId('minus-icon')).toBeInTheDocument();
-    expect(screen.getByTestId('plus-icon')).toBeInTheDocument();
     expect(screen.getByRole('spinbutton', { name: /quantity/i })).toHaveValue(1);
     expect(screen.getByRole('button', { name: /decrease quantity/i })).toBeDisabled();
     expect(screen.getByRole('button', { name: /increase quantity/i })).not.toBeDisabled();

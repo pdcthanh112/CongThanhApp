@@ -7,7 +7,6 @@ import { Icon } from '@mui/material';
 import { AccountBox, ShoppingCart, Favorite, Lock, AddCard, LocationOn } from '@mui/icons-material';
 import { PATH } from '@/utils/constants/path';
 import { useTranslations } from 'next-intl';
-import { getServerSession } from 'next-auth';
 
 type NavBarItemProps = {
   name: string;

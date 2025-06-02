@@ -22,9 +22,6 @@ export default function ShowListCart({ data }: PropsType) {
   const router = useRouter();
   const t = useTranslations();
 
-  // const dispatch = useAppDispatch()
-  // dispatch(initialCart("6304f010-3985-4ecc-a139-e8aba1eee7b1"))
-
   const { toggleAllCarts, isAllCartsSelected, selectedCarts, toggleCart, toggleCartItem, isCartSelected } =
     useSelectedCheckout();
   const { mutate: deleteCart } = useDeleteCart();
@@ -44,7 +41,6 @@ export default function ShowListCart({ data }: PropsType) {
   const handleCheckout = (cartId: number) => {
     const cartSelections = selectedCarts[cartId] || {};
     const selectedItems = Object.entries(cartSelections)
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .filter(([_, isSelected]) => isSelected)
       .map(([itemId]) => Number(itemId));
 
