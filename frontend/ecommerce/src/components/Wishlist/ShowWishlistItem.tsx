@@ -1,4 +1,5 @@
 'use client'
+
 import React from 'react';
 import Image from 'next/image';
 import { TableContainer, Paper, Table, TableHead, TableRow, TableBody, TableCell } from '@mui/material';

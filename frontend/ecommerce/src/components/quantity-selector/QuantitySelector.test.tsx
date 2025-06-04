@@ -4,183 +4,136 @@ import QuantitySelector from './QuantitySelector';
 
 describe('QuantitySelector', () => {
   const defaultProps = {
-    value: 1,
+    initialValue: 5,
     min: 1,
     max: 10,
-    onIncrease: jest.fn(),
-    onDecrease: jest.fn(),
-    onType: jest.fn(),
-    onFocusOut: jest.fn(),
+    onChange: jest.fn(),
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders correctly with default props', () => {
+  test('renders with correct initial value', () => {
     render(<QuantitySelector {...defaultProps} />);
-
-    expect(screen.getByRole('spinbutton', { name: /quantity/i })).toHaveValue(1);
-    expect(screen.getByRole('button', { name: /decrease quantity/i })).toBeDisabled();
-    expect(screen.getByRole('button', { name: /increase quantity/i })).not.toBeDisabled();
+    const input = screen.getByLabelText('Số lượng');
+    expect(input).toHaveValue(5);
   });
 
-  it('increases quantity when plus button is clicked', async () => {
-    render(<QuantitySelector {...defaultProps} value={5} />);
-
-    const plusButton = screen.getByRole('button', { name: /increase quantity/i });
-    await userEvent.click(plusButton);
-
-    expect(defaultProps.onIncrease).toHaveBeenCalledWith(6);
-    expect(screen.getByRole('spinbutton')).toHaveValue(6);
+  test('disables decrease button when quantity equals min', () => {
+    render(<QuantitySelector {...defaultProps} initialValue={1} min={1} />);
+    const decreaseButton = screen.getByLabelText('Decrease quantity');
+    expect(decreaseButton).toBeDisabled();
   });
 
-  it('does not increase quantity beyond max', async () => {
-    render(<QuantitySelector {...defaultProps} value={10} />);
-
-    const plusButton = screen.getByRole('button', { name: /increase quantity/i });
-    expect(plusButton).toBeDisabled();
-    await userEvent.click(plusButton);
-
-    expect(defaultProps.onIncrease).not.toHaveBeenCalled();
-    expect(screen.getByRole('spinbutton')).toHaveValue(10);
+  test('disables increase button when quantity equals max', () => {
+    render(<QuantitySelector {...defaultProps} initialValue={10} max={10} />);
+    const increaseButton = screen.getByLabelText('Increase quantity');
+    expect(increaseButton).toBeDisabled();
   });
 
-  it('decreases quantity when minus button is clicked', async () => {
-    render(<QuantitySelector {...defaultProps} value={5} />);
-
-    const minusButton = screen.getByRole('button', { name: /decrease quantity/i });
-    await userEvent.click(minusButton);
-
-    expect(defaultProps.onDecrease).toHaveBeenCalledWith(4);
-    expect(screen.getByRole('spinbutton')).toHaveValue(4);
+  test('increases quantity when increase button is clicked', async () => {
+    render(<QuantitySelector {...defaultProps} />);
+    const increaseButton = screen.getByLabelText('Increase quantity');
+    await userEvent.click(increaseButton);
+    expect(defaultProps.onChange).toHaveBeenCalledWith(6);
+    expect(screen.getByLabelText('Số lượng')).toHaveValue(6);
   });
 
-  it('does not decrease quantity below min', async () => {
-    render(<QuantitySelector {...defaultProps} value={1} />);
-
-    const minusButton = screen.getByRole('button', { name: /decrease quantity/i });
-    expect(minusButton).toBeDisabled();
-    await userEvent.click(minusButton);
-
-    expect(defaultProps.onDecrease).not.toHaveBeenCalled();
-    expect(screen.getByRole('spinbutton')).toHaveValue(1);
+  test('decreases quantity when decrease button is clicked', async () => {
+    render(<QuantitySelector {...defaultProps} />);
+    const decreaseButton = screen.getByLabelText('Decrease quantity');
+    await userEvent.click(decreaseButton);
+    expect(defaultProps.onChange).toHaveBeenCalledWith(4);
+    expect(screen.getByLabelText('Số lượng')).toHaveValue(4);
   });
 
-  it('updates quantity when typing valid number', async () => {
-    render(<QuantitySelector {...defaultProps} value={5} />);
+  test('does not decrease below min', async () => {
+    render(<QuantitySelector {...defaultProps} initialValue={1} min={1} />);
+    const decreaseButton = screen.getByLabelText('Decrease quantity');
+    await userEvent.click(decreaseButton);
+    expect(defaultProps.onChange).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('Số lượng')).toHaveValue(1);
+  });
 
-    const input = screen.getByRole('spinbutton');
+  test('does not increase above max', async () => {
+    render(<QuantitySelector {...defaultProps} initialValue={10} max={10} />);
+    const increaseButton = screen.getByLabelText('Increase quantity');
+    await userEvent.click(increaseButton);
+    expect(defaultProps.onChange).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('Số lượng')).toHaveValue(10);
+  });
+
+  test('updates quantity when valid input is entered', async () => {
+    render(<QuantitySelector {...defaultProps} />);
+    const input = screen.getByLabelText('Số lượng');
     await userEvent.clear(input);
     await userEvent.type(input, '7');
-
-    expect(defaultProps.onType).toHaveBeenCalledWith(7);
+    expect(defaultProps.onChange).toHaveBeenCalledWith(7);
     expect(input).toHaveValue(7);
   });
 
-  it('clamps value to max when typing above max', async () => {
-    render(<QuantitySelector {...defaultProps} value={5} />);
+  test('sets quantity to min when input is below min', async () => {
+    render(<QuantitySelector {...defaultProps} />);
+    const input = screen.getByLabelText('Số lượng');
+    await userEvent.clear(input);
+    await userEvent.type(input, '0');
+    expect(defaultProps.onChange).toHaveBeenCalledWith(1);
+    expect(input).toHaveValue(1);
+  });
 
-    const input = screen.getByRole('spinbutton');
+  test('sets quantity to max when input is above max', async () => {
+    render(<QuantitySelector {...defaultProps} />);
+    const input = screen.getByLabelText('Số lượng');
     await userEvent.clear(input);
     await userEvent.type(input, '15');
-
-    expect(defaultProps.onType).toHaveBeenCalledWith(10);
+    expect(defaultProps.onChange).toHaveBeenCalledWith(10);
     expect(input).toHaveValue(10);
   });
 
-  it('clamps value to min when typing below min', async () => {
-    render(<QuantitySelector {...defaultProps} value={5} min={3} />);
-
-    const input = screen.getByRole('spinbutton');
+  test('adjusts quantity to min on blur if below min', async () => {
+    render(<QuantitySelector {...defaultProps} />);
+    const input = screen.getByLabelText('Số lượng');
     await userEvent.clear(input);
-    await userEvent.type(input, '2');
-
-    expect(defaultProps.onType).toHaveBeenCalledWith(3);
-    expect(input).toHaveValue(3);
+    await userEvent.type(input, '0');
+    await userEvent.tab(); // Trigger blur
+    expect(defaultProps.onChange).toHaveBeenLastCalledWith(1);
+    expect(input).toHaveValue(1);
   });
 
-  it('handles empty input by setting to min', async () => {
-    render(<QuantitySelector {...defaultProps} value={5} min={3} />);
-
-    const input = screen.getByRole('spinbutton');
+  test('adjusts quantity to max on blur if above max', async () => {
+    render(<QuantitySelector {...defaultProps} />);
+    const input = screen.getByLabelText('Số lượng');
     await userEvent.clear(input);
-    fireEvent.blur(input);
-
-    expect(defaultProps.onFocusOut).toHaveBeenCalledWith(3);
-    expect(input).toHaveValue(3);
+    await userEvent.type(input, '15');
+    await userEvent.tab(); // Trigger blur
+    expect(defaultProps.onChange).toHaveBeenLastCalledWith(10);
+    expect(input).toHaveValue(10);
   });
 
-  it('calls onFocusOut when input loses focus', async () => {
-    render(<QuantitySelector {...defaultProps} value={5} />);
-
-    const input = screen.getByRole('spinbutton');
-    await userEvent.type(input, '8');
-    fireEvent.blur(input);
-
-    expect(defaultProps.onFocusOut).toHaveBeenCalledWith(8);
+  test('updates quantity when initialValue changes', () => {
+    const { rerender } = render(<QuantitySelector {...defaultProps} />);
+    rerender(<QuantitySelector {...defaultProps} initialValue={8} />);
+    expect(screen.getByLabelText('Số lượng')).toHaveValue(8);
   });
 
-  it('ignores negative numbers and non-numeric input', async () => {
-    render(<QuantitySelector {...defaultProps} value={5} />);
-
-    const input = screen.getByRole('spinbutton');
-    await userEvent.clear(input);
-    await userEvent.type(input, '-5');
-
-    expect(defaultProps.onType).not.toHaveBeenCalled();
-    expect(input).toHaveValue(5);
-
+  test('handles non-numeric input gracefully', async () => {
+    render(<QuantitySelector {...defaultProps} />);
+    const input = screen.getByLabelText('Số lượng');
     await userEvent.clear(input);
     await userEvent.type(input, 'abc');
-
-    expect(defaultProps.onType).not.toHaveBeenCalled();
-    expect(input).toHaveValue(5);
+    expect(defaultProps.onChange).toHaveBeenCalledWith(1);
+    expect(input).toHaveValue(1);
   });
 
-  it('handles undefined min/max gracefully', () => {
-    render(<QuantitySelector {...defaultProps} min={undefined} max={undefined} value={5} />);
-
-    const minusButton = screen.getByRole('button', { name: /decrease quantity/i });
-    const plusButton = screen.getByRole('button', { name: /increase quantity/i });
-
-    expect(minusButton).not.toBeDisabled();
-    expect(plusButton).not.toBeDisabled();
-  });
-
-  it('handles zero or invalid initial value', () => {
-    render(<QuantitySelector {...defaultProps} value={0} />);
-
-    expect(screen.getByRole('spinbutton')).toHaveValue(1);
-  });
-
-  it('has correct ARIA attributes', () => {
+  test('renders with correct ARIA attributes', () => {
     render(<QuantitySelector {...defaultProps} />);
+    const decreaseButton = screen.getByLabelText('Decrease quantity');
+    const increaseButton = screen.getByLabelText('Increase quantity');
+    const input = screen.getByLabelText('Số lượng');
 
-    const minusButton = screen.getByRole('button', { name: /decrease quantity/i });
-    const plusButton = screen.getByRole('button', { name: /increase quantity/i });
-    const input = screen.getByRole('spinbutton');
-
-    expect(minusButton).toHaveAttribute('aria-controls', input.id);
-    expect(plusButton).toHaveAttribute('aria-controls', input.id);
-    expect(input).toHaveAttribute('aria-label', 'Quantity');
-  });
-
-  it('disables buttons correctly at boundaries', () => {
-    render(<QuantitySelector {...defaultProps} value={1} min={1} max={10} />);
-
-    expect(screen.getByRole('button', { name: /decrease quantity/i })).toBeDisabled();
-    expect(screen.getByRole('button', { name: /increase quantity/i })).not.toBeDisabled();
-
-    render(<QuantitySelector {...defaultProps} value={10} min={1} max={10} />);
-
-    expect(screen.getByRole('button', { name: /decrease quantity/i })).not.toBeDisabled();
-    expect(screen.getByRole('button', { name: /increase quantity/i })).toBeDisabled();
-  });
-
-  it('passes additional props to InputNumber', () => {
-    render(<QuantitySelector {...defaultProps} errorMessage="Error" />);
-
-    expect(screen.getByText('Error')).toBeInTheDocument();
+    expect(decreaseButton).toHaveAttribute('aria-controls', 'quantity-input');
+    expect(increaseButton).toHaveAttribute('aria-controls', 'quantity-input');
+    expect(input).toHaveAttribute('aria-label', 'Số lượng');
   });
 });

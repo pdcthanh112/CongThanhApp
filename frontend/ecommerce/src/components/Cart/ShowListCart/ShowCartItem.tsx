@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { CartItem, CartItemDetail } from '@/models/types';
 import { useQuery } from '@tanstack/react-query';
@@ -12,6 +14,7 @@ import { Delete } from '@mui/icons-material';
 import { useTranslations } from 'next-intl';
 import { useDeleteCartItem, useUpdateCartItem } from '@/hooks/cart/cartHook';
 import { Popconfirm } from 'antd';
+import useDebounce from '@/hooks/useDebounce';
 
 type PropsType = {
   cartId: number;
@@ -19,30 +22,34 @@ type PropsType = {
 };
 
 export default function ShowCartItem({ cartId, item }: PropsType) {
+  const [quantity, setQuantity] = useState(item.quantity);
+
   const t = useTranslations();
 
-  const { mutate: handleUpdateCartItem, isPending } = useUpdateCartItem();
+  const { mutate: handleUpdateCartItem } = useUpdateCartItem();
 
   const { mutate: handleDeleteCartItem } = useDeleteCartItem();
+
+  const debouncedQuantity = useDebounce(quantity, 500);
 
   const {
     data: itemDetail,
     isLoading,
     error,
   } = useQuery<CartItemDetail>({
-    queryKey: ['cart-item-detail', item],
+    queryKey: ['cart-item-detail', item.id],
     queryFn: async () => await getItemDetail({ cartId: cartId, itemId: item.id }).then((response) => response.data),
   });
 
-  const handleIncrease = async (value: number) => {
-    console.log('IIIIIIIIIIIIIIIIIIII', value);
+  useEffect(() => {
+    if (debouncedQuantity !== item.quantity) {
+      handleUpdateCartItem({ itemId: item.id, quantity: debouncedQuantity });
+    }
+  }, [debouncedQuantity, item.quantity, item.id, handleUpdateCartItem]);
 
-    // console.log('Deeeeeeeeeeee', useDebounce(value))
-  }
-
-  const handleDecrease = async (value: number) => {
-    console.log('DDDDDDDDDDDDDDDDDDDĐ', value);
-  }
+  const handleChange = (value: number) => {
+    setQuantity(value);
+  };
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -70,11 +77,7 @@ export default function ShowCartItem({ cartId, item }: PropsType) {
       </Link>
       <span className="col-span-2">{formatCurrency(120000)}</span>
       <div className="col-span-2">
-        <QuantitySelector
-          value={item.quantity}
-          onIncrease={(value) => handleIncrease(value)}
-          onDecrease={(value) => handleDecrease(value)}
-        />
+        <QuantitySelector initialValue={item.quantity} min={1} onChange={(value) => handleChange(value)} />
       </div>
       <span className="col-span-1 flex justify-end">
         <Popconfirm

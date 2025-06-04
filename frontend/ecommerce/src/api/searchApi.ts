@@ -11,7 +11,10 @@ export const getSearchHistory = async () => {
 
 export const addSearchHistoryItem = async (customerId: string, value: string) => {
   return axiosInstance
-    .post('/search/history')
+    .post('/search/history', {
+      customer: customerId,
+      value,
+    })
     .then((response) => response.data)
     .catch((error) => {
       throw Error(error);
@@ -20,7 +23,7 @@ export const addSearchHistoryItem = async (customerId: string, value: string) =>
 
 export const removeSearchHistoryItem = async (id: number) => {
   return axiosInstance
-    .delete('/search/history')
+    .delete(`/search/history/${id}`)
     .then((response) => response.data)
     .catch((error) => {
       throw Error(error);
@@ -36,11 +39,12 @@ export const getSearchTrending = async () => {
     });
 };
 
-export const getSearchRecommend = async (keyword: string) => {
-  return await axiosInstance
-    .get(`/search/recommend?keyword=${keyword}`)
-    .then((response) => response.data)
-    .catch((error) => {
-      throw Error(error);
-    });
+export const getSearchRecommend = async (keyword: string): Promise<string[]> => {
+  // return await axiosInstance
+  //   .get(`/search/recommend?keyword=${keyword}`)
+  //   .then((response) => response.data)
+  //   .catch((error) => {
+  //     throw Error(error);
+  //   });
+  return ['a1', 'a2', 'a3', 'a4', 'aa1', 'aa2', 'ab1', 'ab2']
 };

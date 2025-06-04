@@ -1,106 +1,89 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import InputNumber, { InputNumberProps } from './InputNumber';
+import { useEffect, useState } from 'react';
 import { MinusIcon, PlusIcon } from '@/assets/icons';
-import useDebounce from '@/hooks/useDebounce';
 
-interface PropsType extends InputNumberProps {
-  value: number;
+type PropsType = {
+  initialValue: number;
   min?: number;
   max?: number;
-  onIncrease?: (value: number) => void;
-  onDecrease?: (value: number) => void;
-  onType?: (value: number) => void;
-  onFocusOut?: (value: number) => void;
-}
+  onChange: (value: number) => void;
+};
 
-const QuantitySelector = ({ min = 1, max, onIncrease, onDecrease, onType, onFocusOut, value, ...rest }: PropsType) => {
-  const [localValue, setLocalValue] = useState<number>(Number(value || 1));
-  const [classNameError, setClassNameError] = useState('hidden');
-
-  const debouncedValue = useDebounce(localValue, 500);
+const QuantitySelector = ({ initialValue, min = 1, max = 99, onChange }: PropsType) => {
+  const [quantity, setQuantity] = useState<number>(Number(initialValue || 1));
 
   useEffect(() => {
-    setLocalValue(Number(value || 0));
-  }, [value]);
+    setQuantity(initialValue);
+  }, [initialValue]);
 
-  // useEffect(() => {
-  //   if (debouncedValue !== value) {
-  //     if (debouncedValue > value) {
-  //       onIncrease && onIncrease(debouncedValue);
-  //     } else if (debouncedValue < value) {
-  //       onDecrease && onDecrease(debouncedValue);
-  //     }
-  //   }
-  // }, [debouncedValue, value, onIncrease, onDecrease]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setClassNameError('hidden');
-    let _value = Number(event.target.value);
-    if (max !== undefined && _value > max) {
-      _value = max;
-    } else if (min !== undefined && _value < min) {
-      _value = min;
+  const handleDecrease = () => {
+    if (quantity > min) {
+      const newQuantity = quantity - 1;
+      setQuantity(newQuantity);
+      onChange(newQuantity);
     }
-    onType && onType(_value);
-    setLocalValue(_value);
   };
 
-  const increase = useCallback(() => {
-    setClassNameError('hidden');
-    let _value = Number(value || localValue) + 1;
-    if (max !== undefined && _value > max) {
-      _value = max;
+  const handleIncrease = () => {
+    let newQuantity = quantity + 1;
+    if (max && quantity >= max) {
+      newQuantity = max;
     }
-    onIncrease && onIncrease(_value);
-    setLocalValue(_value);
-    console.log('first', _value)
-  }, [debouncedValue]);
 
-  const decrease = useCallback(() => {
-    setClassNameError('hidden');
-    let _value = Number(value || localValue) - 1;
-    if (_value < min) {
-      _value = min;
-    }
-    onDecrease && onDecrease(_value);
-    setLocalValue(_value);
-  }, []);
+    setQuantity(newQuantity);
+    onChange(newQuantity);
+  };
 
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement, Element>) => {
-    let _value = Number(event.target.value) || min;
-    if ((max !== undefined && _value > max) || (min !== undefined && value < min)) {
-      setClassNameError('mt-1 text-red-600 min-h-[1.25rem] text-sm');
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (value >= min && value <= max) {
+      setQuantity(value);
+      onChange(value);
+    } else if (value > max) {
+      setQuantity(max);
+      onChange(max);
+    } else {
+      setQuantity(min);
+      onChange(min);
     }
-    onFocusOut && onFocusOut(_value);
-    setLocalValue(_value);
+  };
+
+  const handleInputBlur = () => {
+    if (quantity < min) {
+      setQuantity(min);
+      onChange(min);
+    } else if (quantity > max) {
+      setQuantity(max);
+      onChange(max);
+    }
   };
 
   return (
     <div className={'flex items-center'}>
       <button
         className="p-2 bg-[#f3f3f3] flex h-8 w-8 items-center justify-center rounded-l-sm border border-gray-300 text-gray-600 cursor-pointer"
-        onClick={decrease}
-        disabled={value <= min}
+        onClick={handleDecrease}
+        disabled={initialValue <= min}
         aria-label="Decrease quantity"
         aria-controls="quantity-input"
       >
         <MinusIcon />
       </button>
-      <InputNumber
-        className=""
-        classNameError={classNameError}
-        classNameInput="h-8 w-14 border-t border-b border-gray-300 p-1 text-center outline-hidden"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={value || localValue}
-        {...rest}
+      <input
+        type="number"
+        value={quantity}
+        onChange={handleInputChange}
+        onBlur={handleInputBlur}
+        min={min}
+        max={max}
+        className="w-16 h-10 text-center border-0 focus:outline-none text-gray-800 font-medium"
+        aria-label="Số lượng"
       />
       <button
         className="p-2 bg-[#f3f3f3] flex h-8 w-8 items-center justify-center rounded-r-sm border border-gray-300 text-gray-600 cursor-pointer"
-        onClick={increase}
-        disabled={value >= max!}
+        onClick={handleIncrease}
+        disabled={initialValue >= max!}
         aria-label="Increase quantity"
         aria-controls="quantity-input"
       >
