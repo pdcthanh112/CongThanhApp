@@ -52,11 +52,12 @@ export default function SearchComponent() {
   });
 
   // const {data: searchHistory} = useQuery({queryKey: ['search-history'], queryFn: async () => await getSearchHistory()})
+
   // const {data: searchTrending} = useQuery({queryKey: ['search-trending'], queryFn: async () => await getSearchTrending()})
 
   const { mutate: addSearchHistory } = useMutation({
     mutationKey: ['search-history'],
-    mutationFn: async (keyword: string) => await addSearchHistoryItem(user?.email as string, keyword),
+    mutationFn: async (keyword: string) => await addSearchHistoryItem(user?.accountId as string, keyword),
   });
   const { mutate: removeSearchItem } = useMutation({
     mutationKey: ['search-history'],
@@ -112,10 +113,8 @@ export default function SearchComponent() {
   const handleSearch = (term: string) => {
     if (!term.trim()) return;
 
-    // Thêm term vào search history
     addSearchHistory(term);
 
-    // Thực hiện search
     console.log('Searching for:', term);
     setSearchTerm(term);
     setShowModal(false);

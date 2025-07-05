@@ -1,12 +1,7 @@
 import axiosInstance from '@/config/axiosConfig';
 
 export const getWishlistByCustomer = async (customerId: string) => {
-  return await axiosInstance
-    .get(`wishlist/getByCustomer?customerId=${customerId}`)
-    .then((response) => response.data)
-    .catch((error) => {
-      throw error;
-    });
+  return await axiosInstance.get(`wishlist/getByCustomer?customerId=${customerId}`).then((response) => response.data);
 };
 
 export const addProductToWishlist = async (customerId: string, productId: string) => {
@@ -15,10 +10,7 @@ export const addProductToWishlist = async (customerId: string, productId: string
       customerId: customerId,
       productId: productId,
     })
-    .then((response) => response)
-    .catch((error) => {
-      throw error;
-    });
+    .then((response) => response);
 };
 
 export const removeProductFromWishlist = async (customerId: string, productId: string) => {
@@ -29,8 +21,5 @@ export const removeProductFromWishlist = async (customerId: string, productId: s
         productId: productId,
       },
     })
-    .then((response) => response)
-    .catch((error) => {
-      throw error;
-    });
+    .then((response) => response);
 };

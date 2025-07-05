@@ -14,8 +14,8 @@ const initialUserSettingContext: UserSettingInterface = {
     theme: 'light',
     language: 'us - EN',
   },
-  setSettings: () => null,
-  reset: () => null,
+  setSettings: () => {},
+  reset: () => {},
 };
 
 const UserSettingContext = createContext<UserSettingInterface>(initialUserSettingContext);

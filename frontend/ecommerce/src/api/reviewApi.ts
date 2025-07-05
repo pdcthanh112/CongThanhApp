@@ -6,9 +6,7 @@ export const getStatisticFromProduct = async (productId: string): Promise<Respon
   return await axiosInstance
     .get(`review/statistic?product=${productId}`)
     .then((response) => response.data)
-    .catch((error) => {
-      throw error;
-    });
+
 };
 
 export const getReviewByProduct = async (productId: string, filter: any, pagination: any): Promise<ResponseWithPagination<Review>> => {
@@ -17,7 +15,5 @@ export const getReviewByProduct = async (productId: string, filter: any, paginat
   return await axiosInstance
     .get(`reviews/store-front/product/${productId}?rating=${filter.rating}&page=${pagination.page}&limit=5`, {params})
     .then((response) => response.data)
-    .catch((error) => {
-      throw error;
-    });
+
 };

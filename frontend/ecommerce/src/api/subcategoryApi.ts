@@ -5,10 +5,5 @@ export const getAllSubategory = async (page?: number, limit?: number): Promise<R
   const params = new URLSearchParams();
   page && params.append('page', String(page));
   limit && params.append('limit', String(limit));
-  return await axiosInstance
-    .get('subcategory/getAll')
-    .then((response) => response.data)
-    .catch((error) => {
-      throw error;
-    });
+  return await axiosInstance.get('subcategory/getAll').then((response) => response.data);
 };

@@ -1,5 +1,5 @@
 server:
-  port: 5002 # ${SERVER_PORT}
+  port: ${SERVER_PORT:5003}
   servlet:
     context-path: /api
 #  compression:

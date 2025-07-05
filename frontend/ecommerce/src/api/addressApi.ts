@@ -2,21 +2,11 @@ import axiosInstance from '@/config/axiosConfig';
 import { CreateAddressForm, UpdateAddressForm } from '@/models/form';
 
 export const getAddressById = async (addressId: number) => {
-  return await axiosInstance
-    .get(`address/${addressId}`)
-    .then((response) => response.data)
-    .catch((error) => {
-      throw error;
-    });
+  return await axiosInstance.get(`address/${addressId}`).then((response) => response.data);
 };
 
 export const getAddressByCustomer = async (customerId: string) => {
-  return await axiosInstance
-    .get(`customer/${customerId}/address`)
-    .then((response) => response.data)
-    .catch((error) => {
-      throw error;
-    });
+  return await axiosInstance.get(`customer/${customerId}/address`).then((response) => response.data);
 };
 
 export const createAddress = async (data: CreateAddressForm) => {
@@ -32,10 +22,7 @@ export const createAddress = async (data: CreateAddressForm) => {
       postalCode: data.postalCode,
       idDefault: data.isDefault,
     })
-    .then((response) => response.data)
-    .catch((error) => {
-      throw new error;
-    });
+    .then((response) => response.data);
 };
 
 export const updateAddress = async (addressId: number, data: UpdateAddressForm) => {
@@ -49,26 +36,13 @@ export const updateAddress = async (addressId: number, data: UpdateAddressForm) 
       street: data.street,
       postalCode: data.postalCode,
     })
-    .then((response) => response.data)
-    .catch((error) => {
-      throw new error;
-    });
+    .then((response) => response.data);
 };
 
 export const deleteAddress = async (addressId: number) => {
-  return await axiosInstance
-    .delete(`address/${addressId}`)
-    .then((response) => response.data)
-    .catch((error) => {
-      throw new error;
-    });
+  return await axiosInstance.delete(`address/${addressId}`).then((response) => response.data);
 };
 
 export const getDefaultAddressOfCustomer = async (customerId: string) => {
-  return await axiosInstance
-    .get(`customer/${customerId}/address/default`)
-    .then((response) => response.data)
-    .catch((error) => {
-      throw error;
-    });
+  return await axiosInstance.get(`customer/${customerId}/address/default`).then((response) => response.data);
 };

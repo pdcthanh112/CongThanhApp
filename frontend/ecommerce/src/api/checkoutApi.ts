@@ -1,5 +1,5 @@
 import axiosInstance from '@/config/axiosConfig';
-import { CheckoutForm } from '@/models/types';
+import { CheckoutForm } from '@/models/types/';
 
 export const checkout = async (data: CheckoutForm) => {
   return await axiosInstance
@@ -13,7 +13,4 @@ export const checkout = async (data: CheckoutForm) => {
         payment: data.payment,
     })
     .then((response) => response)
-    .catch((error) => {
-      throw error;
-    });
 };

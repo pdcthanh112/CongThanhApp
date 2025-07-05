@@ -6,17 +6,9 @@ export const executePaypalPayment = async (paymentId: string, payerId: string) =
       paymentId,
       payerId,
     })
-    .then((response) => response.data)
-    .catch((error) => {
-      throw Error(error);
-    });
+    .then((response) => response.data);
 };
 
 export const addPaymentCard = async () => {
-  return await axiosInstance
-    .post('/payments/card')
-    .then((response) => response.data)
-    .catch((error) => {
-      throw Error(error);
-    });
+  return await axiosInstance.post('/payments/card').then((response) => response.data);
 };

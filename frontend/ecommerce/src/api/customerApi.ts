@@ -5,19 +5,13 @@ import axios from 'axios';
 export const login = async (email: string, password: string) => {
   return await axios
     .post('http://localhost:8000/ecommerce/auth/login', { email: email, password: password })
-    .then((response) => response.data)
-    .catch((error) => {
-      throw new Error(error);
-    });
+    .then((response) => response.data);
 };
 
 export const logout = async (email: string) => {
   return await axios
     .post('http://localhost:8000/ecommerce/auth/logout', { email: email })
-    .then((response) => response.data)
-    .catch((error) => {
-      throw new Error(error);
-    });
+    .then((response) => response.data);
 };
 
 export const signup = async (data: SignupForm) => {
@@ -30,10 +24,7 @@ export const signup = async (data: SignupForm) => {
       phone: data.phone,
       gender: data.gender,
     })
-    .then((response) => response.data)
-    .catch((error) => {
-      throw new Error(error);
-    });
+    .then((response) => response.data);
 };
 
 export const changePassword = async (data: ChangePasswordForm) => {
@@ -43,10 +34,7 @@ export const changePassword = async (data: ChangePasswordForm) => {
       currentPassword: data.currentPassword,
       newPassword: data.newPassword,
     })
-    .then((response) => response.data)
-    .catch((error) => {
-      throw new Error(error);
-    });
+    .then((response) => response.data);
 };
 
 export const resetPassword = async (data: ResetPasswordForm) => {
@@ -55,35 +43,19 @@ export const resetPassword = async (data: ResetPasswordForm) => {
       accountId: data.accountId,
       password: data.newPassword,
     })
-    .then((response) => response.data)
-    .catch((error) => {
-      throw error;
-    });
+    .then((response) => response.data);
 };
 
 export const generateOTP = async (data: any) => {
-  return await axios
-    .get('http://localhost:8000/ecommerce/auth/generate-otp')
-    .then((response) => response.data)
-    .catch((error) => {
-      throw error;
-    });
+  return await axios.get('http://localhost:8000/ecommerce/auth/generate-otp').then((response) => response.data);
 };
 
 export const verifyOTP = async (data: any) => {
-  return await axios
-    .get('http://localhost:8000/ecommerce/auth/verify-otp')
-    .then((response) => response.data)
-    .catch((error) => {
-      throw error;
-    });
+  return await axios.get('http://localhost:8000/ecommerce/auth/verify-otp').then((response) => response.data);
 };
 
 export const getCustomerInfo = async (email: string) => {
   return await axiosInstance
     .get(`http://localhost:8000/ecommerce/customer/${email}/info`)
-    .then((response) => response.data)
-    .catch((error) => {
-      throw error;
-    });
+    .then((response) => response.data);
 };

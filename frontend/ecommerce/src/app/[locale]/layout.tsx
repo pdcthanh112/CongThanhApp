@@ -12,6 +12,7 @@ import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
+import AppContent from '@/components/AppContent';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -69,9 +70,9 @@ export default async function Layout({ children, params: { locale } }: Readonly<
           <NextIntlClientProvider messages={messages}>
             <AppHeader />
             <AppNavbar />
-            <RootLayout>
-              <main className="min-h-[calc(100vh-270px)] bg-[#F5F5F5]">{children}</main>
-            </RootLayout>
+            <AppContent>
+              <RootLayout>{children}</RootLayout>
+            </AppContent>
             <AppFooter />
           </NextIntlClientProvider>
         </Providers>
