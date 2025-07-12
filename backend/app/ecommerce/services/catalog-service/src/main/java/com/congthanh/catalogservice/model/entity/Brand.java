@@ -1,8 +1,8 @@
 package com.congthanh.catalogservice.model.entity;
 
+import com.congthanh.commonservice.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @Table(name = "brand")
-public class Brand extends AbstractAuditEntity {
+public class Brand extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

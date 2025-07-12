@@ -1,5 +1,6 @@
 package com.congthanh.productservice.model.entity;
 
+import com.congthanh.commonservice.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @Table(name = "product_attribute")
-public class ProductAttribute extends AbstractAuditEntity {
+public class ProductAttribute extends BaseEntity {
 
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

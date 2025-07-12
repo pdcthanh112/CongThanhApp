@@ -19,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "product")
+@Table(name = "products")
 //@NamedEntityGraph(name = "Product.WithAll", attributeNodes = {
 //        @NamedAttributeNode("image"),
 //        @NamedAttributeNode("attribute")

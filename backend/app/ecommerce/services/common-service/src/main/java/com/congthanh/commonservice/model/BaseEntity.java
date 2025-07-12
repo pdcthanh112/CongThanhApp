@@ -1,6 +1,6 @@
-package com.congthanh.catalogservice.model.entity;
+package com.congthanh.commonservice.model;
 
-import com.congthanh.catalogservice.listener.CustomAuditingEntityListener;
+import com.congthanh.commonservice.model.listener.CustomAuditingEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -15,7 +15,7 @@ import java.time.Instant;
 @MappedSuperclass
 @Data
 @EntityListeners(CustomAuditingEntityListener.class)
-public abstract class AbstractAuditEntity {
+public abstract class BaseEntity {
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)

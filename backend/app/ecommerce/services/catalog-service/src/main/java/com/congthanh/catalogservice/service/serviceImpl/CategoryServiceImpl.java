@@ -14,7 +14,7 @@ import com.congthanh.catalogservice.model.request.RequestFilter;
 import com.congthanh.catalogservice.model.request.UpdateCategoryRequest;
 import com.congthanh.catalogservice.model.response.PaginationInfo;
 import com.congthanh.catalogservice.model.response.ResponseWithPagination;
-import com.congthanh.catalogservice.exception.ecommerce.NotFoundException;
+import com.congthanh.commonservice.exception.NotFoundException;
 import com.congthanh.catalogservice.repository.category.CategoryRepository;
 import com.congthanh.catalogservice.service.CategoryService;
 import com.congthanh.catalogservice.utils.Helper;

@@ -1,4 +1,4 @@
-package com.congthanh.catalogservice.utils;
+package com.congthanh.commonservice.utils;
 
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;

@@ -1,9 +1,9 @@
 package com.congthanh.catalogservice.model.entity;
 
 import com.congthanh.catalogservice.constant.enums.TagStatus;
+import com.congthanh.commonservice.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @Table(name = "tag")
-public class Tag extends AbstractAuditEntity {
+public class Tag extends BaseEntity {
 
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

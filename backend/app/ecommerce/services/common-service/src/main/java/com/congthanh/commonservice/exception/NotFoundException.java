@@ -1,6 +1,6 @@
-package com.congthanh.catalogservice.exception.ecommerce;
+package com.congthanh.commonservice.exception;
 
-import com.congthanh.catalogservice.utils.MessagesUtils;
+import com.congthanh.commonservice.utils.MessagesUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

@@ -1,7 +1,7 @@
 package com.congthanh.catalogservice.cqrs.commands.event.category;
 
 import com.congthanh.catalogservice.constant.common.RabbitMQConstants;
-import com.congthanh.catalogservice.exception.ecommerce.NotFoundException;
+import com.congthanh.commonservice.exception.NotFoundException;
 import com.congthanh.catalogservice.model.document.CategoryDocument;
 import com.congthanh.catalogservice.model.document.SubcategoryDocument;
 import com.congthanh.catalogservice.rabbitmq.category.CategoryEventType;

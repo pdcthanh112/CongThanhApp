@@ -87,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
                 .status(item.getStatus())
                 .stepOrder(item.getStepOrder())
                 .description(item.getDescription())
-                .changedAt(item.getChangedAt())
+                .changedAt(item.getUpdatedAt())
                 .build()).toList();
 
         return OrderDetailVm.builder()

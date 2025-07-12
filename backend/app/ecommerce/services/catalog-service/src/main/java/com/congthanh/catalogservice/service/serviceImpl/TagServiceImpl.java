@@ -8,8 +8,8 @@ import com.congthanh.catalogservice.cqrs.queries.query.tag.GetAllTagQuery;
 import com.congthanh.catalogservice.cqrs.queries.query.tag.GetTagByIdQuery;
 import com.congthanh.catalogservice.model.dto.TagDTO;
 import com.congthanh.catalogservice.model.entity.Tag;
-import com.congthanh.catalogservice.exception.ecommerce.BadRequestException;
-import com.congthanh.catalogservice.exception.ecommerce.NotFoundException;
+import com.congthanh.commonservice.exception.BadRequestException;
+import com.congthanh.commonservice.exception.NotFoundException;
 import com.congthanh.catalogservice.model.document.TagDocument;
 import com.congthanh.catalogservice.model.request.CreateTagRequest;
 import com.congthanh.catalogservice.model.request.UpdateTagRequest;
@@ -79,7 +79,6 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public TagDTO createTag(CreateTagRequest request) {
-        System.out.println("Vô Service, trước commandGateway.sendAndWait(event);");
         Optional<Tag> check = tagRepository.findByName(request.getName());
         if (check.isPresent()) {
             throw new RuntimeException("Tag name already exist");

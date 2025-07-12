@@ -1,9 +1,9 @@
 package com.congthanh.catalogservice.exception.handler;
 
 import com.congthanh.catalogservice.constant.common.ResponseStatus;
-import com.congthanh.catalogservice.exception.ecommerce.BadRequestException;
-import com.congthanh.catalogservice.exception.ecommerce.NotFoundException;
-import com.congthanh.catalogservice.exception.ecommerce.PermissionException;
+import com.congthanh.commonservice.exception.BadRequestException;
+import com.congthanh.commonservice.exception.NotFoundException;
+import com.congthanh.commonservice.exception.PermissionException;
 import com.congthanh.catalogservice.model.response.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

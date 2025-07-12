@@ -1,6 +1,7 @@
 package com.congthanh.catalogservice.model.entity;
 
 import com.congthanh.catalogservice.constant.enums.CategoryStatus;
+import com.congthanh.commonservice.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,8 +11,8 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Builder
-@Table(name = "category")
-public class Category  extends AbstractAuditEntity{
+@Table(name = "categories")
+public class Category extends BaseEntity {
 
     @Id
     private String id;
@@ -31,12 +32,4 @@ public class Category  extends AbstractAuditEntity{
 
     @Enumerated(EnumType.STRING)
     private CategoryStatus status;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "parent_id", insertable = false, updatable = false)
-//    private Category parent;
-//
-//    @OneToMany(mappedBy = "parent")
-//    private Set<Category> children = new HashSet<>();
-
 }

@@ -8,7 +8,6 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <!--	<groupId>com.congthanh</groupId>-->
     <artifactId>catalog-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>catalog-service</name>
@@ -109,7 +108,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>3.4.0</version>
+            <version>3.4.5</version>
         </dependency>
         <!--		<dependency>-->
         <!--			<groupId>org.springframework.boot</groupId>-->
@@ -125,9 +124,13 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>3.4.0</version>
+            <version>3.4.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -198,11 +201,6 @@
 <!--            <groupId>io.jsonwebtoken</groupId>-->
 <!--            <artifactId>jjwt-api</artifactId>-->
 <!--            <version>0.12.6</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springdoc</groupId>-->
-<!--            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>-->
-<!--            <version>2.5.0</version>-->
 <!--        </dependency>-->
         <dependency>
             <groupId>io.swagger</groupId>
@@ -313,10 +311,6 @@
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-spring-boot-starter</artifactId>
             <version>25.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>com.congthanh</groupId>

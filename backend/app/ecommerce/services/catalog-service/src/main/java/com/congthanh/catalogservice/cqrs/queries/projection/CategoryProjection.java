@@ -3,7 +3,7 @@ package com.congthanh.catalogservice.cqrs.queries.projection;
 import com.congthanh.catalogservice.constant.common.ErrorCode;
 import com.congthanh.catalogservice.cqrs.queries.query.category.GetAllCategoryQuery;
 import com.congthanh.catalogservice.cqrs.queries.query.category.GetCategoryByIdQuery;
-import com.congthanh.catalogservice.exception.ecommerce.NotFoundException;
+import com.congthanh.commonservice.exception.NotFoundException;
 import com.congthanh.catalogservice.model.document.CategoryDocument;
 import com.congthanh.catalogservice.repository.category.CategoryDocumentRepository;
 import lombok.RequiredArgsConstructor;

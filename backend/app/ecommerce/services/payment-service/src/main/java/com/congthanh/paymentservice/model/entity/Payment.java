@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "payment")
+@Table(name = "payments")
 public class Payment {
 
     @Id
@@ -46,6 +46,7 @@ public class Payment {
     private Instant paymentAt;
 
     private String transactionId;  // ID từ payment provider
+
     private String paymentUrl;     // URL redirect để thanh toán (nếu có)
 
     @Enumerated(EnumType.STRING)

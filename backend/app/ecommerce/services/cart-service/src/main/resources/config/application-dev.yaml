@@ -36,7 +36,7 @@ spring:
   jpa:
     database: default
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: false
     properties:
       hibernate:
@@ -170,10 +170,15 @@ congthanhapp:
     prod-url: https://congthanhapp-api.com
 
 springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
   swagger-ui:
     tagsSorter: alpha
     path: /swagger-ui
+#    disable-swagger-default-url: true
   enable-spring-security: true
+  show-actuator: true
 
 #logging:
 #  level:

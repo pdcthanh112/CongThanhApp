@@ -1,6 +1,6 @@
-package com.congthanh.catalogservice.listener;
+package com.congthanh.commonservice.model.listener;
 
-import com.congthanh.catalogservice.model.entity.AbstractAuditEntity;
+import com.congthanh.commonservice.model.BaseEntity;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +19,7 @@ public class CustomAuditingEntityListener extends AuditingEntityListener {
     @Override
     @PrePersist
     public void touchForCreate(@NotNull Object target) {
-        AbstractAuditEntity entity = (AbstractAuditEntity) target;
+        BaseEntity entity = (BaseEntity) target;
         if (entity.getCreatedBy() == null) {
             super.touchForCreate(target);
         } else {
@@ -32,7 +32,7 @@ public class CustomAuditingEntityListener extends AuditingEntityListener {
     @Override
     @PreUpdate
     public void touchForUpdate(@NotNull Object target) {
-        AbstractAuditEntity entity = (AbstractAuditEntity) target;
+        BaseEntity entity = (BaseEntity) target;
         if (entity.getUpdatedBy() == null) {
             super.touchForUpdate(target);
         }

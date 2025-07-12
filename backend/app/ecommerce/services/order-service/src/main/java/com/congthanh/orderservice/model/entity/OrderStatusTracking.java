@@ -36,6 +36,9 @@ public class OrderStatusTracking {
     @Column(columnDefinition = "TEXT")
     private String note;
 
-    @Column(name = "changed_at")
-    private Instant changedAt;
+    @Column(name = "updated_at")
+    private Instant updatedAt;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
 }

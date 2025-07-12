@@ -42,7 +42,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/ecommerce/carts/**").hasAuthority("ADMIN")
                                 // Các endpoint công khai (không yêu cầu xác thực)
                                 .requestMatchers("/auth/**").permitAll()
-                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                .requestMatchers("/swagger-ui/**", "/api/v3/api-docs/**").permitAll()
 //                        .requestMatchers("/**", "/auth/**").permitAll()
                                 .anyRequest().authenticated()
                 )

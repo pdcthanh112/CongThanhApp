@@ -39,7 +39,7 @@ spring:
   jpa:
     database: default
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: false
     properties:
       hibernate:
@@ -48,6 +48,10 @@ spring:
         format_sql: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.db.changelog-master.yaml
 
   data:
     mongodb:
