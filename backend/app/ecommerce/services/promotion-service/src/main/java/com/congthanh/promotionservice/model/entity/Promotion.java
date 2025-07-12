@@ -1,5 +1,7 @@
 package com.congthanh.promotionservice.model.entity;
 
+import com.congthanh.commonservice.model.BaseEntity;
+import com.congthanh.promotionservice.constant.enums.PromotionStatus;
 import com.congthanh.promotionservice.constant.enums.PromotionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,8 +16,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "promotion")
-public class Promotion {
+@Table(name = "promotions")
+public class Promotion extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,12 +44,5 @@ public class Promotion {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    private String status;
-
-    @Column(name = "created_at")
-    private Instant createdAt;
-
-    @Column(name = "updated_at")
-    private Instant updatedAt;
-
+    private PromotionStatus status;
 }
