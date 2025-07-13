@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { getAllProduct } from '@/api/productApi';
-import ShowListProduct from '@/components/Product/ShowListProduct';
+import ShowListProduct from '@/features/product/component/ShowListProduct';
 import { PaginationParams, Product } from '@/models/types';
 import { PRODUCT_KEY } from '@/utils/constants/queryKey';
 import { Pagination } from '@mui/material';

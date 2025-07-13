@@ -7,13 +7,13 @@ import {
   getProductOptionValues,
   getProductVariationsByParentId,
 } from '@/api/productApi';
-import ProductDetail from '@/components/Product/ProductDetail';
+import ProductDetail from '@/features/product/component/product-detail';
 import { getStatisticFromProduct } from '@/api/reviewApi';
 import { getSupplierById } from '@/api/supplierApi';
 import { Breadcrumb, ProductOptions, ProductVariant } from '@/models/types';
 import { ReviewStatistic } from '@/models/types/Review';
-import RelatedProduct from '@/components/Product/RelatedProduct';
-import ReviewProduct from '@/components/Product/ProductDetail/ReviewProduct';
+import RelatedProduct from '@/features/product/component/RelatedProduct';
+import ReviewProduct from '@/features/product/component/product-detail/ReviewProduct';
 import { getTranslations } from 'next-intl/server';
 import BreadcrumbComponent from '@/components/breadcrumb/Breadcrumb';
 

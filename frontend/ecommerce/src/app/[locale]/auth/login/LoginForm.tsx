@@ -15,6 +15,7 @@ import { BuiltInProviderType } from 'next-auth/providers/index';
 import { AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '@/assets/icons/socialLoginIcon';
 import { useTranslations } from 'next-intl';
 import { useSyncUserData } from '@/hooks/useSyncData';
+import { PATH } from '@/utils/constants/path';
 
 type PropsType = {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
@@ -26,6 +27,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const t = useTranslations();
+  
   const LoginSchema = createLoginSchema(t);
 
   const { syncData } = useSyncUserData();
@@ -87,16 +89,16 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
                 <FormLabel style={{ color: 'inherit' }}>{t('auth.password')}</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Input placeholder="********" type={showPassword ? 'password' : 'text'} {...field} />
+                    <Input placeholder="********" type={showPassword ? 'text' : 'password'} {...field} />
                     <Icon
                       fontSize="small"
-                      component={showPassword ? VisibilityOff : Visibility}
+                      component={showPassword ? Visibility : VisibilityOff}
                       cursor={'pointer'}
                       className="absolute right-3 top-2"
                       onClick={() => setShowPassword(!showPassword)}
                     />
                     <Link
-                      href={'/forget-password'}
+                      href={PATH.AUTH_PATH_URL.FORGET_PASSWORD}
                       className="absolute right-0 hover:underline"
                       title="Forget password"
                     >
@@ -114,7 +116,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
         </form>
       </Form>
 
-      <Divider>{t('common.or')}</Divider>
+      <Divider sx={{ my: 2 }}>{t('common.or')}</Divider>
 
       <div className="grid grid-cols-12 gap-3 mt-3">
         {Object.values(providers!).map((provider, idx) => {
@@ -123,7 +125,9 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
             return (
               <div
                 key={idx}
-                className={`${providerIcons[provider.id].bgColor} flex px-3 py-3 mb-3 hover:cursor-pointer rounded-lg col-span-6`}
+                className={`${
+                  providerIcons[provider.id].bgColor
+                } flex px-3 py-3 mb-3 hover:cursor-pointer rounded-lg col-span-12 md:col-span-6`}
                 title={t('auth.login_with_social', { social: provider.name })}
                 onClick={() =>
                   signIn(provider.id, { callbackUrl: '/home', redirect: false })
@@ -132,7 +136,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
                 }
               >
                 <Icon component={providerIcons[provider.id].icon} className="h-2" />
-                <span className="ml-3 text-white font-medium">
+                <span className="ml-3 text-white font-medium truncate">
                   {t('auth.login_with_social', { social: provider.name })}
                 </span>
               </div>

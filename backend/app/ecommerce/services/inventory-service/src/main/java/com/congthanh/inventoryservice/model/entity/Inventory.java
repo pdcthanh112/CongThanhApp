@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "inventory")
+@Table(name = "inventories")
 public class Inventory {
 
     @Id
-    private String id;
+    private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String sku;
 
     @Column(nullable = false)

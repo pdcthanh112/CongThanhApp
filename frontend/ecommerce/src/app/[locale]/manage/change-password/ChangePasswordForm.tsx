@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { Icon } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Tooltip } from 'antd';
-import ValidatePassword from '@/components/validate-password/ValidatePassword';
+import ValidatePassword from '@/features/auth/component/validate-password/ValidatePassword';
 import { LockKeyhole } from 'lucide-react';
 import { PATH } from '@/utils/constants/path';
 

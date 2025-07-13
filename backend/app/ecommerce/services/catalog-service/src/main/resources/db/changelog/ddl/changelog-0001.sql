@@ -1,4 +1,4 @@
-CREATE TABLE country
+CREATE TABLE IF NOT EXISTS country
 (
     id                  bigint      NOT NULL UNIQUE,
     country_code        varchar(3)  NOT NULL UNIQUE,
@@ -11,12 +11,11 @@ CREATE TABLE country
     language            varchar(20),
     locale              varchar(2),
     phone_code          varchar(4),
-
     PRIMARY KEY (id)
 );
 
-CREATE TYPE CategoryStatus as ENUM ('ACTIVE', 'INACTIVE')
-CREATE TABLE categories
+CREATE TYPE CategoryStatus as ENUM ('ACTIVE', 'INACTIVE');
+CREATE TABLE IF NOT EXISTS categories
 (
     id        varchar(32)    NOT NULL UNIQUE,
     name      varchar(255)   NOT NULL,
@@ -24,28 +23,25 @@ CREATE TABLE categories
     image     varchar(255),
     parent_id varchar(32),
     status    CategoryStatus NOT NULL DEFAULT ('ACTIVE'),
-
     PRIMARY KEY (id)
 );
 
-CREATE TYPE BrandStatus as ENUM ('ACTIVE', 'INACTIVE')
-CREATE TABLE Brands
+CREATE TYPE BrandStatus as ENUM ('ACTIVE', 'INACTIVE');
+CREATE TABLE IF NOT EXISTS Brands
 (
     id     bigint       NOT NULL UNIQUE,
     name   varchar(255) NOT NULL,
     slug   varchar(50)  NOT NULL UNIQUE,
     image  varchar(255),
     status BrandStatus  NOT NULL DEFAULT ('ACTIVE'),
-
     PRIMARY KEY (id)
 );
 
-CREATE TYPE TagStatus as ENUM ('ACTIVE', 'INACTIVE')
-CREATE TABLE Tags
+CREATE TYPE TagStatus as ENUM ('ACTIVE', 'INACTIVE');
+CREATE TABLE IF NOT EXISTS Tags
 (
     id     bigint    NOT NULL UNIQUE,
     name   varchar(255),
     status TagStatus NOT NULL DEFAULT ('ACTIVE'),
-
     PRIMARY KEY (id)
 )

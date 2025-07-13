@@ -1,8 +1,8 @@
 import '../globals.css';
 import { Inter } from 'next/font/google';
-import AppHeader from '@/components/AppHeader';
-import AppFooter from '@/components/AppFooter';
-import AppNavbar from '@/components/AppNavbar';
+import AppHeader from '@/components/app-component/AppHeader';
+import AppFooter from '@/components/app-component/AppFooter';
+import AppNavbar from '@/components/app-component/AppNavbar';
 import Providers from '../providers';
 import { RootLayout } from '@/layout';
 import { type Locale } from '@/lib/locales';
@@ -12,7 +12,7 @@ import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
-import AppContent from '@/components/AppContent';
+import AppContent from '@/components/app-component/AppContent';
 
 const inter = Inter({ subsets: ['latin'] });
 

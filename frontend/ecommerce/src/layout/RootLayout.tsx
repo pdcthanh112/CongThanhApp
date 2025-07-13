@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { LayoutProps } from '@/app/[locale]/page';
-import AuthModal from '@/components/AuthModal';
+import AuthModal from '@/features/auth/component/auth-modal';
 import { ToastContainer } from 'react-toastify';
 import useAppModalStore from '@/store/useAppModal';
 

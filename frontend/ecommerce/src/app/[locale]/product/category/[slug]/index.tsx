@@ -3,7 +3,7 @@ import { useParams } from 'next/navigation';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getProductByCategory } from '@/api/productApi';
 import { PaginationParams } from '@/models/types/Request';
-import ShowListProduct from '@/components/Product/ShowListProduct';
+import ShowListProduct from '@/features/product/component/ShowListProduct';
 import NotFound from './not-found';
 import { Pagination } from '@mui/material';
 

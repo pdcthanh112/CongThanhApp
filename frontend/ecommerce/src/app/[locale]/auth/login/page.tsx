@@ -15,13 +15,13 @@ export default async function LoginPage() {
   return (
     <div className="grid grid-cols-12">
       <div
-        className="col-span-7 overflow-y-scroll h-[40rem]"
+        className="col-span-12 sm:col-span-7 overflow-y-scroll h-[40rem]"
         style={{
-          scrollbarWidth: 'none', // Firefox
-          msOverflowStyle: 'none', // IE and Edge
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
         }}
       >
-        <div className="w-3/5 mx-auto">
+        <div className="w-4/5 md:w-3/5 mx-auto">
           <h3 className="mt-14 mb-5 font-medium text-xl">Welcome to CongThanhApp - Ecommerce</h3>
           <div className="flex justify-end">
             {t('auth.you_dont_have_an_account')}&nbsp;
@@ -32,7 +32,7 @@ export default async function LoginPage() {
           <LoginForm providers={providers} csrfToken={csrfToken || ''} />
         </div>
       </div>
-      <div className="col-span-5 relative h-full">
+      <div className="col-span-12 sm:col-span-5 relative h-full">
         <Image src={LoginImage} alt={''} objectFit="fit" fill />
       </div>
     </div>

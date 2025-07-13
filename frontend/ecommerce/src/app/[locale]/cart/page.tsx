@@ -1,4 +1,4 @@
-import ShowListCart from '@/components/Cart/ShowListCart';
+import ShowListCart from '@/features/cart/component/ShowListCart';
 import { getCartByCustomerId } from '@/api/cartApi';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth/next';

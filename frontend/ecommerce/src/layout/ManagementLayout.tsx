@@ -1,5 +1,5 @@
 'use client';
-import ManageNavbar from '@/components/ManageNavbar';
+import ManageNavbar from '@/features/manage/components/manage-navbar';
 import React from 'react';
 
 type LayoutProps = {
