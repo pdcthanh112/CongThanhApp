@@ -14,6 +14,7 @@ import ValidatePassword from '@/features/auth/component/validate-password/Valida
 import { CheckCheck, LockKeyhole, Mail, Phone, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { BuiltInProviderType } from 'next-auth/providers/index';
+import DotRequired from '@/components/common/DotRequired';
 
 type PropsType = {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
@@ -70,7 +71,7 @@ export default function RegisterForm({ providers }: PropsType) {
               <FormItem className="h-24 col-span-12 space-y-0 gap-0">
                 <FormLabel style={{ color: 'inherit' }}>
                   {t('auth.email')}
-                  <span className="text-red-500">*</span>
+                  <DotRequired />
                 </FormLabel>
                 <FormControl>
                   <div className="flex items-center border-2 px-3 rounded">
@@ -95,7 +96,7 @@ export default function RegisterForm({ providers }: PropsType) {
               <FormItem className="h-24 col-span-12 space-y-0 gap-0">
                 <FormLabel style={{ color: 'inherit' }}>
                   {t('auth.name')}
-                  <span className="text-red-500">*</span>
+                  <DotRequired />
                 </FormLabel>
                 <FormControl>
                   <div className="flex items-center border-2 px-3 rounded">
@@ -120,7 +121,7 @@ export default function RegisterForm({ providers }: PropsType) {
               <FormItem className="h-24 w-full col-span-12 md:col-span-6 space-y-0 gap-0">
                 <FormLabel style={{ color: 'inherit' }}>
                   {t('auth.password')}
-                  <span className="text-red-500">*</span>
+                  <DotRequired />
                 </FormLabel>
                 <FormControl>
                   <Tooltip
@@ -134,7 +135,7 @@ export default function RegisterForm({ providers }: PropsType) {
                     <div className="relative flex items-center border-2 px-3 rounded">
                       <LockKeyhole />
                       <Input
-                        type={showPassword ? 'password' : 'text'}
+                        type={showPassword ? 'text' : 'password'}
                         placeholder={t('placeholder.input_field', { field: t('auth.password') })}
                         className="border-none"
                         {...field}
@@ -143,7 +144,7 @@ export default function RegisterForm({ providers }: PropsType) {
                       />
                       <Icon
                         fontSize="small"
-                        component={showPassword ? VisibilityOff : Visibility}
+                        component={showPassword ? Visibility : VisibilityOff}
                         cursor={'pointer'}
                         className="absolute right-3 top-4"
                         onClick={() => setShowPassword(!showPassword)}
@@ -163,7 +164,7 @@ export default function RegisterForm({ providers }: PropsType) {
               <FormItem className="h-24 w-full col-span-12 md:col-span-6 space-y-0 gap-0">
                 <FormLabel style={{ color: 'inherit' }}>
                   {t('auth.confirm')}
-                  <span className="text-red-500">*</span>
+                  <DotRequired />
                 </FormLabel>
                 <FormControl>
                   <div className="flex relative items-center border-2 px-3 rounded">
@@ -177,7 +178,7 @@ export default function RegisterForm({ providers }: PropsType) {
                     {formRegister.getValues('password') === formRegister.watch('confirm') ? (
                       <CheckCheck size={20} className="absolute right-2 top-4 text-green-500" />
                     ) : (
-                      <Spin size="small" className="absolute right-2 top-3" />
+                      <Spin size="small" className="absolute right-2 top-4" />
                     )}
                   </div>
                 </FormControl>

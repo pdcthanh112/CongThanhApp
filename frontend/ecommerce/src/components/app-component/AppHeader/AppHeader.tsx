@@ -27,7 +27,7 @@ import SearchComponent from '../../Search/SearchComponent';
 import { ChevronDown, LucideIcon, Settings } from 'lucide-react';
 
 const CategoryComponent = dynamic(() => import('../../Category/CategoryComponent'), { ssr: false });
-const NotificationModal = dynamic(() => import('@/components/NotificationModal'), {
+const NotificationModal = dynamic(() => import('@/features/notification/components/notification-modal'), {
   ssr: false,
   loading: () => <div>Loading...</div>,
 });

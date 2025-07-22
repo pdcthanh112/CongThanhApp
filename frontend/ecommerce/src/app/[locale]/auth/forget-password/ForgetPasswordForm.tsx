@@ -7,6 +7,7 @@ import { createForgetPasswordSchema, ForgetPasswordSchemaType } from '@/models/s
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from '@/components/ui/';
 import { useTranslations } from 'next-intl';
+import { Mail } from 'lucide-react';
 
 export default function ForgetPasswordForm() {
   const t = useTranslations();
@@ -30,10 +31,13 @@ export default function ForgetPasswordForm() {
           control={forgetPasswordForm.control}
           name="email"
           render={({ field }) => (
-            <FormItem className="h-24">
+            <FormItem className="h-24 space-y-0 gap-0">
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="example@email.com" type="email" {...field} className="focus:outline-hidden" />
+                <div className="flex items-center border-2 px-3 rounded">
+                  <Mail />
+                  <Input placeholder="example@email.com" type="email" {...field} className="focus:outline-hidden border-none" />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
