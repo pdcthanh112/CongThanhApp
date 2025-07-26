@@ -1,0 +1,129 @@
+server:
+  port: 8080
+  read_timeout: 30s
+  write_timeout: 30s
+
+redis:
+  addr: "localhost:6379"
+  password: ""
+  db: 0
+
+jwt:
+  secret: "your-super-secret-key"
+  expires_in: 24h
+
+rate_limiting:
+  requests_per_minute: 100
+  burst: 20
+
+services:
+  auth:
+    url: "http://auth-service:8081"
+    timeout: 10s
+    circuit_breaker:
+      max_requests: 10
+      interval: 30s
+      timeout: 60s
+  
+  employee:
+    url: "http://employee-service:8082"
+    timeout: 10s
+    circuit_breaker:
+      max_requests: 10
+      interval: 30s
+      timeout: 60s
+  
+  financial:
+    url: "http://financial-service:8083"
+    timeout: 15s
+    circuit_breaker:
+      max_requests: 5
+      interval: 30s
+      timeout: 60s
+  
+  inventory:
+    url: "http://inventory-service:8084"
+    timeout: 10s
+    circuit_breaker:
+      max_requests: 15
+      interval: 30s
+      timeout: 60s
+  
+  crm:
+    url: "http://crm-service:8085"
+    timeout: 10s
+    circuit_breaker:
+      max_requests: 10
+      interval: 30s
+      timeout: 60s
+  
+  order:
+    url: "http://order-service:8086"
+    timeout: 10s
+    circuit_breaker:
+      max_requests: 20
+      interval: 30s
+      timeout: 60s
+  
+  product:
+    url: "http://product-service:8087"
+    timeout: 10s
+    circuit_breaker:
+      max_requests: 15
+      interval: 30s
+      timeout: 60s
+  
+  analytics:
+    url: "http://analytics-service:8088"
+    timeout: 30s
+    circuit_breaker:
+      max_requests: 5
+      interval: 30s
+      timeout: 60s
+
+routes:
+  - path: "/api/v1/auth/*"
+    service: "auth"
+    methods: ["GET", "POST", "PUT", "DELETE"]
+    auth_required: false
+    
+  - path: "/api/v1/employees/*"
+    service: "employee"
+    methods: ["GET", "POST", "PUT", "DELETE"]
+    auth_required: true
+    roles: ["admin", "hr"]
+    
+  - path: "/api/v1/financial/*"
+    service: "financial"
+    methods: ["GET", "POST", "PUT", "DELETE"]
+    auth_required: true
+    roles: ["admin", "finance"]
+    
+  - path: "/api/v1/inventory/*"
+    service: "inventory"
+    methods: ["GET", "POST", "PUT", "DELETE"]
+    auth_required: true
+    roles: ["admin", "warehouse", "manager"]
+    
+  - path: "/api/v1/crm/*"
+    service: "crm"
+    methods: ["GET", "POST", "PUT", "DELETE"]
+    auth_required: true
+    roles: ["admin", "sales", "manager"]
+    
+  - path: "/api/v1/orders/*"
+    service: "order"
+    methods: ["GET", "POST", "PUT", "DELETE"]
+    auth_required: true
+    roles: ["admin", "sales", "customer"]
+    
+  - path: "/api/v1/products/*"
+    service: "product"
+    methods: ["GET", "POST", "PUT", "DELETE"]
+    auth_required: false
+    
+  - path: "/api/v1/analytics/*"
+    service: "analytics"
+    methods: ["GET", "POST"]
+    auth_required: true
+    roles: ["admin", "manager", "analyst"]

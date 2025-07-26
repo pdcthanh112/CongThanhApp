@@ -5,10 +5,13 @@ server:
   compression:
     enabled: true
     min-response-size: 1024
+  shutdown: graceful
 
 spring:
   application:
     name: congthanhapp-ecommerce-supplier-service
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
   #  config:
   #    import: optional:file:.env[.properties]
   datasource:

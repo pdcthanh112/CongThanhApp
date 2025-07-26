@@ -2,6 +2,7 @@ server:
   port: ${SERVER_PORT:5005}
   servlet:
     context-path: /api
+  shutdown: graceful
 #  compression:
 #    enabled: true
 #    min-response-size: 1024
@@ -14,6 +15,10 @@ server:
 spring:
   application:
     name: congthanhapp-ecommerce-notification-service
+
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+    
   web:
     cors:
       allowed-origins: "http://localhost:3000"

@@ -1,45 +1,53 @@
-ARG NODE_VERSION=20.17.0-alpine
+# Build stage
+FROM golang:1.21-alpine AS builder
 
-# Stage 1: Install dependencies
-FROM node:${NODE_VERSION} AS base
+# Install necessary packages
+RUN apk add --no-cache git ca-certificates tzdata
 
-WORKDIR /usr/src/app
-# Install Nest CLI globally
-RUN npm install -g @nestjs/cli
-# Copy root package.json and package-lock.json
-COPY package*.json ./
+# Set working directory
+WORKDIR /app
 
-# Install dependencies
-RUN npm install
+# Copy go mod files
+COPY go.mod go.sum ./
 
-# Copy the source code of the service and necessary config
-COPY apps/bff-service ./apps/bff-service
-COPY libs ./libs
-COPY nest-cli.json ./
-COPY tsconfig*.json ./
+# Download dependencies
+RUN go mod download
 
-# Stage 2: Build the application
-FROM base AS builder
-RUN nest build bff-service
+# Copy source code
+COPY . .
 
-# Stage 3: Development setup
-FROM base AS dev
-# Expose the application port (optional)
-EXPOSE 3000
-# Command to run application in dev mode
-CMD ["nest", "start", "bff-service", "--watch"]
+# Build the application
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api-gateway .
 
-# Stage 4: Setup the production image
-FROM node:${NODE_VERSION} AS production
+# Final stage
+FROM alpine:latest
 
-WORKDIR /usr/src/app
+# Install ca-certificates for HTTPS requests
+RUN apk --no-cache add ca-certificates tzdata
 
-# Copy the build artifacts from the builder stage
-COPY --from=builder /usr/src/app/dist ./dist
-COPY --from=builder /usr/src/app/node_modules ./node_modules
+# Create non-root user
+RUN addgroup -g 1001 -S apigateway && \
+    adduser -u 1001 -S apigateway -G apigateway
 
-# Expose the application port
-EXPOSE 3000
+# Set working directory
+WORKDIR /app
 
-# Command to run the application
-CMD ["node", "dist/apps/bff-service/main.js"]
+# Copy binary from builder stage
+COPY --from=builder /app/api-gateway .
+COPY --from=builder /app/config.yaml .
+
+# Change ownership
+RUN chown -R apigateway:apigateway /app
+
+# Switch to non-root user
+USER apigateway
+
+# Expose port
+EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1
+
+# Run the application
+CMD ["./api-gateway"]

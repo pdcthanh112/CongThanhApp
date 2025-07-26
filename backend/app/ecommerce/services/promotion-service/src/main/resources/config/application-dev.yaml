@@ -5,12 +5,16 @@ server:
   compression:
     enabled: true
     min-response-size: 1024
+  shutdown: graceful
 
 spring:
   application:
     name: congthanhapp-ecommerce-promotion-service
   #  config:
   #    import: optional:file:.env[.properties]
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
   datasource:
     url: jdbc:postgresql://localhost:5432/CongThanhApp-Ecommerce
     username: postgres

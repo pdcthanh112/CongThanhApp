@@ -2,6 +2,7 @@ server:
   port: 5006 # ${SERVER_PORT}
   servlet:
     context-path: /api
+  shutdown: graceful
 #  compression:
 #    enabled: true
 #    min-response-size: 1024
@@ -14,6 +15,9 @@ server:
 spring:
   application:
     name: congthanhapp-ecommerce-order-service
+
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
 
   config:
     import: optional:file:.env[.properties]

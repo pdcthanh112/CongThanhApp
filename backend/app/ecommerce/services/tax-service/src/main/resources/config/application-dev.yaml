@@ -2,6 +2,7 @@ server:
   port: 5020 # ${SERVER_PORT}
   servlet:
     context-path: /api
+  shutdown: graceful
 #  compression:
 #    enabled: true
 #    min-response-size: 1024
@@ -9,6 +10,9 @@ server:
 spring:
   application:
     name: congthanhapp-ecommerce-tax-service
+
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
 #  web:
 #    cors:
 #      allowed-origins: "http://localhost:3000"

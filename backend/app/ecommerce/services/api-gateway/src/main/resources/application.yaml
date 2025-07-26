@@ -59,6 +59,8 @@ spring:
           uri: lb://CONGTHANHAPP-ECOMMERCE-CART-SERVICE
           predicates:
             - Path=/api/ecommerce/carts/**, /api/graphql
+          filters:
+            - StripPrefix=1  # Loại bỏ /api khỏi đường dẫn
 
         - id: catalog-service
           uri: lb://CONGTHANHAPP-ECOMMERCE-CATALOG-SERVICE
@@ -141,6 +143,11 @@ spring:
           uri: lb://CONGTHANHAPP-ECOMMERCE-WAREHOUSE-SERVICE
           predicates:
             - Path=/api/ecommerce/warehouse/**, /api/graphql
+      default-filters:
+        - name: GlobalFilter
+          args:
+            message: "Request processed by API Gateway"
+
 
 springdoc:
   swagger-ui:
@@ -158,8 +165,17 @@ management:
   endpoints:
     web:
       exposure:
-        include: prometheus
+        include: prometheus, health, metrics
+  endpoint:
+    health:
+      show-details: always
 
 #logging:
 #  pattern:
 #    level: %5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]
+resilience4j.circuitbreaker:
+  instances:
+    userService:
+      slidingWindowSize: 10
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
