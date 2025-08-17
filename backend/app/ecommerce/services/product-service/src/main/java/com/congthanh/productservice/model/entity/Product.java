@@ -76,12 +76,12 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    @JsonBackReference
-    @ToString.Exclude
-    @Builder.Default
-    private Set<ProductImage> image = new HashSet<>();
+//    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonIgnore
+//    @JsonBackReference
+//    @ToString.Exclude
+//    @Builder.Default
+//    private Set<ProductImage> image = new HashSet<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JsonIgnore

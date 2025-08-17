@@ -2,7 +2,6 @@ package com.congthanh.productservice.cqrs.command.event;
 
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.entity.ProductCategory;
-import com.congthanh.productservice.model.entity.ProductImage;
 import com.congthanh.productservice.repository.product.ProductRepository;
 import com.congthanh.productservice.repository.productCategory.ProductCategoryRepository;
 import com.congthanh.productservice.repository.productImage.ProductImageRepository;

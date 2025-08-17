@@ -12,6 +12,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
+    "check-types": "tsc --noEmit --pretty",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write .",

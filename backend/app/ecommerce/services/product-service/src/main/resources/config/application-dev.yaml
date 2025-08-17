@@ -236,17 +236,6 @@ resilience4j:
       rest-api:
         max-attempts: 3
 
-aws:
-  access:
-    key:
-      id: lạdljlasfsd
-  secret:
-    access:
-      key: ádjflajdsl
-  s3:
-    region: jasjkaf
-    bucket: áljaf
-
 
   sleuth:
     sampler:

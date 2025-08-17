@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.5</version>
+        <version>3.5.4</version>
         <relativePath />
     </parent>
     <groupId>com.congthanh</groupId>
@@ -33,6 +33,7 @@
         <module>config-service</module>
         <module>customer-service</module>
         <module>inventory-service</module>
+        <module>media-service</module>
         <module>message-service</module>
         <module>notification-service</module>
         <module>order-service</module>

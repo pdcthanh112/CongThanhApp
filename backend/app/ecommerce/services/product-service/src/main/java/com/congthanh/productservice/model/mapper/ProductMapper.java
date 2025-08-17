@@ -5,7 +5,6 @@ import com.congthanh.productservice.model.dto.ProductDTO;
 import com.congthanh.productservice.model.dto.ProductImageDTO;
 import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.entity.ProductAttributeValue;
-import com.congthanh.productservice.model.entity.ProductImage;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

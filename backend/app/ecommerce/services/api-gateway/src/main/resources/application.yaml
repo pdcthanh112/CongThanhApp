@@ -152,6 +152,13 @@ spring:
 springdoc:
   swagger-ui:
     use-root-path: true
+    urls:
+      - name: user-service
+        url: /user-service/v3/api-docs
+      - name: product-service
+        url: /product-service/v3/api-docs
+      - name: order-service
+        url: /order-service/v3/api-docs
   api-docs:
     enabled: true
 eureka:

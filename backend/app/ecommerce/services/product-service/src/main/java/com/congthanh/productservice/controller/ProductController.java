@@ -10,7 +10,6 @@ import com.congthanh.productservice.model.entity.Product;
 import com.congthanh.productservice.model.response.VariantValueResponse;
 import com.congthanh.productservice.model.viewmodel.*;
 import com.congthanh.productservice.repository.product.ProductRepository;
-import com.congthanh.productservice.repository.variantOptionCombination.VariantOptionCombinationRepository;
 import com.congthanh.productservice.service.ProductService;
 import com.congthanh.productservice.service.VariantOptionService;
 import io.swagger.v3.oas.annotations.Operation;
