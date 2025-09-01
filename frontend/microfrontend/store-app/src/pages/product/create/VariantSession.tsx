@@ -1,8 +1,14 @@
 import React from 'react'
+import { Box } from '@mui/material'
+import FieldInput from '../../../features/product/component/FieldInput'
 
 const VariantSession = () => {
   return (
-    <div>VariantSession</div>
+    <Box>VariantSession
+
+      <FieldInput name='sku' title='SKU'/>
+      <FieldInput name='gtin' title='GTIN'/>
+    </Box>
   )
 }
 

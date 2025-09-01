@@ -7,6 +7,7 @@ import {
   productSchema,
   type ProductFormData,
 } from "../../../features/product/schema/createProductSchema";
+import VariantSession from "./VariantSession";
 
 export default function CreateProductPage() {
   const form = useForm<ProductFormData>({
@@ -32,11 +33,12 @@ export default function CreateProductPage() {
 
   return (
     <Box>
-        <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <InformationSession />
-        <AttributeSession />
-      </form>
+      <FormProvider {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <InformationSession />
+          <AttributeSession />
+          <VariantSession />
+        </form>
       </FormProvider>
     </Box>
   );

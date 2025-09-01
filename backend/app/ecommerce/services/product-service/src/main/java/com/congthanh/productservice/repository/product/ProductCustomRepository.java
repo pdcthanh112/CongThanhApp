@@ -9,8 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-@Transactional
 public interface ProductCustomRepository {
 
     @EntityGraph(value = "Product.WithAll", type = EntityGraph.EntityGraphType.LOAD)

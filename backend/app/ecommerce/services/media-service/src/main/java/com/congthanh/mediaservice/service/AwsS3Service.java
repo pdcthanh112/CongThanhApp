@@ -1,4 +1,4 @@
-package com.congthanh.productservice.service;
+package com.congthanh.mediaservice.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;

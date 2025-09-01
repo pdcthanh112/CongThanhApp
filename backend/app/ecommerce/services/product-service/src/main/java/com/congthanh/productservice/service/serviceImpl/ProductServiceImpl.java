@@ -32,7 +32,6 @@ import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -57,8 +56,6 @@ public class ProductServiceImpl implements ProductService {
     private final KafkaTemplate<String, ProductDTO> kafkaTemplate;
 
     private final CategoryGrpcClient categoryGrpcClient;
-
-    private final AwsS3Service awsS3Service;
 
     private final SnowflakeIdGenerator snowflakeIdGenerator;
 
@@ -183,7 +180,7 @@ public class ProductServiceImpl implements ProductService {
 
         categoryGrpcClient.validateCategory(request.getCategory());
 
-        String thumbnailUrl = awsS3Service.uploadFile(request.getThumbnail());
+//        String thumbnailUrl = awsS3Service.uploadFile(request.getThumbnail());
 
         List<ProductImageRequest> images = request.getImage().stream().map(image -> {
             String url = awsS3Service.uploadFile(image);
@@ -199,7 +196,7 @@ public class ProductServiceImpl implements ProductService {
                 .name(request.getName())
                 .category(request.getCategory())
                 .description(request.getDescription())
-                .thumbnail(thumbnailUrl)
+//                .thumbnail(thumbnailUrl)
                 .image(images)
 //                .brand((null)
                 .status(ProductStatus.ACTIVE)

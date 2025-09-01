@@ -16,6 +16,7 @@ import { AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '@/assets/icons
 import { useTranslations } from 'next-intl';
 import { useSyncUserData } from '@/hooks/useSyncData';
 import { PATH } from '@/utils/constants/path';
+import { useSearchParams } from 'next/navigation';
 
 type PropsType = {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
@@ -24,10 +25,14 @@ type PropsType = {
 
 export default function LoginForm({ providers, csrfToken }: PropsType) {
   // const [session, loading] = useSession();
+  const searchParams = useSearchParams();
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const t = useTranslations();
-  
+
+  const callbackUrl = searchParams.get('callbackUrl') || PATH.HOME;
+
   const LoginSchema = createLoginSchema(t);
 
   const { syncData } = useSyncUserData();
@@ -43,7 +48,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
 
   const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
     console.log('asflafjfksf', data);
-    signIn('credentials', { ...data, callbackUrl: '/home', redirect: false });
+    signIn('credentials', { ...data, callbackUrl: callbackUrl, redirect: false });
   };
 
   type SupportedProviderId = 'google' | 'facebook' | 'twitter' | 'apple';

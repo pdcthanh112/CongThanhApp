@@ -10,11 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^41.4.2",
+    "@ckeditor/ckeditor5-react": "^11.0.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@hookform/resolvers": "^5.2.1",
     "@mui/material": "^7.2.0",
     "axios": "^1.9.0",
+    "ckeditor5": "^46.0.2",
+    "ckeditor5-premium-features": "^46.0.2",
     "next-auth": "^4.24.11",
     "next-intl": "^4.1.0",
     "react": "^19.1.0",
