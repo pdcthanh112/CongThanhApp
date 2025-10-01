@@ -12,7 +12,7 @@ export default function OrderPage() {
   const [pagination, setPagination] = useState<PaginationParams>({ page: 1, limit: 10, totalPage: 0 });
 
   const { data: listOrder, isLoading } = useQuery({
-    queryKey: ['order', status],
+    queryKey: ['order', pagination, status],
     queryFn: async () =>
       await getOrderByStatus(status, pagination.page - 1, pagination.limit).then((result) => {
         setPagination({ ...pagination, totalPage: result.data.totalPage });

@@ -21,4 +21,6 @@ public class MediaFileDTO {
     private MediaType mediaType;
 
     private Long referenceId;
+
+    private int displayOrder;
 }

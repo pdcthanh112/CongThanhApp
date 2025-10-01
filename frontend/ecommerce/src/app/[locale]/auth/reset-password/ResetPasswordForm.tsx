@@ -11,6 +11,7 @@ import ValidatePassword from '@/features/auth/component/validate-password/Valida
 import { CheckCheck, LockKeyhole } from 'lucide-react';
 import { Icon } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { eResetPasswordFormKey } from '@/utils/constants/formKey';
 
 export default function ResetPasswordForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -21,8 +22,8 @@ export default function ResetPasswordForm() {
   const resetPasswordForm = useForm<resetPasswordType>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      password: '',
-      confirm: '',
+      [eResetPasswordFormKey.Password]: '',
+      [eResetPasswordFormKey.Confirm]: '',
     },
   });
 
@@ -35,7 +36,7 @@ export default function ResetPasswordForm() {
       <form onSubmit={resetPasswordForm.handleSubmit(onSubmit)} noValidate>
         <FormField
           control={resetPasswordForm.control}
-          name="password"
+          name={eResetPasswordFormKey.Password}
           render={({ field }) => (
             <FormItem className="h-24 w-full space-y-0 gap-0">
               <FormLabel style={{ color: 'inherit' }}>{t('auth.password')}</FormLabel>
@@ -75,7 +76,7 @@ export default function ResetPasswordForm() {
 
         <FormField
           control={resetPasswordForm.control}
-          name="confirm"
+          name={eResetPasswordFormKey.Confirm}
           render={({ field }) => (
             <FormItem className="h-24 w-full space-y-0 gap-0">
               <FormLabel style={{ color: 'inherit' }}>{t('auth.confirm')}</FormLabel>

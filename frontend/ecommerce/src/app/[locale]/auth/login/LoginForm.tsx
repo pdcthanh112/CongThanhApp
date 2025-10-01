@@ -17,6 +17,7 @@ import { useTranslations } from 'next-intl';
 import { useSyncUserData } from '@/hooks/useSyncData';
 import { PATH } from '@/utils/constants/path';
 import { useSearchParams } from 'next/navigation';
+import { eLoginFormKey } from '@/utils/constants/formKey';
 
 type PropsType = {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
@@ -75,7 +76,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
           <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
           <FormField
             control={formLogin.control}
-            name="email"
+            name={eLoginFormKey.Email}
             render={({ field }) => (
               <FormItem className="h-24 space-y-0">
                 <FormLabel>Email</FormLabel>
@@ -88,7 +89,7 @@ export default function LoginForm({ providers, csrfToken }: PropsType) {
           />
           <FormField
             control={formLogin.control}
-            name="password"
+            name={eLoginFormKey.Password}
             render={({ field }) => (
               <FormItem className="h-24 space-y-0">
                 <FormLabel style={{ color: 'inherit' }}>{t('auth.password')}</FormLabel>

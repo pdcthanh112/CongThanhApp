@@ -1,15 +1,22 @@
 import { z } from 'zod';
 import { useTranslations } from 'next-intl';
+import {
+  eChangePasswordFormKey,
+  eForgetPasswordFormKey,
+  eLoginFormKey,
+  eResetPasswordFormKey,
+} from '@/utils/constants/formKey';
+import { PASSWORD_REGEX } from '@/utils/regex';
 
 export const createLoginSchema = (t: ReturnType<typeof useTranslations>) => {
   return z
     .object({
-      email: z
+      [eLoginFormKey.Email]: z
         .string()
         .trim()
         .nonempty(t('auth.validation.field_required', { field: t('auth.email') }))
         .email(t('auth.validation.field_invalid', { field: t('auth.email') })),
-      password: z
+      [eLoginFormKey.Password]: z
         .string()
         .trim()
         .min(1, t('auth.validation.field_required', { field: t('auth.password') })),
@@ -47,7 +54,8 @@ export const createRegisterSchema = (t: ReturnType<typeof useTranslations>) => {
         .string()
         .nonempty(t('auth.validation.field_required', { field: t('auth.password') }))
         .min(8, 'Password at least 8 characters')
-        .max(32),
+        .max(32)
+        .regex(new RegExp(PASSWORD_REGEX)),
       confirm: z.string().min(1, t('auth.validation.field_required', { field: t('auth.confirm') })),
     })
     .strict()
@@ -67,7 +75,7 @@ export type RegisterSchemaType = z.infer<Awaited<ReturnType<typeof createRegiste
 export const createForgetPasswordSchema = (t: ReturnType<typeof useTranslations>) => {
   return z
     .object({
-      email: z
+      [eForgetPasswordFormKey.Email]: z
         .string()
         .trim()
         .nonempty(t('auth.validation.field_required', { field: t('auth.email') }))
@@ -80,8 +88,8 @@ export type ForgetPasswordSchemaType = z.infer<Awaited<ReturnType<typeof createF
 
 export const resetPasswordSchema = z
   .object({
-    password: z.string().min(8, 'Password at least 8 characters'),
-    confirm: z.string(),
+    [eResetPasswordFormKey.Password]: z.string().min(8, 'Password at least 8 characters'),
+    [eResetPasswordFormKey.Confirm]: z.string(),
   })
   .strict()
   .superRefine(({ confirm, password }, ctx) => {
@@ -99,18 +107,18 @@ export type resetPasswordType = z.TypeOf<typeof resetPasswordSchema>;
 export const createChangePasswordSchema = (t: ReturnType<typeof useTranslations>) => {
   return z
     .object({
-      currentPassword: z
+      [eChangePasswordFormKey.CurrentPassword]: z
         .string()
         .trim()
         .nonempty(t('auth.validation.field_required', { field: t('auth.change_password.current_password') })),
-      newPassword: z
+      [eChangePasswordFormKey.NewPassword]: z
         .string()
         .trim()
         .nonempty(t('auth.validation.field_required', { field: t('auth.change_password.new_password') }))
         .min(8, 'Password at least 8 characters')
         .max(32, 'Password maximum 32 characters')
-        .regex(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/)),
-      confirmPassword: z
+        .regex(new RegExp(PASSWORD_REGEX)),
+      [eChangePasswordFormKey.ConfirmPassword]: z
         .string()
         .trim()
         .nonempty(t('auth.validation.field_required', { field: t('auth.change_password.confirm_password') })),

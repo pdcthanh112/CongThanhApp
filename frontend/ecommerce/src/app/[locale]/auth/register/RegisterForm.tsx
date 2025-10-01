@@ -15,6 +15,7 @@ import { CheckCheck, LockKeyhole, Mail, Phone, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { BuiltInProviderType } from 'next-auth/providers/index';
 import DotRequired from '@/components/common/DotRequired';
+import { eRegisterFormKey } from '@/utils/constants/formKey';
 
 type PropsType = {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
@@ -31,11 +32,11 @@ export default function RegisterForm({ providers }: PropsType) {
   const formRegister = useForm<RegisterSchemaType>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
-      email: '',
-      name: '',
-      password: '',
+      [eRegisterFormKey.Email]: '',
+      [eRegisterFormKey.Name]: '',
+      [eRegisterFormKey.Password]: '',
       confirm: '',
-      phone: '',
+      [eRegisterFormKey.Phone]: '',
     },
   });
 
@@ -66,7 +67,7 @@ export default function RegisterForm({ providers }: PropsType) {
         <form onSubmit={formRegister.handleSubmit(onSubmit)} className="grid grid-cols-12 gap-4">
           <FormField
             control={formRegister.control}
-            name="email"
+            name={eRegisterFormKey.Email}
             render={({ field }) => (
               <FormItem className="h-24 col-span-12 space-y-0 gap-0">
                 <FormLabel style={{ color: 'inherit' }}>
@@ -91,7 +92,7 @@ export default function RegisterForm({ providers }: PropsType) {
 
           <FormField
             control={formRegister.control}
-            name="name"
+            name={eRegisterFormKey.Name}
             render={({ field }) => (
               <FormItem className="h-24 col-span-12 space-y-0 gap-0">
                 <FormLabel style={{ color: 'inherit' }}>
@@ -116,7 +117,7 @@ export default function RegisterForm({ providers }: PropsType) {
 
           <FormField
             control={formRegister.control}
-            name="password"
+            name={eRegisterFormKey.Password}
             render={({ field }) => (
               <FormItem className="h-24 w-full col-span-12 md:col-span-6 space-y-0 gap-0">
                 <FormLabel style={{ color: 'inherit' }}>

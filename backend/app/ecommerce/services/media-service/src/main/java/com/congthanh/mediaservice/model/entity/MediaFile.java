@@ -27,4 +27,6 @@ public class MediaFile {
     private MediaType mediaType;
 
     private Long referenceId;
+
+    private int displayOrder;
 }

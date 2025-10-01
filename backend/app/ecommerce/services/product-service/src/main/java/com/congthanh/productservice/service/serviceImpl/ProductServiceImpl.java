@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final QueryGateway queryGateway;
 
-    private final KafkaTemplate<String, ProductDTO> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     private final CategoryGrpcClient categoryGrpcClient;
 
@@ -183,13 +183,18 @@ public class ProductServiceImpl implements ProductService {
 //        String thumbnailUrl = awsS3Service.uploadFile(request.getThumbnail());
 
         List<ProductImageRequest> images = request.getImage().stream().map(image -> {
-            String url = awsS3Service.uploadFile(image);
             return ProductImageRequest.builder()
                     .id(snowflakeIdGenerator.nextId())
                     .imagePath(url)
                     .displayOrder(1)
                     .build();
         }).toList();
+
+        UploadMediaMessage message = new UploadMediaMessage();
+        kafkaTemplate.send("image-upload-topic", message);
+
+
+
 //        assert category != null && subcategory != null && supplier != null && brand != null;
         CreateProductCommand mainProduct = CreateProductCommand.builder()
                 .id(UUID.randomUUID().toString())
