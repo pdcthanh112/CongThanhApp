@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<changeSet id="create-reviews-table" author="system">
+    <sql dbms="postgresql">
+        CREATE TYPE RatingValue AS ENUM ('1', '2', '3', '4', '5');
+    </sql>
+
+    <createTable tableName="reviews">
+        <column name="id" type="bigint">
+            <constraints primaryKey="true" nullable="false" unique="true"/>
+        </column>
+
+        <column name="content" type="text"/>
+
+        <column name="rating" type="RatingValue">
+            <constraints nullable="false"/>
+        </column>
+
+        <column name="author" type="varchar(32)">
+            <constraints nullable="false"/>
+        </column>
+
+        <column name="product_id" type="bigint">
+            <constraints nullable="false"/>
+        </column>
+
+        <column name="variant_id" type="bigint">
+            <constraints nullable="false"/>
+        </column>
+
+        <column name="order_id" type="bigint">
+            <constraints nullable="false"/>
+        </column>
+
+        <column name="created_at" type="bigint">
+            <constraints nullable="false"/>
+        </column>
+    </createTable>
+</changeSet>

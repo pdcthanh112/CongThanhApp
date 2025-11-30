@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="create-orders-table" author="pdcthanh">
+        <sql>
+            CREATE TYPE OrderStatus AS ENUM ('CREATED', 'PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELED', 'REFUNDED', 'RETURNED', 'COMPLETED' );
+        </sql>
+
+        <createTable tableName="orders">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="order_code" type="varchar(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="customer_id" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="note" type="text"/>
+
+            <column name="total_amount" type="money">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="currency_code" type="varchar(3)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="order_date" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="OrderStatus" defaultValue="CREATED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="order_items">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="product_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantity" type="integer">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="order_price" type="money">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="order_status_tracking">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="step_order" type="integer">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="text"/>
+            <column name="note" type="text"/>
+
+            <column name="updated_at" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_by" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="order_items"
+                baseColumnNames="order_id"
+                constraintName="fk_order_order_item_31d2t45y"
+                referencedTableName="orders"
+                referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint
+                baseTableName="order_status_tracking"
+                baseColumnNames="order_id"
+                constraintName="fk_order_order_tracking_426y43p5"
+                referencedTableName="orders"
+                referencedColumnNames="id"/>
+
+        <createIndex tableName="orders" indexName="idx_orders_order_code">
+            <column name="order_code"/>
+        </createIndex>
+
+        <createIndex tableName="orders" indexName="idx_orders_customer_id">
+            <column name="customer_id"/>
+        </createIndex>
+
+        <createIndex tableName="order_items" indexName="idx_order_items_order_id">
+            <column name="order_id"/>
+        </createIndex>
+
+        <createIndex tableName="order_status_tracking" indexName="idx_order_tracking_order_id">
+            <column name="order_id"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>

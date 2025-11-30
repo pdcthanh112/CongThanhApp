@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="create-product-table" author="pdcthanh">
+        <sql>
+            CREATE TYPE ProductStatus AS ENUM ('ACTIVE', 'INACTIVE', 'DELETED');
+        </sql>
+
+
+        <createTable tableName="products">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="slug" type="VARCHAR(255)"/>
+            <column name="sku" type="VARCHAR(20)"/>
+            <column name="gtin" type="VARCHAR(20)"/>
+
+            <column name="has_variant" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="parent_id" type="BIGINT"/>
+            <column name="price" type="money"/>
+            <column name="supplier" type="VARCHAR(32)"/>
+            <column name="brand" type="INTEGER"/>
+
+            <column name="is_featured" type="BOOLEAN" defaultValueBoolean="false"/>
+
+            <column name="description" type="text"/>
+
+            <column name="status" type="ProductStatus" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="products" indexName="idx_product_slug">
+            <column name="slug"/>
+        </createIndex>
+
+        <createTable tableName="product_categories">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="product_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="category_id" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="display_order" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="product_categories"
+                baseColumnNames="product_id"
+                constraintName="fk_product_product_categories_542b43n4"
+                referencedTableName="products"
+                referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint
+                baseTableName="product_categories"
+                baseColumnNames="category_id"
+                constraintName="fk_product_product_categories_7c2b43n4"
+                referencedTableName="categories"
+                referencedColumnNames="id"/>
+
+        <createTable tableName="product_images">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="product_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="image_path" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="product_images"
+                baseColumnNames="product_id"
+                constraintName="fk_product_product_images_672b43n4"
+                referencedTableName="products"
+                referencedColumnNames="id"/>
+
+        <createTable tableName="product_attributes">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="product_attribute_values">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="product_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="product_attribute_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="value" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="product_attribute_values"
+                baseColumnNames="product_id"
+                constraintName="fk_product_values_426y43p5"
+                referencedTableName="products"
+                referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint
+                baseTableName="product_attribute_values"
+                baseColumnNames="product_attribute_id"
+                constraintName="fk_attribute_values_426y43p5"
+                referencedTableName="product_attributes"
+                referencedColumnNames="id"/>
+
+        <createIndex
+                indexName="idx_product_attribute_values_4523763a"
+                tableName="product_attribute_values">
+            <column name="product_id"/>
+        </createIndex>
+
+        <createTable tableName="product_variants">
+
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="product_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="sku" type="varchar(20)">
+                <constraints unique="true"/>
+            </column>
+
+            <column name="price" type="money"/>
+
+            <column name="stock" type="integer" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="is_default" type="boolean" defaultValueBoolean="false"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="product_variants"
+                baseColumnNames="product_id"
+                constraintName="fk_product_variants_product_7832kld9"
+                referencedTableName="products"
+                referencedColumnNames="id"/>
+
+        <createIndex tableName="product_variants" indexName="idx_product_variants_product_id">
+            <column name="product_id"/>
+        </createIndex>
+
+        <createTable tableName="variant_values">
+
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="variant_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="attribute_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="value" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="variant_values"
+                baseColumnNames="variant_id"
+                constraintName="fk_variant_values_variant_672bbac2"
+                referencedTableName="product_variants"
+                referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint
+                baseTableName="variant_values"
+                baseColumnNames="attribute_id"
+                constraintName="fk_variant_values_attribute_87db3ca2"
+                referencedTableName="product_attributes"
+                referencedColumnNames="id"/>
+
+        <createIndex tableName="variant_values" indexName="idx_variant_values_variant_id">
+            <column name="variant_id"/>
+        </createIndex>
+
+        <addUniqueConstraint
+                tableName="variant_values"
+                columnNames="variant_id, attribute_id"
+                constraintName="uq_variant_values_variant_attribute"/>
+    </changeSet>
+
+</databaseChangeLog>

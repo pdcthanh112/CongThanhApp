@@ -23,5 +23,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src", "../../ecommerce/src/utils/helper/column.helper.ts", "../../ecommerce/src/components/common/TableCustom.tsx"]
 }

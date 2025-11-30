@@ -16,13 +16,11 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "notification")
+@Table(name = "notifications")
 public class Notification {
 
   @Id
   private Long id;
-
-  private String customer;
 
   private String title;
 
@@ -30,22 +28,11 @@ public class Notification {
 
   private String url;
 
-  @Column(name = "sent_at")
-  private Instant sentAt;
-
-  @Column(name = "read_at")
-  private Instant readAt;
-
   @Enumerated(EnumType.STRING)
   private NotificationType type;
-
-  private String image;
 
   @CreationTimestamp
   @Column(name = "created_at")
   private Instant createdAt;
-
-  @Enumerated(EnumType.STRING)
-  private NotificationStatus status;
 
 }

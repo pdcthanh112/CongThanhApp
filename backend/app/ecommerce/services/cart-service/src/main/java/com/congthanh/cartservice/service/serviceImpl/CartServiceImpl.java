@@ -46,6 +46,8 @@ public class CartServiceImpl implements CartService {
 
     private final SnowflakeIdGenerator snowflakeIdGenerator;
 
+    private final CartMapper cartMapper;
+
     @Override
     public CartDTO getCartById(Long id) {
         Cart cart = cartRepository.findById(id).orElseThrow(() -> new NotFoundException("Cart NOT FOUND"));
@@ -114,7 +116,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<CartVm> customerGetCartByCustomerId(String customerId) {
         List<CartDocument> result = cartDocumentRepository.getCartDocumentsByCustomerId(customerId);
-        return result.stream().map(CartMapper::mapCartDocumentToVm).collect(Collectors.toList());
+        return result.stream().map(cartMapper::mapCartDocumentToVm).collect(Collectors.toList());
     }
 
     @Override
@@ -151,7 +153,7 @@ public class CartServiceImpl implements CartService {
     public CartDTO getDefaultCartOfCustomer(String customerId) {
         Cart data = cartRepository.getDefaultCartOfCustomer(customerId);
         if (data != null) {
-            return CartMapper.mapCartEntityToDTO(data);
+            return cartMapper.mapCartEntityToDTO(data);
         }
         return null;
     }

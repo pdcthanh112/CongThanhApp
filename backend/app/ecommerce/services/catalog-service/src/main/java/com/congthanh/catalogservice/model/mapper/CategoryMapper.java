@@ -2,25 +2,17 @@ package com.congthanh.catalogservice.model.mapper;
 
 import com.congthanh.catalogservice.model.dto.CategoryDTO;
 import com.congthanh.catalogservice.model.entity.Category;
-import jakarta.annotation.PostConstruct;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-@Component
-public class CategoryMapper {
+@Mapper(componentModel = "spring")
+public interface CategoryMapper {
 
-    private static  final  ModelMapper modelMapper = new ModelMapper();
+    CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
-    @PostConstruct
-    private void configureModelMapper() {
+//    @Mapping(target = "id", source = "id")
+    Category mapCategoryDTOToEntity(CategoryDTO categoryDTO);
 
-    }
-
-    public static Category mapCategoryDTOToEntity(CategoryDTO categoryDTO) {
-        return modelMapper.map(categoryDTO, Category.class);
-    }
-
-    public static CategoryDTO mapCategoryEntityToDTO(Category category) {
-        return modelMapper.map(category, CategoryDTO.class);
-    }
+    CategoryDTO mapCategoryEntityToDTO(Category category);
 }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.14.xsd">
+
+    <changeSet id="create-notifications-table" author="pdcthanh">
+
+        <sql dbms="postgresql">
+            CREATE TYPE NotificationType as ENUM ('ORDER', 'SALE', 'PROMOTION', 'MESSAGE', 'PAYMENT', 'SYSTEM');
+            CREATE TYPE NotificationChannel AS ENUM ('SMS', 'EMAIL', 'WEB_PUSH', 'IN_APP');
+            CREATE TYPE NotificationStatus as ENUM ('CREATED', 'SENT', 'RECEIVED', 'READ', 'DELETED');
+        </sql>
+
+        <createTable tableName="notifications">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="content" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="type" type="NotificationType">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="notification_deliveries">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="notification_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="channel" type="NotificationChannel">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="NotificationStatus" defaultValue="CREATED">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="attempts" type="INTEGER"/>
+
+            <column name="error_message" type="VARCHAR(255)"/>
+
+            <column name="delivered_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+            <column name="read_at" type="TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="notification_preferences">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="user_id" type="UUID">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="email_enabled" type="BOOLEAN" defaultValue="TRUE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="sms_enabled" type="BOOLEAN" defaultValue="TRUE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="in_app_enabled" type="BOOLEAN" defaultValue="TRUE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="web_push_enabled" type="BOOLEAN" defaultValue="TRUE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="do_not_disturb_start_time" type="TIMESTAMP"/>
+
+            <column name="do_not_disturb_end_time" type="TIMESTAMP"/>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -2,25 +2,15 @@ package com.congthanh.catalogservice.model.mapper;
 
 import com.congthanh.catalogservice.model.dto.TagDTO;
 import com.congthanh.catalogservice.model.entity.Tag;
-import jakarta.annotation.PostConstruct;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-@Component
-public class TagMapper {
+@Mapper(componentModel = "spring")
+public interface TagMapper {
 
-    private static  final ModelMapper modelMapper = new ModelMapper();
+    TagMapper INSTANCE = Mappers.getMapper(TagMapper.class);
 
-    @PostConstruct
-    private void configureModelMapper() {
+    Tag mapTagDTOToTag(TagDTO tagDTO);
 
-    }
-
-    public static Tag mapTagDTOToTag(TagDTO tagDTO) {
-        return modelMapper.map(tagDTO, Tag.class);
-    }
-
-    public static TagDTO mapTagEntityToDTO(Tag tag) {
-        return modelMapper.map(tag, TagDTO.class);
-    }
+    TagDTO mapTagEntityToDTO(Tag tag);
 }

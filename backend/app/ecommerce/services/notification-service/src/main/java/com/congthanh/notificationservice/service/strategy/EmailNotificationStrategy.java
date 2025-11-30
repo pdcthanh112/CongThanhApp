@@ -1,7 +1,7 @@
 package com.congthanh.notificationservice.service.strategy;
 
 import com.congthanh.notificationservice.constant.common.EmailTemplates;
-import com.congthanh.notificationservice.constant.enums.NotificationMethod;
+import com.congthanh.notificationservice.constant.enums.NotificationChannel;
 import com.congthanh.notificationservice.model.request.NotificationRequest;
 import com.congthanh.notificationservice.service.validator.EmailValidatorUtils;
 import jakarta.mail.MessagingException;
@@ -27,8 +27,8 @@ public class EmailNotificationStrategy implements NotificationStrategy {
     private final SpringTemplateEngine templateEngine;
 
     @Override
-    public NotificationMethod getMethod() {
-        return NotificationMethod.EMAIL;
+    public NotificationChannel getMethod() {
+        return NotificationChannel.EMAIL;
     }
 
     @Override

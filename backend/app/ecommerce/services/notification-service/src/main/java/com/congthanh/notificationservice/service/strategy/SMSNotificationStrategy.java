@@ -1,6 +1,6 @@
 package com.congthanh.notificationservice.service.strategy;
 
-import com.congthanh.notificationservice.constant.enums.NotificationMethod;
+import com.congthanh.notificationservice.constant.enums.NotificationChannel;
 import com.congthanh.notificationservice.model.request.NotificationRequest;
 import com.congthanh.notificationservice.service.validator.SMSValidatorUtils;
 import com.twilio.Twilio;
@@ -26,8 +26,8 @@ public class SMSNotificationStrategy implements NotificationStrategy {
     private String fromPhoneNumber;
 
     @Override
-    public NotificationMethod getMethod() {
-        return NotificationMethod.SMS;
+    public NotificationChannel getMethod() {
+        return NotificationChannel.SMS;
     }
 
     @Override

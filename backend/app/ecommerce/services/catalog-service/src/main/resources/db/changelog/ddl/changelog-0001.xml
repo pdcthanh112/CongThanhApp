@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001-create-table" author="pdcthanh" context="dev,prod">
+
+        <sql dbms="postgresql">
+            CREATE TYPE CategoryStatus as ENUM ('ACTIVE', 'INACTIVE');
+            CREATE TYPE "TagStatus" AS ENUM ('ACTIVE', 'INACTIVE');
+            CREATE TYPE TagStatus as ENUM ('ACTIVE', 'INACTIVE');
+        </sql>
+
+<!--        <sqlFile path="db/changelog/ddl/changelog-0001.xml" dbms="postgresql"/>-->
+
+        <createTable tableName="countries">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="country_code" type="VARCHAR(3)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="country_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="country_name_origin" type="VARCHAR(50)"/>
+
+            <column name="currency_code" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="currency_symbol" type="VARCHAR(5)"/>
+
+            <column name="iso_code" type="VARCHAR(2)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="iso_code" type="VARCHAR(3)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="language" type="VARCHAR(20)"/>
+
+            <column name="locale" type="VARCHAR(20)"/>
+
+            <column name="phone_code" type="VARCHAR(4)"/>
+        </createTable>
+
+        <createTable tableName="brands">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="slug" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="image" type="VARCHAR(255)"/>
+        </createTable>
+
+        <createTable tableName="categories">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="name">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="slug" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="image" type="VARCHAR(255)"/>
+
+            <column name="parent_id" type="UUID"/>
+
+            <column name="status" type="NotificationStatus">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="tags">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(255)"/>
+
+            <column name="status" type="TagStatus" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="countries"/>
+            <dropTable tableName="brands"/>
+
+            <sql dbms="postgresql">
+                DROP TYPE IF EXISTS "CategoryStatus";
+                DROP TYPE IF EXISTS "BrandStatus";
+                DROP TYPE IF EXISTS "TagStatus";
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

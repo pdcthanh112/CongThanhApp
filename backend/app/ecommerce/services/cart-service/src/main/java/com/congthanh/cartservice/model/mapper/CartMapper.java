@@ -4,30 +4,18 @@ import com.congthanh.cartservice.model.document.CartDocument;
 import com.congthanh.cartservice.model.dto.CartDTO;
 import com.congthanh.cartservice.model.entity.Cart;
 import com.congthanh.cartservice.model.viewmodel.CartVm;
-import jakarta.annotation.PostConstruct;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-@Component
-public class CartMapper {
+@Mapper(componentModel = "spring")
+public interface CartMapper {
 
-    private static final ModelMapper modelMapper = new ModelMapper();
+    CartMapper INSTANCE = Mappers.getMapper(CartMapper.class);
 
-    @PostConstruct
-    private void configureModelMapper() {
+    Cart mapCartDTOToEntity(CartDTO cartDTO);
 
-    }
+    CartDTO mapCartEntityToDTO(Cart cart);
 
-    public static Cart mapCartDTOToEntity(CartDTO cartDTO) {
-        return modelMapper.map(cartDTO, Cart.class);
-    }
-
-    public static CartDTO mapCartEntityToDTO(Cart cart) {
-        return modelMapper.map(cart, CartDTO.class);
-    }
-
-    public static CartVm mapCartDocumentToVm(CartDocument cart) {
-        return modelMapper.map(cart, CartVm.class);
-    }
+    CartVm mapCartDocumentToVm(CartDocument cart);
 
 }

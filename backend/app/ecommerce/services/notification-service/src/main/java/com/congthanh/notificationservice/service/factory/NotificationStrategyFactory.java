@@ -1,6 +1,6 @@
 package com.congthanh.notificationservice.service.factory;
 
-import com.congthanh.notificationservice.constant.enums.NotificationMethod;
+import com.congthanh.notificationservice.constant.enums.NotificationChannel;
 import com.congthanh.notificationservice.service.strategy.NotificationStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class NotificationStrategyFactory implements NotificationProviderFactory {
 
-    private final Map<NotificationMethod, NotificationStrategy> strategies;
+    private final Map<NotificationChannel, NotificationStrategy> strategies;
 
     @Autowired
     public NotificationStrategyFactory(List<NotificationStrategy> strategyList) {
@@ -21,7 +21,7 @@ public class NotificationStrategyFactory implements NotificationProviderFactory 
     }
 
     @Override
-    public NotificationStrategy createNotificationStrategy(NotificationMethod type) {
+    public NotificationStrategy createNotificationStrategy(NotificationChannel type) {
         return Optional.ofNullable(strategies.get(type))
                 .orElseThrow(() -> new IllegalArgumentException("Invalid notification method"));
     }

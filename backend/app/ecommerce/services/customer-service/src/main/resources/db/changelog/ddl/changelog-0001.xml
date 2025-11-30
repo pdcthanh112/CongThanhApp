@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.14.xsd">
+
+    <changeSet id="create-shipping-address-table" author="pdcthanh">
+        <createTable tableName="carts">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="created_at" type="timestamptz"/>
+
+            <column name="created_by" type="varchar(32)"/>
+
+            <column name="updated_at" type="timestamptz"/>
+
+            <column name="updated_by" type="varchar(32)"/>
+        </createTable>
+
+        <createTable tableName="cart_items">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="cart_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantity" type="integer">
+                <constraints nullable="false" checkConstraint="quantity > 0"/>
+            </column>
+
+            <column name="created_at" type="bigint"/>
+            <column name="created_by" type="varchar(32)"/>
+            <column name="updated_at" type="bigint"/>
+            <column name="updated_by" type="varchar(32)"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="cart_items"
+                baseColumnNames="cart_id"
+                constraintName="fk_cart_cart_item_46k23l47"
+                referencedTableName="carts"
+                referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

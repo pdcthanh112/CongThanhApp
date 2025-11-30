@@ -1,6 +1,6 @@
 package com.congthanh.notificationservice.model.request;
 
-import com.congthanh.notificationservice.constant.enums.NotificationMethod;
+import com.congthanh.notificationservice.constant.enums.NotificationChannel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class NotificationRequest {
 
     @NotNull
-    private NotificationMethod type;
+    private NotificationChannel type;
 
     @NotBlank
     private String recipient;
@@ -23,7 +23,7 @@ public class NotificationRequest {
     private String subject;
     private String content;
 
-    // FCM Specific
+    // WEB_PUSH Specific
     private String deviceToken;
     private Map<String, String> data;
 
