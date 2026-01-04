@@ -13,22 +13,22 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(basePackages = "com.congthanh.productservice.repository")
 public class MongoDBConfig extends AbstractMongoClientConfiguration {
 
-  @Override
-  protected String getDatabaseName() {
-    return "CongThanhApp-Ecommerce";
-  }
+    @Override
+    protected String getDatabaseName() {
+        return "CongThanhApp-Ecommerce";
+    }
 
-  @Override
-  public MongoClient mongoClient() {
-    return MongoClients.create("mongodb://localhost:27017");
-  }
+    @Override
+    public MongoClient mongoClient() {
+        return MongoClients.create("mongodb://localhost:27017");
+    }
 
-  @Bean
-  public MongoClientSettings mongoClientSettings() {
-    return MongoClientSettings.builder()
-            .applyConnectionString(new ConnectionString("mongodb://localhost:27017"))
-            .build();
-  }
+    @Bean
+    public MongoClientSettings mongoClientSettings() {
+        return MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString("mongodb://localhost:27017"))
+                .build();
+    }
 
 //    @Override
 //    protected String getMappingBasePackage() {

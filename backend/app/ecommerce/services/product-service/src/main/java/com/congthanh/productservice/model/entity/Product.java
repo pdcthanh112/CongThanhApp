@@ -20,10 +20,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Table(name = "products")
-//@NamedEntityGraph(name = "Product.WithAll", attributeNodes = {
-//        @NamedAttributeNode("image"),
-//        @NamedAttributeNode("attribute")
-//}, subgraphs = {})
 public class Product {
 
     @Id
@@ -35,7 +31,7 @@ public class Product {
     @Column(unique = true)
     private String slug;
 
-    @Column( unique = true)
+    @Column(unique = true)
     private String sku;
 
     private String gtin;
@@ -69,6 +65,8 @@ public class Product {
 
     @Column(columnDefinition = "text")
     private String description;
+
+//    private int maxQuantityPerOrder = 0;  // 0 = unlimited
 
     @Column()
     private Long thumbnail;

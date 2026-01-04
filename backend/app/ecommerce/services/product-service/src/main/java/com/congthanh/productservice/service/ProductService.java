@@ -12,37 +12,38 @@ import java.util.List;
 
 public interface ProductService {
 
-  ResponseWithPagination<ProductDTO> getAllProduct(Integer page, Integer limit);
+    ResponseWithPagination<ProductDTO> getAllProduct(Integer page, Integer limit);
 
-  ProductDTO getProductById(String id);
+    ProductDTO getProductById(String id);
 
-  ProductDTO getProductDetailById(String id);
+    ProductDTO getProductDetailById(String id);
 
-  ProductDTO getProductDTOBySlug(String slug);
+    ProductDTO getProductDTOBySlug(String slug);
 
-  ProductVm getProductVmBySlug(String slug);
+    ProductVm getProductVmBySlug(String slug);
 
-  ProductDetailVm getProductDetailBySlug(String slug);
+    ProductDetailVm getProductDetailBySlug(String slug);
 
-  ProductDTO createProduct(CreateProductRequest request);
+    ProductDTO createProduct(CreateProductRequest request);
 
-  Product updateProduct(ProductDTO productDTO);
+    Product updateProduct(ProductDTO productDTO);
 
-  boolean deleteProduct(String id);
+    boolean deleteProduct(String id);
 
-  List<ProductVariantVm> getProductVariationsByParentId(String parentId);
+    List<ProductVariantVm> getProductVariationsByParentId(String parentId);
 
-  ResponseWithPagination<ProductDTO> getProductByCategoryId(String categoryId, int page, int limit);
-  ResponseWithPagination<ProductDTO> getProductByCategorySlug(String categoryId, int page, int limit);
+    ResponseWithPagination<ProductDTO> getProductByCategoryId(String categoryId, int page, int limit);
 
-  List<ProductDTO> searchProduct(String keyword);
+    ResponseWithPagination<ProductDTO> getProductByCategorySlug(String categoryId, int page, int limit);
 
-  Long getSoldByProduct(String productId);
+    List<ProductDTO> searchProduct(String keyword);
 
-  List<?> getListFeaturedProducts (int page, int limit);
+    Long getSoldByProduct(String productId);
+
+    List<?> getListFeaturedProducts(int page, int limit);
 
 //  List<ProductVariantAttributeValueDTO> getVariantAttributeValueByProduct(String productId);
 
-  ResponseWithPagination<ProductDTO> getProductWithFilter(int page, int limit, String keyword, String category, String brand, int rating, Double startPrice, Double endPrice);
+    ResponseWithPagination<ProductDTO> getProductWithFilter(int page, int limit, String keyword, String category, String brand, int rating, Double startPrice, Double endPrice);
 
 }

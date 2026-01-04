@@ -47,6 +47,35 @@
             <column name="slug"/>
         </createIndex>
 
+        <createTable tableName="product_prices">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="product_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="base_price" type="decimal(12,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="currency_code" type="varchar(4)" defaultValue="USD">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="tax_rate" type="decimal(5,2)" defaultValue="0.00"/>
+
+            <column name="start_time" type="timestamptz" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="end_time" type="timestamptz"/>
+
+            <column name="created_at" type="timestamptz" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+        </createTable>
+
         <createTable tableName="product_categories">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false" unique="true"/>

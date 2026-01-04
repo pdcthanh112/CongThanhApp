@@ -91,24 +91,24 @@ spring:
     allow-circular-references: true
     allow-bean-definition-overriding: true
 
-#  mail:
-#    host: smtp.example.com
-#    port: 587
-#    username: myemail@example.com
-#    password: emailpassword
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true
-#
-#  cache:
-#    type: caffeine
-#    caffeine:
-#      spec: maximumSize=500,expireAfterAccess=600s
+  #  mail:
+  #    host: smtp.example.com
+  #    port: 587
+  #    username: myemail@example.com
+  #    password: emailpassword
+  #    properties:
+  #      mail:
+  #        smtp:
+  #          auth: true
+  #          starttls:
+  #            enable: true
+  #
+  #  cache:
+  #    type: caffeine
+  #    caffeine:
+  #      spec: maximumSize=500,expireAfterAccess=600s
 
-#    Cấu hình upload file
+  #    Cấu hình upload file
   servlet:
     multipart:
       max-file-size: 10MB
@@ -133,7 +133,7 @@ spring:
   activemq:
     packages:
       trust-all: true
-#  Cấu hình quốc tế hoá i18n
+  #  Cấu hình quốc tế hoá i18n
   messages:
     basename: messages
 

@@ -31,11 +31,11 @@ public class ProductAttributeValueServiceImpl implements ProductAttributeValueSe
     @Override
     public List<ProductAttributeValueDTO> getAttributeByProduct(String productId) {
         List<Tuple> data = productAttributeValueRepository.getAttributeOfProduct(productId);
-        if(data == null) {
+        if (data == null) {
             return null;
         }
         List<ProductAttributeValueDTO> result = new ArrayList<>();
-        for (Tuple item: data) {
+        for (Tuple item : data) {
             ProductAttributeValueDTO valueDTO = ProductAttributeValueDTO.builder()
                     .id(item.get("id", Long.class))
 //                    .attribute(ProductAttributeDTO.builder()

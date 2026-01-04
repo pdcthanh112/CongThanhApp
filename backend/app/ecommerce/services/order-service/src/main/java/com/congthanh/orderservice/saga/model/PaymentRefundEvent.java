@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class PaymentRefundEvent extends SagaEvent{
+public class PaymentRefundEvent extends SagaEvent {
 
     private Long orderId;
 

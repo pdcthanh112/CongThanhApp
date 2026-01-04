@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class ProductImageCustomRepositoryImpl implements ProductImageCustomRepository{
+public class ProductImageCustomRepositoryImpl implements ProductImageCustomRepository {
 
     @PersistenceContext
     private EntityManager entityManager;

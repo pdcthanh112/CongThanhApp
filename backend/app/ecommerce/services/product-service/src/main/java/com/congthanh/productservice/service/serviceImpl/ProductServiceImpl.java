@@ -194,7 +194,6 @@ public class ProductServiceImpl implements ProductService {
         kafkaTemplate.send("image-upload-topic", message);
 
 
-
 //        assert category != null && subcategory != null && supplier != null && brand != null;
         CreateProductCommand mainProduct = CreateProductCommand.builder()
                 .id(UUID.randomUUID().toString())
@@ -249,12 +248,12 @@ public class ProductServiceImpl implements ProductService {
             return productVariations.stream().map(product -> {
                 List<VariantOptionCombination> productOptionCombinations = variantOptionCombinationRepository.findAllByProduct(product);
 
-                System.out.println("VVVVVVVVVVVVVVVVVVVVVVVV"+productOptionCombinations);
+                System.out.println("VVVVVVVVVVVVVVVVVVVVVVVV" + productOptionCombinations);
                 Map<Long, String> options = productOptionCombinations.stream()
                         .collect(Collectors.toMap(
-                        productOptionCombination -> productOptionCombination.getVariantOption().getId(),
-                        VariantOptionCombination::getValue
-                ));
+                                productOptionCombination -> productOptionCombination.getVariantOption().getId(),
+                                VariantOptionCombination::getValue
+                        ));
 
                 System.out.println("CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK" + options);
                 ProductImage thumbnail = productImageRepository.findById(product.getThumbnail()).orElseThrow(() -> new NotFoundException("Product image not found"));

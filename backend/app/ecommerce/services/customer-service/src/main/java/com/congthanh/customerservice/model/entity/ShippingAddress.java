@@ -1,5 +1,6 @@
 package com.congthanh.customerservice.model.entity;
 
+import com.congthanh.commonservice.model.BaseEntity;
 import com.congthanh.customerservice.constant.enums.AddressLabel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @Table(name = "shipping_address")
-public class ShippingAddress extends AbstractAuditEntity{
+public class ShippingAddress extends BaseEntity {
 
     @Id
     private Long id;
@@ -26,7 +27,7 @@ public class ShippingAddress extends AbstractAuditEntity{
     private String fullName;
 
     @Column(nullable = false)
-    private String phone;
+    private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
     private AddressLabel label = AddressLabel.HOME;

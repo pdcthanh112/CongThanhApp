@@ -15,16 +15,16 @@ import java.util.Optional;
 @Transactional
 public interface ProductRepository extends JpaRepository<Product, String>, ProductCustomRepository {
 
-  Optional<Product> findProductBySlug(String slug);
+    Optional<Product> findProductBySlug(String slug);
 
-  Optional<Product> findByName(String name);
+    Optional<Product> findByName(String name);
 
-  Page<Product> findByCategory(String categoryId, Pageable pageable);
+    Page<Product> findByCategory(String categoryId, Pageable pageable);
 //
 //  Page<Product> findBySubcategoryId(Long subcategoryId, Pageable pageable);
 
-  @Modifying
-  @Query(nativeQuery = true, value = "UPDATE mydream.product SET status = 'Deleted' WHERE id = ?1 ")
-  boolean deleteProduct(String id);
+    @Modifying
+    @Query(nativeQuery = true, value = "UPDATE mydream.product SET status = 'Deleted' WHERE id = ?1 ")
+    boolean deleteProduct(String id);
 
 }

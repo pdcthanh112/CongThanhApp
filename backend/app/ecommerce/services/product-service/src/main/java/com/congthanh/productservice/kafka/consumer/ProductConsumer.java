@@ -24,7 +24,8 @@ public class ProductConsumer {
 
     @KafkaListener(topics = "all-products-topic", groupId = "product-group")
     public void consumeAllProducts(String message) throws JsonProcessingException {
-        List<ProductDTO> products = objectMapper.readValue(message, new TypeReference<List<ProductDTO>>(){});
+        List<ProductDTO> products = objectMapper.readValue(message, new TypeReference<List<ProductDTO>>() {
+        });
         // Process the received products
     }
 

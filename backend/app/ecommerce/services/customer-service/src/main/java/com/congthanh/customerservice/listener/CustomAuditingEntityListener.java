@@ -1,6 +1,5 @@
 package com.congthanh.customerservice.listener;
 
-import com.congthanh.customerservice.model.entity.AbstractAuditEntity;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.NotNull;

@@ -1,6 +1,6 @@
 package com.congthanh.productservice.constant.common;
 
 public class ResponseStatus {
-  public static final String STATUS_SUCCESS = "Success";
-  public static final String STATUS_FAILED = "Failed";
+    public static final String STATUS_SUCCESS = "Success";
+    public static final String STATUS_FAILED = "Failed";
 }

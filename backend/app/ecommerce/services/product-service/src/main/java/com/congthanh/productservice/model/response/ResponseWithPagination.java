@@ -13,8 +13,8 @@ import java.util.List;
 @Builder
 public class ResponseWithPagination<T> {
 
-  private PaginationInfo paginationInfo;
+    private PaginationInfo paginationInfo;
 
-  private List<T> responseList;
+    private List<T> responseList;
 
 }

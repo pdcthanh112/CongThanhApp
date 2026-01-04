@@ -1,6 +1,6 @@
 package com.congthanh.orderservice.repository.orderSaga;
 
-import com.congthanh.orderservice.model.entity.OrderSaga;
+import com.congthanh.orderservice.saga.model.OrderSaga;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

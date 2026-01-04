@@ -16,16 +16,20 @@ import java.util.List;
 @Builder
 public class CreateProductRequest {
 
-    @NotNull private String name;
-    @NotNull private List<String> category;
-    @NotNull private String slug;
+    @NotNull
+    private String name;
+    @NotNull
+    private List<String> category;
+    @NotNull
+    private String slug;
     private String sku;
     private String gtin;
     private BigDecimal price;
     private String description;
     private String supplier;
     private String brand;
-    @NotNull private MultipartFile thumbnail;
+    @NotNull
+    private MultipartFile thumbnail;
     private List<MultipartFile> image;
     private List<ProductAttributeRequest> attribute;
     private List<ProductVariantRequest> variant;
@@ -33,6 +37,9 @@ public class CreateProductRequest {
     private MetadataRequest metadata;
 
 
-    record ProductAttributeRequest(@NotNull String attribute, @NotNull String value) {}
-    record ProductVariantRequest(@NotNull String sku, @NotNull String gtin, @NotNull BigDecimal price) {}
+    record ProductAttributeRequest(@NotNull String attribute, @NotNull String value) {
+    }
+
+    record ProductVariantRequest(@NotNull String sku, @NotNull String gtin, @NotNull BigDecimal price) {
+    }
 }

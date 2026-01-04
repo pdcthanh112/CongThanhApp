@@ -15,10 +15,10 @@ public class AttributeValueCustomRepositoryImpl implements AttributeValueCustomR
     @Override
     public List<Tuple> getAttributeOfProduct(String productId) {
         try {
-        String sql = "SELECT av.id as id, pa.id as attributeId, pa.name, av.product, av.value FROM product_attribute pa JOIN attribute_value av ON pa.id = av.attribute WHERE av.product = ?1";
-        Query query = entityManager.createNativeQuery(sql, Tuple.class);
-        query.setParameter(1, productId);
-        return query.getResultList();
+            String sql = "SELECT av.id as id, pa.id as attributeId, pa.name, av.product, av.value FROM product_attribute pa JOIN attribute_value av ON pa.id = av.attribute WHERE av.product = ?1";
+            Query query = entityManager.createNativeQuery(sql, Tuple.class);
+            query.setParameter(1, productId);
+            return query.getResultList();
         } catch (NoResultException e) {
             return null;
         }

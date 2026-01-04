@@ -21,7 +21,7 @@ public class Inventory {
     private String sku;
 
     @Column(nullable = false)
-    private int stock;
+    private int quantity;
 
     @Column(name = "warehouse_id", nullable = false)
     private String warehouse;

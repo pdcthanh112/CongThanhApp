@@ -5,8 +5,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class NotificationEvent extends SagaEvent{
+public class NotificationEvent extends SagaEvent {
+
     private String type;
+
     private String recipientId;
+
     private String message;
 }

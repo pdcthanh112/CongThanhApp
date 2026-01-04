@@ -7,9 +7,7 @@ import com.congthanh.inventoryservice.model.entity.Inventory;
 import com.congthanh.inventoryservice.exception.ecommerce.NotFoundException;
 import com.congthanh.inventoryservice.repository.InventoryRepository;
 import com.congthanh.inventoryservice.service.InventoryService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -45,7 +43,7 @@ public class InventoryServiceImpl implements InventoryService {
     public InventoryDTO updateInventoryQuantity(String sku, Integer quantity) {
         Inventory item = inventoryRepository.findBySku(sku)
                 .orElseThrow(() -> new NotFoundException("Inventory item not found for SKU: " + sku));
-        item.setStock(quantity);
+        item.setQuantity(quantity);
         Inventory savedInventory = inventoryRepository.save(item);
         return InventoryMapper.mapCartEntityToDTO(savedInventory);
     }
@@ -53,7 +51,7 @@ public class InventoryServiceImpl implements InventoryService {
     public InventoryDTO getInventoryItem(String sku) {
         Inventory item = inventoryRepository.findBySku(sku)
                 .orElseThrow(() -> new NotFoundException("Inventory item not found for SKU: " + sku));
-        return new InventoryDTO(item.getId(), item.getSku(), item.getStock());
+        return new InventoryDTO(item.getId(), item.getSku(), item.getQuantity());
     }
 
     public void removeInventoryItem(String sku) {
@@ -64,7 +62,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     public boolean isInStock(String sku, Integer requiredQuantity) {
         return inventoryRepository.findBySku(sku)
-                .map(item -> item.getStock() >= requiredQuantity)
+                .map(item -> item.getQuantity() >= requiredQuantity)
                 .orElse(false);
     }
 

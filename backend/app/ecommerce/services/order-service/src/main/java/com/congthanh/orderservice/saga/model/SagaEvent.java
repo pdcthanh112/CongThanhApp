@@ -12,6 +12,8 @@ public abstract class SagaEvent implements Serializable {
 
     private String sagaId;
 
+    private Long orderId;
+
     private Instant createdAt;
 
     private SagaStatus status;

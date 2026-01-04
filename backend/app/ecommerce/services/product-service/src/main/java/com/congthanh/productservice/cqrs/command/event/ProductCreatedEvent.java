@@ -37,6 +37,7 @@ public class ProductCreatedEvent {
 
     private final ProductStatus status;
 
-    record ProductImage(String imagePath, int displayOrder) {}
+    record ProductImage(String imagePath, int displayOrder) {
+    }
 
 }

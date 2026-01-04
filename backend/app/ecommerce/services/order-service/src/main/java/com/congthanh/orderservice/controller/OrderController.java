@@ -9,6 +9,7 @@ import com.congthanh.orderservice.model.viewmodel.OrderHistoryVm;
 import com.congthanh.orderservice.service.OrderItemService;
 import com.congthanh.orderservice.service.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class OrderController {
   private final OrderItemService orderItemService;
 
   @PostMapping("")
-  public ResponseEntity<Response<OrderDTO>> createOrder(@RequestParam CreateOrderRequest request) {
+  public ResponseEntity<Response<OrderDTO>> createOrder(@RequestBody @Valid CreateOrderRequest request) {
     OrderDTO data = orderService.createOrder(request);
     Response<OrderDTO> response = new Response<>();
     response.setData(data);
@@ -35,7 +36,7 @@ public class OrderController {
     return ResponseEntity.ok().body(response);
   }
 
-  @GetMapping("/detail/{orderCode}")
+  @GetMapping("/{orderCode}/detail")
   public ResponseEntity<Response<OrderDetailVm>> getOrderDetail(@PathVariable("orderCode") String orderCode) {
     OrderDetailVm data = orderService.getOrderDetailByCode(orderCode);
     Response<OrderDetailVm> response = new Response<>();

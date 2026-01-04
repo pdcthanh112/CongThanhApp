@@ -21,7 +21,7 @@ public class ProductImageController {
     private final ProductImageService productImageService;
 
     @GetMapping("/getByProduct")
-    public ResponseEntity<Response<List<ProductImageDTO>>>getImageByProduct(@RequestParam("product") String productId) {
+    public ResponseEntity<Response<List<ProductImageDTO>>> getImageByProduct(@RequestParam("product") String productId) {
         List<ProductImageDTO> data = productImageService.getImageByProduct(productId);
         Response<List<ProductImageDTO>> response = new Response<>();
         response.setData(data);

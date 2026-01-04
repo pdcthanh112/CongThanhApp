@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
-public class ProductAttributeValueCustomRepositoryImpl implements ProductAttributeValueCustomRepository{
+public class ProductAttributeValueCustomRepositoryImpl implements ProductAttributeValueCustomRepository {
 
     @PersistenceContext
     @Qualifier("ecommerceEntityManagerFactory")

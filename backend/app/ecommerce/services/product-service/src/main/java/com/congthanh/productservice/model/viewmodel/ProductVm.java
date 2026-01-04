@@ -20,7 +20,7 @@ public class ProductVm {
     private List<ProductAttribute> attribute;
     private String supplier;
     private String brand;
-//    private List<ProductVariantVm> variant;
+    //    private List<ProductVariantVm> variant;
     private ProductStatus status;
 }
 

@@ -16,30 +16,30 @@ import java.util.List;
 @Builder
 public class ProductDTO implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-  private String id;
+    private String id;
 
-  private String name;
+    private String name;
 
-  private String slug;
+    private String slug;
 
-  private List<ProductCategoryDTO> category;
+    private List<ProductCategoryDTO> category;
 
-  private boolean hasVariant;
+    private boolean hasVariant;
 
-  private String description;
+    private String description;
 
-  private String thumbnail;
+    private String thumbnail;
 
-  private List<ProductImageDTO> image;
+    private List<ProductImageDTO> image;
 
-  private List<ProductAttributeValueDTO> attribute;
+    private List<ProductAttributeValueDTO> attribute;
 
-  private String supplier;
+    private String supplier;
 
-  private String brand;
+    private String brand;
 
-  private ProductStatus status;
+    private ProductStatus status;
 }

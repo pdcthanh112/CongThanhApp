@@ -5,9 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class OrderCancelEvent extends SagaEvent{
-
-    private Long orderId;
+public class OrderCancelEvent extends SagaEvent {
 
     private String reason;
 }

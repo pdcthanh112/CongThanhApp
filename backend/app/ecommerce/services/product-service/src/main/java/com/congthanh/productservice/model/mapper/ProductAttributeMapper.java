@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductAttributeMapper {
 
-    private static  final  ModelMapper modelMapper = new ModelMapper();
+    private static final ModelMapper modelMapper = new ModelMapper();
 
     @PostConstruct
     private void configureModelMapper() {

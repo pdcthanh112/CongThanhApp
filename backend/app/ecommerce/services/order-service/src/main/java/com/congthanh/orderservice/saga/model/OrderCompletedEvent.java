@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class OrderCompletedEvent extends SagaEvent{
+public class OrderCompletedEvent extends SagaEvent {
 
     private Long orderId;
 }

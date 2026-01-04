@@ -6,9 +6,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DeliveryCreateEvent extends SagaEvent{
+public class DeliveryCreateEvent extends SagaEvent {
 
-    private Long orderId;
     private CreateOrderRequest request;
+
     private Object deliveryAddress;
 }

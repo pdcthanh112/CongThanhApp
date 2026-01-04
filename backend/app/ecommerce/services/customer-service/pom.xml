@@ -183,6 +183,12 @@
             <groupId>io.github.resilience4j</groupId>
             <artifactId>resilience4j-spring-boot3</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.congthanh</groupId>
+            <artifactId>common-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <classifier>protos</classifier>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>

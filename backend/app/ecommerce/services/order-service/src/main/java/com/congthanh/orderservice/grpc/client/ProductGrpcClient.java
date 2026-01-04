@@ -9,6 +9,8 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 @Service
 public class ProductGrpcClient {
 
@@ -26,4 +28,10 @@ public class ProductGrpcClient {
         ProductRequest request = ProductRequest.newBuilder().setProductId(productId).build();
         return blockingStub.getProductById(request);
     }
+
+    public GetProductsForOrderResponse validateProductsForOrder () {
+        GetProductsForOrderRequest request  = GetProductsForOrderRequest.newBuilder().build();
+        return blockingStub.ValidateProductsForOrder(request);
+    }
+
 }

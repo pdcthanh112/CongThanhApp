@@ -23,7 +23,7 @@ public class ProductViewServiceImpl implements ProductViewService {
 
     @Override
     public ProductViewDTO addProductView(String productId, String customerId) {
-        ProductView productView  = ProductView.builder()
+        ProductView productView = ProductView.builder()
                 .productId(productId)
                 .viewBy(customerId)
                 .viewedAt(Instant.now())

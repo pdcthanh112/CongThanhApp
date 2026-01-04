@@ -5,7 +5,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-public class ProductViewCustomRepositoryImpl implements ProductViewCustomRepository{
+public class ProductViewCustomRepositoryImpl implements ProductViewCustomRepository {
 
     @PersistenceContext
     @Qualifier("ecommerceEntityManagerFactory")

@@ -10,7 +10,5 @@ import java.util.List;
 @Setter
 public class InventoryRollbackEvent extends SagaEvent {
 
-    private Long orderId;
-
     private List<OrderItem> items;
 }

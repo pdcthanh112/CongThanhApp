@@ -48,7 +48,7 @@ public class VariantOptionServiceImpl implements VariantOptionService {
                 .findAllByParentProductId(product.getId()).stream()
                 .map(ProductOptionCombinationGetVm::fromModel)
                 .toList();
-        return new ArrayList <>(productOptionCombinationGetVms
+        return new ArrayList<>(productOptionCombinationGetVms
                 .stream().collect(Collectors.toMap(
                         p -> Arrays.asList(p.productOptionId(), p.productOptionValue()),
                         p -> p, (existing, replacement) -> existing
