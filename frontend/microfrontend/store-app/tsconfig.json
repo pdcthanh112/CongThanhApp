@@ -1,17 +1,13 @@
 {
   "files": [],
-  "path": {
-    "@/*": ["./src/*"]
-  },
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "baseUrl": ".", 
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"], 
+      "@/*": ["./src/*"]
     }
-  },
-  "include": ["src", "../../ecommerce/src/utils/helper/column.helper.ts", "../../ecommerce/src/components/common/TableCustom.tsx"]
+  }
 }
