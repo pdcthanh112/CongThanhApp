@@ -36,7 +36,7 @@ export default function ShowCartItem({ cartId, item }: PropsType) {
     data: itemDetail,
     isLoading,
     error,
-  } = useQuery<CartItemDetail>({
+  } = useQuery<CartItemDetail | null>({
     queryKey: ['cart-item-detail', item.id],
     queryFn: async () => await getItemDetail({ cartId: cartId, itemId: item.id }).then((response) => response.data),
   });

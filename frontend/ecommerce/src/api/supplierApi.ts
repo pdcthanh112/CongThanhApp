@@ -1,16 +1,31 @@
 import axiosInstance from '@/config/axiosConfig';
-import { Response, Supplier } from '@/models/types';
+import { ok, paged } from '@/graphql/legacy';
+import { Product, Response, Supplier } from '@/models/types';
 
-export const getSupplierById = async (id: any): Promise<Response<Supplier>> => {
-  return await axiosInstance.get(`supplier/${id}`).then((response) => response.data);
+// Gian hàng người bán: supplier-service (Django) qua REST /api/ecommerce/suppliers.
+type ApiSupplier = {
+  id: string;
+  name: string;
+  slug: string;
+  avatarUrl: string;
+  backgroundUrl: string;
+  description: string;
 };
 
-export const getSupplierBySlug = async (slug: string): Promise<Response<Supplier>> => {
-  return await axiosInstance.get(`supplier/get-by-slug?slug=${slug}`).then((response) => response.data);
-};
+const toSupplier = (s: ApiSupplier): Supplier => ({
+  id: s.id,
+  name: s.name,
+  slug: s.slug,
+  avatar: s.avatarUrl,
+  background: s.backgroundUrl,
+});
 
-export const getProductFromSupplier = async (id: any, page: number, limit: number) => {
-  return await axiosInstance
-    .get(`supplier/getProductFromSupplier?supplier=${id}&page=${page}&limit=${limit}`)
-    .then((response) => response.data);
-};
+/** id hoặc slug đều được. */
+export const getSupplierById = async (id: string): Promise<Response<Supplier>> =>
+  ok(toSupplier((await axiosInstance.get(`suppliers/${encodeURIComponent(id)}`)).data.data));
+
+export const getSupplierBySlug = getSupplierById;
+
+/** Sản phẩm của gian hàng: chưa có bộ lọc theo người bán trong supergraph, trả danh sách rỗng. */
+export const getProductFromSupplier = async (_id: string, page: number, limit: number) =>
+  paged<Product>([], page, limit, 0);

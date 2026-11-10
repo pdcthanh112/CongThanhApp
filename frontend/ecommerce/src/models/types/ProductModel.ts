@@ -18,7 +18,16 @@ export type Product = {
     keywords: string;
     description: string;
   };
+  // Có khi lấy qua GraphQL (supergraph storefront): giá, đánh giá, tồn kho đã ghép sẵn.
+  price?: Money;
+  originalPrice?: Money;
+  discountPercent?: number;
+  ratingSummary?: { average: number; count: number; stars?: number[] };
+  inWishlist?: boolean;
+  stockStatus?: string;
 };
+
+export type Money = { amount: number; currency: string; formatted: string };
 
 export type ProductCategory = {
   id: string;

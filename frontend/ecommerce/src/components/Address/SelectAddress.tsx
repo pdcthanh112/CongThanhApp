@@ -67,8 +67,8 @@ const SelectAddress = ({ isOpen, handleOpen, changeAddress }: PropsType) => {
     return (
       <React.Fragment>
         <h3>Your address</h3>
-        <Radio.Group defaultValue={listAddress.find((address: Address) => address.isDefault === true)} onChange={(event) => setAddress(event.target.value)}>
-          {listAddress.map((item: Address) => (
+        <Radio.Group defaultValue={listAddress?.find((address: Address) => address.isDefault === true)} onChange={(event) => setAddress(event.target.value)}>
+          {listAddress?.map((item: Address) => (
             <Radio key={item.id} value={item} checked={item.isDefault} className="my-2 px-3 py-2 border-t-2">
               <span className="mr-1 text-lg">Cong Thanh</span>|<span className="ml-2">{item.phone}</span>
               <div className="flex justify-between">

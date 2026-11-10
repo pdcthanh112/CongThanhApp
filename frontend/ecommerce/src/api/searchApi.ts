@@ -1,32 +1,24 @@
 import axiosInstance from '@/config/axiosConfig';
+import { gql } from '@/graphql/client';
+import { RecentSearchesQuery, RecordSearchMutation, RemoveSearchMutation } from '@/graphql/documents';
+import { ok } from '@/graphql/legacy';
 
+// Lịch sử tìm kiếm: customer-service qua supergraph. Gợi ý: search-service (OpenSearch) qua REST.
 export const getSearchHistory = async () => {
-  return await axiosInstance.get('/search/history').then((response) => response.data);
+  const { me } = await gql(RecentSearchesQuery, { limit: 10 });
+  return ok(me.recentSearches);
 };
 
-export const addSearchHistoryItem = async (customerId: string, value: string) => {
-  return axiosInstance
-    .post('/search/history', {
-      customer: customerId,
-      value,
-    })
-    .then((response) => response.data);
-};
+export const addSearchHistoryItem = async (_customerId: string, value: string) =>
+  ok((await gql(RecordSearchMutation, { keyword: value })).recordSearch);
 
-export const removeSearchHistoryItem = async (id: number) => {
-  return axiosInstance.delete(`/search/history/${id}`).then((response) => response.data);
-};
-
-export const getSearchTrending = async () => {
-  return await axiosInstance.get('/search/trending').then((response) => response.data);
-};
+/** Lịch sử giờ định danh theo từ khoá thay vì id. */
+export const removeSearchHistoryItem = async (keyword: string | number) =>
+  ok((await gql(RemoveSearchMutation, { keyword: String(keyword) })).removeSearch);
 
 export const getSearchRecommend = async (keyword: string): Promise<string[]> => {
-  // return await axiosInstance
-  //   .get(`/search/recommend?keyword=${keyword}`)
-  //   .then((response) => response.data)
-  //   .catch((error) => {
-  //     throw Error(error);
-  //   });
-  return ['a1', 'a2', 'a3', 'a4', 'aa1', 'aa2', 'ab1', 'ab2'];
+  if (!keyword.trim()) return [];
+  const res = await axiosInstance.get('search/suggest', { params: { q: keyword, limit: 8 } });
+  const data = res.data?.data as { text?: string; name?: string }[] | string[] | undefined;
+  return (data ?? []).map((s) => (typeof s === 'string' ? s : (s.text ?? s.name ?? ''))).filter(Boolean);
 };

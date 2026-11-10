@@ -1,8 +1,0 @@
-spring:
-  application:
-    name: congthanhapp-ecommerce-notification-service
-  config:
-    import: optional:file:.env[.properties]
-
-  profiles:
-    active: dev

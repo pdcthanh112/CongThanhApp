@@ -1,112 +1,82 @@
-import axiosInstance from '@/config/axiosConfig';
+import { gql } from '@/graphql/client';
+import { CategoryQuery, ProductQuery, ProductsQuery, SearchProductsQuery } from '@/graphql/documents';
+import { ok, paged, toProduct } from '@/graphql/legacy';
 import {
-  ProductVariantAttribute,
+  PaginationParams,
   Product,
-  Response,
-  ResponseWithPagination,
+  ProductFilter,
+  ProductOptionValueDisplay,
   ProductOptionValueGet,
   ProductVariant,
-  ProductOptionValueDisplay,
-  ProductFilter,
-  PaginationParams,
+  ProductVariantAttribute,
+  Response,
+  ResponseWithPagination,
 } from '@/models/types';
-// import { cacheLife } from 'next/dist/server/use-cache/cache-life';
 
+// Sản phẩm lấy qua supergraph storefront (storefront-bff ghép giá, tồn kho, đánh giá, wishlist).
 export const getAllProduct = async (
   pagination: PaginationParams,
-  filter: ProductFilter
+  filter: ProductFilter = {}
 ): Promise<ResponseWithPagination<Product>> => {
-  // 'use cache'
-  // cacheLife('getAllProduct')
-  const params = new URLSearchParams();
-
-  if (filter.category)
-    params.append(
-      'category',
-      filter.category.reduce((item) => item + ',')
-    );
-  if (filter.brand)
-    params.append(
-      'brand',
-      filter.brand.reduce((item) => item + ',')
-    );
-  if (filter.category)
-    params.append(
-      'category',
-      filter.category.reduce((item) => item + ',')
-    );
-
-  params.append('page', String(pagination.page));
-  params.append('limit', String(pagination.limit));
-  return await axiosInstance.get('products', { params: params }).then((response) => response.data);
+  const { products } = await gql(ProductsQuery, {
+    categoryId: filter.category?.[0] ?? null,
+    page: pagination.page,
+    limit: pagination.limit,
+  });
+  return paged(products.items.map(toProduct), products.page, products.limit, products.totalItems);
 };
 
 export const getProductById = async (productId: string): Promise<Product> => {
-  return await axiosInstance.get(`product/getById/${productId}`).then((response) => response.data);
+  const { product } = await gql(ProductQuery, { id: productId });
+  if (!product) throw new Error('Product not found');
+  return toProduct(product);
 };
 
 export const getProductBySlug = async (productSlug: string): Promise<Response<Product>> => {
-  return await axiosInstance.get(`products/slug/${productSlug}`).then((response) => response.data);
+  const { product } = await gql(ProductQuery, { slug: productSlug });
+  if (!product) throw new Error('Product not found');
+  return ok(toProduct(product));
 };
 
-export const getProductDetailBySlug = async (productSlug: string): Promise<Response<Product>> => {
-  return await axiosInstance.get(`products/store-front/slug/${productSlug}/detail`).then((response) => response.data);
+export const getProductDetailBySlug = getProductBySlug;
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** Nhận id hoặc slug danh mục; page tính từ 0 như API cũ. */
+export const getProductByCategory = async (categoryIdOrSlug: string, page: number, limit: number) => {
+  const categoryId = UUID.test(categoryIdOrSlug)
+    ? categoryIdOrSlug
+    : ((await gql(CategoryQuery, { slug: categoryIdOrSlug })).category?.id ?? categoryIdOrSlug);
+  const { products } = await gql(ProductsQuery, { categoryId, page: page + 1, limit });
+  return paged(products.items.map(toProduct), products.page, products.limit, products.totalItems);
 };
 
-export const getProductByCategory = async (categoryId: string, page: number, limit: number) => {
-  return await axiosInstance
-    // .get(`product/getBySubcategory?subcategory=${subcategoryId}&page=${page}&limit=${limit}`)
-    .get(`/store-front/categories/${categoryId}/products?page=${page}&limit=${limit}`)
-    .then((response) => response.data);
+export const searchProducts = async (keyword: string): Promise<Product[]> => {
+  const { searchProducts } = await gql(SearchProductsQuery, { keyword });
+  return searchProducts.map(toProduct);
 };
 
-export const getAttributeByProductId = async (productId: string) => {
-  return await axiosInstance.get(`attribute-value/getByProduct?product=${productId}`).then((response) => response.data);
-};
-
-// export const getDefaultImageByProductId = async (productId: string): Promise<Response<ProductImage>> => {
-//   return await axiosInstance
-//     .get(`product-image/getDefaultImage?product=${productId}`)
-//     .then((response) => response.data)
-//     .catch((error) => {
-//       throw Error(error);
-//     });
-// };
-
-export const getImageByProductId = async (productId: string) => {
-  return await axiosInstance.get(`product-image/getByProduct?product=${productId}`).then((response) => response.data);
-};
-
-export const getSoldByProduct = async (productId: string) => {
-  return await axiosInstance.get(`product/sold/${productId}`).then((response) => response.data);
-};
-
+// Biến thể/tuỳ chọn sản phẩm chưa có trong supergraph: trả rỗng để trang chi tiết hiển thị sản phẩm đơn.
 export const getVariantAttributeValueByProduct = async (
+  _productId: string
+): Promise<Response<ProductVariantAttribute[]>> => ok([]);
+export async function getProductOptionValues(_productId: string): Promise<ProductOptionValueGet[]> {
+  return [];
+}
+export async function getProductVariationsByParentId(_parentId: string): Promise<ProductVariant[]> {
+  return [];
+}
+export async function getProductOptionValueByProductId(_productId: string): Promise<ProductOptionValueDisplay[]> {
+  return [];
+}
+
+/** Ảnh đại diện: GraphQL trả sẵn thumbnail trong Product; giữ hàm cho component cũ. */
+export const getDefaultImageByProductId = async (
   productId: string
-): Promise<Response<ProductVariantAttribute[]>> => {
-  return await axiosInstance
-    .get(`product/get-variant-attribute?product=${productId}`)
-    .then((response) => response.data);
+): Promise<Response<{ id: number; product: string; imagePath: string }>> => {
+  const { product } = await gql(ProductQuery, { id: productId });
+  return ok({ id: 0, product: productId, imagePath: product?.thumbnail ?? '' });
 };
 
-export const getVariantValueDetail = async (productId: string) => {
-  return await axiosInstance.get(`products/${productId}/variants/attributes/detail`).then((response) => response.data);
-};
-
-export async function getProductOptionValues(productId: string): Promise<ProductOptionValueGet[]> {
-  return await axiosInstance
-    .get(`/products/storefront/product-option-combinations/${productId}/values`)
-    .then((response) => response.data.data);
-}
-
-export async function getProductVariationsByParentId(parentId: string): Promise<ProductVariant[]> {
-  return await axiosInstance
-    .get(`/products/storefront/product-variations/${parentId}`)
-    .then((response) => response.data);
-}
-
-export async function getProductOptionValueByProductId(productId: string): Promise<ProductOptionValueDisplay[]> {
-  return await axiosInstance
-    .get(`/products/storefront/product-option-values/${productId}`)
-    .then((response) => response.data.data);
-}
+/** Số lượng đã bán chưa có trong supergraph. */
+export const getSoldByProduct = async (_productId: string): Promise<Response<number>> => ok(0);

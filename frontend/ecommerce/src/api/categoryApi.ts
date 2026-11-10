@@ -1,13 +1,24 @@
-import axiosInstance from '@/config/axiosConfig';
+import { gql } from '@/graphql/client';
+import { CategoriesQuery } from '@/graphql/documents';
+import { ok, toCategory } from '@/graphql/legacy';
 import { Category, Response } from '@/models/types';
 
-export const getAllCategory = async (page?: number, limit?: number): Promise<Response<Category[]>> => {
-  const params = new URLSearchParams();
-  page && params.append('page', String(page));
-  limit && params.append('limit', String(limit));
-  return await axiosInstance.get('categories/list', { params: params }).then((response) => response.data);
+/** Danh mục gốc (catalog-service qua supergraph). Tham số phân trang giữ cho tương thích, không còn dùng. */
+export const getAllCategory = async (_page?: number, _limit?: number): Promise<Response<Category[]>> => {
+  const { categories } = await gql(CategoriesQuery, { parentId: null });
+  return ok(
+    categories.map((c) => ({
+      id: c.id,
+      name: c.name,
+      slug: c.slug,
+      description: c.description ?? '',
+      parentId: c.parentId ?? '',
+    }))
+  );
 };
 
-export const getAllCategoryJson = async () => {
-  return await axiosInstance.get('categories').then((response) => response.data);
+/** Cây danh mục (gốc + một cấp con) cho menu và bộ lọc. */
+export const getAllCategoryJson = async (): Promise<Response<Category[]>> => {
+  const { categories } = await gql(CategoriesQuery, { parentId: null });
+  return ok(categories.map(toCategory));
 };

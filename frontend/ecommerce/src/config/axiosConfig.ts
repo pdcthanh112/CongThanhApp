@@ -1,41 +1,19 @@
-import axios, { AxiosResponse } from 'axios';
-// import { useSession } from 'next-auth/react';
-// import { getServerSession } from "next-auth/next"
-// import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import axios from 'axios';
+import { accessToken, GATEWAY_URL } from '@/graphql/client';
 
+// REST qua gateway cho các API không nằm trong supergraph (search, supplier, media, translate, chatbot).
+// Dữ liệu chính (sản phẩm, giỏ, đơn, khách hàng...) gọi GraphQL qua @/graphql.
 const axiosInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL}/ecommerce/`,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true
+  baseURL: `${GATEWAY_URL}/api/ecommerce/`,
+  headers: { 'Content-Type': 'application/json' },
 });
 
-axiosInstance.interceptors.request.use(
-  async (config) => {
-    // const { data: session } = useSession();
-// const session = await getServerSession(authOptions)
-    if (config.headers) {
-      if (!config.headers.Authorization) {
-        // config.headers['Authorization'] = `Bearer ${session?.token?.accessToken}`;
-        // config.headers['Authorization'] = `Bearer ${token}`;
-      }
-    }
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
+axiosInstance.interceptors.request.use(async (config) => {
+  if (!config.headers.Authorization) {
+    const token = await accessToken();
+    if (token) config.headers.Authorization = `Bearer ${token}`;
   }
-);
-
-axiosInstance.interceptors.response.use(
-  (response: AxiosResponse) => {
-    return response;
-  },
-  async (error) => {
-    return Promise.reject(error);
-  }
-);
+  return config;
+});
 
 export default axiosInstance;

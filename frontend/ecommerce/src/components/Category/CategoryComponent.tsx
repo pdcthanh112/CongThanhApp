@@ -21,7 +21,7 @@ export default function CategoryComponent() {
     <div className="flex flex-row h-[30rem]">
       <div className="flex w-1/4">
         <ul className="list-none w-full h-full border-r-2 border-gray-300">
-          {categoryData.map((category: Category) => (
+          {categoryData?.map((category: Category) => (
             <li key={category.id} onMouseEnter={() => setSelectedCategory(category)} className="hover:bg-gray-100 p-3">
               <Link href={`/category/${category.slug}`}>{category.name}</Link>
             </li>

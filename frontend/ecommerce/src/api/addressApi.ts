@@ -1,48 +1,59 @@
-import axiosInstance from '@/config/axiosConfig';
+import { gql } from '@/graphql/client';
+import {
+  AddAddressMutation,
+  DeleteAddressMutation,
+  MyAddressesQuery,
+  UpdateAddressMutation,
+} from '@/graphql/documents';
+import { ok, toAddress } from '@/graphql/legacy';
+import type { AddressInput } from '@/graphql/types';
 import { CreateAddressForm, UpdateAddressForm } from '@/models/form';
+import { Address, Response } from '@/models/types';
 
-export const getAddressById = async (addressId: number) => {
-  return await axiosInstance.get(`address/${addressId}`).then((response) => response.data);
+// Địa chỉ giao hàng (customer-service, qua supergraph) của khách đang đăng nhập.
+type Id = string | number;
+
+const toInput = (d: UpdateAddressForm | CreateAddressForm): AddressInput => {
+  const f = d as Partial<CreateAddressForm> & { fullName?: string };
+  return {
+    fullName: f.fullName ?? '',
+    phoneNumber: String(f.phone ?? ''),
+    addressLine: [f.addressLine1, f.street].filter(Boolean).join(', '),
+    wardCode: f.addressLine2 || null,
+    districtCode: f.addressLine3 || null,
+    postalCode: f.postalCode ? String(f.postalCode) : null,
+    countryCode: f.country || 'VN',
+  };
 };
 
-export const getAddressByCustomer = async (customerId: string) => {
-  return await axiosInstance.get(`customer/${customerId}/address`).then((response) => response.data);
+export const getAddressByCustomer = async (customerId: string): Promise<Response<Address[]>> => {
+  const { me } = await gql(MyAddressesQuery);
+  return ok(me.shippingAddresses.map((a) => toAddress(a, customerId)));
+};
+
+export const getAddressById = async (addressId: Id): Promise<Response<Address | null>> => {
+  const { me } = await gql(MyAddressesQuery);
+  const a = me.shippingAddresses.find((x) => x.id === String(addressId));
+  return ok(a ? toAddress(a, me.id) : null);
+};
+
+export const getDefaultAddressOfCustomer = async (customerId: string): Promise<Response<Address | null>> => {
+  const { me } = await gql(MyAddressesQuery);
+  return ok(me.defaultShippingAddress ? toAddress(me.defaultShippingAddress, customerId) : null);
 };
 
 export const createAddress = async (data: CreateAddressForm) => {
-  return await axiosInstance
-    .post('address', {
-      customer: data.customer,
-      phone: data.phone,
-      country: data.country,
-      addressLine1: data.addressLine1,
-      addressLine2: data.addressLine2,
-      addressLine3: data.addressLine3,
-      street: data.street,
-      postalCode: data.postalCode,
-      idDefault: data.isDefault,
-    })
-    .then((response) => response.data);
+  const { addShippingAddress } = await gql(AddAddressMutation, {
+    input: toInput(data),
+    makeDefault: Boolean((data as { isDefault?: boolean }).isDefault),
+  });
+  return ok(toAddress(addShippingAddress));
 };
 
-export const updateAddress = async (addressId: number, data: UpdateAddressForm) => {
-  return await axiosInstance
-    .put(`address/${addressId}`, {
-      phone: data.phone,
-      country: data.country,
-      addressLine1: data.addressLine1,
-      addressLine2: data.addressLine2,
-      addressLine3: data.addressLine3,
-      street: data.street,
-      postalCode: data.postalCode,
-    })
-    .then((response) => response.data);
+export const updateAddress = async (addressId: Id, data: UpdateAddressForm) => {
+  const { updateShippingAddress } = await gql(UpdateAddressMutation, { id: String(addressId), input: toInput(data) });
+  return ok(toAddress(updateShippingAddress));
 };
 
-export const deleteAddress = async (addressId: number) => {
-  return await axiosInstance.delete(`address/${addressId}`).then((response) => response.data);
-};
-
-export const getDefaultAddressOfCustomer = async (customerId: string) => {
-  return await axiosInstance.get(`customer/${customerId}/address/default`).then((response) => response.data);
-};
+export const deleteAddress = async (addressId: Id) =>
+  ok((await gql(DeleteAddressMutation, { id: String(addressId) })).deleteShippingAddress);

@@ -86,7 +86,7 @@ const WishlistItem = ({ item }: PropsType) => {
         </span>
       </TableCell>
       <TableCell align="center">{item.category}</TableCell>
-      <TableCell align="center">{item.price}</TableCell>
+      <TableCell align="center">{item.price?.formatted}</TableCell>
       <TableCell align="center">{checkStatus(item.quantity, item.status)}</TableCell>
       <TableCell align="right">
         <div className="flex justify-end">

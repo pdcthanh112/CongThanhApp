@@ -21,7 +21,7 @@ const ShowCartItem = ({ item }: PropsType) => {
         <Image src={item.product.thumbnail.imagePath || DefaultImage} alt={item.product.name ?? ""} width={40} height={40} className="border border-gray-300" />
         <h4 className="truncate ml-2 w-56 text-sm">{item.product.name}</h4>
       </span>
-      <span className="text-yellow-500">${item.product.price}</span>
+      <span className="text-yellow-500">{item.product.price?.formatted}</span>
     </div>
   );
 };

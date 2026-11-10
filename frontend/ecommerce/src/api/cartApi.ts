@@ -1,53 +1,47 @@
-import axiosInstance from '@/config/axiosConfig';
+import { gql } from '@/graphql/client';
+import {
+  AddToCartMutation,
+  ClearCartMutation,
+  MyCartQuery,
+  RemoveCartItemMutation,
+  UpdateCartItemMutation,
+} from '@/graphql/documents';
+import { ok, toCart, toCartItemDetail } from '@/graphql/legacy';
 import { CreateCartForm } from '@/models/form';
-import { Cart, Response } from '@/models/types';
+import { Cart, CartItemDetail, Response } from '@/models/types';
 
-export const createNewCart = async (data: CreateCartForm) => {
-  return await axiosInstance
-    .post('cart/create', {
-      name: data.name,
-      customer: data.customer,
-      isDefault: data.isDefault,
-    })
-    .then((response) => response);
-};
+// Giỏ hàng (cart-service, qua supergraph): mỗi khách một giỏ, lấy theo token, không cần customerId/cartId.
+type Id = string | number;
 
-export const deleteCart = async (cartId: number) => {
-  return await axiosInstance.delete(`carts/${cartId}`).then((response) => response);
-};
+export const getMyCart = async (): Promise<Cart> => toCart((await gql(MyCartQuery)).myCart);
 
-export const getCartById = async (id: number): Promise<Response<Cart>> => {
-  return await axiosInstance.get(`carts/${id}`).then((response) => response.data);
-};
+/** Giữ tên cũ: trả về giỏ duy nhất của khách đang đăng nhập. */
+export const getCartByCustomerId = async (customerId: string): Promise<Response<Cart[]>> =>
+  ok([toCart((await gql(MyCartQuery)).myCart, customerId)]);
 
-export const getCartByCustomerId = async (customerId: string): Promise<Response<Cart[]>> => {
-  return await axiosInstance.get(`carts/customer/${customerId}`).then((response) => response.data);
-};
+export const getCartById = async (_id: Id): Promise<Response<Cart>> => ok(await getMyCart());
 
-export const addProductToCart = async ({
-  productId,
-  quantity,
-  cartId,
+/** Không còn nhiều giỏ: trả về giỏ hiện tại. */
+export const createNewCart = async (_data: CreateCartForm): Promise<Response<Cart>> => ok(await getMyCart());
+
+export const deleteCart = async (_cartId: Id): Promise<Response<Cart>> =>
+  ok(toCart((await gql(ClearCartMutation)).clearCart));
+
+export const addProductToCart = async ({ productId, quantity }: { productId: string; quantity: number; cartId?: Id }) =>
+  ok(toCart((await gql(AddToCartMutation, { productId, quantity })).addToCart));
+
+export const updateCartItem = async ({ cartItemId, quantity }: { cartItemId: Id; quantity: number }) =>
+  ok(toCart((await gql(UpdateCartItemMutation, { itemId: String(cartItemId), quantity })).updateCartItem));
+
+export const deleteCartItem = async (itemId: Id) =>
+  ok(toCart((await gql(RemoveCartItemMutation, { itemId: String(itemId) })).removeCartItem));
+
+export const getItemDetail = async ({
+  itemId,
 }: {
-  productId: string;
-  quantity: number;
-  cartId: string;
-}) => {
-  return await axiosInstance
-    .post(`cart-item/addToCart?productId=${productId}&quantity=${quantity}&cartId=${cartId}`)
-    .then((response) => response);
-};
-
-export const updateCartItem = async ({ cartItemId, quantity }: { cartItemId: number; quantity: number }) => {
-  return await axiosInstance
-    .put(`cart-item/update?cartItemId=${cartItemId}&quantity=${quantity}`)
-    .then((response) => response);
-};
-
-export const deleteCartItem = async (itemId: number) => {
-  return await axiosInstance.delete(`carts/items/${itemId}`).then((response) => response.data);
-};
-
-export const getItemDetail = async ({ cartId, itemId }: { cartId: number; itemId: number }) => {
-  return await axiosInstance.get(`carts/${cartId}/items/${itemId}/detail`).then((response) => response.data);
+  cartId?: Id;
+  itemId: Id;
+}): Promise<Response<CartItemDetail | null>> => {
+  const line = (await gql(MyCartQuery)).myCart.lines.find((l) => l.id === String(itemId));
+  return ok(line ? toCartItemDetail(line) : null);
 };

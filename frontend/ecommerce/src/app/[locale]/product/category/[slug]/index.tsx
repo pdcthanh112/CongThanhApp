@@ -26,7 +26,7 @@ export default function ProductByCategory() {
       }),
   });
 
-  if (listProduct === null || listProduct?.length <= 0) return <NotFound />;
+  if (!listProduct || listProduct.length <= 0) return <NotFound />;
 
   return (
     <div className="w-[90%] mx-auto">

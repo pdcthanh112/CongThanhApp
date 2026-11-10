@@ -1,32 +1,22 @@
 package com.congthanh.productservice.config;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
 
+/**
+ * S3 dùng chuỗi credential mặc định của AWS SDK (IRSA/Pod Identity trên EKS, profile khi chạy local),
+ * không còn access key tĩnh trong cấu hình.
+ */
 @Configuration
+@ConditionalOnProperty("product.s3.region")
 public class AwsS3Config {
 
-    @Value("${aws.access.key.id}")
-    private String accessKey;
-
-    @Value("${aws.secret.access.key}")
-    private String secretKey;
-
-    @Value("${aws.s3.region}")
-    private String region;
-
     @Bean
-    public AmazonS3 amazonS3Client() {
-        AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-        return AmazonS3ClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(region)
-                .build();
+    public S3Client s3Client(@Value("${product.s3.region}") String region) {
+        return S3Client.builder().region(Region.of(region)).build();
     }
 }

@@ -29,7 +29,7 @@ import io.swagger.v3.oas.models.servers.Server;
         ),
         security = @SecurityRequirement(name = "oauth2_bearer"),
         servers = {
-                @io.swagger.v3.oas.annotations.servers.Server(url = "${server.servlet.context-path}",
+                @io.swagger.v3.oas.annotations.servers.Server(url = "${server.servlet.context-path:/}",
                         description = "Default Server URL")
         })
 @io.swagger.v3.oas.annotations.security.SecurityScheme(name = "oauth2_bearer", type = SecuritySchemeType.OAUTH2,

@@ -1,224 +1,105 @@
+/**
+ * Đăng nhập qua Keycloak (OIDC, PKCE). Đăng ký, quên mật khẩu, đổi mật khẩu, Google/Facebook/Apple đều do
+ * Keycloak xử lý (identity brokering), nên auth-service cũ đã được gỡ. Access token được tự làm mới bằng refresh token.
+ */
 import NextAuth, { NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import GoogleProvider from 'next-auth/providers/google';
-import FacebookProvider from 'next-auth/providers/facebook';
-import TwitterProvider from 'next-auth/providers/twitter';
-import AppleProvider from 'next-auth/providers/apple';
-import { JWT } from 'next-auth/jwt';
+import type { JWT } from 'next-auth/jwt';
+import KeycloakProvider from 'next-auth/providers/keycloak';
 
-interface ExtendedUser {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  permissions?: string[];
+const issuer = process.env.KEYCLOAK_ISSUER ?? 'http://localhost:8180/realms/ecommerce';
+// Client "storefront-web" trong realm là public client + PKCE (platform/identity/keycloak/realms/ecommerce-realm.json).
+const clientId = process.env.KEYCLOAK_CLIENT_ID ?? 'storefront-web';
+const clientSecret = process.env.KEYCLOAK_CLIENT_SECRET ?? '';
+
+function rolesOf(accessToken: string | undefined): string[] {
+  if (!accessToken) return [];
+  try {
+    const claims = JSON.parse(Buffer.from(accessToken.split('.')[1], 'base64url').toString('utf8'));
+    const realm: string[] = claims.realm_access?.roles ?? [];
+    const client: string[] = claims.resource_access?.[clientId]?.roles ?? [];
+    const flat: string[] = Array.isArray(claims.roles) ? claims.roles : []; // client scope roles-claim
+    return [...new Set([...realm, ...client, ...flat].map((r) => r.toUpperCase().replace(/^ROLE_/, '')))];
+  } catch {
+    return [];
+  }
 }
 
-
-interface ExtendedToken extends JWT {
-  id?: string;
-  role?: string;
-  accessToken?: string;
-  refreshToken?: string;
-  permissions?: string[];
-}
-
-
-interface ExtendedSession {
-  user: {
-    id: string;
-    name: string;
-    email: string;
-    role: string;
-    permissions?: string[];
-  };
-  accessToken?: string;
-  expires: string;
+async function refreshAccessToken(token: JWT): Promise<JWT> {
+  try {
+    const res = await fetch(`${issuer}/protocol/openid-connect/token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        client_id: clientId,
+        ...(clientSecret ? { client_secret: clientSecret } : {}),
+        refresh_token: token.refreshToken ?? '',
+      }),
+    });
+    const t = await res.json();
+    if (!res.ok) throw t;
+    return {
+      ...token,
+      accessToken: t.access_token,
+      idToken: t.id_token ?? token.idToken,
+      refreshToken: t.refresh_token ?? token.refreshToken,
+      expiresAt: Math.floor(Date.now() / 1000) + Number(t.expires_in ?? 300),
+      roles: rolesOf(t.access_token),
+      error: undefined,
+    };
+  } catch {
+    return { ...token, error: 'RefreshAccessTokenError' };
+  }
 }
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID!,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
-    }),
-    TwitterProvider({
-      clientId: process.env.TWITTER_CLIENT_ID!,
-      clientSecret: process.env.TWITTER_CLIENT_SECRET!,
-    }),
-    AppleProvider({
-      clientId: process.env.APPLE_CLIENT_ID!,
-      clientSecret: process.env.APPLE_CLIENT_SECRET!,
-    }),
-    CredentialsProvider({
-      name: 'Credentials',
-      credentials: {
-        username: {
-          label: 'Username',
-          type: 'text',
-          placeholder: 'abc@gmail.com',
-          validate: (value: string) => value?.length > 0 || 'Username is required',
-        },
-        password: {
-          label: 'Password',
-          type: 'password',
-          placeholder: '**************',
-          validate: (value: string) => value?.length > 0 || 'Password is required',
-        },
-      },
-      async authorize(credentials) {
-        try {
-          const res = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              username: credentials?.username,
-              password: credentials?.password,
-            }),
-          });
-
-          if (!res.ok) {
-            console.error('Login API error:', await res.text());
-            return null;
-          }
-
-          const user = await res.json();
-          return user;
-        } catch (error) {
-          console.log('Error', error);
-          return null;
-        }
-      },
+    KeycloakProvider({
+      clientId,
+      clientSecret,
+      issuer,
+      checks: ['pkce', 'state'],
+      // Public client: không có secret, xác thực ở token endpoint bằng PKCE.
+      ...(clientSecret ? {} : { client: { token_endpoint_auth_method: 'none' } }),
     }),
   ],
-
-  pages: {
-    signIn: '/auth/login',
-    signOut: '/auth/sign-out',
-    error: '/auth/error',
-    newUser: undefined, // If set, new users will be directed here on first sign in
-    verifyRequest: '/auth/verify-request', // (used for check email message)
-  },
-
-  session: {
-    strategy: 'jwt',
-    maxAge: 30 * 24 * 60 * 60, // 30 ngày
-  },
-
+  pages: { signIn: '/auth/login', error: '/auth/error' },
+  session: { strategy: 'jwt', maxAge: 30 * 24 * 60 * 60 },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      // // Chỉ cho phép đăng nhập với email có domain cụ thể
-      // const allowedDomain = 'company.com';
-      // if (user.email && !user.email.endsWith(`@${allowedDomain}`)) {
-      //   // Cho phép các tài khoản test để demo
-      //   if (user.email === 'test@example.com') {
-      //     return true;
-      //   }
-      //   console.log(`User rejected: ${user.email} does not belong to ${allowedDomain}`);
-      //   return false; // Từ chối đăng nhập
-      // }
-
-      // // Ví dụ: Kiểm tra tài khoản có bị khóa không
-      // // const isBlocked = await checkIfUserIsBlocked(user.id);
-      // // if (isBlocked) return false;
-
-      // // return email?.verificationRequest; // Cho phép đăng nhập
-      return true; // Cho phép đăng nhập
-    },
-    async jwt({ token, user, account, trigger, session }) {
-      if (user) { // Khi đăng nhập lần đầu, user object sẽ có giá trị
-        token.id = user.id;
-        if ('role' in user) {
-          token.role = (user as ExtendedUser).role;
-          token.permissions = (user as ExtendedUser).permissions;
-        }
-           // Lưu accessToken từ OAuth Provider (nếu có)
-           if (account) {
-            token.accessToken = account.access_token;
-            token.refreshToken = account.refresh_token;
-            token.provider = account.provider;
-          }
+    async jwt({ token, account }) {
+      if (account) {
+        return {
+          ...token,
+          accessToken: account.access_token,
+          refreshToken: account.refresh_token,
+          idToken: account.id_token,
+          expiresAt: account.expires_at,
+          roles: rolesOf(account.access_token),
+        };
       }
-      if (trigger === 'update' && session) {
-        if (session.user) {
-          token.name = session.user.name || token.name;
-        }
-        token.lastUpdated = Date.now();
-      }
-     
-      if (account?.expires_at && Date.now() > account.expires_at * 1000) {
-        return await refreshAccessToken(token);
-      }
-
+      // Làm mới sớm 30 giây trước khi hết hạn để request đang bay không bị 401.
+      if (token.expiresAt && Date.now() / 1000 > token.expiresAt - 30) return refreshAccessToken(token);
       return token;
     },
-    async session({ session, token, user }) {
-      if (token) {
-        if (session.user) {
-          session.user.id = token.id as string;
-          
-          // Thêm các trường custom vào session
-          if (token.role) {
-            session.user.role = token.role as string;
-          }
-          if (token.permissions) {
-            session.user.permissions = token.permissions as string[];
-          }
-        }
-        
-        // Thêm access token vào session để client có thể sử dụng
-        if (token.accessToken) {
-          session.accessToken = token.accessToken as string;
-        }
-        
-      }
-
+    async session({ session, token }) {
+      const sub = token.sub ?? '';
+      session.user = { ...session.user, id: sub, accountId: sub, role: token.roles ?? [] };
+      session.accessToken = token.accessToken;
+      session.error = token.error;
       return session;
     },
   },
-  debug: process.env.NODE_ENV === 'development',
+  events: {
+    // Đăng xuất cả phiên SSO trên Keycloak, không chỉ cookie NextAuth.
+    async signOut({ token }) {
+      if (!token?.idToken) return;
+      const url = new URL(`${issuer}/protocol/openid-connect/logout`);
+      url.searchParams.set('id_token_hint', token.idToken);
+      await fetch(url).catch(() => undefined);
+    },
+  },
   secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handlers = NextAuth(authOptions);
-export default handlers;
-// export const { GET, POST } = NextAuth(authOptions);
 export { handlers as GET, handlers as POST };
-
-async function refreshAccessToken(token: JWT): Promise<JWT> {
-  try {
-    const response = await fetch(`/api/auth/refresh`, {
-      method: 'POST',
-      // headers: {
-      //   Authorization: `Bearer ${token.refreshToken}`,
-      // },
-      body: JSON.stringify({
-        refresh_token: token.refreshToken,
-      }),
-    });
-    const tokens = await response.json();
-
-    if (!response.ok) {
-      throw tokens;
-    }
-
-    return {
-      ...token,
-      accessToken: tokens.accessToken,
-      refreshToken: tokens.refreshToken ?? token.refreshToken, // Fall back to old refresh token
-    };
-  } catch (error) {
-    console.log(error);
-
-    return {
-      ...token,
-      error: 'RefreshAccessTokenError',
-    };
-  }
-}

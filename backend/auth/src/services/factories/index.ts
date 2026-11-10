@@ -1,5 +1,0 @@
-export * from './credentials-auth.factory'
-export * from './google-auth.factory'
-export * from './facebook-auth.factory'
-export * from './apple-auth.factory'
-export * from './twitter-auth.factory'

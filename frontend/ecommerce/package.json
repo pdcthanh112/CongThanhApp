@@ -25,7 +25,8 @@
     "test:e2e:playwright": "playwright test",
     "test:e2e:playwright:ui": "playwright test --ui",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "graphql:check": "node scripts/validate-graphql.mjs"
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.2",

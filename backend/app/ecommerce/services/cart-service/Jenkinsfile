@@ -1,19 +1,19 @@
+// CI chính là GitHub Actions (.github/workflows/ci-go.yml); Jenkinsfile giữ cho môi trường Jenkins nội bộ.
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Test') {
             steps {
-                sh 'mvn clean package'
+                dir('backend/app/ecommerce/services/cart-service') {
+                    sh 'go vet ./... && go test ./...'
+                }
             }
         }
         stage('Docker Build') {
             steps {
-                sh 'docker build -t user-service .'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'docker-compose up -d'
+                dir('backend/app/ecommerce') {
+                    sh 'docker build -f services/cart-service/Dockerfile -t congthanhapp/cart-service:${BUILD_NUMBER} .'
+                }
             }
         }
     }

@@ -13,6 +13,7 @@ export type ResponseWithPagination<T> = {
       totalPage: number;
       totalElement: number;
     };
+    totalPage: number;
   };
   message: string;
   statusCode: number;

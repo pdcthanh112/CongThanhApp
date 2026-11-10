@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: congthanhapp-ecommerce-order-service
-
-  profiles:
-    active: dev

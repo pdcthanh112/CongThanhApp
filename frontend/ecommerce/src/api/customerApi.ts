@@ -1,61 +1,26 @@
-import axiosInstance from '@/config/axiosConfig';
+/**
+ * Tài khoản do Keycloak quản lý: các hàm cũ giữ tên để saga/form hiện có gọi được, nhưng chuyển trang sang
+ * Keycloak (đăng nhập, đăng ký, đổi/quên mật khẩu) thay vì gọi auth-service.
+ */
+import { signIn, signOut } from 'next-auth/react';
 import { ChangePasswordForm, ResetPasswordForm } from '@/models/form';
-import axios from 'axios';
 
-export const login = async (email: string, password: string) => {
-  return await axios
-    .post('http://localhost:8000/ecommerce/auth/login', { email: email, password: password })
-    .then((response) => response.data);
-};
+const callbackUrl = () => (typeof window !== 'undefined' ? window.location.href : '/');
 
-export const logout = async (email: string) => {
-  return await axios
-    .post('http://localhost:8000/ecommerce/auth/logout', { email: email })
-    .then((response) => response.data);
-};
+export const login = async (email?: string, _password?: string) =>
+  signIn('keycloak', { callbackUrl: callbackUrl() }, email ? { login_hint: email } : undefined);
 
-export const signup = async (data: SignupForm) => {
-  return await axios
-    .post('http://localhost:8000/ecommerce/auth/signup', {
-      email: data.email,
-      name: data.name,
-      password: data.password,
-      address: data.address,
-      phone: data.phone,
-      gender: data.gender,
-    })
-    .then((response) => response.data);
-};
+export const logout = async (_email?: string) => signOut({ callbackUrl: '/' });
 
-export const changePassword = async (data: ChangePasswordForm) => {
-  return await axios
-    .post('http://localhost:8000/ecommerce/auth/change-password', {
-      accountId: data.accountId,
-      currentPassword: data.currentPassword,
-      newPassword: data.newPassword,
-    })
-    .then((response) => response.data);
-};
+/** Mở trang đăng ký của Keycloak (OIDC prompt=create). */
+export const signup = async (_data?: unknown) =>
+  signIn('keycloak', { callbackUrl: callbackUrl() }, { prompt: 'create' });
 
-export const resetPassword = async (data: ResetPasswordForm) => {
-  return await axios
-    .post('http://localhost:8000/ecommerce/auth/reset-password', {
-      accountId: data.accountId,
-      password: data.newPassword,
-    })
-    .then((response) => response.data);
-};
+/** Keycloak yêu cầu nhập mật khẩu hiện tại rồi đặt mật khẩu mới (Application Initiated Action). */
+export const changePassword = async (_data?: ChangePasswordForm) =>
+  signIn('keycloak', { callbackUrl: callbackUrl() }, { kc_action: 'UPDATE_PASSWORD' });
 
-export const generateOTP = async (data: any) => {
-  return await axios.get('http://localhost:8000/ecommerce/auth/generate-otp').then((response) => response.data);
-};
-
-export const verifyOTP = async (data: any) => {
-  return await axios.get('http://localhost:8000/ecommerce/auth/verify-otp').then((response) => response.data);
-};
-
-export const getCustomerInfo = async (email: string) => {
-  return await axiosInstance
-    .get(`http://localhost:8000/ecommerce/customer/${email}/info`)
-    .then((response) => response.data);
-};
+/** Quên mật khẩu: Keycloak gửi email đặt lại từ trang đăng nhập. */
+export const resetPassword = async (_data?: ResetPasswordForm) => login();
+export const generateOTP = async (_data?: unknown) => login();
+export const verifyOTP = async (_data?: unknown) => login();

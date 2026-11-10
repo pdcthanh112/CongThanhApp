@@ -1,25 +1,16 @@
-import axiosInstance from '@/config/axiosConfig';
+import { gql } from '@/graphql/client';
+import { AddToWishlistMutation, MyWishlistQuery, RemoveFromWishlistMutation } from '@/graphql/documents';
+import { ok, toProduct } from '@/graphql/legacy';
+import { Response, Wishlist } from '@/models/types';
 
-export const getWishlistByCustomer = async (customerId: string) => {
-  return await axiosInstance.get(`wishlist/getByCustomer?customerId=${customerId}`).then((response) => response.data);
+// Wishlist (customer-service, qua supergraph) của khách đang đăng nhập; customerId giữ cho tương thích.
+export const getWishlistByCustomer = async (customerId: string): Promise<Response<Wishlist>> => {
+  const { me } = await gql(MyWishlistQuery, { page: 1, size: 100 });
+  return ok({ id: me.id, custommer: customerId, product: me.wishlist.items.map((i) => toProduct(i.product)) });
 };
 
-export const addProductToWishlist = async (customerId: string, productId: string) => {
-  return await axiosInstance
-    .post('wishlist/add', {
-      customerId: customerId,
-      productId: productId,
-    })
-    .then((response) => response);
-};
+export const addProductToWishlist = async (_customerId: string, productId: string) =>
+  ok((await gql(AddToWishlistMutation, { productId })).addToWishlist);
 
-export const removeProductFromWishlist = async (customerId: string, productId: string) => {
-  return await axiosInstance
-    .delete('wishlist/remove', {
-      data: {
-        customerId: customerId,
-        productId: productId,
-      },
-    })
-    .then((response) => response);
-};
+export const removeProductFromWishlist = async (_customerId: string, productId: string) =>
+  ok((await gql(RemoveFromWishlistMutation, { productId })).removeFromWishlist);

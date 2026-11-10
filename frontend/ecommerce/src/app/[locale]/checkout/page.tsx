@@ -100,7 +100,7 @@ export default function CheckoutPage() {
     }
   };
 
-  const { data: defaultAddress } = useQuery<Address>({
+  const { data: defaultAddress } = useQuery<Address | null>({
     queryKey: ['address'],
     queryFn: async () =>
       await getDefaultAddressOfCustomer('e6169aa0-d4a5-4740-b510-9285bbb73a0e').then((response) => response.data),
